@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Aceptación selección de jurado::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>
+
+        <!-- DataTables Select CSS -->
+        <link href="../../dist/libraries/datatables-select/select.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="../../dist/libraries/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Autocompletar -->
+        <link href="../../dist/libraries/jquery-ui-1.12.1.autocomplete/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+        <!-- css principales de la aplicacion -->
+        <link href="../../dist/css/main.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Datepicker animate -->
+        <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+
+
+    </head>
+
+    <body>
+        <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+        <!--div class="modal fade centrado-porcentual" id="my_loader" role="dialog" z_index=-10>
+          <div class="modal-dialog">
+                <div class="loader" style="margin: 0 auto;"></div>
+          </div>
+        </div-->
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <!--nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav-->
+
+            <div id="page-wrapper">
+
+                <div class="row" id="notificación_texto" style="display: none;">
+                    <form id="form_notificacion" action="" class="form_notificacion" role="form" method="post">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Aceptación selección de jurado</h1>
+
+
+                            <p>Yo <span id="nombre"></span>, identificado(a) con el documento de identidad <span id="documento"></span>, manifiesto que:</p>
+
+                            <p>1. Comprendo las siguientes facultades de los jurados del Programa Distrital de Estímulos, en adelante PDE, para la vigencia <span id="anio"></span> </p>
+                            <ul>
+                                <li>Efectuar la recomendación de selección teniendo en cuenta que la propuesta o propuestas ganadoras deben ser las
+                                    que hayan obtenido el puntaje o puntajes más altos una vez realizada la deliberación, en todo caso respetando siempre
+                                    el puntaje mínimo establecido para ser ganador en cada convocatoria del PDE. Su recomendación de selección será inapelable.</li>
+                                <li>Recomendar que la convocatoria se declare desierta en su totalidad o en alguna de sus categorías o ciclos, si durante la
+                                    deliberación encuentra por unanimidad que las propuestas evaluadas no ameritan el otorgamiento del estímulo. En este caso,
+                                    el jurado expondrá las razones que tuvo en cuenta para tomar esta decisión.</li>
+                                <li>Definir suplentes de los ganadores para los casos de inhabilidad, impedimento o renuncia.</li>
+                                <li>Recomendar el otorgamiento de menciones a aquellas propuestas que considere. Esta decisión deberá quedar consignada
+                                    en el acta de recomendación de ganadores.</li>
+                                <li>Realizar recomendaciones a las propuestas ganadoras para que sean tenidas en cuenta durante la ejecución, siempre y cuando
+                                    éstas no modifiquen el propósito y alcance.</li>
+                            </ul>
+                            <br/>
+                            <div class="form-group">
+                                <p>2. Acepto los compromisos que se relacionan a continuación y que hacen parte de las condiciones generales de participación del PDE.</p>
+
+                                <table id="table_list" class="table" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Compromisos</th>
+                                            <th>Acepto</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Leer detenidamente las condiciones generales de participación del PDE y los requisitos específicos de la
+                                            convocatoria de la cual es jurado.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"  name="check[]" value="1"  >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Presentar por escrito a la entidad encargada, con la debida anterioridad, las consultas y solicitudes
+                                            de aclaración sobre la convocatoria que debe evaluar (en ningún caso la entidad resolverá inquietudes formuladas verbalmente).</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="2"  >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Una vez recibido el acceso al material para la evaluación, verificar que se encuentra la totalidad de las propuestas asignadas
+                                            e informar cualquier inconsistencia a la entidad responsable de la convocatoria.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="3" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Declararse impedido, mediante comunicación escrita, con mínimo cinco (5) días hábiles antes de la fecha de deliberación, respecto
+                                            de las propuestas frente a los cuales identifique la existencia de inhabilidad o conflicto de intereses, o frente aquellas en las
+                                            que considere que no puede emitir un concepto objetivo.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="4" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Asistir a las reuniones, audiciones, visitas de campo y demás actividades programadas por la entidad responsable de la convocatoria,
+                                            durante el proceso de evaluación, en el lugar, fecha y hora que le sean indicados.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="5" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leer y evaluar, previo a la deliberación, las propuestas de la convocatoria para la cual fue seleccionado como jurado.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="6" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tener en cuenta los criterios de evaluación establecidos para cada convocatoria y realizar la selección de
+                                            conformidad con los principios de objetividad, transparencia y autonomía.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="7" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diligenciar una planilla de evaluación por cada obra o propuesta recibida, emitiendo un concepto técnico
+                                            por cada criterio de valoración o una recomendación que retroalimente al participante.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="8" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Elaborar, sustentar y firmar el acta de recomendación de ganadores de la convocatoria que evaluó.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="9" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acudir ante la entidad y presentar por escrito las aclaraciones que le sean requeridas, en el evento
+                                            de presentarse solicitudes efectuadas por terceros, organismos de control o participantes.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="10"  >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cumplir éticamente los deberes encomendados como jurado, procurando siempre la observancia de los
+                                            principios de igualdad, buena fe y dignidad humana consignados en la Constitución.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="11"  >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Realizar un informe final por cada una de las convocatorias en las que participó como evaluador,
+                                            este documento deberá incluir recomendaciones para el fortalecimiento del PDE.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="12" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mantener absoluta confidencialidad en el manejo de la información durante todo el proceso evaluación.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="13" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Abstenerse de hacer uso de la información a que accede en su condición de jurado, para cualquier objetivo
+                                            diferente de la evaluación, respetando siempre los derechos de autor del participante.</td>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="check[]" value="14" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+
+                                <p>Se entregará el 100% del valor determinado como reconocimiento económico, una vez el jurado haya cumplido con todas y cada una de sus
+                                    obligaciones, previa entrega de la siguiente documentación y de la certificación expedida por la entidad encargada de la convocatoria:
+                                    Fotocopia del Certificado de Registro Único Tributario - RUT (para nacionales). Certificación bancaria a nombre del jurado, no mayor a
+                                    treinta (30) días de expedida, en la que conste que la cuenta está activa, cuál es su tipo (ahorros o corriente) y número. En caso de no
+                                    tener cuenta, deberá consultar a la entidad los mecanismos establecidos para otras formas de pago. Certificación de afiliación activa a
+                                    salud correspondiente al mes en el que se tramita el pago. En el caso de jurados extranjeros no residentes en Colombia, solo se solicitará
+                                    la certificación bancaria a nombre el jurado, no mayor a treinta (30) días de expedida. Los jurados extranjeros residentes en Colombia
+                                    deberán presentar los mismos documentos que los jurados nacionales.</p>
+
+                                <p> Nota: En caso de que un jurado incumpla con alguno de los compromisos estipulados en el presente documento, la entidad otorgante lo
+                                    requerirá para que dé las explicaciones pertinentes. De no atender dicho requerimiento dentro de los cinco (5) días hábiles siguientes o
+                                    no cumplir los compromisos acordados, la entidad procederá a retirar el estímulo de manera unilateral mediante acto administrativo, declarando
+                                    su incumplimiento y se establecerá que el ganador no podrá participar por el término de los dos (2) años siguientes en las convocatorias del PDE.</p>
+                                <p> En consecuencia, acepto la designación como jurado de las convocatorias del PDE <span id="anio2"></span></p>
+
+                                <br/>
+                                <p>Fecha de Aceptación: <span id="fecha"></span></p>
+                                <br/>
+                                <button type="submit" class="btn btn-primary" id="aceptar">Acepto</button>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </form>
+                </div>
+                <!-- /.row -->
+
+                <div class="row" id="estado_notificacion" style="display: none;">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">La notificación está en estado <span id="e"></span></h1>
+                    </div>
+                </div>
+
+                <!-- /.row -->
+
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <input type="hidden" id="key">
+        <input type="hidden" id="opc">
+
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- DataTables -->
+        <script src="../../dist/libraries/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="../../dist/libraries/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="../../dist/libraries/datatables-responsive/dataTables.responsive.js"></script>
+        <script src="../../dist/libraries/datatables-select/dataTables.select.min.js"></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='notificacion.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+    </body>
+</html>
