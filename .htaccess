@@ -1,0 +1,5 @@
+#crud_pv/api/.htaccess
+AddDefaultCharset UTF-8
+<IfModule mod_rewrite.c>
+    Options ALL -Indexes    
+</IfModule>

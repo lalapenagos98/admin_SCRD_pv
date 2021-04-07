@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Generar Certificaciones::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>                
+
+        <!-- DataTables Select CSS -->
+        <link href="../../dist/libraries/datatables-select/select.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="../../dist/libraries/datatables-responsive/dataTables.responsive.css" rel="stylesheet">        
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Datepicker animate -->        
+        <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Text area editor html -->
+        <link type="text/css" rel="stylesheet" href="../../dist/libraries/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css">
+
+        <!-- css principales de la aplicacion -->
+        <link href="../../dist/css/main.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="loading centrado-porcentual"></div>   
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Generar Certificaciones</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>                                                                                                    
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Propuestas inscritas
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table id="table_list" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Estado</th>
+                                                    <th>Año</th>
+                                                    <th>Entidad</th>
+                                                    <th>Convocatoria</th>                                                    
+                                                    <th>Categoría</th>
+                                                    <th>Propuesta</th>
+                                                    <th>Código</th>
+                                                    <th>Tipo participante</th>                                                    
+                                                    <th>Participante</th>                                                    
+                                                    <th>Generar Certificado</th>                                                    
+                                                </tr>
+                                            </thead>
+                                        </table>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="anular_propuesta">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Esta seguro de anular la propuesta?</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row premio">
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label>Justifiqué la anulación de la propuesta <span class="icono_requerido">*</span></label>
+                                                                    <textarea id="justificacion_anulacion" name="justificacion_anulacion" class="form-control" rows="3"></textarea>                                                
+                                                                </div>                                                                                                                                                                                                                                                                                                        
+                                                            </div>                                                                                                                                                                        
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" id="id_propuesta" />
+                                                        <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->            
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- DataTables -->
+        <script src="../../dist/libraries/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="../../dist/libraries/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="../../dist/libraries/datatables-responsive/dataTables.responsive.js"></script>
+        <script src="../../dist/libraries/datatables-select/dataTables.select.min.js"></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- Datepicker animate -->
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
+
+        <!-- Descargar archivo -->
+        <script src="../../dist/libraries/ajaxdownloader/ajaxdownloader.min.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='certificaciones.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+
+        <!-- Text area editor html -->
+        <script type="text/javascript" src="../../dist/libraries/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+        <link rel="stylesheet" href="../../dist/css/bootstrap-select.min.css" />
+        <script src="../../dist/js/bootstrap-select.min.js"></script>
+
+    </body>
+</html>

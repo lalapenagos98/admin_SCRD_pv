@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Áreas de conocimientos::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>                
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">                
+                <div class="row">                    
+                    <div class="col-lg-12">                         
+                        <h1 class="page-header">Áreas de conocimientos</h1>
+                    </div>
+                    <div class="panel-body" style="text-align: right">                    
+                        <button type="button" class="btn btn-default btn-circle btn-lg" onclick="location.href = 'list.html'"><i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-circle btn-lg" onclick="location.href = 'list.html'"><i class="fa fa-list"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-circle btn-lg" onclick="location.href = 'form.html'"><i class="fa fa-file-o"></i>
+                        </button>                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">                    
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">                            
+                            <div class="panel-heading">
+                                Crear areas
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <form id="form_validator" action="" class="form_validator" role="form" method="post">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Nombre</label>
+                                                <input type="text" name="nombre" class="form-control">                                                
+                                            </div>                                                                                                                              
+                                        </div>                                                                    
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="id" name="id" />
+                                            <button type="submit" class="btn btn-default">Guardar</button>                                            
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>        
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+         
+
+        <script>
+                            $(document).ready(function () {
+
+                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
+                                var token_actual = getLocalStorage(name_local_storage);
+
+                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
+                                if ($.isEmptyObject(token_actual)) {
+                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                } else
+                                {
+                                    permiso_lectura(token_actual, "Areas de conocimientos");
+
+                                    $('#form_validator').attr('action', url_pv + 'Areasconocimientos/new');
+
+                                    if ($('#id').val().length > 0) {
+                                        //Realizo la peticion para cargar el formulario
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token},
+                                            url: url_pv + 'Areasconocimientos/search/' + $("#id").attr('value')
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Areas de conocimientos:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Areas de conocimientos:", "El area no se encuentra registrada, por favor registrarla");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+
+                                                    if (typeof json.id === 'number') {
+                                                        $('#form_validator').loadJSON(data);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    validator_form(token_actual);
+                                }
+                            });
+
+                            function validator_form(token_actual) {
+                                //Validar el formulario
+                                $('.form_validator').bootstrapValidator({
+                                    feedbackIcons: {
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        nombre: {
+                                            validators: {
+                                                notEmpty: {message: 'El nombre es requerido'}
+                                            }
+                                        }
+                                    }
+                                }).on('success.form.bv', function (e) {
+                                    // Prevent form submission
+                                    e.preventDefault();
+                                    // Get the form instance
+                                    var $form = $(e.target);
+
+                                    // Get the BootstrapValidator instance
+                                    var bv = $form.data('bootstrapValidator');
+
+                                    // Enviar datos del formulario para guardar
+                                    if (typeof $("#id").attr('value') === 'undefined') {
+
+                                        //Se realiza la peticion con el fin de guardar el registro actual
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: $form.attr('action'),
+                                            data: $form.serialize() + "&modulo=Areas de conocimientos&token=" + token_actual.token
+                                        }).done(function (result) {
+
+                                            if (result == 'error')
+                                            {
+                                                notify("danger", "ok", "Areas de conocimientos:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (result == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    if (isNaN(result)) {
+                                                        notify("danger", "ok", "Areas de conocimientos:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        //Asigno el valor id al hidden 
+                                                        $("#id").attr('value', result);
+                                                        notify("success", "ok", "Areas de conocimientos:", "Se creó el area con éxito.");
+                                                    }
+                                                }
+                                            }
+
+                                        });
+                                    } else {
+                                        //Realizo la peticion con el fin de editar el registro actual
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: url_pv + 'Areasconocimientos/edit/' + $("#id").attr('value'),
+                                            data: $form.serialize() + "&modulo=Areas de conocimientos&token=" + token_actual.token
+                                        }).done(function (result) {
+                                            if (result == 'error')
+                                            {
+                                                notify("danger", "ok", "Areas de conocimientos:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (result == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    if (isNaN(result))
+                                                    {
+                                                        notify("danger", "ok", "Areas de conocimientos:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        notify("info", "ok", "Areas de conocimientos:", "Se edito el area con éxito.");
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+                                    bv.resetForm();
+                                });
+                            }
+        </script>
+    </body>
+</html>
