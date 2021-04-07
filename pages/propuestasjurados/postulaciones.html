@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Mis postulaciones::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>
+
+        <!-- DataTables Select CSS -->
+        <link href="../../dist/libraries/datatables-select/select.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="../../dist/libraries/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Autocompletar -->
+        <link href="../../dist/libraries/jquery-ui-1.12.1.autocomplete/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+        <!-- css principales de la aplicacion -->
+        <link href="../../dist/css/main.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Datepicker animate -->
+        <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="loading centrado-porcentual"></div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Mis postulaciones</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                    <div class="panel-body" style="text-align: right">
+                      <button type="button" class="btn btn-default btn-circle btn-lg" onclick="" id="back_step"><i class="fa fa-arrow-left"></i>
+                      </button>
+
+                    </div>
+                </div>
+
+                <!--Modal informacion perfiles-->
+                <!-- Modal -->
+                <div class="modal fade" id="perfil_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <form id="form_nuevo_criterio" class="form_nuevo_criterio"  >
+
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Perfiles</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+
+                      <div class="modal-body">
+
+                            <div id="lista_perfiles"  class="form-group">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12" style="text-align: right">
+                                  <!--button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Aceptar</button>
+                                  <button type="button" id="postular" class="btn btn-primary"  style="display:none;">Postular</button-->
+                                </div>
+                            </div>
+
+                      </div>
+
+                      <div class="modal-footer" class="form-group">
+                        <!--button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button--->
+                        <button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Cerrar</button>
+
+                        <button type="button" id="cancelar" class="btn btn-secondary" data-dismiss="modal"  style="display:none;">Cancelar</button>
+                        <button type="submit" id="postular" class="btn btn-primary"  style="display:none;">Postular</button>
+
+                      </div>
+
+                    </form>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row" style="display:none;" id="estado" name="estado">
+                  <div class="col-lg-12">
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              Estado de la postulación
+                          </div>
+                          <div class="panel-body">
+                              <h2 >Su hoja de vida no está inscrita, para postularse a una convocatoria debe inscribir su hoja de vida</h2>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.row -->
+              <div class="row" id="busqueda_convocatorias">
+                  <div class="col-lg-12">
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                              Búsqueda de convocatorias
+                          </div>
+                          <div class="panel-body">
+
+                              <!--form id="formulario_principal" action="" class="formulario_principal" role="form" method="post" style="display:none;"-->
+                              <!--form id="formulario_principal"  class="formulario_principal" style="display:none;" onsubmit=" return false;"-->
+                                <div class="row">
+
+                                  <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Enfoque </label>
+                                        <select class="form-control" name="enfoque" id="enfoque">
+                                            <option>:: Seleccionar ::</option>
+                                        </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Línea estratégica </label>
+                                        <select class="form-control" name="linea" id="linea">
+                                            <option>:: Seleccionar ::</option>
+                                        </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Área </label>
+                                        <select class="form-control" name="area" id="area">
+                                            <option>:: Seleccionar ::</option>
+                                        </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Palabra clave
+                                              <button
+                                                type="button"
+                                                class="btn btn-primary btn-circle"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Se busca la palabra clave en el nombre y descripción de la convocatoria como filtro de búsqueda"
+                                                >
+                                                <i class="fa fa-question"></i>
+                                              </button>
+                                            </label>
+                                            <input type="text" id="pclave" name="pclave" class="form-control">
+                                        </div>
+                                  </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right">
+                                      <button type="button" class="btn btn-default" id="buscar">Buscar</button>
+                                    </div>
+                                </div>
+                                <!-- tabla rersultado busqueda-->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="form-group">
+                                          <label>Resultado de la búsqueda</label>
+                                        <table id="table_list_b" class="table" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tipo programa</th>
+                                                    <th>Entidad</th>
+                                                    <th>Área</th>
+                                                    <th>Línea</th>
+                                                    <th>Enfoque</th>
+                                                    <th>Nombre</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                              <!--/form-->
+
+                        </div>
+
+                      </div>
+                          <!-- /.panel-body -->
+                    </div>
+                      <!-- /.panel -->
+              </div>
+
+              <div class="row" id="listado_postulaciones">
+                      <div class="col-lg-12">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  Mis postulaciones
+                              </div>
+                              <div class="panel-body">
+
+                                <!-- tabla experiencia laboral-->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table id="table_list_p" class="table" style="width: 100%;">
+                                            <thead>
+                                              <tr>
+                                                  <th>Tipo programa</th>
+                                                  <th>Entidad</th>
+                                                  <th>Enfoque</th>
+                                                  <th>Línea</th>
+                                                  <th>Área</th>
+                                                  <th>Nombre</th>
+                                                  <th>Seleccionar</th>
+
+                                              </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                              <!-- /.panel-body -->
+                      </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+            <input type="hidden" id="idc" name="idc" />
+            <input type="hidden" id="id" name="id" />
+            <input type="hidden" id="idregistro" name="idregistro" />
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- DataTables -->
+        <script src="../../dist/libraries/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="../../dist/libraries/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="../../dist/libraries/datatables-responsive/dataTables.responsive.js"></script>
+        <script src="../../dist/libraries/datatables-select/dataTables.select.min.js"></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- Autocompletar-->
+        <script src="../../dist/libraries/jquery-ui-1.12.1.autocomplete/jquery-ui.js" type="text/javascript"></script>
+
+        <!-- Datepicker animate -->
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
+
+        <!-- Descargar archivo -->
+        <script src="../../dist/libraries/ajaxdownloader/ajaxdownloader.min.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='postulaciones.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+
+    </body>
+</html>

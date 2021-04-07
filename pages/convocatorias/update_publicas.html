@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Convocatorias::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>                
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+                
+        <!-- Datepicker animate -->
+        <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+        
+        <!-- css principales de la aplicacion -->
+        <link href="../../dist/css/main.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+        <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+        <div class="loading centrado-porcentual"></div>             
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">                
+                <div class="row">                    
+                    <div class="col-lg-12">                         
+                        <h1 class="page-header">Convocatorias</h1>
+                    </div>
+                    <div class="panel-body" style="text-align: right">                    
+                        <button type="button" class="btn btn-default btn-circle btn-lg" onclick="location.href = 'list_publicas.html'" data-toggle="tooltip" data-placement="top" title="Listar todas las convocatorias."><i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button type="button" id="link_categorias" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Listar categorías."><i class="fa fa-arrow-right"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-circle btn-lg" onclick="location.href = 'list_publicas.html'" data-toggle="tooltip" data-placement="top" title="Listar todas las convocatorias."><i class="fa fa-list"></i>
+                        </button>                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">                    
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">                            
+                            <div class="panel-heading">
+                                Formulario de la convocatoria
+                            </div>
+                            <div class="panel-body">                                
+                                <form id="form_validator" action="" class="form_validator" role="form" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Estado <span class="icono_requerido">*</span></label>
+                                                <select id='estado' name="estado" class="form-control" disabled="disabled">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Entidad <span class="icono_requerido">*</span></label>
+                                                <select id='entidad' name="entidad" class="form-control" disabled="disabled">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                            
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo de programa <span class="icono_requerido">*</span></label>
+                                                <select id='programa' name="programa" class="form-control" disabled="disabled">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                                                                                                                                                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Año <span class="icono_requerido">*</span></label>
+                                                <select id='anio' name="anio" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                            
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Nombre de la convocatoria <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="nombre" class="form-control">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Descripción corta de la convocatoria <span class="icono_requerido">*</span> <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Lo recomendado es que no sea mayor a 420 caracteres."><i class="fa fa-question"></i></button></label>
+                                                <textarea id="descripcion_html" style="display: none" class="descripcion"></textarea>
+                                                <br/>
+                                                <button lang="descripcion" dir="Descripción corta de la convocatoria" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar la descripción corta de la convocatoria."><i class="fa fa-plus"></i></button>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                            
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Justificación de la convocatoria <span class="icono_requerido">*</span> <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="El funcionario deberá argumentar por qué es importante crear y publicar la convocatoria. (Esta variable no es de carácter público)."><i class="fa fa-question"></i></button></label>
+                                                <textarea id="justificacion_html" style="display: none" class="justificacion"></textarea>
+                                                <br/>
+                                                <button lang="justificacion" dir="Justificación de la convocatoria" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar la justificación de la convocatoria."><i class="fa fa-plus"></i></button>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                    </div>                                    
+                                    <h3>Información general de la convocatoria</h3>                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Modalidad <span class="icono_requerido">*</span></label>
+                                                <select id='modalidad' name="modalidad" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Cobertura <span class="icono_requerido">*</span></label>
+                                                <select id='cobertura' name="cobertura" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Localidad</label>
+                                                <select disabled="disabled" id='localidad' name="localidad" class="form-control class_descripcion_ejecucion" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Upz</label>
+                                                <select disabled="disabled" id='upz' name="upz" class="form-control class_descripcion_ejecucion" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Barrio</label>
+                                                <select disabled="disabled" id='barrio' name="barrio" class="form-control class_descripcion_ejecucion" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Descripción de la ubicación de la ejecución (Territorios priorizados)</label>
+                                                <textarea disabled="disabled" id="descripcion_ejecucion" name="descripcion_ejecucion" class="form-control class_descripcion_ejecucion" rows="3"></textarea>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Enfoque <span class="icono_requerido">*</span></label>
+                                                <select id='enfoque' name="enfoque" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Línea estratégica <span class="icono_requerido">*</span></label>
+                                                <select id='linea_estrategica' name="linea_estrategica" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Área <span class="icono_requerido">*</span></label>
+                                                <select id='area' name="area" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>       
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Tiene categorías?</label>
+                                                <select id='tiene_categorias' name="tiene_categorias" class="form-control" disabled="disabled">
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                          
+                                    </div>
+                                    <div class="row">                                                                                                                                                                                            
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Las categorías manejan diferentes requisitos y/o fechas?</label>
+                                                <select disabled="disabled" id='diferentes_categorias' name="diferentes_categorias" class="form-control" >
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿La convocatoria se presenta a través de anónimo?</label>
+                                                <select id='seudonimo' name="seudonimo" class="form-control" disabled="disabled">                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div id="quienes_pueden_participar" class="form-group diferentes_categorias_none modalidad_jurados" style="text-align: center">
+
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                                                                                                                                                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Los jurados para esta convocatoria, son los mismos para sus diferentes categorías?</label>
+                                                <select disabled="disabled" id='mismos_jurados_categorias' name="mismos_jurados_categorias" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Esta convocatoria tendrá <br/>seguimiento?</label>
+                                                <select id='seguimiento' name="seguimiento" class="form-control" >                                                    
+                                                    <option value="true" selected="selected">Sí</option>
+                                                    <option value="false">No</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Esta convocatoria es cerrada?
+                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Solo aplica para convocatorias cuyos participantes sean invitados de manera directa por las entidades."><i class="fa fa-question"></i></button>                                                
+                                                </label>
+                                                <select id='cerrada' name="cerrada" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Habilitar cronograma para las propuestas?
+                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Esta variable le permite al participante diligenciar el cronograma directamente en la plataforma."><i class="fa fa-question"></i></button>
+                                                </label>
+                                                <select id='cronograma' name="cronograma" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Habilitar presupuesto para las propuestas?
+                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Esta variable le permite al participante diligenciar el presupuesto directamente en la plataforma."><i class="fa fa-question"></i></button>
+                                                </label>
+                                                <select id='presupuesto' name="presupuesto" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Máximo de propuestas permitidas <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Esta variable le permite al participante inscribir más de una propuesta en la misma convocatoria."><i class="fa fa-question"></i></button></label>
+                                                <select id='propuestas_permitidas' name="propuestas_permitidas" class="form-control" >                                                    
+                                                    <option value="1" selected="selected">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>¿Cuántos perfiles de jurado requiere? <span class="icono_requerido">*</span></label>
+                                                <select id='cantidad_perfil_jurado' name="cantidad_perfil_jurado" class="form-control diferentes_categorias_disable" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Precise la cantidad mínima de integrantes de la agrupación<span class="icono_requerido">*</span></label>
+                                                <select id='cantidad_integrantes' name="cantidad_integrantes" class="form-control" >                                                    
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                    </div>
+                                    <h3>Información del convenio</h3>                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Esta convocatoria tiene convenio?</label>
+                                                <select id='convenio' name="convenio" class="form-control" >                                                    
+                                                    <option value="true" >Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo de convenio (Institución) </label>
+                                                <select disabled="disabled" class="form-control class_convenio" id='tipo_convenio' name="tipo_convenio" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Nombre de la(s) institución(es) con la cual se realizó el convenio</label>
+                                                <input disabled="disabled" class="form-control class_convenio" type="text" name="convenio_instituciones">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                         
+                                    </div>
+                                    <h3>Información general de los recursos a otorgar</h3>                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo de estímulo <span class="icono_requerido">*</span></label>
+                                                <select class="form-control diferentes_categorias_disable" id='tipo_estimulo' name="tipo_estimulo" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                         
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Número de estímulos</label>
+                                                <input type="text" name="numero_estimulos" class="form-control diferentes_categorias_disable">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Valor total de recursos que entregará la convocatoria <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="valor_total_estimulos" class="form-control diferentes_categorias_disable">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                         
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Bolsa Concursable</label>
+                                                <select id='bolsa_concursable' name="bolsa_concursable" class="form-control diferentes_categorias_disable" >                                                    
+                                                    <option value="true" >Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Descripción general de los recursos a otorgar <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Detalle cómo se realizará la distribución de los recursos para los ganadores de la convocatoria."><i class="fa fa-question"></i></button></label>
+                                                <textarea name="descripcion_bolsa" class="form-control" rows="3"></textarea>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                          
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button disabled="disabled" type="button" class="btn btn-primary class_bolsa_concursable" data-toggle="modal" data-target="#distribucion_bolsa_modal" >Abrir ventana de distribución de la bolsa</button>
+                                            </div>                                                                                                                                                                                                                                                                                                      
+                                        </div>                                         
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button disabled="disabled" type="button" class="btn btn-primary class_tipo_estimulo" data-toggle="modal" data-target="#detalle_especie_modal" >Abrir ventana de detalle especie</button>
+                                            </div>                                                                                                                                                                                                                                                                                                       
+                                        </div>                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Objeto <span class="icono_requerido">*</span></label>
+                                                <textarea id="objeto_html" style="display: none" class="objeto"></textarea>
+                                                <br/>
+                                                <button lang="objeto" dir="Objeto" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar el objeto."><i class="fa fa-plus"></i></button>                                                                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Quiénes no pueden participar <span class="icono_requerido">*</span></label>
+                                                <textarea id="no_pueden_participar_html" style="display: none" class="no_pueden_participar"></textarea>
+                                                <br/>
+                                                <button lang="no_pueden_participar" dir="Quiénes no pueden participar" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar quiénes no pueden participar."><i class="fa fa-plus"></i></button>                                                                                                                                                                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Derechos específicos de los ganadores <span class="icono_requerido">*</span></label>
+                                                <textarea id="derechos_ganadores_html" style="display: none" class="derechos_ganadores"></textarea>
+                                                <br/>
+                                                <button lang="derechos_ganadores" dir="Derechos específicos de los ganadores" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar derechos específicos de los ganadores."><i class="fa fa-plus"></i></button>                                                                                                                                                                                                                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Deberes específicos de los ganadores <span class="icono_requerido">*</span></label>
+                                                <textarea id="deberes_ganadores_html" style="display: none" class="deberes_ganadores"></textarea>
+                                                <br/>
+                                                <button lang="deberes_ganadores" dir="Deberes específicos de los ganadores" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Cargar deberes específicos de los ganadores."><i class="fa fa-plus"></i></button>                                                                                                                                                                                                                                                                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button type="button" class="btn btn-primary diferentes_categorias_button modalidad_jurados" data-toggle="modal" data-target="#perfiles_participantes_modal" >Abrir ventana de perfiles de los participantes</button>
+                                            </div>                                                                                                                                                                                                                                                                                                      
+                                        </div>                                         
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button id="btn-perfile-jurados" type="button" class="btn btn-primary diferentes_categorias_button modalidad_jurados" data-toggle="modal" data-target="#perfiles_jurados_modal" >Abrir ventana de perfiles de los jurados</button>
+                                            </div>                                                                                                                                                                                                                                                                                                       
+                                        </div>                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Link formato PDF (Condiciones especificas de la convocatoria), Sí aplica</label>
+                                                <input type="text" name="link_condiciones" class="form-control">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="id" name="id" />
+                                            <button type="submit" class="btn btn-default">Guardar</button>                                            
+                                        </div>
+                                    </div>                                                                                                                
+                                </form>                                
+                                <div class="modal fade" id="distribucion_bolsa_modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Distribución de la bolsa</h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                                                <form id="form_validator_bolsa" action="" class="form_validator_bolsa" role="form" method="post">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Número de estímulos a otorgar</label>
+                                                                <input type="text" name="orden" class="form-control">                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Valor individual por estímulo</label>
+                                                                <input type="text" name="valor_recurso" class="form-control">                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">   
+                                                            <input type="hidden" id="id_bolsa" name="id" />
+                                                            <input type="hidden" name="tipo_recurso" value="Bolsa"/>
+                                                            <button type="submit" class="btn btn-default">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Número de estímulos a otorgar</th>
+                                                                                    <th>Valor individual por estímulo</th>                                                                                    
+                                                                                    <th>¿Activo?</th>                                                                                    
+                                                                                    <th>Acciones</th>                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tbody_distribuciones_bolsas">
+                                                                                                                                                               
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal fade" id="detalle_especie_modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Detalle especie</h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                                                <form id="form_validator_especie" class="form_validator_especie" action="" role="form" method="post">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Orden</label>
+                                                                <input type="text" name="orden" class="form-control">                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Tipo de estímulo no pecuniario</label>
+                                                                <select id='recurso_no_pecuniario' name="recurso_no_pecuniario" class="form-control" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                </select>                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Valoración del recurso no pecuniario</label>
+                                                                <input type="text" name="valor_recurso" class="form-control">                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Descripción del recurso no pecuniario</label>
+                                                                <input type="text" name="descripcion_recurso" class="form-control">                                                                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">   
+                                                            <input type="hidden" id="id_especie" name="id" />
+                                                            <input type="hidden" name="tipo_recurso" value="Especie"/>
+                                                            <button type="submit" class="btn btn-default">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Orden</th>
+                                                                                    <th>Tipo de estímulo no pecuniario</th>                                                                                    
+                                                                                    <th>Valoración de recursos no pecuniarios</th>                                                                                                                                                                        
+                                                                                    <th>¿Activo?</th>                                                                                    
+                                                                                    <th>Acciones</th>     
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tbody_distribuciones_especie">
+                                                                                                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal fade" id="perfiles_jurados_modal">
+                                    <div class="modal-dialog" style="width: 60%">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Perfiles de los jurados</h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                                                <form id="form_validator_jurado" action="" class="form_validator_jurado" role="form" method="post">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Jurado numero <span class="icono_requerido">*</span></label>
+                                                                <select id='orden_perfil_jurado' name="orden" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Perfil. Describa de manera clara y breve las características básicas de conocimiento, formación, experiencia y trayectoria que debe tener el jurado  <span class="icono_requerido">*</span></label>
+                                                                <textarea id="descripcion_perfil" name="descripcion_perfil" class="form-control validar_jurado" rows="3"></textarea>                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El jurado debe tener formación profesional universitaria?</label><br/>
+                                                                <select id='formacion_profesional' name="formacion_profesional" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Área(s) de conocimiento</label>
+                                                                <select id="area_conocimiento" class="form-control validar_jurado" name="area_conocimiento[]" multiple="multiple">                                                                                                                        
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El jurado debe tener formación de posgrado?</label><br/>
+                                                                <select id='formacion_postgrado' name="formacion_postgrado" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                                                                                                                              
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Nivel de formación</label>
+                                                                <select id="nivel_educativo" class="form-control validar_jurado" name="nivel_educativo[]" multiple="multiple">                                                                                                                        
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Campo(s) de experiencia o trayectoria</label>
+                                                                <textarea id="campo_experiencia" name="campo_experiencia" class="form-control validar_jurado" rows="3"></textarea>                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Áreas</label>
+                                                                <select id="area_perfil" class="form-control validacion_general validar_jurado" name="area_perfil[]" multiple="multiple">                                                                                                                        
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El jurado debe residir en Bogotá?</label><br/>
+                                                                <select id='reside_bogota' name="reside_bogota" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">                                                        
+                                                            <input type="hidden" name="tipo_participante" value="4" />
+                                                            <input type="hidden" id="id_cpj" name="id" />
+                                                            <button type="submit" class="btn btn-default validar_jurado">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Jurado N°</th>
+                                                                                    <th>Descripción del perfil</th>                                                                                    
+                                                                                    <th>¿Activo?</th>
+                                                                                    <th>Acciones</th>                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tbody_perfiles_jurados">
+                                                                                                                                                               
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal fade" id="perfiles_participantes_modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Perfiles de los participantes</h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Tipo de participante</label><br/>
+                                                                <span id="tipo_participante_cp"></span>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                                                                                                                                                                                                                                        
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Descripción</label>
+                                                                <textarea id="descripcion_cp" name="descripcion_cp" class="form-control " rows="3"></textarea>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                                                                   
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">                                                        
+                                                            <input type="hidden" id="id_tipo_participante" name="tipo_participante" />
+                                                            <input type="hidden" id="id_cp" name="id_cp" />
+                                                            <button id="guardar_cp" type="submit" class="btn btn-default">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Tipo de participante</th>                                                                                                                                                                                                                                                            
+                                                                                    <th>Editar</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tbody_tipos_participantes">
+                                                                                                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal fade" id="modal_html">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="html_titulo"></h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body">
+                                                    <textarea id="html_general" class="form-control" rows="3"></textarea>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">                                                            
+                                                            <button id="html_guardar" type="button" class="btn btn-warning">Guardar</button>                                            
+                                                            <input type="hidden" id="variable" />
+                                                            <input type="hidden" id="titulo_variable" />
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>        
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- Datepicker animate -->
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
+        
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='update_publicas.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>        
+        <script src="../../dist/libraries/ckeditor/ckeditor.js"></script>
+    </body>
+</html>
