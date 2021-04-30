@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Barrios::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>                
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">                
+                <div class="row">                    
+                    <div class="col-lg-12">                         
+                        <h1 class="page-header">Barrio</h1>
+                    </div>
+                    <div class="panel-body" style="text-align: right">                    
+                        <button type="button" class="btn btn-default btn-circle btn-lg" onclick="location.href = 'list.html'"><i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-circle btn-lg" onclick="location.href = 'list.html'"><i class="fa fa-list"></i>
+                        </button>
+                        <button type="button" class="btn btn-success btn-circle btn-lg" onclick="location.href = 'form.html'"><i class="fa fa-file-o"></i>
+                        </button>                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">                    
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">                            
+                            <div class="panel-heading">
+                                Crear barrio
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <form id="form_validator" action="" class="form_validator" role="form" method="post">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Pais</label>
+                                                <select id='pais' name="pais" class="form-control" tabindex="1">                                                    
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Departamento</label>
+                                                <select id='departamento' name="departamento" class="form-control" tabindex="1">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Ciudad</label>
+                                                <select id='ciudad' name="ciudad" class="form-control" tabindex="1">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Localidad</label>
+                                                <select id='localidad' name="localidad" class="form-control" tabindex="1">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Upz</label>
+                                                <select id='upz' name="upz" class="form-control" tabindex="1">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nombre</label>
+                                                <input type="text" name="nombre" class="form-control">                                                
+                                            </div>
+                                        </div>                                                                    
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="id" name="id" />
+                                            <button type="submit" class="btn btn-default">Guardar</button>                                            
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.row (nested) -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>        
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+         
+
+        <script>
+                            $(document).ready(function () {
+
+                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
+                                var token_actual = getLocalStorage(name_local_storage);
+
+                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
+                                if ($.isEmptyObject(token_actual)) {
+                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                } else
+                                {
+                                    permiso_lectura(token_actual, "Barrios");
+
+                                    $('#form_validator').attr('action', url_pv + 'Barrios/new');
+
+                                    //Cargar el select de Pais
+                                    $.ajax({
+                                        type: 'GET',
+                                        data: {"token": token_actual.token},
+                                        url: url_pv + 'Paises/select'
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
+                                            {
+                                                notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                            } else
+                                            {
+                                                var json = JSON.parse(data);
+                                                $("#pais").append('<option value="">:: Seleccionar ::</option>');
+                                                if (json.length > 0) {
+                                                    $.each(json, function (key, pais) {
+                                                        $("#pais").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                    //cargar select departamento
+                                    $('#pais').on('change', function () {
+                                        var pais = $(this).val();
+                                        $('#departamento').find('option').remove();
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token, "pais": pais},
+                                            url: url_pv + 'Departamentos/select'
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+                                                    $("#departamento").append('<option value="">:: Seleccionar ::</option>');
+                                                    if (json.length > 0) {
+                                                        $.each(json, function (key, value) {
+                                                            $("#departamento").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+                                    // Cargar Ciudad
+                                    $('#departamento').on('change', function () {
+                                        var departamento = $(this).val();
+                                        $('#ciudad').find('option').remove();
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token, "departamento": departamento},
+                                            url: url_pv + 'Ciudades/select'
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+                                                    $("#ciudad").append('<option value="">:: Seleccionar ::</option>');
+                                                    if (json.length > 0) {
+                                                        $.each(json, function (key, value) {
+                                                            $("#ciudad").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                    //Cargar Localidad
+                                    $('#ciudad').on('change', function () {
+                                        var ciudad = $(this).val();
+                                        $('#localidad').find('option').remove();
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token, "ciudad": ciudad},
+                                            url: url_pv + 'Localidades/select'
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+                                                    $("#localidad").append('<option value="">:: Seleccionar ::</option>');
+                                                    if (json.length > 0) {
+                                                        $.each(json, function (key, value) {
+                                                            $("#localidad").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+
+                                    //Cargar Upz
+                                    $('#localidad').on('change', function () {
+                                        var localidad = $(this).val();
+                                        $('#upz').find('option').remove();
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token, "localidad": localidad},
+                                            url: url_pv + 'Upzs/select'
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+                                                    $("#upz").append('<option value="">:: Seleccionar ::</option>');
+                                                    if (json.length > 0) {
+                                                        $.each(json, function (key, value) {
+                                                            $("#upz").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+
+
+                                    if ($('#id').val().length > 0) {
+                                        //Realizo la peticion para cargar el formulario
+                                        $.ajax({
+                                            type: 'GET',
+                                            data: {"token": token_actual.token},
+                                            url: url_pv + 'Barrios/search/' + $("#id").attr('value')
+                                        }).done(function (data) {
+                                            if (data == 'error_metodo')
+                                            {
+                                                notify("danger", "ok", "Barrio:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'error')
+                                                {
+                                                    notify("danger", "ok", "Barrio:", "El barrio no se encuentra registrado, por favor registrarse");
+                                                } else
+                                                {
+                                                    var json = JSON.parse(data);
+
+                                                    if (typeof json.barrio.id === 'number') {
+                                                        $('#departamento').find('option').remove();
+                                                        $("#departamento").append('<option value="">:: Seleccionar ::</option>');
+                                                        if (json.departamentos.length > 0) {
+                                                            $.each(json.departamentos, function (key, departamento) {
+                                                                var selected = '';
+                                                                if(departamento.id == json.departamento.id)
+                                                                {
+                                                                    selected = 'selected="selected"';
+                                                                }
+                                                                $("#departamento").append('<option value="' + departamento.id + '" '+selected+' >' + departamento.nombre + '</option>');
+                                                            });
+                                                        }
+                                                        
+                                                        $('#ciudad').find('option').remove();
+                                                        $("#ciudad").append('<option value="">:: Seleccionar ::</option>');
+                                                        if (json.ciudades.length > 0) {
+                                                            $.each(json.ciudades, function (key, ciudad) {
+                                                                var selected = '';
+                                                                if(ciudad.id == json.ciudad.id)
+                                                                {
+                                                                    selected = 'selected="selected"';
+                                                                }
+                                                                $("#ciudad").append('<option value="' + ciudad.id + '" '+selected+' >' + ciudad.nombre + '</option>');
+                                                            });
+                                                        }
+                                                        
+                                                        $('#localidad').find('option').remove();
+                                                        $("#localidad").append('<option value="">:: Seleccionar ::</option>');
+                                                        if (json.localidades.length > 0) {
+                                                            $.each(json.localidades, function (key, localidad) {
+                                                                var selected = '';
+                                                                if(localidad.id == json.localidad.id)
+                                                                {
+                                                                    selected = 'selected="selected"';
+                                                                }
+                                                                $("#localidad").append('<option value="' + localidad.id + '" '+selected+' >' + localidad.nombre + '</option>');
+                                                            });
+                                                        }
+                                                        
+                                                        $('#upz').find('option').remove();
+                                                        $("#upz").append('<option value="">:: Seleccionar ::</option>');
+                                                        if (json.upzs.length > 0) {
+                                                            $.each(json.upzs, function (key, upz) {
+                                                                var selected = '';
+                                                                if(upz.id == json.upz.id)
+                                                                {
+                                                                    selected = 'selected="selected"';
+                                                                }
+                                                                $("#upz").append('<option value="' + upz.id + '" '+selected+' >' + upz.nombre + '</option>');
+                                                            });
+                                                        }
+                                                        
+                                                        json.barrio.pais=json.pais.id;
+                                                        
+                                                        $('#form_validator').loadJSON(json.barrio);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    validator_form(token_actual);
+                                }
+                            });
+
+
+
+                            function validator_form(token_actual) {
+                                //Validar el formulario
+                                $('.form_validator').bootstrapValidator({
+                                    feedbackIcons: {
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        nombre: {
+                                            validators: {
+                                                notEmpty: {message: 'El nombre es requerido'}
+                                            }
+                                        },
+                                        pais: {
+                                            validators: {
+                                                notEmpty: {message: 'El Pais es requerido'}
+                                            }
+                                        },
+                                        departamento: {
+                                            validators: {
+                                                notEmpty: {message: 'El Departamento es requerido'}
+                                            }
+                                        },
+                                        ciudad: {
+                                            validators: {
+                                                notEmpty: {message: 'La Ciudad es requerida'}
+                                            }
+                                        },
+                                        localidad: {
+                                            validators: {
+                                                notEmpty: {message: 'La Localidad es requerida'}
+                                            }
+                                        }
+                                    }
+                                }).on('success.form.bv', function (e) {
+                                    // Prevent form submission
+                                    e.preventDefault();
+                                    // Get the form instance
+                                    var $form = $(e.target);
+
+                                    // Get the BootstrapValidator instance
+                                    var bv = $form.data('bootstrapValidator');
+
+                                    // Enviar datos del formulario para guardar
+                                    if (typeof $("#id").attr('value') === 'undefined') {
+
+                                        //Se realiza la peticion con el fin de guardar el registro actual
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: $form.attr('action'),
+                                            data: $form.serialize() + "&modulo=Barrios&token=" + token_actual.token
+                                        }).done(function (result) {
+
+                                            if (result == 'error')
+                                            {
+                                                notify("danger", "ok", "Barrio:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (result == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    if (isNaN(result)) {
+                                                        notify("danger", "ok", "Barrio:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        //Asigno el valor id al hidden 
+                                                        $("#id").attr('value', result);
+                                                        notify("success", "ok", "Barrio:", "Se creó el barrio con éxito.");
+                                                    }
+                                                }
+                                            }
+
+                                        });
+                                    } else {
+                                        //Realizo la peticion con el fin de editar el registro actual
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: url_pv + 'Barrios/edit/' + $("#id").attr('value'),
+                                            data: $form.serialize() + "&modulo=Barrios&token=" + token_actual.token
+                                        }).done(function (result) {
+                                            if (result == 'error')
+                                            {
+                                                notify("danger", "ok", "Barrio:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (result == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    if (isNaN(result))
+                                                    {
+                                                        notify("danger", "ok", "Barrio:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        notify("info", "ok", "Barrio:", "Se edito el barrio con éxito.");
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+                                    bv.resetForm();
+                                });
+                            }
+        </script>
+    </body>
+</html>
