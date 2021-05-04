@@ -114,6 +114,19 @@ $(document).ready(function () {
             cargar_select_rondas(token_actual, $('#categorias').val());
             // cargar_tabla(token_actual);
         });
+        
+        /*
+         * 22-04-2021
+         * Wilmer Gustavo Mogollón Duque
+         * Se agrega el select grupos_evaluacion
+         */
+        //carga el select grupos evaluación
+        $('#rondas').change(function () {
+            $("#categorias").attr('disabled', '');
+            $('#grupos_evaluacion').val(null);
+            cargar_select_grupos(token_actual, $('#rondas').val());
+            // cargar_tabla(token_actual);
+        });
 
 
 
@@ -437,6 +450,59 @@ function cargar_select_categorias(token_actual, convocatoria) {
     );
 }
 
+
+/*
+ * 22-04-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega la función cargar_select_grupos
+ */
+
+function cargar_select_grupos(token_actual, ronda) {
+
+
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Deliberacion/select_grupos',
+        data: {"token": token_actual.token, "ronda": ronda},
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_categorias");
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                break;
+            default:
+                var json = JSON.parse(data);
+
+                $('#grupos_evaluacion').find('option').remove();
+                $("#grupos_evaluacion").append('<option value="">:: Seleccionar ::</option>');
+
+                if (json !== null && json.length > 0) {
+                    $("#grupos_evaluacion").removeAttr('disabled');
+
+                    //Cargos el select de areasconocimientos
+                    $.each(json, function (key, array) {
+                        $("#grupos_evaluacion").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
+                    });
+
+                }
+
+                break;
+        }
+
+    }
+    );
+}
+
 function cargar_select_rondas(token_actual, convocatoria) {
 
     $.ajax({
@@ -522,7 +588,8 @@ function cargar_tabla(token_actual) {
             url: url_pv + "Deliberacion/all_propuestas",
             data:
                     {"token": token_actual.token,
-                        "ronda": $('#rondas').val()
+                        "ronda": $('#rondas').val(),
+                        "grupo": $('#grupos_evaluacion').val()
                     },
             //async: false
         },
@@ -791,7 +858,7 @@ function cargar_evaluaciones(token_actual, id_propuesta) {
         type: 'GET',
         url: url_pv + 'Deliberacion/all_evaluaciones/propuesta/' + id_propuesta,
         data: {"token": token_actual.token,
-            "ronda": $('#rondas').val()
+            "ronda": $('#rondas').val(), "grupo": $('#grupos_evaluacion').val()
         },
     }).done(function (data) {
 
@@ -1396,11 +1463,6 @@ function cargar_tabla_ganadores_asignar(token_actual) {
 
 
 }
-
-
-
-
-
 
 function confirmar_top_general(token_actual, id_ronda) {
 
