@@ -199,13 +199,13 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                 <i class="fa  fa-mail-reply "></i>
                             </button>
-                            
+
                             <!--
                             22-06-2020
                             Wilmer Gustavo Mogollón Duque
                             Se incorpora botón anular_deliberacion
                             -->
-                            
+
                             <button type="button"
                                     class="btn btn-danger btn-circle btn-lg"
                                     id="anular_deliberacion"
@@ -213,7 +213,7 @@
                                     data-toggle="modal" data-target="#anular_deliberacionModal">
                                 <i class="fa fa-step-backward "></i>
                             </button>
-                            
+
                             <button type="button"
                                     class="btn btn-primary btn-circle btn-lg"
                                     id="top_general"
@@ -221,9 +221,9 @@
                                     data-target="#top_generalModal">
                                 <i class="fa fa-check-square-o "></i>
                             </button>
-                            
-                            
-                            
+
+
+
                             <!--
                             15-06-2020
                             Wilmer Gustavo Mogollón Duque
@@ -469,6 +469,7 @@
                                                             <th>Código de la propuesta</th>
                                                             <th>Nombre de la propuesta</th>
                                                             <th>Top general</th>
+                                                            <th>Ver inhabilidades</th>
                                                         </tr>
                                                     </thead>
 
@@ -754,8 +755,8 @@
             </div>
         </div>
         <!-- Modal -->
-        
-        
+
+
         <!-- Modal anular deliberación -->
         <div class="modal fade" id="anular_deliberacionModal" tabindex="-1" role="dialog" aria-labelledby="anular_deliberacionModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -780,6 +781,161 @@
             </div>
         </div>
         <!-- Modal -->
+
+
+
+
+        <!-- Modal verificación inhabilidades -->
+
+        <div class="modal fade" id="modal_verificacion">
+
+            <div class="modal-dialog" style="width: 800px;  margin: auto;">
+                <div class="modal-content">
+                    <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                    <div class="loading centrado-porcentual"></div>
+                    <!-- cabecera del diálogo -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Información de la propuesta</h4>                                                    
+                    </div>
+                    <!-- cuerpo del diálogo -->                                                    
+                    <div class="modal-body" style="height: 450px; overflow-y: auto;">                                                                                                            
+                        <div class="row">
+                            <div class="col-lg-12">                                                                
+                                <table id="info_propuesta_verificacion_1" class="table table-bordered table-striped">                                    
+                                    <tbody>
+                                        <tr>
+                                            <th>Estado</th>
+                                            <td class="nombre_estado"></td>
+                                            <th>Código</th>
+                                            <td id="codigo_propuesta"></td>
+                                        </tr>
+                                        <tr>                                                                            
+                                            <th>Tipo de participante</th>
+                                            <td class="tipo_participante"></td>
+                                            <th>Nombre del participante</th>
+                                            <td class="nombre_participante"></td>
+                                        </tr>
+                                        <tr>                                                                            
+                                            <th colspan="1">Nombre de la propuesta</th>
+                                            <td colspan="3" class="nombre_propuesta"></td>
+                                        </tr>                                                                                                                                                                                
+                                    </tbody>
+                                </table>                                                                
+                            </div>
+                        </div> 
+                        <div id="contratistas" class="row" style="display: none">
+                            <div class="col-lg-12"> 
+                                <b>La propuesta actual tiene contratistas registrados como participantes, los cuales son:</b>
+
+                                <table class="table table-bordered table-striped">                                    
+                                    <thead>
+                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                            <th>Participante</th>
+                                            <th>Contratista en:</th>                                                                            
+                                        </tr>                                                                                                                                                                                                                                                        
+                                    </thead>
+                                    <tbody id="body_contratistas">                                                                        
+
+                                    </tbody>
+                                </table>                                                                                                                                
+                            </div>                                                            
+                        </div> 
+                        <div id="propuestas_pn" class="row" style="display: none">
+                            <div class="col-lg-12"> 
+                                <b>La propuesta actual cuenta con integrantes que participa en otras convocatorias, los cuales son:</b>
+
+                                <table class="table table-bordered table-striped">                                    
+                                    <thead>
+                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                            <th>Convocatoria</th>
+                                            <th>Categoría</th>   
+                                            <th>Tipo Rol</th>                        
+                                            <th>Participante</th>
+                                            <th>Propuesta código</th>                                                                                                                   
+                                            <th>Estado propuesta</th>
+                                        </tr>                                                                                                                                                                                                                                                        
+                                    </thead>
+                                    <tbody id="body_propuestas_pn">                                                                        
+
+                                    </tbody>
+                                </table>                                                                                                                                
+                            </div>                                                            
+                        </div> 
+                        <div id="propuestas_ganadoras_pn" class="row" style="display: none">
+                            <div class="col-lg-12"> 
+                                <b>La propuesta actual cuenta con integrantes que ya son ganadores en otras convocatorias, los cuales son:</b>
+
+                                <table class="table table-bordered table-striped">                                    
+                                    <thead>
+                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                            <th>Convocatoria</th>
+                                            <th>Categoría</th>   
+                                            <th>Tipo Rol</th>                        
+                                            <th>Participante</th>
+                                            <th>Propuesta código</th>                                                                                                                   
+                                            <th>Estado propuesta</th>
+                                        </tr>                                                                                                                                                                                                                                                        
+                                    </thead>
+                                    <tbody id="body_propuestas_ganadoras_pn">                                                                        
+
+                                    </tbody>
+                                </table>                                                                                                                                
+                            </div>                                                            
+                        </div>
+
+                        <div id="ganadoras_anios_anteriores" class="row" style="display: none">
+                            <div class="col-lg-12"> 
+                                <b>La propuesta actual cuenta con integrantes que ya fueron ganadores en años anteriores, los cuales son:</b>
+
+                                <table class="table table-bordered table-striped">                                    
+                                    <thead>
+                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                            <th>Año</th>
+                                            <th>Entidad</th>
+                                            <th>Convocatoria</th>                                                                            
+                                            <th>Categoría</th>   
+                                            <th>Propuesta</th>                                                                            
+                                            <th>Participante</th>
+                                            <th>Tipo participante</th>                                                                                                    
+                                            <th>Tipo Rol</th>                                                                            
+                                        </tr>                                                                                                                                                                                                                                                        
+                                    </thead>
+                                    <tbody id="body_ganadoras_anios_anteriores">                                                                        
+
+                                    </tbody>
+                                </table>                                                                                                                                
+                            </div>                                                            
+                        </div> 
+
+                        <div id="jurados_seleccionados" class="row" style="display: none">
+                            <div class="col-lg-12"> 
+                                <b>La propuesta actual cuenta con integrantes que ya son jurados seleccionados, los cuales son:</b>
+
+                                <table class="table table-bordered table-striped">                                    
+                                    <thead>
+                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                            <th>Convocatoria</th>
+                                            <th>Categoría</th>   
+                                            <th>Tipo Rol</th>                        
+                                            <th>Participante</th>                                                                            
+                                            <th>Estado postulación</th>
+                                        </tr>                                                                                                                                                                                                                                                        
+                                    </thead>
+                                    <tbody id="body_jurados_seleccionados">                                                                        
+
+                                    </tbody>
+                                </table>                                                                                                                                
+                            </div>                                                            
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
         <!-- jQuery -->
         <script src="../../vendor/jquery/jquery.min.js"></script>
