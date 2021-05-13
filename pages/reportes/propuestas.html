@@ -113,154 +113,178 @@
                 </div>      
                 <br/>
                 <!-- /.row -->                
-                <div id="reportes_propuestas" class="row" style="display: none">
-                    <div class="col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Propuestas por estado
+                <div id="reportes_propuestas" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Propuestas por estado
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_propuestas_estados"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_propuestas_estados"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                Propuestas por participantes
+                        <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Propuestas por participantes
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_propuestas_participantes"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_propuestas_participantes"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
                     </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                 Integrantes, Representantes y Participantes por convocatoria <br/>(Inscritas)
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                     Integrantes, Representantes y Participantes por convocatoria <br/>(Inscritas)
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_convocatorias_listado_participantes"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_convocatorias_listado_participantes"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Integrantes, Representantes y Participantes Contratistas <br/>(Inscritas)
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Integrantes, Representantes y Participantes Contratistas <br/>(Inscritas)
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_convocatorias_listado_contratistas"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_convocatorias_listado_contratistas"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
                     </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Listado  de propuestas (Guardada - No Inscrita)
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Listado  de propuestas (Guardada - No Inscrita)
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_convocatorias_listado_no_inscritas"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_convocatorias_listado_no_inscritas"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
-                    </div>
 
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Listado  de jurados postulados
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Listado  de jurados postulados
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_jurados_postulados"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_jurados_postulados"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
                     </div>
-
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Planillas de evaluación de propuestas
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Planillas de evaluación de propuestas
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_planillas_evaluacion"></div>                                
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_planillas_evaluacion"></div>                                
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
-                    </div>
 
-                    <!--
-                        11-08-2020
-                        Wilmer Gustavo Mogollón
-                        Se incorpora el reporte de planillas de evañuación de jurados 
-                    -->
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Planillas de evaluación de jurados
+                        <!--
+                            11-08-2020
+                            Wilmer Gustavo Mogollón
+                            Se incorpora el reporte de planillas de evañuación de jurados 
+                        -->
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Planillas de evaluación de jurados
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_evaluacion_jurados"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
                             </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div id="reporte_evaluacion_jurados"></div>
-                            </div>
-                            <!-- /.panel-body -->
-                            <div class="panel-footer">
-                                Fecha de corte <span class="fecha_actual"></span>
-                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->                        
-                        <!-- /.panel -->
                     </div>
-
-
-                    <!-- /.col-lg-12 -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Listado  de propuestas Inscritas PDAC
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="reporte_convocatorias_listado_inscritas_pdac"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    Fecha de corte <span class="fecha_actual"></span>
+                                </div>
+                            </div>
+                            <!-- /.panel -->                        
+                            <!-- /.panel -->
+                        </div>                        
+                        <!-- /.col-lg-12 -->
+                    </div>                    
                 </div>
                 <!-- /.row -->
             </div>

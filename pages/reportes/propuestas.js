@@ -221,6 +221,7 @@ $(document).ready(function () {
                                         $("#reporte_propuestas_participantes").empty();
                                         $("#reporte_convocatorias_listado_contratistas").empty();
                                         $("#reporte_convocatorias_listado_no_inscritas").empty();
+                                        $("#reporte_convocatorias_listado_inscritas_pdac").empty();
                                         $("#reporte_jurados_postulados").empty();//20-07-2020 -- Jurados postulados
                                         $("#reporte_evaluacion_jurados").empty();//11-08-2020 -- Evaluación de Jurados postulados
                                         $("#reporte_convocatorias_listado_participantes").empty();                                                                                
@@ -273,6 +274,8 @@ $(document).ready(function () {
                                                     
                                                     $("#reporte_convocatorias_listado_no_inscritas").html(json.reporte_convocatorias_listado_no_inscritas);
                                                     
+                                                    $("#reporte_convocatorias_listado_inscritas_pdac").html(json.reporte_convocatorias_listado_inscritas_pdac);
+                                                    
                                                     $("#reporte_jurados_postulados").html(json.reporte_jurados_postulados);
                                                     
                                                     $("#reporte_evaluacion_jurados").html(json.reporte_evaluacion_jurados);//11-08-2020 Reporte de evaluación jurados
@@ -299,6 +302,16 @@ $(document).ready(function () {
                                                         $.AjaxDownloader({
                                                             data: json,
                                                             url: url_pv + 'ConvocatoriasFormatos/reporte_listado_entidades_convocatorias_no_inscritas_xls/'
+                                                        });
+
+                                                    });
+                                                    
+                                                    $('.reporte_convocatorias_listado_inscritas_pdac').click(function () {
+                                                        var json = JSON.parse($(this).attr("rel"));
+
+                                                        $.AjaxDownloader({
+                                                            data: json,
+                                                            url: url_pv + 'ConvocatoriasFormatos/reporte_convocatorias_listado_inscritas_pdac_xls/'
                                                         });
 
                                                     });

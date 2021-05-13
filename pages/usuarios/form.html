@@ -120,6 +120,24 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>¿Certifica en la entidad?</label><br/>
+                                            <select id='certifica' name="certifica" class="form-control" >                                                    
+                                                <option value="">:: Seleccionar ::</option>
+                                                <option value="true">Sí</option>
+                                                <option value="false">No</option>
+                                            </select>                                                                
+                                        </div>                                                                                                                                                                                                                                                                                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Cargo en la entidad</label>
+                                            <input type="text" name="cargo" class="form-control" />                                                
+                                        </div>
+                                    </div>
+                                </div>     
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>¿Activo?</label><br/>
                                             <select id='active' name="active" class="form-control" >                                                    
                                                 <option value="">:: Seleccionar ::</option>
@@ -355,6 +373,7 @@
                                                     if (typeof json.id === 'number') {
                                                         $('#form_validator').loadJSON(json);
                                                         $("#active option[value='" + json.active + "']").prop('selected', true);
+                                                        $("#certifica option[value='" + json.certifica + "']").prop('selected', true);
                                                     }
                                                 }
                                             }
@@ -755,6 +774,11 @@
                                         active: {
                                             validators: {
                                                 notEmpty: {message: 'Activo es requerido'}
+                                            }
+                                        },
+                                        certifica: {
+                                            validators: {
+                                                notEmpty: {message: 'Certifica en la entidad es requerido'}
                                             }
                                         }
 

@@ -274,6 +274,16 @@ $(document).ready(function () {
             guardar_confirmacion(token_actual, $("#estado_actual_propuesta").val(), $("#tipo_verificacion").val());
         });
 
+        $("#generar_presupuesto").click(function () {
+                
+            $.AjaxDownloader({
+                data : {
+                    propuesta   : $("#propuesta").val(),
+                    token   : token_actual.token                        
+                },
+                url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_xls/'
+            });
+        });
 
         $("#boton_confirma_administrativa_1").click(function () {
             $("#numero_verificacion").val('');
@@ -673,6 +683,15 @@ function cargar_verificacion_1(token_actual, propuesta) {
                 } else
                 {
                     var json = JSON.parse(data);
+
+                    if(json.programa===2)
+                    {                        
+                        $(".pdac_programa").css("display","block");
+                    }
+                    else
+                    {
+                        $(".pdac_programa").css("display","none");
+                    }
 
                     $('#info_propuesta_verificacion_1').loadJSON(json.propuesta);
 

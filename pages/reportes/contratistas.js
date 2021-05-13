@@ -166,7 +166,7 @@ $(document).ready(function () {
                         });
                     } else
                     {
-                        notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas, el archivo debe ser en formato csv.");
+                        notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas, el archivo debe ser en formato txt.");
                     }
 
 
