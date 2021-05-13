@@ -842,6 +842,7 @@ function editar_grupo(token_actual, grupo) {
                 + "&modulo=Jurados&token=" + token_actual.token
                 + "&convocatoria=" + $('#convocatorias').val()
                 + "&categoria=" + $('#categorias').val()
+                + "&ronda=" + $('.rondas_editar').val()
     }).done(function (data) {
 
 
