@@ -124,6 +124,27 @@ $(document).ready(function () {
                 
             });
             
+            $('.generar_listado_xls').click(function () {
+                var id = $("#id").attr('value');
+                var token_actual = getLocalStorage(name_local_storage);
+                
+                if($("#tiene_categorias").val()=="Si")
+                {
+                    id = $("#convocatoria").val();
+                }
+                
+                $.AjaxDownloader({
+                    data : {
+                        token   : token_actual.token,
+                        id   : id,
+                        tipo   : $('#tipo_documento').val(),
+                    },
+                    url: url_pv + 'PropuestasWS/listados_xls/'
+                });
+
+            });
+            
+            
             //Permite crear el href para crear el reporte de listas
             $('#convocatoria').on('change', function () {
                 var tipo = $('#tipo_documento').val();
