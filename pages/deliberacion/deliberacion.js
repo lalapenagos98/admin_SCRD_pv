@@ -1065,11 +1065,11 @@ function cargar_tabla_ganadores(token_actual) {
                     return row.promedio;
                 },
             },
-            /*{"data": "Estado de la evaluación",
+            {"data": "Grupo evaluador",
              render: function ( data, type, row ) {
-             return row.estado_evaluacion;
+             return row.grupoevaluador;
              },
-             },*/
+             },
 
 
             /*{"data": "Seleccionar",
@@ -1077,7 +1077,7 @@ function cargar_tabla_ganadores(token_actual) {
              return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
              },
              },*/
-            {"data": "aciones",
+            {"data": "Ver inhabilidades",
                 render: function (data, type, row) {
                     return '<button id="' + row.id + '" title="Ver inhabilidades de la propuesta" type="button" class="btn btn-warning cargar_verificacion_1" data-toggle="modal" data-target="#modal_verificacion" id_propuesta="' + row.id + '">'
                             + '<span class="glyphicon glyphicon-eye-open"></span></button>';
