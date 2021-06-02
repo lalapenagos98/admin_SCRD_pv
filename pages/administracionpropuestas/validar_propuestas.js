@@ -52,7 +52,10 @@ $(document).ready(function () {
                         if (json.entidades.length > 0) {
                             //var selected;
                             $.each(json.estados_propuestas, function (key, estado_propuesta) {
-                                if (estado_propuesta.id == 23)
+                                //21	Por Subsanar
+                                //23	Rechazada
+                                //24	Habilitada
+                                if (estado_propuesta.id == 21 || estado_propuesta.id == 23 || estado_propuesta.id == 24)
                                 {
                                     $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
                                 }
@@ -568,7 +571,7 @@ function cargar_tabla(token_actual) {
         "processing": true,
         "serverSide": true,
         "ordering": false,
-        "lengthMenu": [50, 75, 100],
+        "lengthMenu": [200, 300, 400],
         "ajax": {
             url: url_pv + "PropuestasValidar/buscar_propuestas",
             data: function (d) {
@@ -608,9 +611,9 @@ function cargar_tabla(token_actual) {
                     row.verificacion_tecnicos = icon_tecni;
 
                     //Iconos de numero de verificacion
-                    row.btn_verificacion_1 = '<button type="button" lang="' + row.id_propuesta + '" class="btn btn-primary btn_tooltip cargar_verificacion_1" data-toggle="modal" data-target="#modal_verificacion_1" title="Es la primera verificación, la cual consiste en revisar los documentos administrativos y técnicos, con el fin de Habilitar, Rechazar o Subsanar."><span class="fa fa-eye"></span></button>';
+                    row.btn_verificacion_1 = '<button type="button" lang="' + row.id_propuesta + '" class="btn btn-primary btn_tooltip cargar_verificacion_1" data-toggle="modal" data-target="#modal_verificacion_1" title="Es la primera verificación, la cual consiste en revisar los documentos administrativos y técnicos, con el fin de Habilitar, Rechazar o Subsanar."><span class="fa fa-eye"></span></button><br/><br/><button type="button" dir="' + row.por_que_habilita + '" lang="' + row.id_propuesta + '" class="btn btn-info btn_tooltip cargar_habilitar_1" data-toggle="modal" data-target="#modal_habilitar_1" title="Le permite habilitar la propuesta al estado inicial en la verificación #1, donde la propuesta queda en estado Inscrita y sin confirmar la documentación administrativa y técnica."><span class="fa fa-thumbs-up"></span></button>';
                     
-                    row.btn_verificacion_2 = '<button type="button" lang="' + row.id_propuesta + '" class="btn btn-primary btn_tooltip cargar_verificacion_2" data-toggle="modal" data-target="#modal_verificacion_2" title="Es la segunda verificación, la cual consiste en revisar los documentos administrativos que subsano el participante con el fin de Habilitar o Rechazar."><span class="fa fa-eye"></span></button>';
+                    row.btn_verificacion_2 = '<button type="button" lang="' + row.id_propuesta + '" class="btn btn-primary btn_tooltip cargar_verificacion_2" data-toggle="modal" data-target="#modal_verificacion_2" title="Es la segunda verificación, la cual consiste en revisar los documentos administrativos que subsano el participante con el fin de Habilitar o Rechazar."><span class="fa fa-eye"></span></button><br/><br/><button type="button" dir="' + row.por_que_habilita + '" lang="' + row.id_propuesta + '" class="btn btn-info btn_tooltip cargar_habilitar_2" data-toggle="modal" data-target="#modal_habilitar_1" title="Le permite habilitar la propuesta al estado inicial en la verificación #2, donde la propuesta queda en estado Subsanada y sin confirmar la segunda verificación."><span class="fa fa-thumbs-up"></span></button>';
                     
                     return row.estado;
                 }
@@ -624,6 +627,33 @@ function cargar_tabla(token_actual) {
             $('.cargar_verificacion_2').click(function () {
                 cargar_verificacion_2(token_actual, $(this).attr("lang"));
             });
+            $('.cargar_habilitar_1').click(function () {
+                //Asigno la propuesta actual
+                $("#propuesta").val($(this).attr("lang"));
+                $("#numero_habilitar").val("1");
+                $("#actual_habilitar").html("1");
+                var por_que_habilita=$(this).attr("dir");                
+                if($(this).attr("dir")=="null")
+                {
+                    por_que_habilita="";
+                }
+                $(".por_que_habilita").html(por_que_habilita);
+            });
+            $('.cargar_habilitar_2').click(function () {
+                //Asigno la propuesta actual
+                $("#propuesta").val($(this).attr("lang"));
+                $("#numero_habilitar").val("2");
+                $("#actual_habilitar").html("2");
+                var por_que_habilita=$(this).attr("dir");                
+                if($(this).attr("dir")=="null")
+                {
+                    por_que_habilita="";
+                }
+                $(".por_que_habilita").html(por_que_habilita);
+            });
+            
+            guardar_por_que_habilita();
+            
         },
         "columns": [
             {"data": "estado"},
@@ -1253,6 +1283,72 @@ function guardar_verificacion_1(token_actual, id , modulo , verificacion)
     {
         notify("danger", "ok", "Validar propuestas:", mensaje_observaciones);
     }
+
+
+}
+
+//guardar guardar_por_que_habilita
+function guardar_por_que_habilita()
+{
+    $('.guardar_por_que_habilita').click(function () {
+       if($("#por_que_habilita").val()!="")
+        {
+            var token_habilitar = getLocalStorage(name_local_storage);
+            
+            $.ajax({
+                type: 'POST',
+                url: url_pv + 'PropuestasValidar/guardar_habilitacion',
+                data: {"token": token_habilitar.token, "modulo": "Validar propuestas", "propuesta": $("#propuesta").val(), "numero_habilitar": $("#numero_habilitar").val(), "por_que_habilita": $("#por_que_habilita").val()},
+            }).done(function (result) {
+
+                if (result == 'error_metodo')
+                {
+                    notify("danger", "ok", "Validar propuestas:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (result == 'error_token')
+                    {
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    } else
+                    {
+                        if (result == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        } else
+                        {
+                            if (result == 'crear_propuesta')
+                            {
+                                notify("danger", "remove", "Validar propuestas:", "El código de la propuesta no es valido.");
+                            } else
+                            {
+                                if (result == 'error')
+                                {
+                                    notify("danger", "ok", "Validar propuestas:", "Se registro un error al crear, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                } else
+                                {
+
+                                    $('#modal_confirmar_administrativa_1').modal('hide');
+                                    $('#modal_verificacion_2').modal('hide');
+                                    $('#modal_verificacion_1').modal('hide');
+                                    $('#modal_habilitar_1').modal('hide');
+                                    $(".por_que_habilita").html('');
+                                    $("textarea#por_que_habilita").val('');
+                                    $('#table_list').DataTable().draw();
+                                }
+                            }
+                        }
+                    }
+                }
+
+            });
+                
+                
+        }
+        else
+        {
+            notify("danger", "ok", "Habilitar propuestas:", "La justificación de habilitar la propuesta es obligatoria");
+        } 
+    });    
 
 
 }

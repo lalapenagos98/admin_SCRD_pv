@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>::Validar propuestas rechazadas::</title>
+        <title>::Validar propuestas habilitadas / rechazadas::</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +63,7 @@
                 <div class="loading centrado-porcentual"></div>   
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Validar propuestas rechazadas</h1>
+                        <h1 class="page-header">Validar propuestas habilitadas / rechazadas</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>                
@@ -159,6 +159,7 @@
                                         <input type="hidden" id="estado_actual_propuesta" value="" />
                                         <input type="hidden" id="tipo_verificacion" value="" />
                                         <input type="hidden" id="numero_verificacion" value="" />
+                                        <input type="hidden" id="numero_habilitar" value="" />
 
                                         <div class="modal fade" id="modal_verificacion_1">
 
@@ -273,6 +274,63 @@
                                                                 <button type="button" id="boton_confirma_tecnica_1" class="btn btn-primary">Confirmar verificación de documentación técnica</button>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="modal fade" id="modal_habilitar_1">
+
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                                    <div class="loading centrado-porcentual"></div>
+                                                    <!-- cabecera del diálogo -->
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">Habilitar la propuesta al estado inicial en la verificación #<span id="actual_habilitar"></span></h4>                                                    
+                                                    </div>
+                                                    <!-- cuerpo del diálogo -->                                                    
+                                                    <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label>Justifique la habilitación de la propuesta<span class="icono_requerido">*</span></label>
+                                                                        <textarea id="por_que_habilita" name="por_que_habilita" class="form-control" rows="3"></textarea>                                                
+                                                                    </div>
+                                                                </div>                                        
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group por_que_habilita">
+
+                                                                    </div>
+                                                                </div>                                        
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12" style="text-align: right">                                                                                                                                                                     
+                                                                    <button type="button" class="btn btn-default guardar_por_que_habilita">Guardar</button>
+                                                                </div>
+                                                            </div>                                                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="modal fade" id="modal_habilitar_2">
+
+                                            <div class="modal-dialog" style="width: 800px;  margin: auto;">
+                                                <div class="modal-content">
+                                                    <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                                    <div class="loading centrado-porcentual"></div>
+                                                    <!-- cabecera del diálogo -->
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">Habilitar la propuesta al estado inicial en la verificación #1</h4>                                                    
+                                                    </div>
+                                                    <!-- cuerpo del diálogo -->                                                    
+                                                    <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
