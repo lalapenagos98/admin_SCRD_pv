@@ -201,13 +201,13 @@ function init(token_actual) {
  * Se incorpora función registrar_ganador_jurado
  */
 
-function registrar_ganador_jurado(token_actual, id_jurado_postulado, numero_resolucion, fecha_resolucion, monto_asignado, codigo_presupuestal, codigo_proyecto_inversion, cdp, crp, valor_estimulo) {
+function registrar_ganador_jurado(token_actual, id_jurado_postulado, numero_resolucion, fecha_resolucion, monto_asignado, codigo_presupuestal, codigo_proyecto_inversion, cdp, crp, valor_estimulo, fecha_inicio_ejecucion, fecha_fin_ejecucion, nombre_resolucion ) {
 
 
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Registroganadoresjurados/registrar_ganador_jurado/postulacion/' + id_jurado_postulado,
-        data: "&modulo=Jurados&token=" + token_actual.token + "&numero_resolucion=" + numero_resolucion + "&fecha_resolucion=" + fecha_resolucion + "&codigo_presupuestal=" + codigo_presupuestal + "&codigo_proyecto_inversion=" + codigo_proyecto_inversion + "&cdp=" + cdp + "&crp=" + crp + "&valor_estimulo=" + valor_estimulo
+        data: "&modulo=Jurados&token=" + token_actual.token + "&numero_resolucion=" + numero_resolucion + "&fecha_resolucion=" + fecha_resolucion + "&codigo_presupuestal=" + codigo_presupuestal + "&codigo_proyecto_inversion=" + codigo_proyecto_inversion + "&cdp=" + cdp + "&crp=" + crp + "&valor_estimulo=" + valor_estimulo + "&fecha_inicio_ejecucion=" + fecha_inicio_ejecucion + "&fecha_fin_ejecucion=" + fecha_fin_ejecucion + "&nombre_resolucion=" + nombre_resolucion
 
     }).done(function (data) {
 
@@ -552,6 +552,9 @@ function cargar_formulario(token_actual, id_postulacion)
                     if (json.notificacion) {
                         $("#numero_resolucion").attr("value", json.notificacion.numero_resolucion);
                         $("#fecha_resolucion").attr("value", json.notificacion.fecha_resolucion);
+                        $("#fecha_inicio_ejecucion").attr("value", json.notificacion.fecha_inicio_ejecucion);
+                        $("#fecha_fin_ejecucion").attr("value", json.notificacion.fecha_fin_ejecucion);
+                        $("#nombre_resolucion").attr("value", json.notificacion.nombre_resolucion);
                         $("#codigo_presupuestal").attr("value", json.notificacion.codigo_presupuestal);
                         $("#codigo_proyecto_inversion").attr("value", json.notificacion.codigo_proyecto_inversion);
                         $("#cdp").attr("value", json.notificacion.cdp);
@@ -777,7 +780,7 @@ function validator_form(token_actual) {
         // Get the BootstrapValidator instance
         var bv = $form.data('bootstrapValidator');
 
-        registrar_ganador_jurado(token_actual, $('#id_jurado_postulado').val(), $('#numero_resolucion').val(), $('#fecha_resolucion').val(), $('#monto_asignado').val(), $('#codigo_presupuestal').val(), $('#codigo_proyecto_inversion').val(), $('#cdp').val(), $('#crp').val(), $('#valor_estimulo').val());
+        registrar_ganador_jurado(token_actual, $('#id_jurado_postulado').val(), $('#numero_resolucion').val(), $('#fecha_resolucion').val(), $('#monto_asignado').val(), $('#codigo_presupuestal').val(), $('#codigo_proyecto_inversion').val(), $('#cdp').val(), $('#crp').val(), $('#valor_estimulo').val(), $('#fecha_inicio_ejecucion').val(), $('#fecha_fin_ejecucion').val(), $('#nombre_resolucion').val());
         $('#registrarganadorModal').modal('hide');
         limpiarFormulario();
 

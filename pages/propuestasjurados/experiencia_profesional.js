@@ -285,6 +285,10 @@
                funcion: {
                    validators: {
                        notEmpty: {message: 'Las funciones son requeridas'},
+                       stringLength: {
+                            max: 500,
+                            message: 'Este campo debe contener máximo 500 caracteres'
+                        }
                    }
                },
                correo: {
