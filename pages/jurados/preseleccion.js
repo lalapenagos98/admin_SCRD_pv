@@ -530,6 +530,8 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
 
                 if (json.participante) {
 
+                    $('#modalidad_participa_jurado').html(json.modalidad_participa_jurado);
+                    
                     $('#tipo_documento').html(json.participante.tipo_documento);
                     $('#numero_documento').html(json.participante.numero_documento);
 
@@ -2250,7 +2252,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
     $.ajax({
         type: 'GET',
         url: url_pv + 'Juradospreseleccion/search_info_inhabilidades',
-        data: {"token": token_actual.token, "idc": $('#convocatorias').val(), "postulacion": postulacion, "participante": participante},
+        data: {"token": token_actual.token, "idc": $('#convocatorias').val(), "postulacion": postulacion, "participante": participante, "anio" : $('#anio').val()},
     }).done(function (data) {
 
         switch (data) {
@@ -2318,7 +2320,34 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                         $("#jurados_seleccionados").css("display","none");
                     }
                     
+                    
+                    //Jurados proceso
+                    
+                    if(json.html_propuestas_jurados_proceso!=="")
+                    {
+                        $("#jurados_proceso").css("display","block");                                                                    
+                        $( ".tr_jurados_proceso" ).remove();
+                        $( "#body_jurados_proceso" ).append(json.html_propuestas_jurados_proceso);
+                        
+                    }
+                    else
+                    {
+                        $("#jurados_proceso").css("display","none");
+                    }
+                    
                     //Personas naturales
+                    
+                    if(json.html_propuestas!=="")
+                    {
+                        $("#propuestas_pn").css("display","block");                                                                    
+                        $( ".tr_propuestas" ).remove();
+                        $( "#body_propuestas_pn" ).append(json.html_propuestas);
+                        
+                    }
+                    else
+                    {
+                        $("#propuestas_pn").css("display","none");
+                    }
                     
                     if(json.html_propuestas_ganadoras!=="")
                     {

@@ -519,6 +519,9 @@
                                                 <div id="collapse1" class="panel-collapse collapse in" aria-expanded="true" style="">
                                                     <div class="panel-body">
                                                         <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <h5 style="color: red;"><b>Modalidad en la que participa el aspirante: </b><div id="modalidad_participa_jurado"> </div></h5>
+                                                            </div>
                                                             <div class="col-lg-6">
                                                                 <h5><b>Tipo de documento de identificación: </b><div id="tipo_documento"> </div></h5>
                                                             </div>
@@ -906,11 +909,12 @@
                                         <!--Jurados seleccionados-->
                                         <div id="jurados_seleccionados" class="row" style="display: none">
                                             <div class="col-lg-12"> 
-                                                <b>El jurado ya fue seleccionado en las siguientes convocatorias:</b>
+                                                <b>Convocatorias en las que el aspirante ha sido jurado:</b>
 
                                                 <table class="table table-bordered table-striped">                                    
                                                     <thead>
                                                         <tr style="background-color: #FA5858; color: #ffffff">
+                                                            <th>Año</th>
                                                             <th>Convocatoria</th>
                                                             <th>Categoría</th>   
                                                             <th>Tipo Rol</th>                        
@@ -924,6 +928,27 @@
                                                 </table>                                                                                                                                
                                             </div>                                                            
                                         </div>
+                                        <div id="jurados_proceso" class="row" style="display: none">
+                                            <div class="col-lg-12"> 
+                                                <b>Convocatorias en las que está en proceso para ser jurado:</b>
+
+                                                <table class="table table-bordered table-striped">                                    
+                                                    <thead>
+                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                            <th>Año</th>
+                                                            <th>Entidad</th>
+                                                            <th>Convocatoria</th>
+                                                            <th>Tipo Rol</th>                        
+                                                            <th>Participante</th>                                                                            
+                                                            <th>Estado postulación</th>
+                                                        </tr>                                                                                                                                                                                                                                                        
+                                                    </thead>
+                                                    <tbody id="body_jurados_proceso">                                                                        
+
+                                                    </tbody>
+                                                </table>                                                                                                                                
+                                            </div>                                                            
+                                        </div>
                                         <!--Jurados participa en otras convocatorias-->
                                         <div id="propuestas_pn" class="row" style="display: none">
                                             <div class="col-lg-12"> 
@@ -932,6 +957,7 @@
                                                 <table class="table table-bordered table-striped">                                    
                                                     <thead>
                                                         <tr style="background-color: #FA5858; color: #ffffff">
+                                                            <th>Año</th>
                                                             <th>Convocatoria</th>
                                                             <th>Categoría</th>   
                                                             <th>Tipo Rol</th>                        
@@ -946,11 +972,33 @@
                                                 </table>                                                                                                                                
                                             </div>                                                            
                                         </div>
+                                        <!--Jurados participa en otras convocatorias-->
+                                        <div id="propuestas_ganadoras_pn" class="row" style="display: none">
+                                            <div class="col-lg-12"> 
+                                                <b>El jurado ha sido ganador en convocatorias, los cuales son:</b>
+
+                                                <table class="table table-bordered table-striped">                                    
+                                                    <thead>
+                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                            <th>Año</th>
+                                                            <th>Convocatoria</th>
+                                                            <th>Categoría</th>   
+                                                            <th>Tipo Rol</th>                        
+                                                            <th>Participante</th>
+                                                            <th>Propuesta código</th>                                                                                                                   
+                                                            <th>Estado propuesta</th>
+                                                        </tr>                                                                                                                                                                                                                                                        
+                                                    </thead>
+                                                    <tbody id="body_propuestas_ganadoras_pn">                                                                        
+
+                                                    </tbody>
+                                                </table>                                                                                                                                
+                                            </div>                                                            
+                                        </div>
                                         <!--Jurados seleccionados años anteriores-->
                                         <div id="ganadoras_anios_anteriores" class="row" style="display: none">
                                             <div class="col-lg-12"> 
-                                                <b>El jurado ya fue seleccionado como ganador en años anteriores para las siguientes convocatorias:</b>
-
+                                                <b>El jurado ya fue seleccionado como ganador en años anteriores para las siguientes convocatorias (SISTEMA DE CONVOCATORIAS v1):</b>
                                                 <table class="table table-bordered table-striped">                                    
                                                     <thead>
                                                         <tr style="background-color: #FA5858; color: #ffffff">

@@ -571,7 +571,7 @@ function cargar_tabla(token_actual) {
         "processing": true,
         "serverSide": true,
         "ordering": false,
-        "lengthMenu": [50, 75, 100],
+        "lengthMenu": [200, 300, 400],
         "ajax": {
             url: url_pv + "PropuestasValidar/buscar_propuestas",
             data: function (d) {
