@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    
+    
+    
 
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
@@ -404,7 +407,7 @@ function cargar_tabla(token_actual) {
                         //Establecer los valores del perdiodo de la evaluación
                         $.ajax({
                             type: 'GET',
-                            url: url_pv + 'Rondas/search/' + $('#rondas').val(),
+                            url: url_pv + 'Rondas/search_estado_grupo_evaluador_ronda/' + $('#rondas').val(),
                             data: {"token": token_actual.token},
                         }).done(function (data) {
 
@@ -426,7 +429,7 @@ function cargar_tabla(token_actual) {
 
                                     var json = JSON.parse(data);
 
-                                    if (json.estado == 'En deliberación') {
+                                    if (json.estado === 'En deliberación') {
                                         $("#notificacion_periodo").html('Ronda en deliberación.');
                                         /*
                                          * 10-06-2020 
@@ -437,44 +440,62 @@ function cargar_tabla(token_actual) {
 
                                     }
 
-                                    if (json.estado == 'Habilitada') {
-
-                                        $("#fecha_inicio_evaluacion").html(json.fecha_inicio_evaluacion.substr(0, 10));
-                                        $("#fecha_fin_evaluacion").html(json.fecha_fin_evaluacion.substr(0, 10));
+                                    if (json.estado === 'Habilitada') {
 
 
-                                        //tiempo restante
-                                        var inicio = new Date();
-                                        var fin = new Date(json.fecha_fin_evaluacion.substr(0, 10) + " 23:59:59");
-                                        var x = new Date(fin.getDate() - inicio.getDate());
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: url_pv + 'Rondas/search/' + $('#rondas').val(),
+                                            data: {"token": token_actual.token},
+                                        }).done(function (data) {
+                                            switch (data) {
+                                                default:
 
-                                        var dias = (fin.getTime() - inicio.getTime()) / 86400000;
-                                        var horas = ((fin.getTime() - inicio.getTime()) % 86400000) / 3600000;
-                                        var minutos = (((fin.getTime() - inicio.getTime()) % 86400000) % 3600000) / 60000;
+                                                    var json = JSON.parse(data);
 
-                                        if (dias >= 0) {
+                                                    $("#fecha_inicio_evaluacion").html(json.fecha_inicio_evaluacion.substr(0, 10));
+                                                    $("#fecha_fin_evaluacion").html(json.fecha_fin_evaluacion.substr(0, 10));
 
-                                            $("#notificacion_periodo").html('El periodo de evaluación es de ' + json.fecha_inicio_evaluacion.substr(0, 10)
-                                                    + ' al ' + json.fecha_fin_evaluacion.substr(0, 10) + '.'
-                                                    + ' Le quedan ' + Math.trunc(dias) + ' días, '
-                                                    + Math.trunc(horas) + ' horas y '
-                                                    + Math.trunc(minutos) + ' minutos para evaluar.');
 
-                                            /*
-                                             * 10-06-2020 
-                                             * Wilmer Gustavo Mogollón Duque
-                                             * Se agrega botón confirmar_top para confirmar top en evaluación
-                                             */
-                                            $("#confirmar_top").show();
+                                                    //tiempo restante
+                                                    var inicio = new Date();
+                                                    var fin = new Date(json.fecha_fin_evaluacion.substr(0, 10) + " 23:59:59");
+                                                    var x = new Date(fin.getDate() - inicio.getDate());
 
-                                        } else {
-                                            $("#notificacion_periodo").html('El periodo de evaluación ya terminó, por lo tanto no puede evaluar las propuestas.');
+                                                    var dias = (fin.getTime() - inicio.getTime()) / 86400000;
+                                                    var horas = ((fin.getTime() - inicio.getTime()) % 86400000) / 3600000;
+                                                    var minutos = (((fin.getTime() - inicio.getTime()) % 86400000) % 3600000) / 60000;
+
+                                                    if (dias >= 0) {
+
+                                                        $("#notificacion_periodo").html('El periodo de evaluación es de ' + json.fecha_inicio_evaluacion.substr(0, 10)
+                                                                + ' al ' + json.fecha_fin_evaluacion.substr(0, 10) + '.'
+                                                                + ' Le quedan ' + Math.trunc(dias) + ' días, '
+                                                                + Math.trunc(horas) + ' horas y '
+                                                                + Math.trunc(minutos) + ' minutos para evaluar.');
+
+                                                        /*
+                                                         * 10-06-2020 
+                                                         * Wilmer Gustavo Mogollón Duque
+                                                         * Se agrega botón confirmar_top para confirmar top en evaluación
+                                                         */
+                                                        $("#confirmar_top").show();
+
+                                                    } else {
+                                                        $("#notificacion_periodo").html('El periodo de evaluación ya terminó, por lo tanto no puede evaluar las propuestas.');
+                                                    }
+                                                    
+                                                    break;
+                                            }
                                         }
+                                        );
+
+
 
                                     }
 
 
-                                    if (json.estado == 'Evaluada') {
+                                    if (json.estado === 'Evaluada') {
                                         $("#notificacion_periodo").html('La ronda está evaluada.');
                                     }
 
@@ -679,7 +700,7 @@ function cargar_info_basica(token_actual, id_propuesta, id_evaluacion) {
     $.ajax({
         type: 'GET',
         url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
-        data: {"token": token_actual.token, "evaluacion": id_evaluacion},//14-09-2020 --- se incorpora el id de la ronda
+        data: {"token": token_actual.token, "evaluacion": id_evaluacion}, //14-09-2020 --- se incorpora el id de la ronda
     }).done(function (data) {
 
         switch (data) {
@@ -1018,11 +1039,11 @@ function confirmar_evaluacion(token_actual, id_evaluacion) {
             case 'criterio_null':
                 notify("danger", "remove", "Usuario:", "Debe evaluar todos los criterios.");
                 break;
-            /*
-             * 03-03-2021
-             * Wilmer Gustavo Mogollón Duque
-             * Se agrega case para cuando la evaluación no se ha iniciado
-             */
+                /*
+                 * 03-03-2021
+                 * Wilmer Gustavo Mogollón Duque
+                 * Se agrega case para cuando la evaluación no se ha iniciado
+                 */
             case 'sin_evaluar':
                 notify("danger", "remove", "Usuario:", "No puede confirmar la evaluación, primero debe calificar los criterios.");
                 break;

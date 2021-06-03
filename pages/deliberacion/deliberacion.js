@@ -1,6 +1,9 @@
 $(document).ready(function () {
+    
+    
+    
 
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
+//Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
     $("#notificacion_periodo").hide();
     $("#deliberar").hide();
@@ -14,16 +17,14 @@ $(document).ready(function () {
      * Se agrega el botón top_general al hide
      */
     $("#top_general").hide();
-
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
     if ($.isEmptyObject(token_actual)) {
         location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
     } else
     {
-        //Verifica si el token actual tiene acceso de lectura
+//Verifica si el token actual tiene acceso de lectura
         permiso_lectura(token_actual, "Deliberación");
         $('.convocatorias-search').select2();
-
         //Carga el select de entidad
         $.ajax({
             type: 'GET',
@@ -47,7 +48,6 @@ $(document).ready(function () {
                         break;
                     default:
                         json_entidades = JSON.parse(data);
-
                         $('#entidad').find('option').remove();
                         $("#entidad").append('<option value="">:: Seleccionar ::</option>');
                         if (json_entidades.length > 0) {
@@ -62,7 +62,6 @@ $(document).ready(function () {
 
             }
         });
-
         //Carga el select de años
         $('#anio').find('option').remove();
         $("#anio").append('<option value="">:: Seleccionar ::</option>');
@@ -70,53 +69,51 @@ $(document).ready(function () {
             $("#anio").append('<option value="' + i + '" >' + i + '</option>');
         }
 
-        //carga select_convocatorias
+//carga select_convocatorias
         $('#anio').change(function () {
             $('#convocatorias').val(null);
             cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-
             $('#categorias').val(null);
             $("#categorias").attr('disabled', '');
-
             $('#rondas').val(null);
-
             //cargar_tabla(token_actual);
         });
-
         //carga select convocatorias
         $('#entidad').change(function () {
             $('#convocatorias').val(null);
             cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-
             $('#categorias').val(null);
             $("#categorias").attr('disabled', '');
-
             $('#rondas').val(null);
-
             //cargar_tabla(token_actual);
         });
-
         //carga el select categorias
         $('#convocatorias').change(function () {
             $("#categorias").attr('disabled', '');
             $('#categorias').val(null);
             cargar_select_categorias(token_actual, $('#convocatorias').val());
-
             $('#rondas').val(null);
             cargar_select_rondas(token_actual, $('#convocatorias').val());
-
             //cargar_tabla(token_actual);
         });
-
         //carga el select rondas
         $('#categorias').change(function () {
             $('#rondas').val(null);
             cargar_select_rondas(token_actual, $('#categorias').val());
             // cargar_tabla(token_actual);
         });
-
-
-
+        /*
+         * 22-04-2021
+         * Wilmer Gustavo Mogollón Duque
+         * Se agrega el select grupos_evaluacion
+         */
+        //carga el select grupos evaluación
+        $('#rondas').change(function () {
+            $("#categorias").attr('disabled', '');
+            $('#grupos_evaluacion').val(null);
+            cargar_select_grupos(token_actual, $('#rondas').val());
+            // cargar_tabla(token_actual);
+        });
         /*
          * 20-06-2020
          * Wilmer Gustavo Mogollón Duque
@@ -130,36 +127,33 @@ $(document).ready(function () {
             if ($('#rondas').val() === "") {
                 alert("Debe seleccionar la ronda de evaluación");
             } else {
-                $('#resultado').focus();
-                validator_form(token_actual);
-                cargar_tabla(token_actual);
+
+                if ($('#grupos_evaluacion').val() === "") {
+                    alert("Debe seleccionar un grupo de evaluación");
+                } else {
+                    $('#resultado').focus();
+                    validator_form(token_actual);
+                    cargar_tabla(token_actual);
+                }
             }
 
 
         });
-
-
-
         $("#top_general").click(function () {
 
             cargar_info_top_general(token_actual, $('#rondas').val());
         });
-
-
         $("#total_ganadores").change(function () {
             cargar_tabla_ganadores(token_actual);
         });
         $("#total_suplentes").change(function () {
             cargar_tabla_ganadores(token_actual);
         });
-
         $("#baceptartop").click(function () {
             confirmar_top_general(token_actual, $('#rondas').val());
             $('#exampleModaltop').modal('hide');
             $('#top_generalModal').modal('hide');
-
         });
-
         /*
          * 06-06-2020
          * Wilmer Gustavo Mogollón Duque
@@ -172,14 +166,11 @@ $(document).ready(function () {
             $("#mensaje").show();
             $("#bcancelar").show();
             $("#baceptar").show();
-
         });
-
         $("#baceptar").click(function () {
 
-            deliberar(token_actual, $('#rondas').val());
+            deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
             $('#exampleModal').modal('toggle');
-
         });
         /*
          * 12-06-2020
@@ -193,44 +184,34 @@ $(document).ready(function () {
             $("#mensajegn").show();
             $("#bcancelargn").show();
             $("#baceptargn").show();
-
         });
-
         $("#baceptargn").click(function () {
             generar_acta_preseleccionados(token_actual, $('#rondas').val());
             $('#genera_acta_modal').modal('hide');
         });
-
         //Aceptar top generar
         $("#btn_aceptar_top").click(function () {
 
             validator_form_confirmar(token_actual);
-
         });
-
-
         /*
          * 22-06-2020
          * Wilmer Gustavo Mogollón Duque
          * Se incorpora la acción para el botón anular_deliberacion
          */
         //Anular deliberación
-        
+
         $("#anular_deliberacion").click(function () {
 
             $("#mensaje_anular").show();
             $("#bcancelar_anular").show();
             $("#baceptar_anular").show();
-
         });
-        
         $("#baceptar_anular").click(function () {
 
-            anular_deliberacion(token_actual, $('#rondas').val());
+            anular_deliberacion(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
             $('#anular_deliberacionModal').modal('hide');
-
         });
-
 //        $("#form_top_general").bootstrapValidator({
 //            feedbackIcons: {
 //                valid: 'glyphicon glyphicon-ok',
@@ -286,29 +267,20 @@ $(document).ready(function () {
                 }
             }
         });
-
-
-
-
         //Declaración desierta
         $("#btn_declarar_desierta").click(function () {
 
             $('#form_top_general').bootstrapValidator('enableFieldValidators', 'comentarios', true);
             $('#form_top_general').bootstrapValidator('validateField', 'comentarios');
-
             $("#mensajeds").show();
             $("#bcancelards").show();
             $("#baceptards").show();
-
         });
-
         $("#baceptards").click(function () {
             declarar_convocatoria_desierta(token_actual, $('#rondas').val());
             $('#genera_acta_modal_desierta').modal('hide');
             $('#top_generalModal').moda10000l('hide');
         });
-
-
         /*
          * Botón para guardar el estímulo de la propuesta
          */
@@ -319,10 +291,7 @@ $(document).ready(function () {
             asignar_monto(token_actual, $('#id_propuesta').val(), $('#monto_asignado').val());
             $('#asignar_monto').modal('hide');
             limpiarFormulario();
-
         });
-
-
         /*
          * 15-06-2020
          * Wilmer Gistavo Mogollón Duque
@@ -333,14 +302,12 @@ $(document).ready(function () {
         });
 
 
+
+
         validator_form(token_actual);
-
-
     }
 
 });
-
-
 //Agrego para limpiar el formulario
 function limpiarFormulario() {
     document.getElementById("asignar_est_form").reset();
@@ -372,7 +339,6 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
                 break;
             default:
                 var json = JSON.parse(data);
-
                 //Cargos el select de areasconocimientos
                 $('#convocatorias').find('option').remove();
                 $("#convocatorias").append('<option value="">:: Seleccionar ::</option>');
@@ -416,18 +382,63 @@ function cargar_select_categorias(token_actual, convocatoria) {
                 break;
             default:
                 var json = JSON.parse(data);
-
                 $('#categorias').find('option').remove();
                 $("#categorias").append('<option value="">:: Seleccionar ::</option>');
-
                 if (json != null && json.length > 0) {
                     $("#categorias").removeAttr('disabled');
-
                     //Cargos el select de areasconocimientos
                     $.each(json, function (key, array) {
                         $("#categorias").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
                     });
+                }
 
+                break;
+        }
+
+    }
+    );
+}
+
+
+/*
+ * 22-04-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega la función cargar_select_grupos
+ */
+
+function cargar_select_grupos(token_actual, ronda) {
+
+
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Deliberacion/select_grupos',
+        data: {"token": token_actual.token, "ronda": ronda},
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_categorias");
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                break;
+            default:
+                var json = JSON.parse(data);
+                $('#grupos_evaluacion').find('option').remove();
+                $("#grupos_evaluacion").append('<option value="">:: Seleccionar ::</option>');
+                if (json !== null && json.length > 0) {
+                    $("#grupos_evaluacion").removeAttr('disabled');
+                    //Cargos el select de areasconocimientos
+                    $.each(json, function (key, array) {
+                        $("#grupos_evaluacion").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
+                    });
                 }
 
                 break;
@@ -462,14 +473,13 @@ function cargar_select_rondas(token_actual, convocatoria) {
             default:
 
                 var json = JSON.parse(data);
-
                 $('#rondas').find('option').remove();
                 $("#rondas").append('<option value="">:: Seleccionar ::</option>');
                 //$('#rondas').hide();
 
                 if (json != null && json.length > 0) {
-                    //Cargos el select de areasconocimientos
-                    //$('#rondas').show();
+//Cargos el select de areasconocimientos
+//$('#rondas').show();
                     $.each(json, function (key, array) {
                         $("#rondas").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
                     });
@@ -491,8 +501,6 @@ function cargar_tabla(token_actual) {
      */
 
     $("#notificacion_periodo").hide();
-    
-
     //Muestro los botones
     $("#deliberar").show();
     $("#confirmar_top_general").show().slow;
@@ -500,9 +508,6 @@ function cargar_tabla(token_actual) {
     $("#anular_deliberacion").show().slow;
     $("#genera_acta").show().slow;
     $("#asignar_estimulo").show().slow;
-
-    
-
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     //var data =  ( $('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
@@ -522,7 +527,8 @@ function cargar_tabla(token_actual) {
             url: url_pv + "Deliberacion/all_propuestas",
             data:
                     {"token": token_actual.token,
-                        "ronda": $('#rondas').val()
+                        "ronda": $('#rondas').val(),
+                        "grupo": $('#grupos_evaluacion').val()
                     },
             //async: false
         },
@@ -576,7 +582,6 @@ function cargar_tabla(token_actual) {
                 render: function (data, type, row) {
                     return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#evaluarModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
                             + '<span class="glyphicon glyphicon-eye-open"></span></button>';
-
                 },
             }
 
@@ -584,8 +589,6 @@ function cargar_tabla(token_actual) {
 
         ]
     });
-
-
 }
 
 function acciones_registro(token_actual) {
@@ -595,10 +598,7 @@ function acciones_registro(token_actual) {
         cargar_info_basica(token_actual, $(this).attr("id_propuesta"));
         cargar_evaluaciones(token_actual, $(this).attr("id_propuesta"));
         $("#table_evaluaciones_top_general").html($(this).attr("top_general"));
-
     });
-
-
     /*
      * Se incorpora para cargar el formulario del estímulo
      */
@@ -607,8 +607,6 @@ function acciones_registro(token_actual) {
 
 
         var id_propuesta = $(this).attr("id_propuesta");
-
-
         $.ajax({
             type: 'GET',
             url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
@@ -632,8 +630,6 @@ function acciones_registro(token_actual) {
                 default:
 
                     var json = JSON.parse(data);
-
-
                     if (json.propuesta) {
                         $("#monto_asignado").attr("value", json.propuesta.monto_asignado);
                         $("#id_propuesta").attr("value", json.propuesta.id);
@@ -643,28 +639,19 @@ function acciones_registro(token_actual) {
 
 
                     break;
-
             }
 
         }
         );
-
-
     });
-
     $(".btn_confirmar").click(function () {
 
         confirmar_evaluacion(token_actual, $(this).attr("id"));
-
     });
-
-
     $(".btn_notificar").click(function () {
         cargar_info_impedimento(token_actual, $(this).attr("id"));
         $("#id_evaluacion").val($(this).attr("id"));
     });
-
-
 }
 
 function cargar_info_basica(token_actual, id_propuesta) {
@@ -674,7 +661,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
     $("#resumen_propuesta").html("");
     $("#objetivo_propuesta").html("");
     $("#bogota_propuesta").html("");
-
     $.ajax({
         type: 'GET',
         url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
@@ -698,8 +684,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
             default:
 
                 var json = JSON.parse(data);
-
-
                 //informacion básica de la propuesta
                 if (json.propuesta) {
                     $("#codigo_propuesta").html(json.propuesta.codigo);
@@ -713,7 +697,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
                 if (json.parametros) {
 
                     var parametros = '';
-
                     $.each(json.parametros, function (k, a) {
 
                         parametros = parametros + '<div class="col-lg-6">'
@@ -721,7 +704,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '<span>' + a.valor_parametro + '</span>'
                                 + '</div>';
                     });
-
                     $("#parametros_propuesta").html(parametros);
                 }
 
@@ -729,7 +711,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                 if (json.documentos) {
                     var items = '';
-
                     $.each(json.documentos, function (k, a) {
 
                         items = items + '<tr>'
@@ -743,7 +724,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '</td>'
                                 + '</tr>';
                     });
-
                     $("#archivos_table").html(items);
                 }
 
@@ -766,7 +746,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
                 $(".download_file").click(function () {
                     //Cargo el id file
                     var cod = $(this).attr('id');
-
                     $.AjaxDownloader({
                         url: url_pv + 'PropuestasEvaluacion/download_file/',
                         data: {
@@ -774,9 +753,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                             token: token_actual.token
                         }
                     });
-
                 });
-
                 break;
         }
 
@@ -791,7 +768,7 @@ function cargar_evaluaciones(token_actual, id_propuesta) {
         type: 'GET',
         url: url_pv + 'Deliberacion/all_evaluaciones/propuesta/' + id_propuesta,
         data: {"token": token_actual.token,
-            "ronda": $('#rondas').val()
+            "ronda": $('#rondas').val(), "grupo": $('#grupos_evaluacion').val()
         },
     }).done(function (data) {
 
@@ -812,10 +789,8 @@ function cargar_evaluaciones(token_actual, id_propuesta) {
             default:
 
                 var json = JSON.parse(data);
-
                 var parametros = '';
                 $("#table_evaluaciones_body").html(parametros);
-
                 $.each(json, function (k, a) {
 
                     parametros = parametros + '<tr>'
@@ -825,24 +800,21 @@ function cargar_evaluaciones(token_actual, id_propuesta) {
                             + '<td>' + a.evaluacion_estado + '</td>'
                             + '</tr>';
                 });
-
                 $("#table_evaluaciones_body").append(parametros);
-
                 break;
         }
 
     }
     );
-
 }
 
-function deliberar(token_actual, id_ronda) {
+function deliberar(token_actual, id_ronda, id_grupo) {
 
 
     $.ajax({
         type: 'POST',
         url: url_pv + 'Deliberacion/deliberar/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token
+        data: "&modulo=Deliberación&token=" + token_actual.token + "&grupo=" + id_grupo
 
     }).done(function (data) {
 
@@ -875,22 +847,20 @@ function deliberar(token_actual, id_ronda) {
             case 'deliberacion':
                 notify("success", "remove", "Usuario:", "Esta ronda ya se encuentra en deliberación");
                 break;
-
         }
 
     });
-
 }
 
 function cargar_info_top_general(token_actual, id_ronda) {
     var id_convocatoria;
     $("#fieldset_top_general").removeAttr("disabled");
-
     //se verifica que las evaluaciones esten confirmadas
     $.ajax({
         type: 'GET',
         url: url_pv + 'Deliberacion/validar_confirmacion/ronda/' + id_ronda,
-        data: {"token": token_actual.token},
+        data: {"token": token_actual.token,
+            "grupo": $('#grupos_evaluacion').val()},
     }).done(function (data) {
 
         switch (data) {
@@ -911,12 +881,11 @@ function cargar_info_top_general(token_actual, id_ronda) {
                 notify("danger", "remove", "Usuario:", "Hay evaluaciones sin confirmar.");
                 break;
             case 'error_deliberacion':
-                notify("danger", "remove", "Usuario:", "Recuerde que es necesario enviar a deliberar.");
+                notify("danger", "remove", "Usuario:", "Recuerde que para confirmar el top general, es necesario que todos los grupos de evaluación hayan deliberado.");
                 break;
             case 'exito':
 
                 $("#top_generalModal").modal('show');
-
                 //Información de la ronda y la convocatoria
                 $.ajax({
                     type: 'GET',
@@ -941,7 +910,6 @@ function cargar_info_top_general(token_actual, id_ronda) {
                         default:
 
                             var json = JSON.parse(data);
-
                             if (json.id) {
 
                                 if (json.estado == 'Evaluada') {
@@ -958,9 +926,7 @@ function cargar_info_top_general(token_actual, id_ronda) {
                                 $("#aspectos").val(json.aspectos);
                                 $("#recomendaciones").val(json.recomendaciones);
                                 $("#comentarios").val(json.comentarios);
-
                                 id_convocatoria = json.convocatoria;
-
                                 //información de la convocatoria
                                 $.ajax({
                                     type: 'GET',
@@ -985,10 +951,8 @@ function cargar_info_top_general(token_actual, id_ronda) {
                                         default:
 
                                             var json = JSON.parse(data);
-
                                             if (json.id) {
                                                 var categoria = "";
-
                                                 //Si se seleccionó una categoria, se busca el nombre y se concatena con el nombre de la convocatoria
                                                 if ($("categorias").val() != undefined && $("categorias").val() != null) {
 
@@ -1016,7 +980,6 @@ function cargar_info_top_general(token_actual, id_ronda) {
                                                             default:
 
                                                                 var json2 = JSON.parse(data);
-
                                                                 if (json2.id) {
                                                                     categoria = json2.nombre;
                                                                 }
@@ -1024,19 +987,15 @@ function cargar_info_top_general(token_actual, id_ronda) {
                                                         }//fin switch
 
                                                     });
-
                                                 }
 
                                                 //si existe la categoria se concatena con el nombre de la convocatoria
                                                 $("#nombre_convocatoria").html(json.nombre + (categoria != "" ? "-" + categoria : categoria));
-
-
                                             }
 
                                     }//fin switch
 
                                 });
-
                                 cargar_tabla_ganadores(token_actual);
                             }
 
@@ -1045,17 +1004,10 @@ function cargar_info_top_general(token_actual, id_ronda) {
                     }//fin switch
 
                 });
-
-
                 break;
         }//fin switch
 
     });
-
-
-
-
-
 }
 
 function cargar_tabla_ganadores(token_actual) {
@@ -1086,6 +1038,9 @@ function cargar_tabla_ganadores(token_actual) {
             //$(".check_activar_f").removeAttr("checked");
             acciones_registro(token_actual);
             //validator_form(token_actual);
+            $('.cargar_verificacion_1').click(function () {
+                cargar_verificacion_1(token_actual, $(this).attr("id_propuesta"));
+            });
 
         },
         "rowCallback": function (row, data, index) {
@@ -1113,38 +1068,35 @@ function cargar_tabla_ganadores(token_actual) {
                     return row.promedio;
                 },
             },
-                    /*{"data": "Estado de la evaluación",
-                     render: function ( data, type, row ) {
-                     return row.estado_evaluacion;
-                     },
-                     },*/
+            {"data": "Grupo evaluador",
+             render: function ( data, type, row ) {
+             return row.grupoevaluador;
+             },
+             },
 
 
-                    /*{"data": "Seleccionar",
-                     render: function ( data, type, row ) {
-                     return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
-                     },
-                     },*/
-                    /*{"data": "aciones",
-                     render: function ( data, type, row ) {
-                     return '<button id="'+row.id+'" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#evaluarModal" id_propuesta="'+row.id+'" top_general="'+row.promedio+'">'
-                     +'<span class="glyphicon glyphicon-eye-open"></span></button>' ;
-                     
-                     },
-                     }*/
+            /*{"data": "Seleccionar",
+             render: function ( data, type, row ) {
+             return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
+             },
+             },*/
+            {"data": "Ver inhabilidades",
+                render: function (data, type, row) {
+                    return '<button id="' + row.id + '" title="Ver inhabilidades de la propuesta" type="button" class="btn btn-warning cargar_verificacion_1" data-toggle="modal" data-target="#modal_verificacion" id_propuesta="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-eye-open"></span></button>';
+
+                },
+            }
 
 
 
         ]
     });
-
-
 }
 
 function cargar_info_top_general_asignar(token_actual, id_ronda) {
     var id_convocatoria;
     $("#fieldset_top_general").removeAttr("disabled");
-
     //se verifica que las evaluaciones esten confirmadas
     $.ajax({
         type: 'GET',
@@ -1172,7 +1124,6 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
             case 'exito':
 
                 $("#asignar_estimulo_Modal").modal('show');
-
                 //Información de la ronda y la convocatoria
                 $.ajax({
                     type: 'GET',
@@ -1197,7 +1148,6 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                         default:
 
                             var json = JSON.parse(data);
-
                             if (json.id) {
 
 //                                if (json.estado == 'Evaluada') {
@@ -1214,9 +1164,7 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                                 $("#aspectos").val(json.aspectos);
                                 $("#recomendaciones").val(json.recomendaciones);
                                 $("#comentarios").val(json.comentarios);
-
                                 id_convocatoria = json.convocatoria;
-
                                 //información de la convocatoria
                                 $.ajax({
                                     type: 'GET',
@@ -1241,10 +1189,8 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                                         default:
 
                                             var json = JSON.parse(data);
-
                                             if (json.id) {
                                                 var categoria = "";
-
                                                 //Si se seleccionó una categoria, se busca el nombre y se concatena con el nombre de la convocatoria
                                                 if ($("categorias").val() != undefined && $("categorias").val() != null) {
 
@@ -1272,7 +1218,6 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                                                             default:
 
                                                                 var json2 = JSON.parse(data);
-
                                                                 if (json2.id) {
                                                                     categoria = json2.nombre;
                                                                 }
@@ -1280,19 +1225,15 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                                                         }//fin switch
 
                                                     });
-
                                                 }
 
                                                 //si existe la categoria se concatena con el nombre de la convocatoria
                                                 $("#nombre_convocatoria").html(json.nombre + (categoria != "" ? "-" + categoria : categoria));
-
-
                                             }
 
                                     }//fin switch
 
                                 });
-
                                 cargar_tabla_ganadores_asignar(token_actual);
                             }
 
@@ -1301,17 +1242,10 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                     }//fin switch
 
                 });
-
-
                 break;
         }//fin switch
 
     });
-
-
-
-
-
 }
 
 function cargar_tabla_ganadores_asignar(token_actual) {
@@ -1385,7 +1319,6 @@ function cargar_tabla_ganadores_asignar(token_actual) {
                 render: function (data, type, row) {
                     return '<button id="' + row.id + '" title="Asignar estímulo" type="button" class="btn btn-warning btn_asignar_estimulo" data-toggle="modal" data-target="#asignar_monto" id_propuesta="' + row.id + '">'
                             + '<span class="glyphicon glyphicon-usd"></span></button>';
-
                 },
             }
 
@@ -1393,14 +1326,7 @@ function cargar_tabla_ganadores_asignar(token_actual) {
 
         ]
     });
-
-
 }
-
-
-
-
-
 
 function confirmar_top_general(token_actual, id_ronda) {
 
@@ -1444,8 +1370,6 @@ function confirmar_top_general(token_actual, id_ronda) {
         }
 
     });
-
-
 }
 
 /*
@@ -1458,7 +1382,6 @@ function confirmar_top_general(token_actual, id_ronda) {
 function generar_acta_preseleccionados(token_actual, id_ronda) {
 
     window.open(url_pv + "FormatosDoc/acta_recomendacion_preseleccionados/ronda/" + id_ronda, "_blank");
-
 }
 
 function declarar_convocatoria_desierta(token_actual, id_ronda) {
@@ -1503,8 +1426,6 @@ function declarar_convocatoria_desierta(token_actual, id_ronda) {
         }
 
     });
-
-
 }
 
 /*
@@ -1551,21 +1472,19 @@ function asignar_monto(token_actual, id_propuesta, monto_asignado) {
         }
 
     });
-
-
 }
 /*
  * 22-06-2020
  * Wilmer Gustavo Mogollón Duque
  * Se agrega función anular_deliberacion 
  */
-function anular_deliberacion(token_actual, id_ronda) {
+function anular_deliberacion(token_actual, id_ronda, id_grupo) {
 
 
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Deliberacion/anular_deliberacion/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token
+        data: "&modulo=Deliberación&token=" + token_actual.token + "&grupo=" + id_grupo
 
     }).done(function (data) {
 
@@ -1600,8 +1519,335 @@ function anular_deliberacion(token_actual, id_ronda) {
         }
 
     });
+}
 
 
+/*
+ * 12-05-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Cargar verificación
+ */
+
+
+function cargar_verificacion_1(token_actual, propuesta) {
+    //Asigno la propuesta actual
+    $("#propuesta").val(propuesta);
+
+    $('#doc_administrativos_verificacion_2 tr').remove();
+    $('#doc_administrativos_verificacion_1 tr').remove();
+    $('#doc_tecnicos_verificacion_1 tr').remove();
+
+    //Realizo la peticion para cargar el formulario
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token, "verificacion": 1},
+        url: url_pv + 'Deliberacion/cargar_propuesta/' + propuesta
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+            } else
+            {
+                if (data == 'error_propuesta')
+                {
+                    notify("danger", "ok", "Convocatorias:", "El código de la propuesta es incorrecto.");
+                } else
+                {
+                    var json = JSON.parse(data);
+
+                    $('#info_propuesta_verificacion_1').loadJSON(json.propuesta);
+
+                    var html_table = '';
+                    $.each(json.administrativos, function (key2, documento) {
+                        if (documento.verificacion_1_id === null)
+                        {
+                            documento.verificacion_1_id = "";
+                        }
+                        if (documento.verificacion_1_estado === null)
+                        {
+                            documento.verificacion_1_estado = "";
+                        }
+                        if (documento.verificacion_1_observacion === null)
+                        {
+                            documento.verificacion_1_observacion = "";
+                        }
+
+                        html_table = html_table + '<tr>';
+                        html_table = html_table + '<td>' + documento.orden + ' ' + documento.requisito + '</td>';
+                        html_table = html_table + '<td><b>Archivos<b/><br/><br/>';
+
+                        $.each(documento.archivos, function (key, archivo) {
+                            html_table = html_table + '<p><a style="color:#5cb85c" href="javascript:void(0)" onclick="download_file(\'' + archivo.id_alfresco + '\')">(Descargar) ' + archivo.nombre + '</a><br/>';
+                            html_table = html_table + '<a style="color:#f0ad4e" target="_blank" href="' + archivo.url_alfresco + '" >(Ver Documento) ' + archivo.nombre + '</a></p>';
+                        });
+                        html_table = html_table + '<b>Links<b/><br/><br/>';
+                        var numero_link = 1;
+                        $.each(documento.links, function (key, link) {
+                            html_table = html_table + '<p><a href="' + link.link + '" target="_blank">link ' + numero_link + '</a></p>';
+                            numero_link++;
+                        });
+                        html_table = html_table + '</td>';
+                        html_table = html_table + '<td>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label> Resultado de la verificación</label>';
+                        html_table = html_table + '                     <select id="estado_' + documento.id + '" class="form-control estados_administrativos" >';
+                        $.each(json.estados_verificacion_1, function (key, estado) {
+                            var selected = '';
+                            if (documento.verificacion_1_estado == estado.id)
+                            {
+                                selected = 'selected="selected"';
+                            }
+                            if (estado.id != 26)
+                            {
+                                html_table = html_table + '<option value="' + estado.id + '" ' + selected + '>' + estado.nombre + '</option>';
+                            }
+                        });
+
+                        var color_boton_guardado = "btn-success";
+                        if (documento.verificacion_1_id == "")
+                        {
+                            color_boton_guardado = "btn-danger";
+                        }
+
+                        html_table = html_table + '                     </select>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label>Observaciones</label>';
+                        html_table = html_table + '                     <textarea id="observaciones_' + documento.id + '" class="form-control" rows="3">' + documento.verificacion_1_observacion + '</textarea>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group" style="text-align: right">';
+                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'Verificación documentos administrativos\',1)">Guardar</button>';
+                        html_table = html_table + '                     <input type="hidden" class="validar_administrativos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '</td>';
+                        html_table = html_table + '</tr>';
+                    });
+
+                    $('#doc_administrativos_verificacion_1 tr').remove();
+                    $("#doc_administrativos_verificacion_1").append(html_table);
+
+                    html_table = "";
+
+                    $.each(json.tecnicos, function (key2, documento) {
+
+                        if (documento.verificacion_1_id === null)
+                        {
+                            documento.verificacion_1_id = "";
+                        }
+                        if (documento.verificacion_1_estado === null)
+                        {
+                            documento.verificacion_1_estado = "";
+                        }
+                        if (documento.verificacion_1_observacion === null)
+                        {
+                            documento.verificacion_1_observacion = "";
+                        }
+
+                        html_table = html_table + '<tr>';
+                        html_table = html_table + '<td>' + documento.orden + ' ' + documento.requisito + '</td>';
+                        html_table = html_table + '<td><b>Archivos<b/><br/><br/>';
+
+                        $.each(documento.archivos, function (key, archivo) {
+                            html_table = html_table + '<p><a style="color:#5cb85c" href="javascript:void(0)" onclick="download_file(\'' + archivo.id_alfresco + '\')">(Descargar) ' + archivo.nombre + '</a><br/>';
+                            html_table = html_table + '<a style="color:#f0ad4e" target="_blank" href="' + archivo.url_alfresco + '" >(Ver Documento) ' + archivo.nombre + '</a></p>';
+                        });
+                        html_table = html_table + '<b>Links<b/><br/><br/>';
+                        var numero_link = 1;
+                        $.each(documento.links, function (key, link) {
+                            html_table = html_table + '<p><a href="' + link.link + '" target="_blank">link ' + numero_link + '</a></p>';
+                        });
+                        html_table = html_table + '</td>';
+                        html_table = html_table + '<td>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label> Resultado de la verificación</label>';
+                        html_table = html_table + '                     <select id="estado_' + documento.id + '" class="form-control estados_tecnicos" >';
+                        $.each(json.estados_verificacion_1, function (key, estado) {
+                            var selected = '';
+                            if (documento.verificacion_1_estado == estado.id)
+                            {
+                                selected = 'selected="selected"';
+                            }
+
+                            //Se debe habilitar el estado subsanar en los documentos tecnicos
+                            //de modalidad LEP
+                            //if(json.modalidad==6)
+                            //{
+                            //    html_table = html_table + '<option value="' + estado.id + '" ' + selected + '>' + estado.nombre + '</option>';
+                            //}
+                            //else
+                            //{
+                            if (estado.id != 27)
+                            {
+                                html_table = html_table + '<option value="' + estado.id + '" ' + selected + '>' + estado.nombre + '</option>';
+                            }
+                            //}                                                                                    
+                        });
+
+                        var color_boton_guardado = "btn-success";
+                        if (documento.verificacion_1_id == "")
+                        {
+                            var color_boton_guardado = "btn-danger";
+                        }
+
+                        html_table = html_table + '                     </select>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label>Observaciones</label>';
+                        html_table = html_table + '                     <textarea id="observaciones_' + documento.id + '" class="form-control" rows="3">' + documento.verificacion_1_observacion + '</textarea>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '         <div class="row">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group" style="text-align: right">';
+                        html_table = html_table + '                     <button type="button" id="btn_documento_' + documento.id + '" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'Verificación documentos técnicos\',1)">Guardar</button>';
+                        html_table = html_table + '                     <input type="hidden" class="validar_tecnicos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        html_table = html_table + '</td>';
+                        html_table = html_table + '</tr>';
+                    });
+
+                    $('#doc_tecnicos_verificacion_1 tr').remove();
+                    $("#doc_tecnicos_verificacion_1").append(html_table);
+
+
+                    //Por defecto los documentos tecnicos esta desactivados
+                    $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                    $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
+
+                    //Valido si ya realizaron la verificación administrativa con el fin de habilitar
+                    //la documentación tecnica
+                    if (json.propuesta.verificacion_administrativos)
+                    {
+
+                        $("#doc_administrativos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        $("#boton_confirma_administrativa_1").attr("disabled", "disabled");
+
+                        $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').removeAttr("disabled");
+                        $("#boton_confirma_tecnica_1").removeAttr("disabled");
+
+                    }
+
+                    if (json.propuesta.verificacion_tecnicos)
+                    {
+
+                        $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
+
+                    }
+
+                    //Si la propuesta esta estado por
+                    //Registrada
+                    //Anulada
+                    //Por Subsanar -> id -> se elimina debido a que se puede verificar
+                    //                      la documentacion tecnica asi este por subsanar
+                    //                      ya que al momento se rechaza
+                    //Subsanación Recibida
+                    //Rechazada
+                    //Habilitada
+                    //subsanada
+                    //Se inactiva en la 1 verificación los documetos tecnicos                    
+                    if (json.propuesta.estado == 7 || json.propuesta.estado == 20 || json.propuesta.estado == 22 || json.propuesta.estado == 23 || json.propuesta.estado == 24 || json.propuesta.estado == 31)
+                    {
+
+                        $("#doc_administrativos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        $("#boton_confirma_administrativa_1").attr("disabled", "disabled");
+
+                        $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
+
+                    }
+
+                    if (Object.keys(json.contratistas).length > 0)
+                    {
+                        $("#contratistas").css("display", "block");
+
+                        var html_table = "";
+                        $(".tr_contratistas").remove();
+                        $.each(json.contratistas, function (key, contratista) {
+                            var nombre_contratista = String(contratista);
+                            html_table = html_table + '<tr class="tr_contratistas"><td>' + key + '</td><td>' + nombre_contratista.replace(",", "<br/>") + '</td></tr>';
+                        });
+                        $("#body_contratistas").append(html_table);
+
+                    } else
+                    {
+                        $("#contratistas").css("display", "none");
+                    }
+
+                    if (json.html_propuestas != "")
+                    {
+                        $("#propuestas_pn").css("display", "block");
+                        $(".tr_propuestas").remove();
+                        $("#body_propuestas_pn").append(json.html_propuestas);
+
+                    } else
+                    {
+                        $("#propuestas_pn").css("display", "none");
+                    }
+
+                    if (json.html_propuestas_ganadoras != "")
+                    {
+                        $("#propuestas_ganadoras_pn").css("display", "block");
+                        $(".tr_propuestas_ganadoras").remove();
+                        $("#body_propuestas_ganadoras_pn").append(json.html_propuestas_ganadoras);
+
+                    } else
+                    {
+                        $("#propuestas_ganadoras_pn").css("display", "none");
+                    }
+
+                    if (json.html_ganadoras_anios_anteriores != "")
+                    {
+                        $("#ganadoras_anios_anteriores").css("display", "block");
+                        $(".tr_ganador_anio_anterior").remove();
+                        $("#body_ganadoras_anios_anteriores").append(json.html_ganadoras_anios_anteriores);
+
+                    } else
+                    {
+                        $("#ganadoras_anios_anteriores").css("display", "none");
+                    }
+
+                    if (json.html_propuestas_jurados_seleccionados != "")
+                    {
+                        $("#jurados_seleccionados").css("display", "block");
+                        $(".tr_jurados_seleccionados").remove();
+                        $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+
+                    } else
+                    {
+                        $("#jurados_seleccionados").css("display", "none");
+                    }
+
+                }
+            }
+        }
+    });
 }
 
 function validator_form(token_actual) {

@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
 
+
+
+
 //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
     if ($.isEmptyObject(token_actual)) {
@@ -842,6 +845,7 @@ function editar_grupo(token_actual, grupo) {
                 + "&modulo=Jurados&token=" + token_actual.token
                 + "&convocatoria=" + $('#convocatorias').val()
                 + "&categoria=" + $('#categorias').val()
+                + "&ronda=" + $('.rondas_editar').val()
     }).done(function (data) {
 
 
