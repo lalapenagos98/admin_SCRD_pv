@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/admin_SCRD_pv/pages/administracionpropuestas/evaluacion_propuestas.html</file>
-            <file>file:/var/www/html/admin_SCRD_pv/pages/jurados/gruposevaluacion.js</file>
-            <file>file:/var/www/html/admin_SCRD_pv/pages/jurados/gruposevaluacion.html</file>
-            <file>file:/var/www/html/admin_SCRD_pv/pages/administracionpropuestas/evaluacion_propuestas.js</file>
+            <file>file:/var/www/html/admin_SCRD_pv/pages/propuestas/cambio_integrante.html</file>
+            <file>file:/var/www/html/admin_SCRD_pv/pages/propuestas/cambio_integrante.js</file>
         </group>
     </open-files>
 </project-private>
