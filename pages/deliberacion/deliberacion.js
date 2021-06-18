@@ -109,7 +109,6 @@ $(document).ready(function () {
          */
         //carga el select grupos evaluación
         $('#rondas').change(function () {
-            $("#categorias").attr('disabled', '');
             $('#grupos_evaluacion').val(null);
             cargar_select_grupos(token_actual, $('#rondas').val());
             // cargar_tabla(token_actual);
