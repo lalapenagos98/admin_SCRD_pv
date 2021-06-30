@@ -114,7 +114,7 @@ $(document).ready(function () {
                                             $(".es_premio").removeAttr("disabled");
                                         }
                                     }
-
+                                    
                                     //Cargo los parametros dinamicos
                                     var parametros = "";
                                     var columna = 1;
@@ -135,6 +135,10 @@ $(document).ready(function () {
                                     }
                                     $("#dinamico").html(parametros);
 
+
+                                    //crear tooltip 
+                                    $('[data-toggle="tooltip"]').tooltip();
+                                    $('.btn_tooltip').tooltip();
                                     //Cargo los parametros obligatorios
                                     $("#validator").attr("value", JSON.stringify(json.validator));
 
