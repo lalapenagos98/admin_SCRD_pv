@@ -397,6 +397,9 @@ function cargar_tabla(token_actual) {
             case 'acceso_denegado':
                 notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
                 break;
+            case 'error_suplente':
+                notify("danger", "remove", "Usuario:", "Su rol es de jurado suplente, por lo tanto no puede evaluar propuestas");
+                break;
             default:
 
                 var json = JSON.parse(data);
