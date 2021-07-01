@@ -319,7 +319,9 @@ function cargar_tabla(token_actual) {
                             '<button id="' + row.id + '" title="Confirmar grupo de evaluación" type="button" class="btn btn-warning btn_confirmar" >'
                             + '<span class="glyphicon glyphicon-ok"></span></button>' : "") +
                             '<button id="' + row.id + '" title="Editar grupo de evaluación" type="button" class="btn btn-primary btn_editar" data-toggle="modal" data-target="#editar_grupoModal" >'
-                            + '<span class="glyphicon glyphicon-edit"></span></button>';
+                            + '<span class="glyphicon glyphicon-edit"></span></button>'+
+                            '<button id="' + row.id + '" title="Desactivar grupo de evaluación" type="button" class="btn btn-danger btn_desactivar"  >'
+                            + '<span class="glyphicon glyphicon-thumbs-down"></span></button>';
                 },
             }
 
@@ -341,12 +343,16 @@ function acciones_registro(token_actual) {
     $(".btn_confirmar").click(function () {
         confirmar_grupo(token_actual, $(this).attr("id"));
     });
-
     /*
-     * 06-04-2021
+     * 28-06-2021
      * Wilmer Gustavo Mogollón Duque
-     * Se agrega mensaje de alerta al momento de confirmar un grupo de evaluación
+     * Se función desactivar_grupo
      */
+    $(".btn_desactivar").click(function () {
+        desactivar_grupo(token_actual, $(this).attr("id"));
+    });
+
+    
 
 
 
@@ -904,6 +910,49 @@ function confirmar_grupo(token_actual, grupo) {
                 break;
             default:
                 notify("success", "ok", "Convocatorias:", "Se editó el grupo con éxito.");
+                //  $(".guardar_aplica_perfil").addClass( "disabled" );
+                cargar_tabla(token_actual);
+                break;
+        }
+
+    });
+}
+
+
+/*
+ * 28-06-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función para desactivar_grupo un grupo de evaluación
+ */
+
+function desactivar_grupo(token_actual, grupo) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'Gruposevaluacion/desactivar/' + grupo,
+        data: "modulo=Jurados&token=" + token_actual.token
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "El grupo de evaluación ya fue confirmado.");
+                //cargar_datos_formulario(token_actual);
+                break;
+            default:
+                notify("success", "ok", "Convocatorias:", "Se desactivó el grupo con éxito.");
                 //  $(".guardar_aplica_perfil").addClass( "disabled" );
                 cargar_tabla(token_actual);
                 break;
