@@ -151,6 +151,10 @@ $(document).ready(function () {
                         $(".pasos_pdac").css("display", "none");                        
                     }
                     
+                    if($("#programa").val()=="4"){
+                        $(".programa_alianza").css("display", "none");                                                
+                    }
+                    
                     if ($("#tipo_participante option:selected").attr("dir") == "true")
                     {
                         $("#terminos_condiciones option[value='" + $("#tipo_participante option:selected").attr("dir") + "']").prop('selected', true);

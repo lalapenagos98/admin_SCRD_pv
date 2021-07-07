@@ -68,6 +68,11 @@ $(document).ready(function () {
             $("#boton_confirma_administrativa_1").removeAttr("disabled"); 
         });
         
+        $('#modal_verificacion_1').on('hidden.bs.modal', function () {
+            $("#contratistas").css("display","none");                    
+            $("#boton_confirma_administrativa_1").removeAttr("disabled");             
+        });
+        
         $('#buscar').click(function () {
 
             if ($("#codigo").val() != "")

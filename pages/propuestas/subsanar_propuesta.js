@@ -158,8 +158,14 @@ $(document).ready(function () {
                                                     notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                                 } else
                                                 {
-                                                    notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
-                                                    cargar_tabla_archivos(token_actual, documento,$("#estado_documento").val());
+                                                    if (data == 'error_periodo_subsanado')
+                                                    {
+                                                        notify("danger", "ok", "Convocatorias:", "No puede crear el archivo debido a que excedió el periodo de subsanación para esta propuesta.");
+                                                    } else
+                                                    {
+                                                        notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                                        cargar_tabla_archivos(token_actual, documento,$("#estado_documento").val());
+                                                    }
                                                 }
                                             }
                                         }
@@ -614,9 +620,14 @@ function validator_form(token_actual) {
                             notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo en la carpeta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         } else
                         {
-                            notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");                            
-                            cargar_tabla_link(token_actual, documento,$("#estado_documento").val());
-
+                            if (data == 'error_periodo_subsanado')
+                            {
+                                notify("danger", "ok", "Convocatorias:", "No puede crear el link debido a que excedió el periodo de subsanación para esta propuesta.");
+                            } else
+                            {                                                        
+                                notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");                            
+                                cargar_tabla_link(token_actual, documento,$("#estado_documento").val());
+                            }
                         }
                     }
                 }
