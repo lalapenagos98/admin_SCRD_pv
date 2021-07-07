@@ -71,114 +71,114 @@
             </nav>
 
             <div id="page-wrapper">
-              <div class="loading centrado-porcentual"></div>
-              <div class="row">
-                  <div class="col-lg-12">
-                      <h1 class="page-header">Selección de jurados</h1>
-                  </div>
-                  <!-- /.col-lg-12 -->
-              </div>
-              <!-- /.row -->
-              <div class="row">
-                  <div class="col-lg-12">
-                      <div class="panel panel-default">
-                          <div class="panel-heading">
-                            Búsqueda de jurados
-                          </div>
-                          <div class="panel-body">
-                              <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
-
-                                  <div class="row">
-                                      <div class="col-lg-6">
-                                          <div class="form-group">
-                                              <label>Entidad</label>
-                                              <select id='entidad' name="entidad" class="form-control" >
-                                                  <option value="">:: Seleccionar ::</option>
-                                              </select>
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-6">
-                                          <div class="form-group">
-                                              <label>Año</label>
-                                              <select id='anio' name="anio" class="form-control" >
-                                                  <option value="">:: Seleccionar ::</option>
-                                              </select>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Convocatorias</label>
-                                            <select id='convocatorias' name="convocatorias" class="form-control  convocatorias-search">
-                                                <option value="">:: Seleccionar ::</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6" style="display: none;" id="select_categorias">
-                                        <div class="form-group">
-                                            <label>Categorias</label>
-                                            <select id='categorias' name="categorias" class="form-control" >
-                                                <option value="">:: Seleccionar ::</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="row">
-                                      <div class="col-lg-12" style="text-align: right">
-                                          <input type="hidden" id="idd" name="idd" />
-                                          <button type="button" class="btn btn-default" id="buscar" title="Buscar">Buscar</button>
-
-                                      </div>
-                                  </div>
-                              </form>
-                          </div>
-                          <!-- /.panel-body -->
-                      </div>
-                      <!-- /.panel -->
-                  </div>
-                  <!-- /.col-lg-12 -->
-              </div>
-
-
-
-              <div class="row">
-                  <div class="col-lg-12">
-                      <div class="panel panel-default"  id="resultado" tabindex="0">
-                          <div class="panel-heading">
-                              Resultado de la búsqueda
-                          </div>
-                          <div class="panel-body">
-                            <!-- tabla experiencia laboral-->
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <table id="table_list" class="table" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Código de la propuesta</th>
-                                                <th>Tipo documento</th>
-                                                <th>Número documento</th>
-                                                <th>Nombres</th>
-                                                <th>Apellidos</th>
-                                                <th>Puntaje</th>
-                                                <th>Estado notificación</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
+                <div class="loading centrado-porcentual"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Selección de jurados</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Búsqueda de jurados
                             </div>
+                            <div class="panel-body">
+                                <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Entidad</label>
+                                                <select id='entidad' name="entidad" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Año</label>
+                                                <select id='anio' name="anio" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Convocatorias</label>
+                                                <select id='convocatorias' name="convocatorias" class="form-control  convocatorias-search">
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6" style="display: none;" id="select_categorias">
+                                            <div class="form-group">
+                                                <label>Categorias</label>
+                                                <select id='categorias' name="categorias" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="idd" name="idd" />
+                                            <button type="button" class="btn btn-default" id="buscar" title="Buscar">Buscar</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default"  id="resultado" tabindex="0">
+                            <div class="panel-heading">
+                                Resultado de la búsqueda
+                            </div>
+                            <div class="panel-body">
+                                <!-- tabla experiencia laboral-->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table id="table_list" class="table" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código de la propuesta</th>
+                                                    <th>Tipo documento</th>
+                                                    <th>Número documento</th>
+                                                    <th>Nombres</th>
+                                                    <th>Apellidos</th>
+                                                    <th>Puntaje</th>
+                                                    <th>Estado notificación</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
                                 <!-- /.row -->
-                          </div>
-                          <!-- /.panel-body -->
-                      </div>
-                      <!-- /.panel -->
-                  </div>
-                  <input type="hidden" id="id_jurado_postulado">
-                  <!-- /.col-lg-12 -->
-              </div>
-              <!-- /.row -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <input type="hidden" id="id_jurado_postulado">
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
 
             </div>
             <!-- /#page-wrapper -->
@@ -189,153 +189,197 @@
         <!-- Modal notificar-->
         <div class="modal fade" id="notificarModal" tabindex="-1" role="dialog" aria-labelledby="notificarModalLabel" >
             <div class="modal-dialog " role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="notificarModalLabel">Notificar</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificarModalLabel">Notificar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
 
-                <form id="form_notificar" action="" class="form_notificar" role="form" method="post">
-                  <div class="row">
-                    <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>Fecha inicio de la evaluación:<span class="icono_requerido">*</span></label>
-                                <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                    <input class="form-control" id="fecha_inicio_evaluacion" name="fecha_inicio_evaluacion" size="16" type="text" value="" readonly>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        <form id="form_notificar" action="" class="form_notificar" role="form" method="post">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Fecha inicio de la evaluación:<span class="icono_requerido">*</span></label>
+                                        <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                            <input class="form-control" id="fecha_inicio_evaluacion" name="fecha_inicio_evaluacion" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Fecha fin de la evaluación:<span class="icono_requerido">*</span></label>
+                                        <div class="input-group date calendario c2" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                            <input class="form-control" id="fecha_fin_evaluacion" name="fecha_fin_evaluacion" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Fecha fin de la evaluación:<span class="icono_requerido">*</span></label>
-                            <div class="input-group date calendario c2" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                <input class="form-control" id="fecha_fin_evaluacion" name="fecha_fin_evaluacion" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Fecha de deliberación:<span class="icono_requerido">*</span></label>
+                                        <div class="input-group date calendario c3" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                            <input class="form-control" id="fecha_deliberacion" name="fecha_deliberacion" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tipo de jurado</label>
+                                        <select id="select_tipo_jurado" name="select_tipo_jurado" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Fecha de deliberación:<span class="icono_requerido">*</span></label>
-                            <div class="input-group date calendario c3" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                <input class="form-control" id="fecha_deliberacion" name="fecha_deliberacion" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Jurado suplente?</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="option_suplente" id="optionsRadiosInline1" value="true">Si
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="option_suplente" id="optionsRadiosInline2" value="false">No
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Valor estímulo</label>
+                                        <input type="text" id="valor_estimulo" name="valor_estimulo"  class="form-control" >
+                                    </div>
+
+                                </div>
+
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label>Tipo de jurado</label>
-                        <select id="select_tipo_jurado" name="select_tipo_jurado" class="form-control">
-                        </select>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label>Jurado suplente?</label>
-                      </div>
-                      <div class="form-group">
-                        <label class="radio-inline">
-                            <input type="radio" name="option_suplente" id="optionsRadiosInline1" value="true">Si
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="option_suplente" id="optionsRadiosInline2" value="false">No
-                        </label>
-                      </div>
                     </div>
 
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label>Valor estímulo</label>
-                          <input type="text" id="valor_estimulo" name="valor_estimulo"  class="form-control" >
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Enviar notificación</button>
 
-                      </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="notificar_cancelar" >Cancelar</button>
+                        <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
+                    </div>
 
-                  </div>
-
+                    </form>
                 </div>
-
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Enviar notificación</button>
-
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="notificar_cancelar" >Cancelar</button>
-                  <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
-                </div>
-
-              </form>
-              </div>
             </div>
-          </div>
+        </div>
         <!-- Modal -->
 
         <!-- Modal -->
-          <div class="modal fade" id="notificacionModal" tabindex="-1" role="dialog" aria-labelledby="notificacionModalLabel" aria-hidden="true">
+        <div class="modal fade" id="notificacionModal" tabindex="-1" role="dialog" aria-labelledby="notificacionModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="notificacionModal">Notificación</h5-->
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label>Usuario que notificó</label>
-                            <p><span id="notificacionModal_usuario"></span></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Fecha notificación</label>
-                            <p><span id="notificacionModal_fecha_creacion"></span></p>
-                        </div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificacionModal">Notificación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+<!--                            <div class="col-lg-6">
+                                <label>ID notificación</label>
+                                <p><span id="id_notificacion_cambio"></span></p>
+                            </div>-->
+                            <div class="col-lg-6">
+                                <label>Usuario que notificó</label>
+                                <p><span id="notificacionModal_usuario"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Fecha notificación</label>
+                                <p><span id="notificacionModal_fecha_creacion"></span></p>
+                            </div>
 
-                        <div class="col-lg-6">
-                            <label>Tipo </label>
-                            <p><span id="notificacionModal_tipo_jurado"></span></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Rol</label>
-                            <p><span id="notificacionModal_rol_jurado"></span></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Fecha aceptacion</label>
-                            <p><span id="notificacionModal_fecha_aceptacion"></span></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Fecha rechazo</label>
-                            <p><span id="notificacionModal_fecha_rechazo"></span></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Estímulo</label>
-                            <p><span id="notificacionModal_estimulo"></span></p>
-                        </div>
+                            <div class="col-lg-6">
+                                <label>Tipo </label>
+                                <p><span id="notificacionModal_tipo_jurado"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Rol</label>
+                                <p><span id="notificacionModal_rol_jurado"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Fecha aceptacion</label>
+                                <p><span id="notificacionModal_fecha_aceptacion"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Fecha rechazo</label>
+                                <p><span id="notificacionModal_fecha_rechazo"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Estímulo</label>
+                                <p><span id="notificacionModal_estimulo"></span></p>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>¿Desea cambiar el rol del jurado?</label>
+                                <label class="radio-inline">
+                                    <input type="checkbox" name="cambio_rol" id="cambio_rol" value="1" onchange="javascript:showContent()">
+                                </label>
+                            </div>
 
+
+                            <div class="col-lg-12" id="div_cambiar_rol" style="padding-top: 2em;">
+                                <form role="form" id="form_aplica_perfil">
+                                    <fieldset id="fieldset_aplica_perfil">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+
+<!--                                                <div class="col-lg-6">
+                                                    <label>ID notificación</label>
+                                                    <p><span id="id_notificacion_cambio"></span></p>
+                                                </div>-->
+                                                <input type="hidden" id="id_notificacion_cambio">
+
+                                                <div class="form-group">
+                                                    <label>Seleccione el rol del jurado</label>
+                                                    <select id="cambio_rol_jurado_sel">
+                                                        <option value="Suplente">Suplente</option>
+                                                        <option value="Principal">Principal</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <button type="button" class="btn btn-success cambiar_rol">Guardar</button>
+                                            <!--<input type="hidden" id="cambio_rol_jurado_sel">-->
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="notificacionModal_baceptar"  data-dismiss="modal" >Aceptar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="notificacionModal_baceptar"  data-dismiss="modal" >Aceptar</button>
-                </div>
-              </div>
             </div>
-          </div>
-          <!-- Modal -->
-          
-          
-          <!--
-            20-07-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al generar el documento de aceptación.
+        </div>
+        <!-- Modal -->
+
+
+        <!--
+          20-07-2020
+          Wilmer Gustavo Mogollón Duque
+          Se agrega modal para notificación al generar el documento de aceptación.
         -->
 
         <!-- Modal generar acta -->
