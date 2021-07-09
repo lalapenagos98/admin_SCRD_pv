@@ -92,9 +92,14 @@ $(document).ready(function () {
                                                             $("#pais").append('<option value="">:: Seleccionar ::</option>');
                                                             $("#pais_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                                                             if (json.length > 0) {
+                                                                $("#pais").append('<option value="46">Colombia</option>');
+                                                                $("#pais_nacimiento").append('<option value="46">Colombia</option>');                        
+                        
                                                                 $.each(json, function (key, pais) {
-                                                                    $("#pais").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
-                                                                    $("#pais_nacimiento").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                                    if( pais.id !== 46){
+                                                                        $("#pais").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                                        $("#pais_nacimiento").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                                    }
                                                                 });
                                                             }
                                                         }
@@ -121,8 +126,11 @@ $(document).ready(function () {
                                                             $("#localidad_residencia").append('<option value="">:: Seleccionar ::</option>');
                                                             if (json.length > 0) {
                                                                 $.each(json, function (key, pais) {
-                                                                    $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                                    if( pais.id !== 21){
+                                                                        $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                                                    }
                                                                 });
+                                                                $("#localidad_residencia").append('<option value="21">No aplica</option>'); 
                                                             }
                                                         }
                                                     }

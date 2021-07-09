@@ -218,6 +218,10 @@ $(document).ready(function () {
                                                                         }
                                                                         $("#dinamico").html(parametros);
 
+                                                                        //crear tooltip 
+                                                                        $('[data-toggle="tooltip"]').tooltip();
+                                                                        $('.btn_tooltip').tooltip();
+
                                                                         //Cargo los parametros obligatorios
                                                                         $("#validator").attr("value", JSON.stringify(json.validator));
 

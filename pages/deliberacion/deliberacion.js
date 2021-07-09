@@ -109,6 +109,7 @@ $(document).ready(function () {
          */
         //carga el select grupos evaluación
         $('#rondas').change(function () {
+//            $("#categorias").attr('disabled', '');
             $('#grupos_evaluacion').val(null);
             cargar_select_grupos(token_actual, $('#rondas').val());
             // cargar_tabla(token_actual);
@@ -836,6 +837,9 @@ function deliberar(token_actual, id_ronda, id_grupo) {
                 break;
             case 'error_validacion':
                 notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_confirmacion':
+                notify("danger", "remove", "Usuario:", "No puede enviar a deliberar, aún existen evaluaciones sin confirmar");
                 break;
             case 'error_ronda':
                 notify("danger", "remove", "Usuario:", "Error al actualizar la ronda");

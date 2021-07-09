@@ -1,8 +1,8 @@
 //Definimos las variables del sitio
-var url_pv = "https://sicon.scrd.gov.co/crud_SCRD_pv/api/";
-var url_pv_admin = "https://sicon.scrd.gov.co/admin_SCRD_pv/";
-var url_pv_site = "https://sicon.scrd.gov.co/site_SCRD_pv/";
-var url_pv_report = "https://sicon.scrd.gov.co/report_SCRD_pv/";
+var url_pv = "http://localhost/crud_SCRD_pv/api/";
+var url_pv_admin = "http://localhost/admin_SCRD_pv/";
+var url_pv_site = "http://localhost/site_SCRD_pv/";
+var url_pv_report = "http://localhost/report_SCRD_pv/";
 var name_local_storage = "token_pv";
 
 //funcion para extaer un parametro de la url
@@ -39,8 +39,15 @@ function crearParametro(id, label, valores, tipo, obligatorio, estado_propuesta)
     switch (tipo) {
         case 'Texto':
             parametro='<div class="col-lg-6">';
-            parametro+='<div class="form-group">';
-            parametro+='<label>'+label+' '+span_obligatorio+'</label>';
+            parametro+='<div class="form-group">';            
+            if(valores!=='')
+            {                
+                parametro+='<label>'+label+' '+span_obligatorio+'</label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="'+valores+'"><i class="fa fa-question"></i></button>';                
+            }
+            else
+            {
+                parametro+='<label>'+label+' '+span_obligatorio+'</label>';                
+            }            
             parametro+='<input id="parametro_'+id+'" name="parametro['+id+']" type="text" class="form-control" value="" '+disabled+'>';
             parametro+='</div>';
             parametro+='</div>';
@@ -48,9 +55,16 @@ function crearParametro(id, label, valores, tipo, obligatorio, estado_propuesta)
             break;
         case 'Parrafo':
             parametro='<div class="col-lg-6">';
-            parametro+='<div class="form-group">';
-            parametro+='<label>'+label+' '+span_obligatorio+'</label>';
-            parametro+='<textarea id="parametro_'+id+'" name="parametro['+id+']" class="form-control textarea_html" rows="3" '+disabled+'></textarea>';
+            parametro+='<div class="form-group">';            
+            if(valores!=='')
+            {                                
+                parametro+='<label>'+label+' '+span_obligatorio+'</label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="'+valores+'"><i class="fa fa-question"></i></button>';
+            }
+            else
+            {
+                parametro+='<label>'+label+' '+span_obligatorio+'</label>';
+            }
+            parametro+='<textarea id="parametro_'+id+'" name="parametro['+id+']" class="form-control textarea_html" rows="3" '+disabled+'></textarea>';            
             parametro+='</div>';
             parametro+='</div>';
             return(parametro);
