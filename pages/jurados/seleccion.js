@@ -2,6 +2,9 @@ $(document).ready(function () {
 
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
+    
+    
+    $("#div_cambiar_rol").hide();
 
 
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
@@ -101,11 +104,27 @@ $(document).ready(function () {
             //$('.form_notificar').data('bootstrapValidator').destroy()
             //console.log("estado...ssssll");
         });
+        
+        
+        $(".cambiar_rol").click(function () {
+            cambiar_rol_jurado(token_actual, $('#id_notificacion_cambio').val(), $('#cambio_rol_jurado_sel').val());
+        });
 
 
     }
 
 });
+
+function showContent() {
+        element = document.getElementById("div_cambiar_rol");
+        check = document.getElementById("cambio_rol");
+        if (check.checked) {
+            element.style.display='block';
+        }
+        else {
+            element.style.display='none';
+        }
+    }
 
 
 
@@ -544,6 +563,7 @@ function cargar_notificacion(token_actual, notificacion_key) {
                 var json = JSON.parse(data);
 
                 if (json) {
+                    $('#id_notificacion_cambio').val(json.id_notificacion);
                     $('#notificacionModal_usuario').html(json.usuario);
                     $('#notificacionModal_fecha_creacion').html(json.fecha_creacion);
                     $('#notificacionModal_tipo_jurado').html(json.tipo_jurado);
@@ -647,6 +667,62 @@ function validator_form(token_actual) {
         bv.resetForm();
         $("#notificarModal").modal("toggle");
 
+
+    });
+
+}
+
+
+
+/*
+ * 22-06-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se incorpora función para realizar cambio de rol a jurado
+ */
+
+
+function cambiar_rol_jurado(token_actual, notificacion, rol_nuevo) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'Juradosseleccion/cambiar_rol_jurado',
+        data: "&modulo=Jurados&token=" + token_actual.token
+                + "&idnotificacion=" + notificacion
+                + "&rol_nuevo=" + rol_nuevo
+    }).done(function (data) {
+
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                //cargar_datos_formulario(token_actual);
+                break;
+            case 'error_email':
+                notify("danger", "remove", "Usuario:", "Error al enviar la notificación.");
+                //cargar_datos_formulario(token_actual);
+                break;
+            case 'error_notificacion':
+                notify("danger", "remove", "Usuario:", "Error el jurado no ha sido notificado.");
+                //cargar_datos_formulario(token_actual);
+                break;
+            default:
+                notify("success", "ok", "Convocatorias:", "Se actualizó el rol del jurado con éxito.");
+                //  $(".guardar_aplica_perfil").addClass( "disabled" );
+                cargar_tabla(token_actual);
+                break;
+        }
 
     });
 
