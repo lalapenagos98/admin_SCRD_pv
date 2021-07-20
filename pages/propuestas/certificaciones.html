@@ -136,6 +136,35 @@
             <!-- /#page-wrapper -->            
         </div>
         <!-- /#wrapper -->
+        
+         <div class="modal fade" id="certificaciones_jurados">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                    <div class="loading centrado-porcentual"></div>
+                    <!-- cabecera del diálogo -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                        
+                    </div>
+
+                    <!-- cuerpo del diálogo -->
+                    <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Convocatoria</th>
+                                    <th>Categoría</th>
+                                    <th>Generar Certificado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_certificados_jurados">
+
+                            </tbody>
+                        </table>                                                                                  
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- jQuery -->
         <script src="../../vendor/jquery/jquery.min.js"></script>
