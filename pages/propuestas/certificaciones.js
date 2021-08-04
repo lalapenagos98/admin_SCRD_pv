@@ -67,6 +67,21 @@ $(document).ready(function () {
                             row.ver_certificado = '<a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a>';
                         }
                         
+                        //Valido que sea los edtados en
+                        //21 por subsanar
+                        //23 rechazada
+                        //24 habilitada
+                        //33 Recomendada como Ganadora                              
+                        //44 Recomendada como No Ganadora                              
+                        if( row.estado==='Por Subsanar' || row.estado==='Rechazada' || row.estado==='Habilitada' || row.estado==='Recomendada como Ganadora' || row.estado==='No Ganadora')
+                        {
+                            row.estado="<b>Inscrita</b>";
+                        }
+                        else
+                        {
+                            row.estado="<b>"+row.estado+"</b>";
+                        }
+                        
                         return row.estado;
                     }
                 }
