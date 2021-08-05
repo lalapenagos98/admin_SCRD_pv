@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    
-    
-    
+
+
+
 
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
@@ -406,7 +406,7 @@ function cargar_tabla(token_actual) {
                 console.log(json);
                 if (json.id) {
 
-                    if ((json.active != null) && json.active) {
+                    if ((json.active !== null) && json.active) {
                         //Establecer los valores del perdiodo de la evaluación
                         $.ajax({
                             type: 'GET',
@@ -469,6 +469,7 @@ function cargar_tabla(token_actual) {
                                                     var horas = ((fin.getTime() - inicio.getTime()) % 86400000) / 3600000;
                                                     var minutos = (((fin.getTime() - inicio.getTime()) % 86400000) % 3600000) / 60000;
 
+
                                                     if (dias >= 0) {
 
                                                         $("#notificacion_periodo").html('El periodo de evaluación es de ' + json.fecha_inicio_evaluacion.substr(0, 10)
@@ -487,7 +488,7 @@ function cargar_tabla(token_actual) {
                                                     } else {
                                                         $("#notificacion_periodo").html('El periodo de evaluación ya terminó, por lo tanto no puede evaluar las propuestas.');
                                                     }
-                                                    
+
                                                     break;
                                             }
                                         }
@@ -528,7 +529,7 @@ function cargar_tabla(token_actual) {
                             "processing": true,
                             "destroy": true,
                             "serverSide": true,
-                            "lengthMenu": [10, 15, 20],
+                            "lengthMenu": [200], //Para que se listen todos en una sola vista
                             "responsive": true,
                             "searching": false,
                             "ajax": {
@@ -536,7 +537,8 @@ function cargar_tabla(token_actual) {
                                 data:
                                         {"token": token_actual.token,
                                             "ronda": $('#rondas').val(),
-                                            "estado": $('#estados').val()
+                                            "estado": $('#estados').val(),
+                                            "codigo": $('#codigo').val()
                                         },
                                 //async: false
                             },

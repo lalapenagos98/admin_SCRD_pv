@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    
-    
-    
+
+
+
 
 //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
@@ -171,6 +171,7 @@ $(document).ready(function () {
 
             deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
             $('#exampleModal').modal('toggle');
+            $('#deliberar').prop('disabled', true);
         });
         /*
          * 12-06-2020
@@ -821,34 +822,45 @@ function deliberar(token_actual, id_ronda, id_grupo) {
         switch (data) {
             case 'error':
                 notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'error_metodo':
                 notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'error_token':
                 location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                $('#deliberar').prop('disabled', false);
                 //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
                 break;
             case 'acceso_denegado':
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'deshabilitado':
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'error_validacion':
                 notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'error_confirmacion':
                 notify("danger", "remove", "Usuario:", "No puede enviar a deliberar, aún existen evaluaciones sin confirmar");
+                $('#deliberar').prop('disabled', false);
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'error_ronda':
                 notify("danger", "remove", "Usuario:", "Error al actualizar la ronda");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'exito':
                 notify("success", "remove", "Usuario:", "Se ha enviado esta ronda a deliberar");
+                $('#deliberar').prop('disabled', false);
                 break;
             case 'deliberacion':
                 notify("success", "remove", "Usuario:", "Esta ronda ya se encuentra en deliberación");
+                $('#deliberar').prop('disabled', false);
                 break;
         }
 
@@ -1072,11 +1084,10 @@ function cargar_tabla_ganadores(token_actual) {
                 },
             },
             {"data": "Grupo evaluador",
-             render: function ( data, type, row ) {
-             return row.grupoevaluador;
-             },
-             },
-
+                render: function (data, type, row) {
+                    return row.grupoevaluador;
+                },
+            },
 
             /*{"data": "Seleccionar",
              render: function ( data, type, row ) {

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    
-    
+
+
+
 
     <head>
 
@@ -145,6 +145,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Código de la propuesta</label>
+                                                <input type="text" id="codigo" name="codigo" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
@@ -165,12 +173,17 @@
                     <div class="col-lg-12">
                         <!-- /.col-lg-12 -->
                         <div class="panel-body" style="text-align: right">
-                            <button type="button" class="btn btn-success btn-circle btn-lg" id="confirmar_top" title="Confirmar top individual" style="display: none;"><i class="fa  fa-check-square-o "></i>
+                            <button type="button" 
+                                    class="btn btn-success btn-circle btn-lg" 
+                                    id="confirmar_top" 
+                                    title="Confirmar top individual" 
+                                    style="display: none;">
+                                <i class="fa  fa-check-square-o "></i>
                             </button>
                             <button type="button" 
                                     class="btn btn-info btn-circle btn-lg" 
                                     id="confirmar_top_deliberacion" 
-                                    title="Confirmar top individual" 
+                                    title="Confirmar top individual deliberación" 
                                     style="display: none;" 
                                     data-toggle="modal"
                                     data-target="#confirmar_top_individual_modal">
@@ -437,7 +450,7 @@
             </div>
         </div>
         <!-- Modal -->
-        
+
         <!-- Modal confirmar top individual -->
         <div class="modal fade" id="confirmar_top_individual_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
