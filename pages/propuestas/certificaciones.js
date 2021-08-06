@@ -58,7 +58,29 @@ $(document).ready(function () {
                         
                         href = redirect + "?entidad=" + row.entidad + "&tp=" + m + "&id=" + row.codigo+ "&token=" + row.token;
 
-                        row.ver_certificado = '<a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a>';
+                        if(m=="JUR")
+                        {
+                            row.ver_certificado = '<a><button style="margin: 0 0 5px 0" type="button" class="btn btn-success" data-toggle="modal" data-target="#certificaciones_jurados" title="Ver Postulaciones" onclick="certificaciones_jurados(\''+row.codigo+'\',\''+row.token+'\')"><span class="fa fa-download"></span></button></a>';
+                        }
+                        else
+                        {
+                            row.ver_certificado = '<a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a>';
+                        }
+                        
+                        //Valido que sea los edtados en
+                        //21 por subsanar
+                        //23 rechazada
+                        //24 habilitada
+                        //33 Recomendada como Ganadora                              
+                        //44 Recomendada como No Ganadora                              
+                        if( row.estado==='Por Subsanar' || row.estado==='Rechazada' || row.estado==='Habilitada' || row.estado==='Recomendada como Ganadora' || row.estado==='No Ganadora')
+                        {
+                            row.estado="<b>Inscrita</b>";
+                        }
+                        else
+                        {
+                            row.estado="<b>"+row.estado+"</b>";
+                        }
                         
                         return row.estado;
                     }
@@ -79,3 +101,34 @@ $(document).ready(function () {
         });        
     }
 });
+
+function certificaciones_jurados(codigo,token){
+    //Realizo la peticion para validar acceso a la convocatoria
+    $.ajax({
+        type: 'POST',
+        data: {"codigo": codigo,"token": token},
+        url: url_pv + 'PropuestasParticipantes/cargar_certificaciones_jurados'
+    }).done(function (data) {
+        
+        var redirect = url_pv_report+"reporte_certificacion.php";
+        var m = "JUR";                                
+        
+        var json = JSON.parse(data);                
+        if (json.length > 0) {
+                $("#tbody_certificados_jurados").find("tr").remove();
+                $.each(json, function (key, c) {
+                    
+                    href = redirect + "?entidad=" + c.entidad + "&tp=" + m + "&id=" + c.id+ "&token=" + token;
+                    
+                    if(c.categoria=="")
+                    {
+                        $("#tbody_certificados_jurados").append('<tr><td>' + c.convocatoria + '</td><td>' + c.categoria + '</td><td><a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a></td></tr>');                        
+                    }
+                    else
+                    {
+                        $("#tbody_certificados_jurados").append('<tr><td>' + c.categoria + '</td><td>' + c.convocatoria + '</td><td><a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a></td></tr>');                        
+                    }
+                });
+            }
+    });
+}

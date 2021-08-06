@@ -214,14 +214,20 @@
                                     notify("danger", "ok", "Login:", "La contraseña no es la correcta, si no la recuerda por favor ingresar a ¿Olvidó su contraseña?.");
                                 } else
                                 {
-                                    var json = JSON.parse(data);  
-                                    if (typeof json.usuario !== 'undefined') {
-                                        setLocalStorage(name_local_storage,data);
-                                        location.href='pages/index/index.html?msg=Bienvenido(a) '+json.usuario+' al Sistema de Convocatorias&msg_tipo=success';
-                                    }
-                                    else
+                                    if (data == 'error_activo')
                                     {
-                                        notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        notify("danger", "ok", "Login:", "El usuario no se encuentra activo, por favor activarlo en la bandeja de entrada de su cuenta de correo electrónico "+$("#username").val());
+                                    } else
+                                    {
+                                        var json = JSON.parse(data);  
+                                        if (typeof json.usuario !== 'undefined') {
+                                            setLocalStorage(name_local_storage,data);
+                                            location.href='pages/index/index.html?msg=Bienvenido(a) '+json.usuario+' al Sistema de Convocatorias&msg_tipo=success';
+                                        }
+                                        else
+                                        {
+                                            notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        }
                                     }
                                 }
                             }

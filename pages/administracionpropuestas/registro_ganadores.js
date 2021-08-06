@@ -558,8 +558,12 @@ function cargar_formulario(token_actual)
                 {
                     var json = JSON.parse(data);
                     
+                    var href_cer = url_pv_report+'reporte_certificacion.php?entidad='+json[1].entidad+'&tp='+json[1].tp+'&id='+json[0].codigo+'&token='+token_actual.token;
+                    
+                    $("#generar_certificado").attr('href',href_cer);
+                    
                     //Cargo el formulario con los datos
-                    $('#formulario_principal').loadJSON(json);                                        
+                    $('#formulario_principal').loadJSON(json[0]);                                        
                 }
             }
         });

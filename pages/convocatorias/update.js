@@ -529,7 +529,7 @@ $(document).ready(function () {
                                 $("#localidad").append('<option value="' + localidad.id + '" ' + selected + ' >' + localidad.nombre + '</option>');
                             });
                         }
-
+                        
                         //Cargos el select de upzs
                         $('#upz').find('option').remove();
                         $("#upz").append('<option value="">:: Seleccionar ::</option>');
@@ -558,6 +558,20 @@ $(document).ready(function () {
                             });
                         }
 
+                    }
+
+                    //Cargos el select de localidades
+                    $('#certifica').find('option').remove();
+                    $("#certifica").append('<option value="">:: Seleccionar ::</option>');
+                    if (json.certifica.length > 0) {
+                        $.each(json.certifica, function (key, usuario) {
+                            var selected = '';
+                            if (usuario.id == json.convocatoria.certifica)
+                            {
+                                selected = 'selected="selected"';
+                            }
+                            $("#certifica").append('<option value="' + usuario.id + '" ' + selected + ' >' + usuario.username + ' - ' + usuario.primer_nombre + ' ' + usuario.segundo_nombre + ' ' + usuario.primer_apellido + ' ' + usuario.segundo_apellido + '</option>');
+                        });
                     }
 
                     //Cargo el select de programas
