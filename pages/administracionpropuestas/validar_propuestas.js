@@ -55,7 +55,16 @@ $(document).ready(function () {
                                 //21	Por Subsanar
                                 //23	Rechazada
                                 //24	Habilitada
-                                if (estado_propuesta.id == 21 || estado_propuesta.id == 23 || estado_propuesta.id == 24)
+                                //33	Recomendada como Ganadora
+                                //34	Ganadora
+                                //44	No Ganadora
+                                if (
+                                        estado_propuesta.id == 21 || 
+                                        estado_propuesta.id == 23 || 
+                                        estado_propuesta.id == 24 || 
+                                        estado_propuesta.id == 33 || 
+                                        estado_propuesta.id == 34 || 
+                                        estado_propuesta.id == 44 )
                                 {
                                     $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
                                 }
