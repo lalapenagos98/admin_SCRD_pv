@@ -547,6 +547,11 @@ function cargar_formulario(token_actual, id_postulacion)
                 default:
 
                     var json = JSON.parse(data);
+                    
+                    var href_cer = url_pv_report+'reporte_certificacion.php?entidad='+json.entidad.nombre+'&tp='+json.tp+'&id='+json.notificacion.id+'&token='+token_actual.token;
+                    
+                    
+                    $("#generar_certificado").attr('href',href_cer);
 
 
                     if (json.notificacion) {

@@ -226,27 +226,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Fecha inicio de ejecución <span class="icono_requerido">*</span></label>
-                                        <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                            <input class="form-control" name="fecha_inicio_ejecucion" id="fecha_inicio_ejecucion" size="16" type="text" value="" readonly>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Fecha fin de ejecución <span class="icono_requerido">*</span></label>
-                                        <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                            <input class="form-control" name="fecha_fin_ejecucion" id="fecha_fin_ejecucion" size="16" type="text" value="" readonly>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Nombre de la resolución <span class="icono_requerido">*</span></label>
+                                        <label>Nombre de la resolución</label>
                                         <input type="text" name="nombre_resolucion" id="nombre_resolucion" class="form-control">
                                     </div>
                                 </div>
@@ -290,6 +270,7 @@
                             <!--<input type="hidden" id="id" name="id"/>-->
 
                             <div class="modal-footer">
+                                <a id="generar_certificado" href="javascript::void(0)" target="_blank">Generar certificado</a>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelarasg">Cancelar</button>
                                 <button type="submit" class="btn btn-primary" id="baceptargan" >Aceptar</button>
                                 <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
