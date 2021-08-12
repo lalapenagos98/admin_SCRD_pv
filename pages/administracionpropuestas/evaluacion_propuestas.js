@@ -400,6 +400,9 @@ function cargar_tabla(token_actual) {
             case 'error_suplente':
                 notify("danger", "remove", "Usuario:", "Su rol es de jurado suplente, por lo tanto no puede evaluar propuestas");
                 break;
+            case 'error_no_hay_grupo'://Para cuando no hay grupo evaluador
+                notify("danger", "remove", "Usuario:", "Aún no se ha creado el grupo evaluador, por lo tanto no puede acceder a las evaluaciones de las propuestas");
+                break;
             default:
 
                 var json = JSON.parse(data);
@@ -448,7 +451,7 @@ function cargar_tabla(token_actual) {
 
                                         $.ajax({
                                             type: 'GET',
-                                            url: url_pv + 'Rondas/search/' + $('#rondas').val(),
+                                            url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
                                             data: {"token": token_actual.token},
                                         }).done(function (data) {
                                             switch (data) {
@@ -456,24 +459,19 @@ function cargar_tabla(token_actual) {
 
                                                     var json = JSON.parse(data);
 
-                                                    $("#fecha_inicio_evaluacion").html(json.fecha_inicio_evaluacion.substr(0, 10));
-                                                    $("#fecha_fin_evaluacion").html(json.fecha_fin_evaluacion.substr(0, 10));
+                                                    var dias = json.dias;
+                                                    var horas = json.horas;
+                                                    var minutos = json.minutos;
 
 
-                                                    //tiempo restante
-                                                    var inicio = new Date();
-                                                    var fin = new Date(json.fecha_fin_evaluacion.substr(0, 10) + " 23:59:59");
-                                                    var x = new Date(fin.getDate() - inicio.getDate());
-
-                                                    var dias = (fin.getTime() - inicio.getTime()) / 86400000;
-                                                    var horas = ((fin.getTime() - inicio.getTime()) % 86400000) / 3600000;
-                                                    var minutos = (((fin.getTime() - inicio.getTime()) % 86400000) % 3600000) / 60000;
+                                                    $("#fecha_inicio_evaluacion").html(json.inicio.substr(0, 10));
+                                                    $("#fecha_fin_evaluacion").html(json.fin.substr(0, 10));
 
 
                                                     if (dias >= 0) {
 
-                                                        $("#notificacion_periodo").html('El periodo de evaluación es de ' + json.fecha_inicio_evaluacion.substr(0, 10)
-                                                                + ' al ' + json.fecha_fin_evaluacion.substr(0, 10) + '.'
+                                                        $("#notificacion_periodo").html('El periodo de evaluación es de ' + json.inicio.substr(0, 10)
+                                                                + ' al ' + json.fin.substr(0, 10) + '.'
                                                                 + ' Le quedan ' + Math.trunc(dias) + ' días, '
                                                                 + Math.trunc(horas) + ' horas y '
                                                                 + Math.trunc(minutos) + ' minutos para evaluar.');
