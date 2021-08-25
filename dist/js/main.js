@@ -4,6 +4,22 @@ var url_pv_admin = "http://localhost/admin_SCRD_pv/";
 var url_pv_site = "http://localhost/site_SCRD_pv/";
 var url_pv_report = "http://localhost/report_SCRD_pv/";
 var name_local_storage = "token_pv";
+var name_local_storage_keycloak = "token_keycloak";
+
+//Conexión al keycloak
+var keycloak = Keycloak({
+    url: 'https://qa-sso.scrd.gov.co/auth',
+    realm: 'SCRD',
+    clientId: 'sicon-ui'
+});
+
+//Configuración de respuesta del keycloak
+var initOptions = {
+    responseMode: 'fragment',
+    flow: 'standard',
+    redirectUri: window.location
+};
+
 
 //funcion para extaer un parametro de la url
 function getURLParameter(sParam)
@@ -232,6 +248,33 @@ function permiso_lectura(token_actual, modulo)
     });
 }
 
+//Funcion para lavidar permiso de lectura
+function permiso_lectura_keycloak(token_actual, modulo)
+{
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual, modulo: modulo},
+        url: url_pv + 'Session/permiso_lectura_keycloak/'
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            location.href = '../index/index.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+        } else
+        {
+            if (data == 'error_token')
+            {
+                location.href = '../index/index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+            } else
+            {
+                if (data == 'acceso_denegado')
+                {
+                    location.href = '../index/index.html?msg=Acceso denegado.&msg_tipo=danger';
+                }
+            }
+        }        
+    });
+}
+
 //Logaut
 function logout()
 {
@@ -281,27 +324,36 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('.btn_tooltip').tooltip();
 
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    //Si el token no esta activo o se presenta un error se elimina la variable del session storage
-    var token_actual = getLocalStorage(name_local_storage);
-    if ((token_actual != null) || (token_actual != "") || (token_actual != "undefined"))
-    {
-        //Cargamos el menu principal
-        $.ajax({
-            type: 'POST',
-            data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-            url: url_pv + 'Administrador/menu'
-        }).done(function (result) {
-            if (result == 'error_token')
-            {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-            } else
-            {
-                $("#menu_principal").html(result);
-            }
-        });
-    }
-
+    //Array del consumo con el back
+    keycloak.init(initOptions).then(function (authenticated) {
+        //Si no esta autenticado lo obliga a ingresar al keycloak
+        if (authenticated === false)
+        {
+            keycloak.login();
+        } else
+        {            
+            //Guardamos el token en el local storage
+            setLocalStorage(name_local_storage_keycloak,keycloak.token);
+            
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": keycloak.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
+            });                    
+        }
+    }).catch(function () {
+        location.href = url_pv_admin + 'error_keycloak.html';
+    });
+    
     $('.calendario').datetimepicker({
         language: 'es',
         weekStart: 1,
