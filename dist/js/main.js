@@ -10,16 +10,15 @@ var name_local_storage_keycloak = "token_keycloak";
 var keycloak = Keycloak({
     url: 'https://qa-sso.scrd.gov.co/auth',
     realm: 'SCRD',
-    clientId: 'sicon-ui'
+    clientId: 'sicon-ui'    
 });
 
 //Configuración de respuesta del keycloak
 var initOptions = {
-    responseMode: 'fragment',
-    flow: 'standard',
+    onLoad: 'check-sso',
+    silentCheckSsoRedirectUri: url_pv_admin + 'silent-check-sso.html',    
     redirectUri: window.location
 };
-
 
 //funcion para extaer un parametro de la url
 function getURLParameter(sParam)
@@ -324,36 +323,6 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $('.btn_tooltip').tooltip();
 
-    //Array del consumo con el back
-    keycloak.init(initOptions).then(function (authenticated) {
-        //Si no esta autenticado lo obliga a ingresar al keycloak
-        if (authenticated === false)
-        {
-            keycloak.login();
-        } else
-        {            
-            //Guardamos el token en el local storage
-            setLocalStorage(name_local_storage_keycloak,keycloak.token);
-            
-            //Cargamos el menu principal
-            $.ajax({
-                type: 'POST',
-                data: {"token": keycloak.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-                url: url_pv + 'Administrador/menu'
-            }).done(function (result) {
-                if (result == 'error_token')
-                {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                } else
-                {
-                    $("#menu_principal").html(result);
-                }
-            });                    
-        }
-    }).catch(function () {
-        location.href = url_pv_admin + 'error_keycloak.html';
-    });
-    
     $('.calendario').datetimepicker({
         language: 'es',
         weekStart: 1,
