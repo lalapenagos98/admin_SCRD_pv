@@ -284,7 +284,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "programa": programa},
-                url: url_pv + 'Enfoques/select'
+                url: url_pv + 'Enfoques/selectconvocatorias'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
