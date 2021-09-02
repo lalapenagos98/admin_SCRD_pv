@@ -160,7 +160,7 @@
                                         var token_actual = JSON.parse(JSON.stringify(keycloak));
                                     
                                         //Verifica si el token actual tiene acceso de lectura
-                                        permiso_lectura_keycloak(token_actual.token, "SICON-USUARIOS");
+                                        permiso_lectura_keycloak(token_actual.token, "SICON-SEGURIDAD-USUARIOS");
 
                                         //Cargamos el menu principal
                                         $.ajax({
