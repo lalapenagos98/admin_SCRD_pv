@@ -218,7 +218,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                             {
                                 if (json.error == 'error_token')
                                 {
-                                    //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                                 } else
                                 {
                                     if (json.error == 'error_fecha_cierre')
