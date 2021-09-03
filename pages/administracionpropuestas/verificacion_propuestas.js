@@ -785,7 +785,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
-                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION\',1)">Guardar</button>';
+                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION-ADM-LE\',1)">Guardar</button>';
                         html_table = html_table + '                     <input type="hidden" class="validar_administrativos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
@@ -877,7 +877,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
-                        html_table = html_table + '                     <button type="button" id="btn_documento_' + documento.id + '" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION\',1)">Guardar</button>';
+                        html_table = html_table + '                     <button type="button" id="btn_documento_' + documento.id + '" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION-TEC-LE\',1)">Guardar</button>';
                         html_table = html_table + '                     <input type="hidden" class="validar_tecnicos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
@@ -1105,7 +1105,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
-                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION\',2)">Guardar</button>';
+                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION-ADM-LE\',2)">Guardar</button>';
                         html_table = html_table + '                     <input type="hidden" class="validar_administrativos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
@@ -1181,7 +1181,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
-                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION\',2)">Guardar</button>';
+                        html_table = html_table + '                     <button id="btn_documento_' + documento.id + '" type="button" class="btn ' + color_boton_guardado + '" onclick="guardar_verificacion_1(\'' + token_actual.token + '\',\'' + documento.id + '\',\'SICON-PROPUESTAS-VERIFICACION-ADM-LE\',2)">Guardar</button>';
                         html_table = html_table + '                     <input type="hidden" class="validar_administrativos" id="id_documento_' + documento.id + '" value="' + documento.verificacion_1_id + '" />';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
