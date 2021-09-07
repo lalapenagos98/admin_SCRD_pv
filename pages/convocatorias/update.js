@@ -238,7 +238,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 previous = this.value;
             }).on('change', function () {
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "estado": $(this).val()},
                     url: url_pv + 'Convocatorias/verificar_estado'
                 }).done(function (data) {
@@ -270,7 +270,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 $('#modalidad').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Modalidades/select'
                 }).done(function (data) {
@@ -297,7 +297,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 $('#enfoque').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Enfoques/select'
                 }).done(function (data) {
@@ -341,7 +341,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $('#upz').find('option').remove();
                 $('#barrio').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "localidad": localidad},
                     url: url_pv + 'Upzs/select'
                 }).done(function (data) {
@@ -366,7 +366,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     }
                 });
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "localidad": localidad},
                     url: url_pv + 'Barrios/select'
                 }).done(function (data) {
@@ -398,7 +398,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 var localidad = $("#localidad").val();
                 $('#barrio').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "localidad": localidad, "upz": upz},
                     url: url_pv + 'Barrios/select'
                 }).done(function (data) {
@@ -1191,7 +1191,7 @@ function cargar_tabla_perfiles_jurado(token_actual) {
 //Carga la tabla de los recursos de la convocatoria
 function cargar_tabla_registros(token_actual, tbody, tipo_recurso) {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "convocatoria": $("#id").val(), "tipo_recurso": tipo_recurso},
         url: url_pv + 'Convocatoriasrecursos/select_convocatoria'
     }).done(function (data) {
@@ -1210,6 +1210,7 @@ function cargar_tabla_registros(token_actual, tbody, tipo_recurso) {
                     $("#" + tbody).find("tr").remove();
                     $.each(json, function (key, distribucion_bolsa) {
                         var checked = '';
+                        
                         if (distribucion_bolsa.active == true)
                         {
                             checked = "checked='checked'";
