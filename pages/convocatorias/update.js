@@ -1072,11 +1072,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
-            //Verifico si selecciono una convocatoria
-            if ($('#id').val().length > 0) {
-                $('.menu_convocatoria').css("display", "block");
-            }
-
             validator_form(token_actual);
         }
     }
