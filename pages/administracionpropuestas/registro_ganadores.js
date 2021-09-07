@@ -1,140 +1,207 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+keycloak.init(initOptions).then(function (authenticated) {
+    //Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Registro de ganadores");
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-        //Realizo la peticion para cargar el formulario
-        $.ajax({
-            type: 'GET',
-            data: {"token": token_actual.token, "modulo": "Registro de ganadores"},
-            url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
-        }).done(function (data) {
-            if (data == 'error_metodo')
-            {
-                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-            } else
-            {
-                if (data == 'error_token')
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-PROPUESTAS-GANADORES");
+
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu'
+            }).done(function (result) {
+                if (result == 'error_token')
                 {
                     location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                 } else
                 {
-                    if (data == 'acceso_denegado')
+                    $("#menu_principal").html(result);
+                }
+            });
+
+            //Realizo la peticion para cargar el formulario
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "modulo": "SICON-PROPUESTAS-GANADORES"},
+                url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
+            }).done(function (data) {
+                if (data == 'error_metodo')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (data == 'error_token')
                     {
-                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                     } else
                     {
-                        var json = JSON.parse(data);
+                        if (data == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                        } else
+                        {
+                            var json = JSON.parse(data);
 
-                        $("#anio").append('<option value="">:: Seleccionar ::</option>');
-                        if (json.anios.length > 0) {
-                            $.each(json.anios, function (key, anio) {
-                                $("#anio").append('<option value="' + anio + '"  >' + anio + '</option>');
-                            });
-                        }
+                            $("#anio").append('<option value="">:: Seleccionar ::</option>');
+                            if (json.anios.length > 0) {
+                                $.each(json.anios, function (key, anio) {
+                                    $("#anio").append('<option value="' + anio + '"  >' + anio + '</option>');
+                                });
+                            }
 
-                        $("#entidad").append('<option value="">:: Seleccionar ::</option>');
-                        if (json.entidades.length > 0) {
-                            $.each(json.entidades, function (key, entidad) {
-                                $("#entidad").append('<option value="' + entidad.id + '"  >' + entidad.nombre + '</option>');
-                            });
-                        }
+                            $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                            if (json.entidades.length > 0) {
+                                $.each(json.entidades, function (key, entidad) {
+                                    $("#entidad").append('<option value="' + entidad.id + '"  >' + entidad.nombre + '</option>');
+                                });
+                            }
 
-                        if (json.entidades.length > 0) {
-                            //var selected;
-                            $.each(json.estados_propuestas, function (key, estado_propuesta) {
-                                if (estado_propuesta.id != 7 && estado_propuesta.id != 20)
-                                {
-                                    $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
-                                }
-                            });
-                        }
-
-                        validator_form(token_actual);
-
-                        //Valido cual va a hacer el estado de la propuesta
-                        $('.estado_btn').click(function () {
-                            $("#estado").val($(this).attr("title"));
-                        });
-                        
-                        $('#no_ganador').click(function () {
-                            //Se realiza la peticion con el fin de guardar el registro actual
-                            $.ajax({
-                                type: 'POST',
-                                url: url_pv + 'PropuestasGanadoras/editar_propuesta',
-                                data: "id="+$("#id").val()+"&estado=44&modulo=Registro de ganadores&token=" + token_actual.token
-                            }).done(function (result) {
-                                var result = result.trim();
-
-                                if (result == 'error')
-                                {
-                                    notify("danger", "ok", "Propuestas:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                } else
-                                {
-                                    if (result == 'error_token')
+                            if (json.entidades.length > 0) {
+                                //var selected;
+                                $.each(json.estados_propuestas, function (key, estado_propuesta) {
+                                    if (estado_propuesta.id != 7 && estado_propuesta.id != 20)
                                     {
-                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                        $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
+                                    }
+                                });
+                            }
+
+                            validator_form(token_actual);
+
+                            //Valido cual va a hacer el estado de la propuesta
+                            $('.estado_btn').click(function () {
+                                $("#estado").val($(this).attr("title"));
+                            });
+
+                            $('#no_ganador').click(function () {
+                                //Se realiza la peticion con el fin de guardar el registro actual
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url_pv + 'PropuestasGanadoras/editar_propuesta',
+                                    data: "id=" + $("#id").val() + "&estado=44&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
+                                }).done(function (result) {
+                                    var result = result.trim();
+
+                                    if (result == 'error')
+                                    {
+                                        notify("danger", "ok", "Propuestas:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                     } else
                                     {
-                                        if (result == 'acceso_denegado')
+                                        if (result == 'error_token')
                                         {
-                                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                                         } else
                                         {
-                                            if (result == 'error_metodo')
+                                            if (result == 'acceso_denegado')
                                             {
-                                                notify("danger", "ok", "Propuestas:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                                             } else
                                             {
-                                                if (isNaN(result)) {
+                                                if (result == 'error_metodo')
+                                                {
                                                     notify("danger", "ok", "Propuestas:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                                 } else
                                                 {
-                                                    notify("success", "ok", "Propuestas:", "Se Guardó con el éxito la propuesta, No Ganadora.");
-                                                    cargar_tabla(token_actual);
+                                                    if (isNaN(result)) {
+                                                        notify("danger", "ok", "Propuestas:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        notify("success", "ok", "Propuestas:", "Se Guardó con el éxito la propuesta, No Ganadora.");
+                                                        cargar_tabla(token_actual);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
 
+                                });
                             });
-                        });                                                
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        $('#buscar').click(function () {
-            cargar_tabla(token_actual);
-        });
+            $('#buscar').click(function () {
+                cargar_tabla(token_actual);
+            });
 
-        $('#entidad, #anio').change(function () {
+            $('#entidad, #anio').change(function () {
 
-            $("#categoria option[value='']").prop('selected', true);
-            $("#convocatoria option[value='']").prop('selected', true);
-            $("#categoria").attr("disabled", "disabled");
+                $("#categoria option[value='']").prop('selected', true);
+                $("#convocatoria option[value='']").prop('selected', true);
+                $("#categoria").attr("disabled", "disabled");
 
-            if ($("#anio").val() == "")
-            {
-                notify("danger", "ok", "Propuestas:", "Debe seleccionar el año");
-            } else
-            {
-                if ($("#entidad").val() != "")
+                if ($("#anio").val() == "")
+                {
+                    notify("danger", "ok", "Propuestas:", "Debe seleccionar el año");
+                } else
+                {
+                    if ($("#entidad").val() != "")
+                    {
+                        $.ajax({
+                            type: 'POST',
+                            data: {"modulo": "SICON-PROPUESTAS-GANADORES", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
+                            url: url_pv + 'PropuestasGanadoras/select_convocatorias'
+                        }).done(function (data) {
+                            if (data == 'error_metodo')
+                            {
+                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            } else
+                            {
+                                if (data == 'error_token')
+                                {
+                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                } else
+                                {
+                                    if (data == 'acceso_denegado')
+                                    {
+                                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                                    } else
+                                    {
+                                        var json = JSON.parse(data);
+
+                                        $('#convocatoria').find('option').remove();
+                                        $("#convocatoria").append('<option value="">:: Seleccionar ::</option>');
+                                        $.each(json, function (key, value) {
+                                            $("#convocatoria").append('<option dir="' + value.tiene_categorias + '" lang="' + value.diferentes_categorias + '" value="' + value.id + '">' + value.nombre + '</option>');
+                                        });
+
+                                        $("#convocatoria").selectpicker('refresh');
+
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+            });
+
+            $('#convocatoria').change(function () {
+
+                if ($("#convocatoria option:selected").attr("dir") == "true")
+                {
+                    $("#categoria").removeAttr("disabled")
+                } else
+                {
+                    $("#categoria").attr("disabled", "disabled");
+                }
+
+                if ($("#convocatoria").val() != "")
                 {
                     $.ajax({
-                        type: 'GET',
-                        data: {"modulo": "Registro de ganadores", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
-                        url: url_pv + 'PropuestasGanadoras/select_convocatorias'
+                        type: 'POST',
+                        data: {"modulo": "SICON-PROPUESTAS-GANADORES", "token": token_actual.token, "conv": $("#convocatoria").val()},
+                        url: url_pv + 'PropuestasGanadoras/select_categorias'
                     }).done(function (data) {
                         if (data == 'error_metodo')
                         {
@@ -153,79 +220,29 @@ $(document).ready(function () {
                                 {
                                     var json = JSON.parse(data);
 
-                                    $('#convocatoria').find('option').remove();
-                                    $("#convocatoria").append('<option value="">:: Seleccionar ::</option>');
+                                    $('#categoria').find('option').remove();
+                                    $("#categoria").append('<option value="">:: Seleccionar ::</option>');
                                     $.each(json, function (key, value) {
-                                        $("#convocatoria").append('<option dir="' + value.tiene_categorias + '" lang="' + value.diferentes_categorias + '" value="' + value.id + '">' + value.nombre + '</option>');
+                                        $("#categoria").append('<option value="' + value.id + '">' + value.nombre + '</option>');
                                     });
-
-                                    $("#convocatoria").selectpicker('refresh');
-
                                 }
                             }
                         }
                     });
                 }
-            }
 
-        });
+            });
 
-        $('#convocatoria').change(function () {
 
-            if ($("#convocatoria option:selected").attr("dir") == "true")
-            {
-                $("#categoria").removeAttr("disabled")
-            } else
-            {
-                $("#categoria").attr("disabled", "disabled");
-            }
+            //Limpio el formulario de los anexos
+            $('#ver_propuesta').on('hidden.bs.modal', function () {
+                $("#formulario_principal")[0].reset();
+                $("#id").val("");
+                $("#estado").val("");
+                $(".text_limpiar").val("");
+            });
 
-            if ($("#convocatoria").val() != "")
-            {
-                $.ajax({
-                    type: 'GET',
-                    data: {"modulo": "Registro de ganadores", "token": token_actual.token, "conv": $("#convocatoria").val()},
-                    url: url_pv + 'PropuestasGanadoras/select_categorias'
-                }).done(function (data) {
-                    if (data == 'error_metodo')
-                    {
-                        notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                    } else
-                    {
-                        if (data == 'error_token')
-                        {
-                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                        } else
-                        {
-                            if (data == 'acceso_denegado')
-                            {
-                                notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
-                            } else
-                            {
-                                var json = JSON.parse(data);
-
-                                $('#categoria').find('option').remove();
-                                $("#categoria").append('<option value="">:: Seleccionar ::</option>');
-                                $.each(json, function (key, value) {
-                                    $("#categoria").append('<option value="' + value.id + '">' + value.nombre + '</option>');
-                                });
-                            }
-                        }
-                    }
-                });
-            }
-
-        });
-        
-        
-        //Limpio el formulario de los anexos
-        $('#ver_propuesta').on('hidden.bs.modal', function () {
-            $("#formulario_principal")[0].reset();            
-            $("#id").val("");
-            $("#estado").val("");
-            $(".text_limpiar").val("");            
-        });
-
+        }
     }
 });
 
@@ -296,7 +313,7 @@ function validator_form(token_actual) {
         $.ajax({
             type: 'POST',
             url: $form.attr('action'),
-            data: $form.serialize() + "&modulo=Registro de ganadores&token=" + token_actual.token
+            data: $form.serialize() + "&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
         }).done(function (result) {
             var result = result.trim();
 
@@ -372,8 +389,9 @@ function cargar_tabla(token_actual)
                         params.estado = $('#estado_propuesta').val();
                         d.params = JSON.stringify(params);
                         d.token = token_actual.token;
-                        d.modulo = "Registro de ganadores";
+                        d.modulo = "SICON-PROPUESTAS-GANADORES";
                     },
+                    type: "POST"
                 },
                 "drawCallback": function (settings) {
                     //Cargo el formulario, para crear o editar
@@ -479,8 +497,9 @@ function cargar_tabla(token_actual)
                                                     params.estado = $('#estado_propuesta').val();
                                                     d.params = JSON.stringify(params);
                                                     d.token = token_actual.token;
-                                                    d.modulo = "Registro de ganadores";
+                                                    d.modulo = "SICON-PROPUESTAS-GANADORES";
                                                 },
+                                                type: "POST"
                                             },
                                             "drawCallback": function (settings) {
                                                 //Cargo el formulario, para crear o editar
@@ -542,8 +561,8 @@ function cargar_formulario(token_actual)
         $("#id").attr('value', $(this).attr('title'))
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
-            data: {"token": token_actual.token, "propuesta": $("#propuesta").attr('value'), "participante": $("#participante").attr('value'), "conv": $("#conv").attr('value'), "modulo": "Registro de ganadores", "m": getURLParameter('m'), "id": $("#id").attr('value')},
+            type: 'POST',
+            data: {"token": token_actual.token, "propuesta": $("#propuesta").attr('value'), "participante": $("#participante").attr('value'), "conv": $("#conv").attr('value'), "modulo": "SICON-PROPUESTAS-GANADORES", "m": getURLParameter('m'), "id": $("#id").attr('value')},
             url: url_pv + 'PropuestasGanadoras/consultar_propuesta/'
         }).done(function (data) {
             if (data == 'error_metodo')
@@ -557,16 +576,16 @@ function cargar_formulario(token_actual)
                 } else
                 {
                     var json = JSON.parse(data);
-                    
-                    var href_cer = url_pv_report+'reporte_certificacion.php?entidad='+json[1].entidad+'&tp='+json[1].tp+'&id='+json[0].codigo+'&token='+token_actual.token;
-                    
-                    $("#generar_certificado").attr('href',href_cer);
-                    
+
+                    var href_cer = url_pv_report + 'reporte_certificacion.php?entidad=' + json[1].entidad + '&tp=' + json[1].tp + '&id=' + json[0].codigo + '&token=' + token_actual.token;
+
+                    $("#generar_certificado").attr('href', href_cer);
+
                     //Cargo el formulario con los datos
-                    $('#formulario_principal').loadJSON(json[0]);                                        
+                    $('#formulario_principal').loadJSON(json[0]);
                 }
             }
         });
     });
-    
+
 }

@@ -12,7 +12,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             var token_actual = JSON.parse(JSON.stringify(keycloak));
 
             //Verifica si el token actual tiene acceso de lectura
-            permiso_lectura_keycloak(token_actual.token, "SICON-USUARIOS");
+            permiso_lectura_keycloak(token_actual.token, "SICON-HOME-FUNCIONARIO");
             
             //Cargamos el menu principal
             $.ajax({
@@ -29,10 +29,30 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
-
-            //Cargar por defecto los manuales de funcionario
-            $(".manuales_externos").css("display", "none");
-            $(".manuales_internos").css("display", "block");
+            //Muestra los manuales del funcionario
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, modulo: "SICON-HOME-FUNCIONARIO"},
+                url: url_pv + 'Session/permiso_lectura_keycloak/'
+            }).done(function (data) {
+                if (data == 'ok')
+                {
+                    $(".manuales_internos").css("display", "block");
+                }        
+            });
+            
+            //Muestra los manuales del ciudadano
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, modulo: "SICON-HOME-CIUDADANO"},
+                url: url_pv + 'Session/permiso_lectura_keycloak/'
+            }).done(function (data) {
+                if (data == 'ok')
+                {
+                    $(".manuales_externos").css("display", "block");
+                }        
+            });
+            
             
             /*
             if (json.externo == "Si")
