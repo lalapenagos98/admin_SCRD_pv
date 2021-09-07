@@ -1,314 +1,355 @@
-$(document).ready(function () {
-
-
-
-
-//Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    var token_actual = getLocalStorage(name_local_storage);
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
+//Si no esta autenticado lo obliga a ingresar al keycloak
     $("#notificacion_periodo").hide();
     $("#deliberar").hide();
     $("#confirmar_top_general").hide();
     $("#anular_deliberacion").hide();
     $("#asignar_estimulo").hide();
     $("#genera_acta").hide();
-    /*
-     * 06-06-2020
-     * Wilmer Gustavo Mogollón Duque
-     * Se agrega el botón top_general al hide
-     */
-    $("#top_general").hide();
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
-//Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Deliberación");
-        $('.convocatorias-search').select2();
-        //Carga el select de entidad
-        $.ajax({
-            type: 'GET',
-            data: {"token": token_actual.token},
-            url: url_pv + 'Entidades/all_select/',
-            success: function (data) {
 
-                switch (data) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                        notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                        break;
-                    default:
-                        json_entidades = JSON.parse(data);
-                        $('#entidad').find('option').remove();
-                        $("#entidad").append('<option value="">:: Seleccionar ::</option>');
-                        if (json_entidades.length > 0) {
-                            $.each(json_entidades, function (key, entidad) {
-                                $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
-                            });
-                        }
+    if (authenticated === false) {
+        keycloak.login();
+    } else {
 
-                        break;
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
+
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-DELIBERAR");
+
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
                 }
+            });
+
+            /*
+             * 06-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se agrega el botón top_general al hide
+             */
+            $("#top_general").hide();
+            //Verifica si el token actual tiene acceso de lectura
 
 
+            $('.convocatorias-search').select2();
+
+            init(token_actual);
+            //cargar_datos_formulario(token_actual);
+            validator_form(token_actual);
+
+            //Carga el select de años
+            $('#anio').find('option').remove();
+            $("#anio").append('<option value="">:: Seleccionar ::</option>');
+            for (i = (new Date()).getFullYear(); i >= 2016; i--) {
+                $("#anio").append('<option value="' + i + '" >' + i + '</option>');
             }
-        });
-        //Carga el select de años
-        $('#anio').find('option').remove();
-        $("#anio").append('<option value="">:: Seleccionar ::</option>');
-        for (i = (new Date()).getFullYear(); i >= 2016; i--) {
-            $("#anio").append('<option value="' + i + '" >' + i + '</option>');
-        }
 
-//carga select_convocatorias
-        $('#anio').change(function () {
-            $('#convocatorias').val(null);
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#categorias').val(null);
-            $("#categorias").attr('disabled', '');
-            $('#rondas').val(null);
-            //cargar_tabla(token_actual);
-        });
-        //carga select convocatorias
-        $('#entidad').change(function () {
-            $('#convocatorias').val(null);
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#categorias').val(null);
-            $("#categorias").attr('disabled', '');
-            $('#rondas').val(null);
-            //cargar_tabla(token_actual);
-        });
-        //carga el select categorias
-        $('#convocatorias').change(function () {
-            $("#categorias").attr('disabled', '');
-            $('#categorias').val(null);
-            cargar_select_categorias(token_actual, $('#convocatorias').val());
-            $('#rondas').val(null);
-            cargar_select_rondas(token_actual, $('#convocatorias').val());
-            //cargar_tabla(token_actual);
-        });
-        //carga el select rondas
-        $('#categorias').change(function () {
-            $('#rondas').val(null);
-            cargar_select_rondas(token_actual, $('#categorias').val());
-            // cargar_tabla(token_actual);
-        });
-        /*
-         * 22-04-2021
-         * Wilmer Gustavo Mogollón Duque
-         * Se agrega el select grupos_evaluacion
-         */
-        //carga el select grupos evaluación
-        $('#rondas').change(function () {
+            //carga select_convocatorias
+            $('#anio').change(function () {
+                $('#convocatorias').val(null);
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#categorias').val(null);
+                $("#categorias").attr('disabled', '');
+                $('#rondas').val(null);
+                //cargar_tabla(token_actual);
+            });
+            //carga select convocatorias
+            $('#entidad').change(function () {
+                $('#convocatorias').val(null);
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#categorias').val(null);
+                $("#categorias").attr('disabled', '');
+                $('#rondas').val(null);
+                //cargar_tabla(token_actual);
+            });
+            //carga el select categorias
+            $('#convocatorias').change(function () {
+                $("#categorias").attr('disabled', '');
+                $('#categorias').val(null);
+                cargar_select_categorias(token_actual, $('#convocatorias').val());
+                $('#rondas').val(null);
+                cargar_select_rondas(token_actual, $('#convocatorias').val());
+                //cargar_tabla(token_actual);
+            });
+            //carga el select rondas
+            $('#categorias').change(function () {
+                $('#rondas').val(null);
+                cargar_select_rondas(token_actual, $('#categorias').val());
+                // cargar_tabla(token_actual);
+            });
+            /*
+             * 22-04-2021
+             * Wilmer Gustavo Mogollón Duque
+             * Se agrega el select grupos_evaluacion
+             */
+            //carga el select grupos evaluación
+            $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
-            $('#grupos_evaluacion').val(null);
-            cargar_select_grupos(token_actual, $('#rondas').val());
-            // cargar_tabla(token_actual);
-        });
-        /*
-         * 20-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Agrego un if para controlar que seleccione la ronda de evaluación
-         */
+                $('#grupos_evaluacion').val(null);
+                cargar_select_grupos(token_actual, $('#rondas').val());
+                // cargar_tabla(token_actual);
+            });
+            /*
+             * 20-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Agrego un if para controlar que seleccione la ronda de evaluación
+             */
 
 
-        //carga la tabla con los criterios de busqueda
-        $('#buscar').click(function () {
+            //carga la tabla con los criterios de busqueda
+            $('#buscar').click(function () {
 
-            if ($('#rondas').val() === "") {
-                alert("Debe seleccionar la ronda de evaluación");
-            } else {
-
-                if ($('#grupos_evaluacion').val() === "") {
-                    alert("Debe seleccionar un grupo de evaluación");
+                if ($('#rondas').val() === "") {
+                    alert("Debe seleccionar la ronda de evaluación");
                 } else {
-                    $('#resultado').focus();
-                    validator_form(token_actual);
-                    cargar_tabla(token_actual);
-                }
-            }
 
-
-        });
-        $("#top_general").click(function () {
-
-            cargar_info_top_general(token_actual, $('#rondas').val());
-        });
-        $("#total_ganadores").change(function () {
-            cargar_tabla_ganadores(token_actual);
-        });
-        $("#total_suplentes").change(function () {
-            cargar_tabla_ganadores(token_actual);
-        });
-        $("#baceptartop").click(function () {
-            confirmar_top_general(token_actual, $('#rondas').val());
-            $('#exampleModaltop').modal('hide');
-            $('#top_generalModal').modal('hide');
-        });
-        /*
-         * 06-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorporan acciones a los botones para que muestre un mensaje de alerta
-         */
-
-        //deliberar
-        $("#deliberar").click(function () {
-
-            $("#mensaje").show();
-            $("#bcancelar").show();
-            $("#baceptar").show();
-        });
-        $("#baceptar").click(function () {
-
-            deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
-            $('#exampleModal').modal('toggle');
-            $('#deliberar').prop('disabled', true);
-        });
-        /*
-         * 12-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
-         */
-
-        //deliberar
-        $("#genera_acta").click(function () {
-
-            $("#mensajegn").show();
-            $("#bcancelargn").show();
-            $("#baceptargn").show();
-        });
-        $("#baceptargn").click(function () {
-            generar_acta_preseleccionados(token_actual, $('#rondas').val());
-            $('#genera_acta_modal').modal('hide');
-        });
-        //Aceptar top generar
-        $("#btn_aceptar_top").click(function () {
-
-            validator_form_confirmar(token_actual);
-        });
-        /*
-         * 22-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorpora la acción para el botón anular_deliberacion
-         */
-        //Anular deliberación
-
-        $("#anular_deliberacion").click(function () {
-
-            $("#mensaje_anular").show();
-            $("#bcancelar_anular").show();
-            $("#baceptar_anular").show();
-        });
-        $("#baceptar_anular").click(function () {
-
-            anular_deliberacion(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
-            $('#anular_deliberacionModal').modal('hide');
-        });
-//        $("#form_top_general").bootstrapValidator({
-//            feedbackIcons: {
-//                valid: 'glyphicon glyphicon-ok',
-//                invalid: 'glyphicon glyphicon-remove',
-//                validating: 'glyphicon glyphicon-refresh'
-//            },
-//            fields: {
-//                comentarios: {
-//                    enabled: false,
-//                    validators: {
-//                        notEmpty: {
-//                            message: 'Debe digitar los comentarios generales sobre la convocatoria y las propuestas participantes.'
-//                        }
-//                    }
-//                },
-//            }
-//        })
-
-        //validador formulario Notificación de impedimento
-        $('#form_top_general').bootstrapValidator({
-
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                total_ganadores: {
-                    validators: {
-                        notEmpty: {message: 'El número de ganadores es requerido'}
-                    }
-                },
-                total_suplentes: {
-                    validators: {
-                        notEmpty: {message: 'El número de ganadores es requerido'}
-                    }
-                },
-                aspectos: {
-                    validators: {
-                        notEmpty: {message: 'La descripción de los aspectos es requerida'}
-                    }
-                },
-                recomendaciones: {
-                    validators: {
-                        notEmpty: {message: 'La descripción de las recomendaciones es requerida'}
-                    }
-                },
-                comentarios: {
-                    enabled: false,
-                    validators: {
-                        notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                    if ($('#grupos_evaluacion').val() === "") {
+                        alert("Debe seleccionar un grupo de evaluación");
+                    } else {
+                        $('#resultado').focus();
+                        validator_form(token_actual);
+                        cargar_tabla(token_actual);
                     }
                 }
-            }
-        });
-        //Declaración desierta
-        $("#btn_declarar_desierta").click(function () {
-
-            $('#form_top_general').bootstrapValidator('enableFieldValidators', 'comentarios', true);
-            $('#form_top_general').bootstrapValidator('validateField', 'comentarios');
-            $("#mensajeds").show();
-            $("#bcancelards").show();
-            $("#baceptards").show();
-        });
-        $("#baceptards").click(function () {
-            declarar_convocatoria_desierta(token_actual, $('#rondas').val());
-            $('#genera_acta_modal_desierta').modal('hide');
-            $('#top_generalModal').moda10000l('hide');
-        });
-        /*
-         * Botón para guardar el estímulo de la propuesta
-         */
-
-        $("#baceptarasg").click(function () {
-
-            token_actual = getLocalStorage(name_local_storage);
-            asignar_monto(token_actual, $('#id_propuesta').val(), $('#monto_asignado').val());
-            $('#asignar_monto').modal('hide');
-            limpiarFormulario();
-        });
-        /*
-         * 15-06-2020
-         * Wilmer Gistavo Mogollón Duque
-         * Se agrega acción al botón  para llamar a la función 
-         */
-        $("#asignar_estimulo").click(function () {
-            cargar_info_top_general_asignar(token_actual, $('#rondas').val());
-        });
 
 
+            });
+            $("#top_general").click(function () {
+
+                cargar_info_top_general(token_actual, $('#rondas').val());
+            });
+            $("#total_ganadores").change(function () {
+                cargar_tabla_ganadores(token_actual);
+            });
+            $("#total_suplentes").change(function () {
+                cargar_tabla_ganadores(token_actual);
+            });
+            $("#baceptartop").click(function () {
+                confirmar_top_general(token_actual, $('#rondas').val());
+                $('#exampleModaltop').modal('hide');
+                $('#top_generalModal').modal('hide');
+            });
+            /*
+             * 06-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorporan acciones a los botones para que muestre un mensaje de alerta
+             */
+
+            //deliberar
+            $("#deliberar").click(function () {
+
+                $("#mensaje").show();
+                $("#bcancelar").show();
+                $("#baceptar").show();
+            });
+            $("#baceptar").click(function () {
+
+                deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
+                $('#exampleModal').modal('toggle');
+                $('#deliberar').prop('disabled', true);
+            });
+            /*
+             * 12-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
+             */
+
+            //deliberar
+            $("#genera_acta").click(function () {
+
+                $("#mensajegn").show();
+                $("#bcancelargn").show();
+                $("#baceptargn").show();
+            });
+            $("#baceptargn").click(function () {
+                generar_acta_preseleccionados(token_actual, $('#rondas').val());
+                $('#genera_acta_modal').modal('hide');
+            });
+            //Aceptar top generar
+            $("#btn_aceptar_top").click(function () {
+
+                validator_form_confirmar(token_actual);
+            });
+            /*
+             * 22-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorpora la acción para el botón anular_deliberacion
+             */
+            //Anular deliberación
+
+            $("#anular_deliberacion").click(function () {
+
+                $("#mensaje_anular").show();
+                $("#bcancelar_anular").show();
+                $("#baceptar_anular").show();
+            });
+            $("#baceptar_anular").click(function () {
+
+                anular_deliberacion(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
+                $('#anular_deliberacionModal').modal('hide');
+            });
+
+            //validador formulario Notificación de impedimento
+            $('#form_top_general').bootstrapValidator({
+
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    total_ganadores: {
+                        validators: {
+                            notEmpty: {message: 'El número de ganadores es requerido'}
+                        }
+                    },
+                    total_suplentes: {
+                        validators: {
+                            notEmpty: {message: 'El número de ganadores es requerido'}
+                        }
+                    },
+                    aspectos: {
+                        validators: {
+                            notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                        }
+                    },
+                    recomendaciones: {
+                        validators: {
+                            notEmpty: {message: 'La descripción de las recomendaciones es requerida'}
+                        }
+                    },
+                    comentarios: {
+                        enabled: false,
+                        validators: {
+                            notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                        }
+                    }
+                }
+            });
+            //Declaración desierta
+            $("#btn_declarar_desierta").click(function () {
+
+                $('#form_top_general').bootstrapValidator('enableFieldValidators', 'comentarios', true);
+                $('#form_top_general').bootstrapValidator('validateField', 'comentarios');
+                $("#mensajeds").show();
+                $("#bcancelards").show();
+                $("#baceptards").show();
+            });
+            $("#baceptards").click(function () {
+                declarar_convocatoria_desierta(token_actual, $('#rondas').val());
+                $('#genera_acta_modal_desierta').modal('hide');
+                $('#top_generalModal').moda10000l('hide');
+            });
+            /*
+             * Botón para guardar el estímulo de la propuesta
+             */
+
+            $("#baceptarasg").click(function () {
+
+                asignar_monto(token_actual, $('#id_propuesta').val(), $('#monto_asignado').val());
+                $('#asignar_monto').modal('hide');
+                limpiarFormulario();
+            });
+            /*
+             * 15-06-2020
+             * Wilmer Gistavo Mogollón Duque
+             * Se agrega acción al botón  para llamar a la función 
+             */
+            $("#asignar_estimulo").click(function () {
+                cargar_info_top_general_asignar(token_actual, $('#rondas').val());
+            });
 
 
-        validator_form(token_actual);
+            validator_form(token_actual);
+        }//
     }
 
+}
+).catch(function () {
+    location.href = url_pv_admin + 'error_keycloak.html';
 });
+
+
+
+function init(token_actual) {
+    //Realizo la peticion para cargar el formulario
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token, "id": $("#id").attr('value')},
+        url: url_pv + 'Deliberacion/init/'
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            default:
+
+                var json = JSON.parse(data);
+
+                //Carga el select de entidad
+                $('#entidad').find('option').remove();
+                $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                if (json.entidades.length > 0) {
+                    $.each(json.entidades, function (key, entidad) {
+                        $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
+                    });
+                }
+
+                //Carga el select de años
+                $('#anio').find('option').remove();
+                $("#anio").append('<option value="">:: Seleccionar ::</option>');
+                if (json.anios.length > 0) {
+                    $.each(json.anios, function (key, value) {
+                        $("#anio").append('<option value="' + value + '" >' + value + '</option>');
+                    });
+                }
+
+                //Carga el select tipo jurado
+                $('#select_tipo_jurado').find('option').remove();
+                $("#select_tipo_jurado").append('<option value="">:: Seleccionar ::</option>');
+                if (json.tipos_jurado.length > 0) {
+                    $.each(json.tipos_jurado, function (key, tipo) {
+                        $("#select_tipo_jurado").append('<option value="' + tipo.id + '" >' + tipo.nombre + '</option>');
+                    });
+                }
+
+
+
+                break;
+        }
+
+    });
+
+
+
+}
+
+
+
+
 //Agrego para limpiar el formulario
 function limpiarFormulario() {
     document.getElementById("asignar_est_form").reset();
@@ -319,7 +360,7 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/select_convocatorias',
         data: {"token": token_actual.token, "anio": anio, "entidad": entidad},
     }).done(function (data) {
@@ -362,7 +403,7 @@ function cargar_select_categorias(token_actual, convocatoria) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/select_categorias',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
@@ -411,7 +452,7 @@ function cargar_select_grupos(token_actual, ronda) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/select_grupos',
         data: {"token": token_actual.token, "ronda": ronda},
     }).done(function (data) {
@@ -452,7 +493,7 @@ function cargar_select_grupos(token_actual, ronda) {
 function cargar_select_rondas(token_actual, convocatoria) {
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Rondas/select_rondas',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
@@ -525,6 +566,7 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Deliberacion/all_propuestas",
             data:
                     {"token": token_actual.token,
@@ -609,7 +651,7 @@ function acciones_registro(token_actual) {
 
         var id_propuesta = $(this).attr("id_propuesta");
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
             data: {"token": token_actual.token},
         }).done(function (data) {
@@ -663,7 +705,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
     $("#objetivo_propuesta").html("");
     $("#bogota_propuesta").html("");
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -766,7 +808,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
 function cargar_evaluaciones(token_actual, id_propuesta) {
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/all_evaluaciones/propuesta/' + id_propuesta,
         data: {"token": token_actual.token,
             "ronda": $('#rondas').val(), "grupo": $('#grupos_evaluacion').val()
@@ -815,7 +857,7 @@ function deliberar(token_actual, id_ronda, id_grupo) {
     $.ajax({
         type: 'POST',
         url: url_pv + 'Deliberacion/deliberar/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token + "&grupo=" + id_grupo
+        data: "&modulo=SICON-DELIBERAR&token=" + token_actual.token + "&grupo=" + id_grupo
 
     }).done(function (data) {
 
@@ -868,11 +910,12 @@ function deliberar(token_actual, id_ronda, id_grupo) {
 }
 
 function cargar_info_top_general(token_actual, id_ronda) {
+    
     var id_convocatoria;
     $("#fieldset_top_general").removeAttr("disabled");
     //se verifica que las evaluaciones esten confirmadas
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/validar_confirmacion/ronda/' + id_ronda,
         data: {"token": token_actual.token,
             "grupo": $('#grupos_evaluacion').val()},
@@ -903,7 +946,7 @@ function cargar_info_top_general(token_actual, id_ronda) {
                 $("#top_generalModal").modal('show');
                 //Información de la ronda y la convocatoria
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: url_pv + 'Rondas/search/' + id_ronda,
                     data: {"token": token_actual.token},
                 }).done(function (data) {
@@ -944,7 +987,7 @@ function cargar_info_top_general(token_actual, id_ronda) {
                                 id_convocatoria = json.convocatoria;
                                 //información de la convocatoria
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'Convocatorias/convocatoria/' + id_convocatoria,
                                     data: {"token": token_actual.token},
                                 }).done(function (data) {
@@ -1039,6 +1082,7 @@ function cargar_tabla_ganadores(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Deliberacion/recomendacion_ganadores",
             data:
                     {"token": token_actual.token,
@@ -1113,7 +1157,7 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
     $("#fieldset_top_general").removeAttr("disabled");
     //se verifica que las evaluaciones esten confirmadas
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Deliberacion/validar_confirmacion/ronda/' + id_ronda,
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -1140,7 +1184,7 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                 $("#asignar_estimulo_Modal").modal('show');
                 //Información de la ronda y la convocatoria
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: url_pv + 'Rondas/search/' + id_ronda,
                     data: {"token": token_actual.token},
                 }).done(function (data) {
@@ -1181,7 +1225,7 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
                                 id_convocatoria = json.convocatoria;
                                 //información de la convocatoria
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'Convocatorias/convocatoria/' + id_convocatoria,
                                     data: {"token": token_actual.token},
                                 }).done(function (data) {
@@ -1210,7 +1254,7 @@ function cargar_info_top_general_asignar(token_actual, id_ronda) {
 
                                                     //información de la categoria
                                                     $.ajax({
-                                                        type: 'GET',
+                                                        type: 'POST',
                                                         url: url_pv + 'Convocatorias/categoria/' + $("categorias").val(),
                                                         data: {"token": token_actual.token},
                                                     }).done(function (data) {
@@ -1276,6 +1320,7 @@ function cargar_tabla_ganadores_asignar(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Deliberacion/recomendacion_ganadores_asignar",
             data:
                     {"token": token_actual.token,
@@ -1347,7 +1392,7 @@ function confirmar_top_general(token_actual, id_ronda) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Deliberacion/confirmar_top_general/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token
+        data: "&modulo=SICON-DELIBERAR&token=" + token_actual.token
                 + "&total_ganadores=" + $('#total_ganadores').val()
                 + "&total_suplentes=" + $('#total_suplentes').val()
                 + "&aspectos=" + $('#aspectos').val()
@@ -1403,7 +1448,7 @@ function declarar_convocatoria_desierta(token_actual, id_ronda) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Deliberacion/declarar_desierta_convocatoria/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token
+        data: "&modulo=SICON-DELIBERAR&token=" + token_actual.token
                 + "&total_ganadores=" + $('#total_ganadores').val()
                 + "&total_suplentes=" + $('#total_suplentes').val()
                 + "&aspectos=" + $('#aspectos').val()
@@ -1454,7 +1499,7 @@ function asignar_monto(token_actual, id_propuesta, monto_asignado) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Deliberacion/asignar_monto/propuesta/' + id_propuesta,
-        data: "&modulo=Deliberación&token=" + token_actual.token + "&monto_asignado=" + monto_asignado
+        data: "&modulo=SICON-DELIBERAR&token=" + token_actual.token + "&monto_asignado=" + monto_asignado
 
     }).done(function (data) {
 
@@ -1498,7 +1543,7 @@ function anular_deliberacion(token_actual, id_ronda, id_grupo) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Deliberacion/anular_deliberacion/ronda/' + id_ronda,
-        data: "&modulo=Deliberación&token=" + token_actual.token + "&grupo=" + id_grupo
+        data: "&modulo=SICON-DELIBERAR&token=" + token_actual.token + "&grupo=" + id_grupo
 
     }).done(function (data) {
 

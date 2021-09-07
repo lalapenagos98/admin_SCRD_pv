@@ -1,137 +1,159 @@
-$(document).ready(function () {
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
+//Si no esta autenticado lo obliga a ingresar al keycloak
 
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    var token_actual = getLocalStorage(name_local_storage);
-    
-    
     $("#div_cambiar_rol").hide();
 
 
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
-        $('.convocatorias-search').select2();
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Jurados");
-        init(token_actual);
-        //cargar_datos_formulario(token_actual);
-        validator_form(token_actual);
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //carga select_convocatorias
-        $('#anio').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-JURADOS-SELECCION");
 
-        //carga select convocatorias
-        $('#entidad').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
+            });
 
-        //carga el select categorias
-        $('#convocatorias').change(function () {
-            cargar_select_categorias(token_actual, $('#convocatorias').val());
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
+            $('.convocatorias-search').select2();
+            
+            
+            init(token_actual);
+            //cargar_datos_formulario(token_actual);
+            validator_form(token_actual);
 
-        $('#categorias').change(function () {
+            //carga select_convocatorias
+            $('#anio').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
 
-            cargar_tabla(token_actual);
-        });
+            //carga select convocatorias
+            $('#entidad').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
 
-        //carga la tabla con los criterios de busqueda
-        $('#buscar').click(function () {
-            //  alert("buscando");
-            $('#resultado').focus();
-            cargar_tabla(token_actual);
-        });
+            //carga el select categorias
+            $('#convocatorias').change(function () {
+                cargar_select_categorias(token_actual, $('#convocatorias').val());
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
 
+            $('#categorias').change(function () {
 
-        $("#exampleModal").on('hide.bs.modal', function () {
-            $('#filtro').val(null);
-            $('#palabra_clave').val(null);
-            $("#formulario_busqueda_banco").trigger("reset");
-        });
+                cargar_tabla(token_actual);
+            });
 
-        $("#evaluar").on('hide.bs.modal', function () {
-
-        });
-
-        $(".guardar_aplica_perfil").click(function () {
-
-            //Se evalua si algun radiobutton es seleccionado
-            if ($("input[name=option_aplica_perfil]:checked").length == 0) {
-
-                notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica el perfil o no");
-                return false;
-            }
-
-            if ($('.guardar_aplica_perfil').hasClass('disabled')) {
-                return false;
-            } else {
-                evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
-            }
-
-        });
-
-        $("#alertModalSelbaceptar").click(function () {
-            //  $("#alertModalSel").modal("hide");
-            //seleccionar_jurado(token_actual,  $("#id_jurados_postulados").val(),   $("#id_participante_sel").val() );
-            $('#select_categorias_2').hide();
-            $('#categorias').val($('#categorias_2').val());
-            $("#panel_tabs").show();
-
-        });
-
-        $("#notificar_aceptar").click(function () {
-
-            notificar(token_actual, $("#id_jurado_postulado").val());
-        });
-
-        $("#notificarModal").on('hide.bs.modal', function () {
-            // $('.form_notificar').bootstrapValidator('resetFormData', true);
-            //$(".form_notificar").trigger("reset");
-            //$('.form_notificar').data('bootstrapValidator').destroy()
-            //console.log("estado...ssssll");
-        });
-        
-        
-        $(".cambiar_rol").click(function () {
-            cambiar_rol_jurado(token_actual, $('#id_notificacion_cambio').val(), $('#cambio_rol_jurado_sel').val());
-        });
+            //carga la tabla con los criterios de busqueda
+            $('#buscar').click(function () {
+                //  alert("buscando");
+                $('#resultado').focus();
+                cargar_tabla(token_actual);
+            });
 
 
+            $("#exampleModal").on('hide.bs.modal', function () {
+                $('#filtro').val(null);
+                $('#palabra_clave').val(null);
+                $("#formulario_busqueda_banco").trigger("reset");
+            });
+
+            $("#evaluar").on('hide.bs.modal', function () {
+
+            });
+
+            $(".guardar_aplica_perfil").click(function () {
+
+                //Se evalua si algun radiobutton es seleccionado
+                if ($("input[name=option_aplica_perfil]:checked").length == 0) {
+
+                    notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica el perfil o no");
+                    return false;
+                }
+
+                if ($('.guardar_aplica_perfil').hasClass('disabled')) {
+                    return false;
+                } else {
+                    evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
+                }
+
+            });
+
+            $("#alertModalSelbaceptar").click(function () {
+                //  $("#alertModalSel").modal("hide");
+                //seleccionar_jurado(token_actual,  $("#id_jurados_postulados").val(),   $("#id_participante_sel").val() );
+                $('#select_categorias_2').hide();
+                $('#categorias').val($('#categorias_2').val());
+                $("#panel_tabs").show();
+
+            });
+
+            $("#notificar_aceptar").click(function () {
+
+                notificar(token_actual, $("#id_jurado_postulado").val());
+            });
+
+            $("#notificarModal").on('hide.bs.modal', function () {
+                // $('.form_notificar').bootstrapValidator('resetFormData', true);
+                //$(".form_notificar").trigger("reset");
+                //$('.form_notificar').data('bootstrapValidator').destroy()
+                //console.log("estado...ssssll");
+            });
+
+
+            $(".cambiar_rol").click(function () {
+                cambiar_rol_jurado(token_actual, $('#id_notificacion_cambio').val(), $('#cambio_rol_jurado_sel').val());
+            });
+
+
+        }
     }
 
+}).catch(function () {
+    location.href = url_pv_admin + 'error_keycloak.html';
 });
 
 function showContent() {
-        element = document.getElementById("div_cambiar_rol");
-        check = document.getElementById("cambio_rol");
-        if (check.checked) {
-            element.style.display='block';
-        }
-        else {
-            element.style.display='none';
-        }
+    element = document.getElementById("div_cambiar_rol");
+    check = document.getElementById("cambio_rol");
+    if (check.checked) {
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
     }
+}
 
 
 
 function init(token_actual) {
     //Realizo la peticion para cargar el formulario
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "id": $("#id").attr('value')},
         url: url_pv + 'Juradosseleccion/init/'
     }).done(function (data) {
@@ -195,7 +217,7 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Juradosseleccion/select_convocatorias',
         data: {"token": token_actual.token, "anio": anio, "entidad": entidad},
     }).done(function (data) {
@@ -238,7 +260,7 @@ function cargar_select_categorias(token_actual, convocatoria) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Juradosseleccion/select_categorias',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
@@ -300,6 +322,7 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Juradosseleccion/all_seleccionados",
             data:
                     {"token": token_actual.token,
@@ -457,7 +480,7 @@ function notificar(token_actual, postulacion) {
         type: 'PUT',
         url: url_pv + 'Juradosseleccion/notificar',
         data: $("#form_notificar").serialize()
-                + "&modulo=Jurados&token=" + token_actual.token
+                + "&modulo=SICON-JURADOS-SELECCION&token=" + token_actual.token
                 + "&postulacion=" + postulacion
     }).done(function (data) {
 
@@ -499,7 +522,7 @@ function declinar(token_actual, notificacion_key) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Juradosseleccion/declinar',
-        data: "modulo=Jurados&token=" + token_actual.token
+        data: "modulo=SICON-JURADOS-SELECCION&token=" + token_actual.token
                 + "&key=" + notificacion_key
     }).done(function (data) {
 
@@ -540,7 +563,7 @@ function cargar_notificacion(token_actual, notificacion_key) {
 
     //Realizo la peticion para cargar el formulario
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "key": notificacion_key},
         url: url_pv + 'Juradosseleccion/notificacion/'
     }).done(function (data) {
@@ -686,7 +709,7 @@ function cambiar_rol_jurado(token_actual, notificacion, rol_nuevo) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Juradosseleccion/cambiar_rol_jurado',
-        data: "&modulo=Jurados&token=" + token_actual.token
+        data: "&modulo=SICON-JURADOS-SELECCION&token=" + token_actual.token
                 + "&idnotificacion=" + notificacion
                 + "&rol_nuevo=" + rol_nuevo
     }).done(function (data) {
