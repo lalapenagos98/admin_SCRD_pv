@@ -1040,7 +1040,7 @@ function confirmar_evaluacion(token_actual, id_evaluacion) {
                 notify("danger", "remove", "Usuario:", "Esta evaluación ya fue confirmada, por lo tanto no puede editar la información.");
                 break;
             case 'criterio_null':
-                notify("danger", "remove", "Usuario:", "Debe evaluar todos los criterios.");
+                notify("danger", "remove", "Usuario:", "Recuerde que debe evaluar todos los criterios diligenciando observaciones y puntuación.");
                 break;
                 /*
                  * 03-03-2021
