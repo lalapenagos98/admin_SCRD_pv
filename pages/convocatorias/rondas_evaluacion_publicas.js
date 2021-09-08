@@ -1,80 +1,96 @@
-$(document).ready(function () {
+keycloak.init(initOptions).then(function (authenticated) {
+    //Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
+    } else
+    {
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    var token_actual = getLocalStorage(name_local_storage);
-    //  var idcat;
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin+'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else {
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-AJUSTAR-CONVOCATORIAS");
 
-        $("#idConvocatoria").val($("#id").val());
-      //  $("#selectCategoria").hide();
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "modulo": "SICON-AJUSTAR-CONVOCATORIAS-UPDATE"},
+                url: url_pv + 'Administrador/menu'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
+            });
+
+            $("#idConvocatoria").val($("#id").val());
+            //  $("#selectCategoria").hide();
 
 
-        //Agrego url para retornar
-        $(".regresar").attr("onclick", "location.href='update_publicas.html?id=" + $("#id").val() + "'");
-                                
-                                
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Convocatorias");
+            //Agrego url para retornar
+            $(".regresar").attr("onclick", "location.href='update_publicas.html?id=" + $("#id").val() + "'");
 
-        //Realizo la peticion para cargar los datos del formulario
-        if ($("#id").val() != "") {
-            //alert("hay id"+"www"+$("#id").attr('value') );
+
+            //Realizo la peticion para cargar los datos del formulario
+            if ($("#id").val() != "") {
+                //alert("hay id"+"www"+$("#id").attr('value') );
+            }
+
+            //William Barbosa 2019-07-18
+            //Cuando se pasa a enriquecido no valida revisar
+            //Establesco los text area html
+            $('.textarea_html').jqte();
+
+            cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+
+            //establece formulario nuevo
+            $('#b_nueva_ronda').click(function () {
+
+                $('#form_nuevo_ronda').trigger("reset");
+                $("#descripcion_ronda").jqteVal('');
+                $("#descripcion_ronda").val(null);
+                $("#id_registro").val(null);
+                $('.form_nuevo_ronda').bootstrapValidator('destroy', true);
+
+                //carga los datos en el select_categoria
+                cargar_select_categoria(token_actual);
+
+                //carga los datos en el select_tipo_acta
+                cargar_select_tipo_acta(token_actual);
+
+                //14-09-2020 Wilmer Mogollón --- Select tipo_evaluacion
+                //carga los datos en el select_tipo_evaluacion
+                cargar_select_tipo_evaluacion(token_actual);
+
+                // $('#form_nuevo_convocatoria').attr('action', url_pv + 'Rondas/new');
+                validator_form(token_actual);
+
+            });//$('#b_nueva_ronda').click();
+
+
+            //establece el valor de la convocatoria cuando existen categorias
+            $('#select_categoria').change(function () {
+                $("#convocatoria").val($("#select_categoria").val());
+            });
+
+
+            $('#b_nueva_ronda').on('hidden.bs.modal', function () {
+                /*$("#descripcion").jqteVal('');
+                 $("#orden").val("");
+                 $("#requisto option[value='']").prop("selected", true);
+                 $("#subsanable option[value='true']").prop("selected", true);
+                 $("#obligatorio option[value='true']").prop("selected", true);
+                 $("#id_registro").val("");
+                 */
+                //$('#form_nuevo_ronda').bootstrapValidator('resetForm', true)
+                //$('#form_nuevo_ronda').data('bootstrapValidator').resetForm(true);
+            });
         }
-
-        //William Barbosa 2019-07-18
-        //Cuando se pasa a enriquecido no valida revisar
-        //Establesco los text area html
-        $('.textarea_html').jqte();
-
-        cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-
-        //establece formulario nuevo
-        $('#b_nueva_ronda').click(function () {
-
-            $('#form_nuevo_ronda').trigger("reset");
-            $("#descripcion_ronda").jqteVal('');
-            $("#descripcion_ronda").val(null);
-            $("#id_registro").val(null);
-            $('.form_nuevo_ronda').bootstrapValidator('destroy', true);
-
-            //carga los datos en el select_categoria
-            cargar_select_categoria(token_actual);
-
-            //carga los datos en el select_tipo_acta
-            cargar_select_tipo_acta(token_actual);
-            
-            //14-09-2020 Wilmer Mogollón --- Select tipo_evaluacion
-            //carga los datos en el select_tipo_evaluacion
-            cargar_select_tipo_evaluacion(token_actual);
-
-            // $('#form_nuevo_convocatoria').attr('action', url_pv + 'Rondas/new');
-            validator_form(token_actual);
-
-        });//$('#b_nueva_ronda').click();
-
-
-        //establece el valor de la convocatoria cuando existen categorias
-        $('#select_categoria').change(function () {
-            $("#convocatoria").val($("#select_categoria").val());
-        });
-
-
-        $('#b_nueva_ronda').on('hidden.bs.modal', function () {
-            /*$("#descripcion").jqteVal('');
-             $("#orden").val("");
-             $("#requisto option[value='']").prop("selected", true);
-             $("#subsanable option[value='true']").prop("selected", true);
-             $("#obligatorio option[value='true']").prop("selected", true);
-             $("#id_registro").val("");
-             */
-            //$('#form_nuevo_ronda').bootstrapValidator('resetForm', true)
-            //$('#form_nuevo_ronda').data('bootstrapValidator').resetForm(true);
-        });        
-
     }//fin else
 });//fin document
 
@@ -88,13 +104,14 @@ function cargar_tabla(id, token_actual) {
         "destroy": true,
         "serverSide": true,
         "lengthMenu": [10, 15, 20],
-        "responsive":true,
+        "responsive": true,
         "ajax": {
             url: url_pv + "Rondas/all_convocatoria_ajustar",
-            data: {"token": token_actual.token, "idcat": id}
+            data: {"token": token_actual.token, "idcat": id},
+            type: "POST"
         },
         columnDefs: [
-            { orderable: false, targets: '_all' }
+            {orderable: false, targets: '_all'}
         ],
         "drawCallback": function (settings) {
             $(".check_activar_t").attr("checked", "true");
@@ -165,9 +182,9 @@ function cargar_tabla(id, token_actual) {
 
 function cargar_select_categoria(token_actual) {
 
-  $("#selectCategoria").hide();
+    $("#selectCategoria").hide();
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "id": $("#idConvocatoria").attr('value')},
         url: url_pv + 'Convocatorias/select_categorias/'
     }).done(function (data) {
@@ -182,20 +199,20 @@ function cargar_select_categoria(token_actual) {
             $('#select_categoria').find('option').remove();
 
             if (json.length > 0) {
-              //  console.log('lo'+json.length );
+                //  console.log('lo'+json.length );
 
-              //Cargo el select categorias
-              $('#select_categoria').find('option').remove();
-              $("#select_categoria").append('<option value="">:: Seleccionar ::</option>');
+                //Cargo el select categorias
+                $('#select_categoria').find('option').remove();
+                $("#select_categoria").append('<option value="">:: Seleccionar ::</option>');
 
                 $.each(json, function (key, categoria) {
                     $("#select_categoria").append('<option value="' + categoria.id + '"  >' + categoria.nombre + '</option>');
                 });
 
-              $("#selectCategoria").show();
+                $("#selectCategoria").show();
             } else {
-              $("#convocatoria").val($("#idConvocatoria").attr('value'));
-              $("#select_categoria").append('<option value="' + $("#idConvocatoria").attr('value') + '" selected >' + $("#idConvocatoria").attr('value') + '</option>');
+                $("#convocatoria").val($("#idConvocatoria").attr('value'));
+                $("#select_categoria").append('<option value="' + $("#idConvocatoria").attr('value') + '" selected >' + $("#idConvocatoria").attr('value') + '</option>');
 
             }
         }
@@ -204,7 +221,7 @@ function cargar_select_categoria(token_actual) {
 
 function cargar_select_tipo_acta(token_actual) {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "nombre": "tipo_acta"},
         url: url_pv + 'Tablasmaestras/select_general/'
     }).done(function (data) {
@@ -239,7 +256,7 @@ function cargar_select_tipo_acta(token_actual) {
  */
 function cargar_select_tipo_evaluacion(token_actual) {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "nombre": "tipo_evaluacion"},
         url: url_pv + 'Tablasmaestras/select_general/'
     }).done(function (data) {
@@ -306,7 +323,7 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'La descripción es requerida'}
                 }
             },
-           total_ganadores: {
+            total_ganadores: {
                 validators: {
                     notEmpty: {message: 'El número de ganadores es requerido'}
                 }
@@ -359,67 +376,67 @@ function validator_form(token_actual) {
 
         //console.log("form-->" + $form.serialize());
 
-        if ( $("#id_registro").attr('value') === null || $("#id_registro").attr('value') === '') {
-          console.log("crear!!!");
+        if ($("#id_registro").attr('value') === null || $("#id_registro").attr('value') === '') {
+            console.log("crear!!!");
             //Se realiza la peticion con el fin de guardar el registro actual
             $.ajax({
                 type: 'POST',
                 url: url_pv + 'Rondas/new',
-                data: $form.serialize() + "&modulo=Rondas&token=" + token_actual.token
+                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
             }).done(function (result) {
 
-                  switch (result) {
+                switch (result) {
                     case 'error':
-                      notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                      break;
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
                     case 'error_metodo':
-                      notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                      break;
+                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
                     case 'error_token':
-                      location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                      break;
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        break;
                     case 'acceso_denegado':
-                      notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                      break;
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
                     default:
-                      notify("success", "ok", "Convocatorias:", "Se creó la ronda con éxito.");
-                      //Cargar datos de la tabla de rondas
-                      cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-                      break;
-                    }
+                        notify("success", "ok", "Convocatorias:", "Se creó la ronda con éxito.");
+                        //Cargar datos de la tabla de rondas
+                        cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                        break;
+                }
 
 
             });
 
         } else {
-          //  console.log("editar!!!");
+            //  console.log("editar!!!");
 
             //Realizo la peticion con el fin de editar el registro actual
             $.ajax({
                 type: 'PUT',
                 url: url_pv + 'Rondas/edit_rondas/' + $("#id_registro").attr('value'),
-                data: $form.serialize() + "&modulo=Rondas&token=" + token_actual.token
+                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
             }).done(function (result) {
                 switch (result) {
-                case 'error':
-                  notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                  break;
-                case 'error_metodo':
-                  notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                  break;
-                case 'error_token':
-                  location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                  break;
-                case 'acceso_denegado':
-                  notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                  break;
-                case 'deshabilitado':
-                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                    break;
-                default:
-                    notify("info", "ok", "Convocatorias:", "Se editó la ronda con éxito.");
-                    cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-                  break;
+                    case 'error':
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_metodo':
+                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_token':
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        break;
+                    case 'acceso_denegado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
+                    case 'deshabilitado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
+                    default:
+                        notify("info", "ok", "Convocatorias:", "Se editó la ronda con éxito.");
+                        cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                        break;
                 }
             });
 
@@ -455,36 +472,36 @@ function acciones_ronda(token_actual) {
         //Peticion para inactivar el evento
         $.ajax({
             type: 'DELETE',
-            data: {"token": token_actual.token, "modulo": "Rondas", "active": active},
+            data: {"token": token_actual.token, "modulo": "SICON-AJUSTAR-CONVOCATORIAS", "active": active},
             url: url_pv + 'Rondas/delete_ajustar/' + $(this).attr("title")
         }).done(function (result) {
 
 
-          switch (result) {
-            case 'Si':
-                notify("info", "ok", "Convocatorias:", "Se activó la ronda con éxito.");
-              break;
-            case 'No':
-                notify("info", "ok", "Convocatorias:", "Se eliminó la ronda con éxito.");
-              break;
-            case 'error':
-              notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-              break;
-            case 'error_token':
-                location.href = url_pv_admin+'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-              break;
-            case 'acceso_denegado':
-              notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-              break;
-            case 'deshabilitado':
-              notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-              cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-              break;
-            default:
-              notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
-                cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-              break;
-          }
+            switch (result) {
+                case 'Si':
+                    notify("info", "ok", "Convocatorias:", "Se activó la ronda con éxito.");
+                    break;
+                case 'No':
+                    notify("info", "ok", "Convocatorias:", "Se eliminó la ronda con éxito.");
+                    break;
+                case 'error':
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
+                case 'error_token':
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    break;
+                case 'acceso_denegado':
+                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                    break;
+                case 'deshabilitado':
+                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                    cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                    break;
+                default:
+                    notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
+                    cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                    break;
+            }
 
         });
     });
@@ -492,12 +509,12 @@ function acciones_ronda(token_actual) {
     //Permite realizar la carga respectiva de la ronda
     $(".btn_cargar").click(function () {
 
-      $('#form_nuevo_ronda').trigger("reset");
-      $('.form_nuevo_ronda').bootstrapValidator('destroy', true);
+        $('#form_nuevo_ronda').trigger("reset");
+        $('.form_nuevo_ronda').bootstrapValidator('destroy', true);
 
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token},
             url: url_pv + 'Rondas/search/' + $(this).attr("id")
         }).done(function (data) {
@@ -535,7 +552,7 @@ function acciones_ronda(token_actual) {
     //carga el modal de criterios
     $(".btn_cargar_criterios").click(function () {
 
-    //  console.log("cargando criterios");
+        //  console.log("cargando criterios");
 
         var puntaje_maximo_criterios;
         var total_puntaje_criterios = 0;
@@ -549,76 +566,76 @@ function acciones_ronda(token_actual) {
 
         //traer el valor puntaje_maximo
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "nombre": "puntaje_maximo_criterios"},
             url: url_pv + 'Tablasmaestras/search_nombre/',
             async: false
         }).done(function (data) {
 
-           switch (data) {
-              case 'error':
-                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                break;
-              case 'error_token':
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                break;
-              case 'acceso_denegado':
-                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                break;
-              case 'error_metodo':
-                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                break;
-              default:
-                var json = JSON.parse(data);
-                puntaje_maximo_criterios = json.valor;
-                break;
+            switch (data) {
+                case 'error':
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
+                case 'error_token':
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    break;
+                case 'acceso_denegado':
+                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                    break;
+                case 'error_metodo':
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
+                default:
+                    var json = JSON.parse(data);
+                    puntaje_maximo_criterios = json.valor;
+                    break;
             }
 
         });
 
         //Calcular la suma de los puntajes de los criterios
         //  console.log("idRonda-->" + $(this).attr("title"));
-        $("#convocatoria_ronda").val( $(this).attr("id") );
+        $("#convocatoria_ronda").val($(this).attr("id"));
         //console.log("convocatoria_ronda->>"+ $("#convocatoria_ronda").val() );
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "idRonda": $(this).attr("id")},
             url: url_pv + 'Convocatoriasrondascriterios/criterios_ronda'
         }).done(function (result) {
 
-              //console.log("json-xxxx->>" + result);
+            //console.log("json-xxxx->>" + result);
 
-              switch (result) {
+            switch (result) {
                 case 'error':
-                  notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
                 case 'error_token':
-                  location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                  break;
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    break;
                 case 'acceso_denegado':
-                  notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                  break;
+                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                    break;
                 case 'error_metodo':
-                  notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
                 default:
-                  var json = JSON.parse(result);
+                    var json = JSON.parse(result);
 
-                  if (json.length > 0) {
+                    if (json.length > 0) {
 
-                      $.each(json, function (key, criterio) {
-                          //console.log("key->" + key + "  criterio.puntaje_maximo->" + criterio.puntaje_maximo);
-                          total_puntaje_criterios += criterio.puntaje_maximo;
-                      });
+                        $.each(json, function (key, criterio) {
+                            //console.log("key->" + key + "  criterio.puntaje_maximo->" + criterio.puntaje_maximo);
+                            total_puntaje_criterios += criterio.puntaje_maximo;
+                        });
 
-                      //asignar valor al limite
-                      limite = (puntaje_maximo_criterios - total_puntaje_criterios);
-                      //console.log("limite" + limite);
-                      $("#limite").val(limite);
-                  }
+                        //asignar valor al limite
+                        limite = (puntaje_maximo_criterios - total_puntaje_criterios);
+                        //console.log("limite" + limite);
+                        $("#limite").val(limite);
+                    }
 
-                  break;
-              }
+                    break;
+            }
             //cargar_tabla_criterio(  $(this).attr("title"), token_actual);
             //console.log("cargar");
             validator_form_criterio(token_actual, $(this).attr("id"));
@@ -627,7 +644,7 @@ function acciones_ronda(token_actual) {
 
         //carga select tipo criterios
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "nombre": "tipos_criterios"},
             url: url_pv + 'Tablasmaestras/select_general/'
         }).done(function (data) {
@@ -656,7 +673,7 @@ function acciones_ronda(token_actual) {
 
 
         //  sum_criterios(token_actual, $(this).attr("title"));
-        cargar_tabla_criterio( $(this).attr("id"), token_actual );
+        cargar_tabla_criterio($(this).attr("id"), token_actual);
         //$("#convocatoria_ronda").val($(this).attr("title"));
         //validator_form_criterio(token_actual,$(this).attr("title"));
     });
@@ -680,7 +697,8 @@ function cargar_tabla_criterio(idRonda, token_actual) {
         "responsive": true,
         "ajax": {
             url: url_pv + "Convocatoriasrondascriterios/all_criterios_ronda",
-            data: {"token": token_actual.token, "idRonda": idRonda}
+            data: {"token": token_actual.token, "idRonda": idRonda},
+            type: "POST"
         },
         "drawCallback": function (settings) {
             $(".check_activar_t").attr("checked", "true");
@@ -691,16 +709,16 @@ function cargar_tabla_criterio(idRonda, token_actual) {
             {"data": "orden"},
             {"data": "grupo_criterio"},
             {"data": "descripcion_criterio"},
-          //{"data": "puntaje_maximo"},
+            //{"data": "puntaje_maximo"},
             {"data": "rango",
-              render: function (data, type, row) {
-                  return row.puntaje_minimo+'-'+row.puntaje_maximo;
-              },
+                render: function (data, type, row) {
+                    return row.puntaje_minimo + '-' + row.puntaje_maximo;
+                },
             },
             {"data": "exclusivo",
-              render: function (data, type, row) {
-                  return  ( (row.exclusivo)? "Si":"No");
-              },
+                render: function (data, type, row) {
+                    return  ((row.exclusivo) ? "Si" : "No");
+                },
             },
             {"data": "active",
                 render: function (data, type, row) {
@@ -730,11 +748,11 @@ function validator_form_criterio(token_actual, idRonda) {
         },
         excluded: ':disabled',
         fields: {
-           /*grupo_criterio: {
-                validators: {
-                    notEmpty: {message: 'El grupo es requerido'}
-                }
-            },*/
+            /*grupo_criterio: {
+             validators: {
+             notEmpty: {message: 'El grupo es requerido'}
+             }
+             },*/
             descripcion_criterio: {
                 validators: {
                     notEmpty: {message: 'El criterio es requerido'}
@@ -759,13 +777,13 @@ function validator_form_criterio(token_actual, idRonda) {
         // Prevent form submission
         e.preventDefault();
         // Get the form instance
-        if( $("#exclusivo").prop('checked') ){
-           //$("#exclusivo").prop("checked", true);
-           $("#exclusivo").val(true);
-        }else{
-          //se establece con el fin de que viaje el parametro con el valor false
-           $("#exclusivo").prop("checked", true);
-           $("#exclusivo").val(false);
+        if ($("#exclusivo").prop('checked')) {
+            //$("#exclusivo").prop("checked", true);
+            $("#exclusivo").val(true);
+        } else {
+            //se establece con el fin de que viaje el parametro con el valor false
+            $("#exclusivo").prop("checked", true);
+            $("#exclusivo").val(false);
         }
 
         var $form = $(e.target);
@@ -778,39 +796,39 @@ function validator_form_criterio(token_actual, idRonda) {
         //console.log("form-->" + $form.serialize());
         //console.log("id_registro_criterio"+$("#id_registro_criterio"));
 
-        if ( $("#id_registro_criterio").attr('value') === null || $("#id_registro_criterio").attr('value') === '') {
+        if ($("#id_registro_criterio").attr('value') === null || $("#id_registro_criterio").attr('value') === '') {
             //console.log("crear!!!");
 
             //Se realiza la peticion con el fin de guardar el registro actual
             $.ajax({
                 type: 'POST',
                 url: url_pv + 'Convocatoriasrondascriterios/new',
-                data: $form.serialize() + "&modulo=Criterios&token=" + token_actual.token
+                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
             }).done(function (result) {
 
 
-              switch (result) {
-                case 'error':
-                  notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
-                case 'error_token':
-                  location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                  break;
-                case 'acceso_denegado':
-                  notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                  break;
-                case 'error_metodo':
-                  notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
-                  case 'error_puntaje':
-                    notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
-                    break;
-                default:
-                  notify("success", "ok", "Convocatorias:", "Se creó el criterio con éxito.");
-                  //Cargar datos de la tabla de rondas
-                  cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
-                  break;
-              }
+                switch (result) {
+                    case 'error':
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_token':
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        break;
+                    case 'acceso_denegado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
+                    case 'error_metodo':
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_puntaje':
+                        notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
+                        break;
+                    default:
+                        notify("success", "ok", "Convocatorias:", "Se creó el criterio con éxito.");
+                        //Cargar datos de la tabla de rondas
+                        cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
+                        break;
+                }
 
 
             });
@@ -822,36 +840,36 @@ function validator_form_criterio(token_actual, idRonda) {
             $.ajax({
                 type: 'PUT',
                 url: url_pv + 'Convocatoriasrondascriterios/edit/' + $("#id_registro_criterio").attr('value'),
-                data: $form.serialize() + "&modulo=Criterios&token=" + token_actual.token
+                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
             }).done(function (result) {
 
 
-              switch (result) {
-                case 'error':
-                  notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
-                case 'error_token':
-                  location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                  break;
-                case 'acceso_denegado':
-                  notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                  break;
-                case 'error_metodo':
-                  notify("danger", "ok", "Convocatorias:", "Se registró un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                  break;
-                case 'error_puntaje':
-                  notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
-                  break;
-                case 'deshabilitado':
-                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                    break;
-                default:
-                  notify("info", "ok", "Convocatorias:", "Se editó el criterio con éxito.");
-                  sum_criterios(token_actual, $("#convocatoria_ronda").attr('value') );
-                  cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
-                  $("#id_registro_criterio").val(null);
-                  break;
-              }
+                switch (result) {
+                    case 'error':
+                        notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_token':
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        break;
+                    case 'acceso_denegado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
+                    case 'error_metodo':
+                        notify("danger", "ok", "Convocatorias:", "Se registró un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_puntaje':
+                        notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
+                        break;
+                    case 'deshabilitado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        break;
+                    default:
+                        notify("info", "ok", "Convocatorias:", "Se editó el criterio con éxito.");
+                        sum_criterios(token_actual, $("#convocatoria_ronda").attr('value'));
+                        cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
+                        $("#id_registro_criterio").val(null);
+                        break;
+                }
 
             });
 
@@ -878,58 +896,58 @@ function acciones_criterio(token_actual) {
         //Cambio el estado del check
         var active = "false";
 
-        if ( $(this).prop('checked') ) {
+        if ($(this).prop('checked')) {
             active = "true";
         }
 
         //Peticion para inactivar o activar el evento
         $.ajax({
             type: 'DELETE',
-            data: {"token": token_actual.token, "modulo": "Rondas", "active": active, "convocatoria_ronda": $('#convocatoria_ronda').val()},
+            data: {"token": token_actual.token, "modulo": "SICON-AJUSTAR-CONVOCATORIAS", "active": active, "convocatoria_ronda": $('#convocatoria_ronda').val()},
             url: url_pv + 'Convocatoriasrondascriterios/delete/' + $(this).attr("title")
         }).done(function (result) {
 
 
-          switch (result) {
-            case 'Si':
-              notify("info", "ok", "Convocatorias:", "Se activó el evento con éxito.");
-              break;
-            case 'No':
-                notify("info", "ok", "Convocatorias:", "Se eliminó el evento con éxito.");
-              break;
-            case 'error':
-              notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-              break;
-            case 'error_token':
-              location.href = url_pv_admin+'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-              break;
-            case 'acceso_denegado':
-              notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-              break;
-            case 'error_metodo':
-              notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-              break;
-            case 'error_puntaje':
-                notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
-                $(this).removeAttr("checked");
+            switch (result) {
+                case 'Si':
+                    notify("info", "ok", "Convocatorias:", "Se activó el evento con éxito.");
+                    break;
+                case 'No':
+                    notify("info", "ok", "Convocatorias:", "Se eliminó el evento con éxito.");
+                    break;
+                case 'error':
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
+                case 'error_token':
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    break;
+                case 'acceso_denegado':
+                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                    break;
+                case 'error_metodo':
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    break;
+                case 'error_puntaje':
+                    notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
+                    $(this).removeAttr("checked");
 
-                return false;
-                break;
-            default:
-              break;
-          }
+                    return false;
+                    break;
+                default:
+                    break;
+            }
 
-          });
+        });
     });
 
     //carga los datos del formulario del modal de criterios
     $(".btn_cargar_criterio").click(function () {
-      //console.log("btn_cargar_criterio!!!");
+        //console.log("btn_cargar_criterio!!!");
 
 
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token},
             url: url_pv + 'Convocatoriasrondascriterios/search/' + $(this).attr("id")
         }).done(function (data) {
@@ -949,8 +967,8 @@ function acciones_criterio(token_actual) {
                     $("#grupo_criterio").val(json.grupo_criterio);
                     $("#descripcion_criterio").val(json.descripcion_criterio);
                     $("#id_registro_criterio").val(json.id);
-                    if(json.exclusivo){
-                       $("#exclusivo").prop("checked", true);
+                    if (json.exclusivo) {
+                        $("#exclusivo").prop("checked", true);
                     }
 
 
@@ -959,12 +977,12 @@ function acciones_criterio(token_actual) {
         });
 
 
-      //  validator_form_criterio(token_actual);
+        //  validator_form_criterio(token_actual);
 
     });
 
-    $("#puntaje_maximo").on("change",function(){
-    //  console.log("cambio!!!");
+    $("#puntaje_maximo").on("change", function () {
+        //  console.log("cambio!!!");
     })
 
 }
@@ -977,7 +995,7 @@ function sum_criterios(token_actual, idRonda) {
 
     //establecer el valor puntaje_maximo
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "nombre": "puntaje_maximo_criterios"},
         url: url_pv + 'Tablasmaestras/search_nombre/'
     }).done(function (data) {
@@ -998,9 +1016,9 @@ function sum_criterios(token_actual, idRonda) {
     );
 
     //Calcular la suma de los puntajes de los criterios
-  //  console.log("idRonda-->" + idRonda);
+    //  console.log("idRonda-->" + idRonda);
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "idRonda": idRonda},
         url: url_pv + 'Convocatoriasrondascriterios/criterios_ronda'
     }).done(function (data) {
@@ -1019,8 +1037,8 @@ function sum_criterios(token_actual, idRonda) {
 
                 $.each(json, function (key, criterio) {
                     console.log("key->" + key + "  valor->" + criterio.id);
-                    if(criterio.active){
-                      total_puntaje_criterios += criterio.puntaje_maximo;
+                    if (criterio.active) {
+                        total_puntaje_criterios += criterio.puntaje_maximo;
                     }
 
                 });

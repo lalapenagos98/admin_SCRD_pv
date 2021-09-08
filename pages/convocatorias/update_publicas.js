@@ -16,7 +16,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             //Cargamos el menu principal
             $.ajax({
                 type: 'POST',
-                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "modulo": "SICON-AJUSTAR-CONVOCATORIAS-UPDATE"},
                 url: url_pv + 'Administrador/menu'
             }).done(function (result) {
                 if (result == 'error_token')
