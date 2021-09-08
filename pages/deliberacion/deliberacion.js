@@ -6,6 +6,7 @@ $(document).ready(function () {
 //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
     $("#notificacion_periodo").hide();
+    $("#notificacion_evaluaciones").hide();
     $("#deliberar").hide();
     $("#confirmar_top_general").hide();
     $("#anular_deliberacion").hide();
@@ -502,6 +503,7 @@ function cargar_tabla(token_actual) {
      */
 
     $("#notificacion_periodo").hide();
+    $("#notificacion_evaluaciones").hide();
     //Muestro los botones
     $("#deliberar").show();
     $("#confirmar_top_general").show().slow;
@@ -512,6 +514,43 @@ function cargar_tabla(token_actual) {
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     //var data =  ( $('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
+    /*
+     * 09-08-2021
+     * Wilmer Gustavo Mogollón 
+     * Agregar información pertinente
+     */
+
+
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
+        data: {"token": token_actual.token},
+    }).done(function (data) {
+        switch (data) {
+            default:
+
+                var json = JSON.parse(data);
+
+
+                $("#fecha_inicio_evaluacion").html(json.inicio.substr(0, 10));
+                $("#fecha_fin_evaluacion").html(json.fin.substr(0, 10));
+
+
+
+                $("#notificacion_periodo").html('La fecha de deliberación es: ' + json.deliberacion.substr(0, 10) + '.');
+                $("#notificacion_periodo").show();
+
+                if (json.evaluaciones_confirmadas === 0) {
+                    $("#notificacion_evaluaciones").show();
+                    $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
+                }
+                
+                break;
+        }
+    }
+    );
+
+
 
     //establece los valores de la tabla
     $('#table_list').DataTable({
@@ -589,7 +628,11 @@ function cargar_tabla(token_actual) {
 
 
         ]
+
+
     });
+
+
 }
 
 function acciones_registro(token_actual) {
