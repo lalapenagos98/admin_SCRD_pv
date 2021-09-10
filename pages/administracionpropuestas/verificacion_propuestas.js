@@ -1215,24 +1215,17 @@ function cargar_verificacion_2(token_actual, propuesta) {
 //Funcion para descargar archivo
 function download_file(cod)
 {
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
-        $.AjaxDownloader({
-            url: url_pv + 'PropuestasDocumentacion/download_file/',
-            data: {
-                cod: cod,
-                token: token_actual.token,
-                modulo: "SICON-PROPUESTAS-VERIFICACION"
-            }
-        });
-    }
-
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+    
+    $.AjaxDownloader({
+        url: url_pv + 'PropuestasDocumentacion/download_file_back/',
+        data: {
+            cod: cod,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+        }
+    });
+    
 }
 
 //guardar verificacion 1
@@ -1313,4 +1306,23 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
     }
 
 
+}
+
+function certificado(id,programa){
+    var url = "reporte_propuesta_inscrita_back.php";
+    if(programa===2){
+        url = "reporte_propuesta_inscrita_pdac_back.php";
+    }
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+    
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+        }
+    });
+    
 }

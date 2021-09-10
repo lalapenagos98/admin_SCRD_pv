@@ -136,13 +136,28 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                         notify("danger", "remove", "Reportes:", "Debe ingresar el número de documento.");
                                                     } else
                                                     {
-                                                        window.open(url_pv_report + 'reporte_persona_natural.php?token=' + token_actual.token + '&nd=' + numero_documento + '&anio=' + $("#anio").val(), '_blank');
+                                                        $.AjaxDownloader({
+                                                            url: url_pv_report + 'reporte_persona_natural.php',
+                                                            data: {
+                                                                nd: numero_documento,
+                                                                anio: $("#anio").val(),
+                                                                token: token_actual.token,
+                                                                modulo: "SICON-PROPUESTAS-VERIFICACION"
+                                                            }
+                                                        });                                                                                                                
                                                     }
                                                 });
 
                                                 $('#btn_inhabilidades').click(function () {
                                                     var codigos = $("#inhabilidades_codigos").val();
-                                                    window.open(url_pv_report + 'reporte_inhabilidades_propuestas.php?codigos=' + codigos + '&token=' + token_actual.token, '_blank');
+                                                    $.AjaxDownloader({
+                                                        url: url_pv_report + 'reporte_inhabilidades_propuestas.php',
+                                                        data: {
+                                                            codigos: codigos,
+                                                            token: token_actual.token,
+                                                            modulo: "SICON-PROPUESTAS-VERIFICACION"
+                                                        }
+                                                    });                                                    
                                                 });
                                             }
                                         }
