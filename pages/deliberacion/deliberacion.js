@@ -112,8 +112,9 @@ $(document).ready(function () {
         $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
             $('#grupos_evaluacion').val(null);
-            cargar_select_grupos(token_actual, $('#rondas').val());
-            // cargar_tabla(token_actual);
+            if($('#anio').val() >= 2021){
+                cargar_select_grupos(token_actual, $('#rondas').val());
+            }
         });
         /*
          * 20-06-2020
@@ -129,8 +130,8 @@ $(document).ready(function () {
                 alert("Debe seleccionar la ronda de evaluación");
             } else {
 
-                if ($('#grupos_evaluacion').val() === "") {
-                    alert("Debe seleccionar un grupo de evaluación");
+                if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
+                        alert("Debe seleccionar un grupo de evaluación hpta");
                 } else {
                     $('#resultado').focus();
                     validator_form(token_actual);
