@@ -408,7 +408,7 @@ function cargar_tabla(token_actual)
             $("#busqueda").attr("value", "1");
         } else
         {
-            $('#table_list').DataTable().draw();
+            $('#table_list').DataTable().ajax.reload( null, false ); 
         }
     } else
     {
@@ -515,7 +515,7 @@ function cargar_tabla(token_actual)
                                         $("#busqueda").attr("value", "1");
                                     } else
                                     {
-                                        $('#table_list').DataTable().draw();
+                                        $('#table_list').DataTable().ajax.reload( null, false ); 
                                     }
                                 } else
                                 {

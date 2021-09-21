@@ -124,7 +124,7 @@ $(document).ready(function () {
                     $("#busqueda").attr("value", "1");
                 } else
                 {
-                    $('#table_list').DataTable().draw();
+                    $('#table_list').DataTable().ajax.reload( null, false ); 
                 }
             } else
             {
@@ -231,7 +231,7 @@ $(document).ready(function () {
                                                 $("#busqueda").attr("value", "1");
                                             } else
                                             {
-                                                $('#table_list').DataTable().draw();
+                                                $('#table_list').DataTable().ajax.reload( null, false ); 
                                             }
                                         } else
                                         {
