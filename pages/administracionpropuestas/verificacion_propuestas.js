@@ -585,7 +585,7 @@ $(document).ready(function () {
                                                 notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                             } else
                                             {
-                                                
+                                                $("#pd_link").attr('onclick',"download_file('"+data+"')");
                                                 notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
                                             }
                                         }
@@ -858,7 +858,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group">';
                         html_table = html_table + '                     <label>Soporte Rechazo</label>';
-                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
+                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip soporterechazo" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
                         html_table = html_table + '         </div>';
@@ -964,7 +964,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group">';
                         html_table = html_table + '                     <label>Soporte Rechazo</label>';
-                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
+                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip soporterechazo" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
                         html_table = html_table + '         </div>';
@@ -1100,6 +1100,8 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         $("#jurados_seleccionados").css("display","none");
                     }
 
+                    //Siempre debe estar activo
+                    $(".soporterechazo").removeAttr("disabled");
                 }
             }
         }
