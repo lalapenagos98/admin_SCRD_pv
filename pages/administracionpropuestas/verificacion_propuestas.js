@@ -85,7 +85,7 @@ $(document).ready(function () {
                     $("#busqueda").attr("value", "1");
                 } else
                 {
-                    $('#table_list').DataTable().draw();
+                    $('#table_list').DataTable().ajax.reload( null, false ); 
                 }
             } else
             {
@@ -140,7 +140,7 @@ $(document).ready(function () {
                                                 $("#busqueda").attr("value", "1");
                                             } else
                                             {
-                                                $('#table_list').DataTable().draw();
+                                                $('#table_list').DataTable().ajax.reload( null, false ); 
                                             }
                                         } else
                                         {
@@ -520,6 +520,90 @@ $(document).ready(function () {
             }
 
         });
+        
+        
+        $('input[type="file"]').change(function (evt) {
+
+            var f = evt.target.files[0];
+            var reader = new FileReader();
+
+            // Cierre para capturar la información del archivo.
+            reader.onload = function (fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                var srcName = f.name;
+                var srcSize = f.size;
+                var srcType = f.type;
+                var ext = srcName.split('.');
+                // ahora obtenemos el ultimo valor despues el punto
+                // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
+                srcExt = ext[ext.length - 1];
+
+                var permitidos = 'pdf';
+                var permitidos_mayuscula = 'PDF';
+                var pd_verificacion = $("#pd_verificacion").val();
+                var tamano = '15';
+
+                var extensiones = permitidos.split(',');
+                var extensiones_mayuscula = permitidos_mayuscula.split(',');
+
+                if (extensiones.includes(srcExt) || extensiones_mayuscula.includes(srcExt) )
+                {
+                    //mb -> bytes
+                    permitidotamano = tamano * 1000 * 1000;
+                    if (srcSize > permitidotamano)
+                    {
+                        notify("danger", "ok", "Documentación:", "El tamaño del archivo excede el permitido (" + tamano + " MB)");
+                    } else
+                    {
+                        
+                        var token_actual = getLocalStorage(name_local_storage);
+                        
+                        $.post(url_pv + 'PropuestasVerificacion/guardar_archivo_rechazo', {pd_verificacion: pd_verificacion, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, propuesta: $("#propuesta").attr('value'),"modulo": "Verificación de propuestas"}).done(function (data) {
+                            if (data == 'error_metodo')
+                            {
+                                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            } else
+                            {
+                                if (data == 'error_token')
+                                {
+                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                } else
+                                {
+
+                                    if (data == 'acceso_denegado')
+                                    {
+                                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                                    } else
+                                    {
+                                        if (data == 'error_carpeta')
+                                        {
+                                            notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo en la carpeta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error_archivo')
+                                            {
+                                                notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                $("#pd_link").attr('onclick',"download_file('"+data+"')");
+                                                notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        });
+                    }
+                } else
+                {
+                    notify("danger", "ok", "Documentación:", "Archivo no permitido");
+                }
+
+            };
+            // Leer en el archivo como una URL de datos.                
+            reader.readAsDataURL(f);
+        });
 
     }
 });
@@ -564,7 +648,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta,tipo_verific
                             $('#modal_verificacion_2').modal('hide');
                             $('#modal_verificacion_1').modal('hide');
 
-                            $('#table_list').DataTable().draw();
+                            $('#table_list').DataTable().ajax.reload( null, false );                             
                         }
                     }
                 }
@@ -749,15 +833,18 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         });
                         
                         var color_boton_guardado="btn-success";
+                        var mostrar_file='display:block';
                         if(documento.verificacion_1_id=="")
                         {
                             color_boton_guardado="btn-danger";
+                            mostrar_file='display:none';
                         } 
                         
                         html_table = html_table + '                     </select>';
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
                         html_table = html_table + '         </div>';
+                        
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group">';
@@ -766,6 +853,17 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
                         html_table = html_table + '         </div>';
+                        
+                        html_table = html_table + '         <div id="div_' + documento.id + '" class="row" style="'+mostrar_file+'">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label>Soporte Rechazo</label>';
+                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip soporterechazo" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        
+                        
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
@@ -841,9 +939,11 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         });
                         
                         var color_boton_guardado="btn-success";
+                        var mostrar_file='display:block';
                         if(documento.verificacion_1_id=="")
                         {
                             var color_boton_guardado="btn-danger";
+                            mostrar_file='display:none';
                         }                        
                         
                         html_table = html_table + '                     </select>';
@@ -858,6 +958,19 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         html_table = html_table + '                 </div>';
                         html_table = html_table + '             </div>';
                         html_table = html_table + '         </div>';
+                        
+                        
+                        html_table = html_table + '         <div id="div_' + documento.id + '" class="row" style="'+mostrar_file+'">';
+                        html_table = html_table + '             <div class="col-lg-12">';
+                        html_table = html_table + '                 <div class="form-group">';
+                        html_table = html_table + '                     <label>Soporte Rechazo</label>';
+                        html_table = html_table + '                     <button type="button" class="btn btn-primary btn_tooltip soporterechazo" data-toggle="modal" data-target="#cargar_documento" onclick="guardar_variables_documentos(\'' + documento.id + '\',\'' + documento.id_alfresco + '\')">Cargar Soporte, si aplica</button>';
+                        html_table = html_table + '                 </div>';
+                        html_table = html_table + '             </div>';
+                        html_table = html_table + '         </div>';
+                        
+                        
+                        
                         html_table = html_table + '         <div class="row">';
                         html_table = html_table + '             <div class="col-lg-12">';
                         html_table = html_table + '                 <div class="form-group" style="text-align: right">';
@@ -987,6 +1100,8 @@ function cargar_verificacion_1(token_actual, propuesta) {
                         $("#jurados_seleccionados").css("display","none");
                     }
 
+                    //Siempre debe estar activo
+                    $(".soporterechazo").removeAttr("disabled");
                 }
             }
         }
@@ -1224,6 +1339,13 @@ function download_file(cod)
 
 }
 
+
+function guardar_variables_documentos(id,id_alfresco){        
+    $("#pd_verificacion").val($("#id_documento_"+id).val());
+    $("#pd_link").attr('onclick',"download_file('"+id_alfresco+"')");
+}
+
+
 //guardar verificacion 1
 function guardar_verificacion_1(token_actual, id , modulo , verificacion)
 {
@@ -1286,7 +1408,8 @@ function guardar_verificacion_1(token_actual, id , modulo , verificacion)
                                     $("#id_documento_" + convocatoriadocumento).val(result);
                                     $("#btn_documento_" + convocatoriadocumento).removeClass("btn-danger");
                                     $("#btn_documento_" + convocatoriadocumento).addClass("btn-success");
-
+                                    $("#div_" + convocatoriadocumento).css('display','block');
+                                    guardar_variables_documentos(convocatoriadocumento);
                                     notify("success", "ok", "Verificación de propuestas:", "Se Guardó con éxito la verificación del documento.");
                                 }
                             }

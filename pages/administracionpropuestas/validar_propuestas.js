@@ -92,7 +92,7 @@ $(document).ready(function () {
                     $("#busqueda").attr("value", "1");
                 } else
                 {
-                    $('#table_list').DataTable().draw();
+                    $('#table_list').DataTable().ajax.reload( null, false ); 
                 }
             } else
             {
@@ -147,7 +147,7 @@ $(document).ready(function () {
                                                 $("#busqueda").attr("value", "1");
                                             } else
                                             {
-                                                $('#table_list').DataTable().draw();
+                                                $('#table_list').DataTable().ajax.reload( null, false ); 
                                             }
                                         } else
                                         {
@@ -561,7 +561,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta,tipo_verific
                             $('#modal_verificacion_2').modal('hide');
                             $('#modal_verificacion_1').modal('hide');
 
-                            $('#table_list').DataTable().draw();
+                            $('#table_list').DataTable().ajax.reload( null, false ); 
                         }
                     }
                 }
@@ -1342,7 +1342,7 @@ function guardar_por_que_habilita()
                                     $('#modal_habilitar_1').modal('hide');
                                     $(".por_que_habilita").html('');
                                     $("textarea#por_que_habilita").val('');
-                                    $('#table_list').DataTable().draw();
+                                    $('#table_list').DataTable().ajax.reload( null, false ); 
                                 }
                             }
                         }
