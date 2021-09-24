@@ -68,6 +68,29 @@ $(document).ready(function () {
             //cargar_tabla(token_actual);
             //$("#exampleModal").modal("toggle");
         });
+        
+        /*
+         * 22-09-2021
+         * Wilmer Gustavo Mogollón Duque
+         * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
+         */
+
+        //acta preselección
+        $("#generar_acta_preseleccion").click(function () {
+
+            $("#mensajegn").show();
+            $("#bcancelargn").show();
+            $("#baceptargn").show();
+        });
+        $("#baceptargn").click(function () {
+            if($("#categorias").val()===""){
+                generar_acta_jurados_preseleccionados(token_actual, $("#convocatorias").val());
+            }else{
+                generar_acta_jurados_preseleccionados(token_actual, $("#categorias").val());
+            }
+//            generar_acta_jurados_preseleccionados(token_actual, $('#rondas').val());
+            $('#genera_acta_modal').modal('hide');
+        });
 
         $("#exampleModal").on('hide.bs.modal', function () {
             $('#filtro').val(null);
@@ -2389,4 +2412,16 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
 
     );
 
+}
+
+/*
+ * 22-09-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se incorpora la función generar_acta_jurados_preseleccionados, para llamar al controlador que genera el acta de deliberación
+ */
+
+
+function generar_acta_jurados_preseleccionados(token_actual, id_convocatoria) {
+
+    window.open(url_pv + "FormatosDoc/generar_acta_jurados_preseleccionados/convocatoria/" + id_convocatoria, "_blank");
 }
