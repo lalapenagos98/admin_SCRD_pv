@@ -131,7 +131,7 @@ $(document).ready(function () {
             } else {
 
                 if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                        alert("Debe seleccionar un grupo de evaluación hpta");
+                        alert("Debe seleccionar un grupo de evaluación");
                 } else {
                     $('#resultado').focus();
                     validator_form(token_actual);
