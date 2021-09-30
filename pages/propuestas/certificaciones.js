@@ -56,7 +56,19 @@ $(document).ready(function () {
                             m = "JUR";                                
                         }
                         
-                        href = redirect + "?entidad=" + row.entidad + "&tp=" + m + "&id=" + row.codigo+ "&token=" + row.token;
+                        if(row.usuariocertifica!=null)
+                        {
+                            var entidad_usuario = row.usuariocertifica.split('@');
+                            entidad_usuario = entidad_usuario[1].split('.')[0];                            
+                            
+                            href = redirect + "?entidad=" + entidad_usuario.toUpperCase() + "&tp=" + m + "&id=" + row.codigo+ "&token=" + row.token;
+                            
+                        }
+                        else
+                        {
+                            href = redirect + "?entidad=" + row.entidad + "&tp=" + m + "&id=" + row.codigo+ "&token=" + row.token;
+                        }
+                        
 
                         if(m=="JUR")
                         {

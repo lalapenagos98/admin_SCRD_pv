@@ -49,6 +49,16 @@ $(document).ready(function () {
                             });
                         }
 
+                        //Cargos el select de localidades
+                        $('#certifica').find('option').remove();
+                        $("#certifica").append('<option value="">:: Seleccionar ::</option>');
+                        if (json.certifica.length > 0) {
+                            $.each(json.certifica, function (key, usuario) {
+                                var selected = '';
+                                $("#certifica").append('<option value="' + usuario.id + '" ' + selected + ' >' + usuario.username + ' - ' + usuario.primer_nombre + ' ' + usuario.segundo_nombre + ' ' + usuario.primer_apellido + ' ' + usuario.segundo_apellido + '</option>');
+                            });
+                        }
+
                         if (json.entidades.length > 0) {
                             //var selected;
                             $.each(json.estados_propuestas, function (key, estado_propuesta) {
