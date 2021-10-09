@@ -162,7 +162,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.comunidad_objetivo!=null)
                                                                         {
-                                                                            $(".caracter_comunidad_objetivo").html(2000 - json.propuesta.comunidad_objetivo.length);
+                                                                            $(".caracter_comunidad_objetivo").html(1000 - json.propuesta.comunidad_objetivo.length);
                                                                         }
                                                                         if(json.propuesta.establecio_cifra!=null)
                                                                         {
@@ -226,7 +226,7 @@ function validator_form(token_actual) {
             },
             poblacion_objetivo: {
                 validators: {
-                    notEmpty: {message: 'Describa brevemente la población objetivo del proyecto, es requerido'},
+                    notEmpty: {message: 'Describa la estrategia de vinculación de beneficiarios o participantes del proyecto, es requerido'},
                     stringLength: {
                         message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 1000.',
                         max: '1000'
@@ -235,10 +235,10 @@ function validator_form(token_actual) {
             },
             comunidad_objetivo: {
                 validators: {
-                    notEmpty: {message: '¿Cómo se concertó el proyecto con la comunidad objetivo?, es requerido'},
+                    notEmpty: {message: 'Dentro de la población beneficiaria del proyecto se incluirá algunos de los grupos poblacionales, es requerido'},
                     stringLength: {
-                        message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 2000.',
-                        max: '2000'
+                        message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 1000.',
+                        max: '1000'
                     }
                 }
             },

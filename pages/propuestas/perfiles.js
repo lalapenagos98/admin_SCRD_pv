@@ -134,7 +134,7 @@ $(document).ready(function () {
                     $("#condiciones_participacion_pdf").attr("src", $("#tipo_participante option:selected").attr("lang"));
                     
                     if($("#programa").val()=="2"){
-                        if($("#convocatoria_padre").val()=="608")
+                        if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186")
                         {
                             $(".alianza_pdac").css("display", "block");
                         }
@@ -248,7 +248,7 @@ $(document).ready(function () {
 
                 var enviar=true;
                 
-                if($("#convocatoria_padre").val()=="608"){
+                if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186"){
                     if($("#alianza_sectorial").val()=="")
                     {
                         enviar=false;
