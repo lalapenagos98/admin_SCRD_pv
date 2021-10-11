@@ -139,8 +139,8 @@ $(document).ready(function () {
                             //copio el formulario
                             if(row.id_estado==34)
                             {
-                                href_propuesta = "cambio_integrante.html?perfil=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
-                                row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Realizar cambio de integrante"><span class="fa fa-users"></span></button></a>';
+//                                href_propuesta = "cambio_integrante.html?perfil=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
+//                                row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Realizar cambio de integrante"><span class="fa fa-users"></span></button></a>';
                                 /*Wilmer Mogollón -- 26-09-2021 -- Agrego botón para documentación ganadores*/
                                 href_propuesta = "documentacion_ganadores.html?m=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
                                 row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-success btn_tooltip" title="Documentación ganadores"><span class="fa fa-folder-o"></span></button></a>';
