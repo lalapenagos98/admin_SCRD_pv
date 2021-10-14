@@ -112,7 +112,7 @@ $(document).ready(function () {
                                                                         var json = JSON.parse(data);
                                                                         
                                                                         //Si la convocatoria es interlocales
-                                                                        if(json.convocatoria_padre_categoria=="608")
+                                                                        if(json.convocatoria_padre_categoria=="608" || json.convocatoria_padre_categoria=="1186")
                                                                         {
                                                                             $(".campos_locales").css("display","block");
                                                                         }
@@ -159,6 +159,10 @@ $(document).ready(function () {
                                                                         if(json.propuesta.poblacion_objetivo!=null)
                                                                         {
                                                                             $(".caracter_poblacion_objetivo").html(1000 - json.propuesta.poblacion_objetivo.length);
+                                                                        }
+                                                                        if(json.propuesta.poblacion_estrategia!=null)
+                                                                        {
+                                                                            $(".caracter_poblacion_estrategia").html(1000 - json.propuesta.poblacion_estrategia.length);
                                                                         }
                                                                         if(json.propuesta.comunidad_objetivo!=null)
                                                                         {
@@ -225,6 +229,15 @@ function validator_form(token_actual) {
                 }
             },
             poblacion_objetivo: {
+                validators: {
+                    notEmpty: {message: 'Describa brevemente la población objetivo del proyecto, es requerido'},
+                    stringLength: {
+                        message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 1000.',
+                        max: '1000'
+                    }
+                }
+            },
+            poblacion_estrategia: {
                 validators: {
                     notEmpty: {message: 'Describa la estrategia de vinculación de beneficiarios o participantes del proyecto, es requerido'},
                     stringLength: {
