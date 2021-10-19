@@ -230,7 +230,7 @@ function validator_form(token_actual) {
             },
             poblacion_objetivo: {
                 validators: {
-                    notEmpty: {message: 'Describa brevemente la población objetivo del proyecto, es requerido'},
+                    notEmpty: {message: 'Describa brevemente la población beneficiaria del proyecto, es requerido'},
                     stringLength: {
                         message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 1000.',
                         max: '1000'
