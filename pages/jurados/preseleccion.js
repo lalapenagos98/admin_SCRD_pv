@@ -6,25 +6,120 @@ keycloak.init(initOptions).then(function (authenticated) {
         keycloak.login();
     } else
     {
-        //Guardamos el token en el local storage
-        if (typeof keycloak === 'object') {
+        $('.convocatorias-search').select2();
+        //Verifica si el token actual tiene acceso de lectura
+        permiso_lectura(token_actual, "Jurados");
+        init(token_actual);
+        //cargar_datos_formulario(token_actual);
+        validator_form(token_actual);
 
-            var token_actual = JSON.parse(JSON.stringify(keycloak));
-            //Verifica si el token actual tiene acceso de lectura
-            permiso_lectura_keycloak(token_actual.token, "SICON-JURADOS-PRESELECCION");
+        //carga select_convocatorias
+        $('#anio').change(function () {
+            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+            $('#select_categorias').hide();
+            $('#convocatorias').val(null);
+            $('#categorias').val(null);
+            cargar_tabla(token_actual);
+        });
 
-            //Cargamos el menu principal
-            $.ajax({
-                type: 'POST',
-                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-                url: url_pv + 'Administrador/menu_funcionario'
-            }).done(function (result) {
-                if (result == 'error_token')
-                {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                } else
-                {
-                    $("#menu_principal").html(result);
+        //carga select convocatorias
+        $('#entidad').change(function () {
+            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+            $('#select_categorias').hide();
+            $('#convocatorias').val(null);
+            $('#categorias').val(null);
+            cargar_tabla(token_actual);
+        });
+
+        //carga el select categorias
+        $('#convocatorias').change(function () {
+            cargar_select_categorias(token_actual, $('#convocatorias').val());
+            $('#categorias').val(null);
+            cargar_tabla(token_actual);
+        });
+
+        $('#categorias').change(function () {
+
+            cargar_tabla(token_actual);
+        });
+
+        //carga la tabla con los criterios de busqueda
+        $('#buscar').click(function () {
+            //  alert("buscando");
+            $('#resultado').focus();
+            cargar_tabla(token_actual);
+        });
+
+        $('#buscar_banco').click(function () {
+            //$("#formulario_busqueda_banco").submit();
+            //$('#resultado').focus();
+            //$('#filtro').val(true);
+            //cargar_tabla(token_actual);
+            //$("#exampleModal").modal("toggle");
+        });
+
+        $('#formulario_busqueda_banco').click(function () {
+            //$("#formulario_busqueda_banco").submit();
+            //$('#resultado').focus();
+            //$('#filtro').val(true);
+            //cargar_tabla(token_actual);
+            //$("#exampleModal").modal("toggle");
+        });
+        
+        /*
+         * 22-09-2021
+         * Wilmer Gustavo Mogollón Duque
+         * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
+         */
+
+        //acta preselección
+        $("#generar_acta_preseleccion").click(function () {
+
+            $("#mensajegn").show();
+            $("#bcancelargn").show();
+            $("#baceptargn").show();
+        });
+        $("#baceptargn").click(function () {
+            if($("#categorias").val()===""){
+                generar_acta_jurados_preseleccionados(token_actual, $("#convocatorias").val());
+            }else{
+                generar_acta_jurados_preseleccionados(token_actual, $("#categorias").val());
+            }
+//            generar_acta_jurados_preseleccionados(token_actual, $('#rondas').val());
+            $('#genera_acta_modal').modal('hide');
+        });
+
+        $("#exampleModal").on('hide.bs.modal', function () {
+            $('#filtro').val(null);
+            $('#palabra_clave').val(null);
+            $("#formulario_busqueda_banco").trigger("reset");
+        });
+
+        $("#evaluar").on('hide.bs.modal', function () {
+
+        });
+
+        $("#form_aplica_perfil").bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                descripcion_evaluacion: {
+                    enabled: false,
+                    validators: {
+                        notEmpty: {
+                            message: 'Digite la razón por la cual no aplica el perfil.'
+                        }
+                    }
+                },
+                'option_aplica_perfil': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe seleccionar si aplica ó no el perfil.'
+                        },
+                    }
                 }
             });
             
@@ -2115,4 +2210,17 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
     }
 
     );
+
+}
+
+/*
+ * 22-09-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se incorpora la función generar_acta_jurados_preseleccionados, para llamar al controlador que genera el acta de deliberación
+ */
+
+
+function generar_acta_jurados_preseleccionados(token_actual, id_convocatoria) {
+
+    window.open(url_pv + "FormatosDoc/generar_acta_jurados_preseleccionados/convocatoria/" + id_convocatoria, "_blank");
 }

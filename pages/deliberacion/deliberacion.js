@@ -2,6 +2,7 @@
 keycloak.init(initOptions).then(function (authenticated) {
 //Si no esta autenticado lo obliga a ingresar al keycloak
     $("#notificacion_periodo").hide();
+    $("#notificacion_evaluaciones").hide();
     $("#deliberar").hide();
     $("#confirmar_top_general").hide();
     $("#anular_deliberacion").hide();
@@ -98,22 +99,27 @@ keycloak.init(initOptions).then(function (authenticated) {
             //carga el select grupos evaluación
             $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
-                $('#grupos_evaluacion').val(null);
+            $('#grupos_evaluacion').val(null);
+            if($('#anio').val() >= 2021){
                 cargar_select_grupos(token_actual, $('#rondas').val());
-                // cargar_tabla(token_actual);
-            });
-            /*
-             * 20-06-2020
-             * Wilmer Gustavo Mogollón Duque
-             * Agrego un if para controlar que seleccione la ronda de evaluación
-             */
+            }
+        });
+        /*
+         * 20-06-2020
+         * Wilmer Gustavo Mogollón Duque
+         * Agrego un if para controlar que seleccione la ronda de evaluación
+         */
 
 
-            //carga la tabla con los criterios de busqueda
-            $('#buscar').click(function () {
+        //carga la tabla con los criterios de busqueda
+        $('#buscar').click(function () {
 
-                if ($('#rondas').val() === "") {
-                    alert("Debe seleccionar la ronda de evaluación");
+            if ($('#rondas').val() === "") {
+                alert("Debe seleccionar la ronda de evaluación");
+            } else {
+
+                if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
+                        alert("Debe seleccionar un grupo de evaluación");
                 } else {
 
                     if ($('#grupos_evaluacion').val() === "") {
@@ -543,6 +549,7 @@ function cargar_tabla(token_actual) {
      */
 
     $("#notificacion_periodo").hide();
+    $("#notificacion_evaluaciones").hide();
     //Muestro los botones
     $("#deliberar").show();
     $("#confirmar_top_general").show().slow;
@@ -553,6 +560,43 @@ function cargar_tabla(token_actual) {
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     //var data =  ( $('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
+    /*
+     * 09-08-2021
+     * Wilmer Gustavo Mogollón 
+     * Agregar información pertinente
+     */
+
+
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
+        data: {"token": token_actual.token},
+    }).done(function (data) {
+        switch (data) {
+            default:
+
+                var json = JSON.parse(data);
+
+
+                $("#fecha_inicio_evaluacion").html(json.inicio.substr(0, 10));
+                $("#fecha_fin_evaluacion").html(json.fin.substr(0, 10));
+
+
+
+                $("#notificacion_periodo").html('La fecha de deliberación es: ' + json.deliberacion.substr(0, 10) + '.');
+                $("#notificacion_periodo").show();
+
+                if (json.evaluaciones_confirmadas === 0) {
+                    $("#notificacion_evaluaciones").show();
+                    $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
+                }
+                
+                break;
+        }
+    }
+    );
+
+
 
     //establece los valores de la tabla
     $('#table_list').DataTable({
@@ -631,7 +675,11 @@ function cargar_tabla(token_actual) {
 
 
         ]
+
+
     });
+
+
 }
 
 function acciones_registro(token_actual) {

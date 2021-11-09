@@ -112,7 +112,15 @@ keycloak.init(initOptions).then(function (authenticated) {
                     }
                 } else
                 {
-                    if ($("#convocatoria").val() != "")
+                    $('#table_list').DataTable().ajax.reload( null, false ); 
+                }
+            } else
+            {
+                if ($("#convocatoria").val() != "")
+                {
+
+                    var mensaje;
+                    if ($("#convocatoria option:selected").attr("dir") == "true")
                     {
 
                         var mensaje;
@@ -226,6 +234,15 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                                         $("#convocatoria").selectpicker('refresh');
 
+                                                $("#busqueda").attr("value", "1");
+                                            } else
+                                            {
+                                                $('#table_list').DataTable().ajax.reload( null, false ); 
+                                            }
+                                        } else
+                                        {
+                                            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        }
                                     }
                                 }
                             }
@@ -578,7 +595,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
                             $('#modal_verificacion_2').modal('hide');
                             $('#modal_verificacion_1').modal('hide');
 
-                            $('#table_list').DataTable().draw();
+                            $('#table_list').DataTable().ajax.reload( null, false ); 
                         }
                     }
                 }
@@ -1359,6 +1376,58 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
 
 }
 
+//guardar guardar_por_que_habilita
+function guardar_por_que_habilita()
+{
+    $('.guardar_por_que_habilita').click(function () {
+       if($("#por_que_habilita").val()!="")
+        {
+            var token_habilitar = getLocalStorage(name_local_storage);
+            
+            $.ajax({
+                type: 'POST',
+                url: url_pv + 'PropuestasValidar/guardar_habilitacion',
+                data: {"token": token_habilitar.token, "modulo": "Validar propuestas", "propuesta": $("#propuesta").val(), "numero_habilitar": $("#numero_habilitar").val(), "por_que_habilita": $("#por_que_habilita").val()},
+            }).done(function (result) {
+
+                if (result == 'error_metodo')
+                {
+                    notify("danger", "ok", "Validar propuestas:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (result == 'error_token')
+                    {
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    } else
+                    {
+                        if (result == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        } else
+                        {
+                            if (result == 'crear_propuesta')
+                            {
+                                notify("danger", "remove", "Validar propuestas:", "El código de la propuesta no es valido.");
+                            } else
+                            {
+                                if (result == 'error')
+                                {
+                                    notify("danger", "ok", "Validar propuestas:", "Se registro un error al crear, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                } else
+                                {
+
+                                    $('#modal_confirmar_administrativa_1').modal('hide');
+                                    $('#modal_verificacion_2').modal('hide');
+                                    $('#modal_verificacion_1').modal('hide');
+                                    $('#modal_habilitar_1').modal('hide');
+                                    $(".por_que_habilita").html('');
+                                    $("textarea#por_que_habilita").val('');
+                                    $('#table_list').DataTable().ajax.reload( null, false ); 
+                                }
+                            }
+                        }
+                    }
+                }
 
 function certificado(id,programa){
     var url = "reporte_propuesta_inscrita_back.php";
