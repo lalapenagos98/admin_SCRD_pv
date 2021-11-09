@@ -293,15 +293,21 @@ keycloak.init(initOptions).then(function (authenticated) {
                             }
                         }
                     }
-                });
-
-                $('#enfoque').find('option').remove();
-                $.ajax({
-                    type: 'POST',
-                    data: {"token": token_actual.token, "programa": programa},
-                    url: url_pv + 'Enfoques/select'
-                }).done(function (data) {
-                    if (data == 'error_metodo')
+                }
+            });
+            
+            $('#enfoque').find('option').remove();
+            $.ajax({
+                type: 'GET',
+                data: {"token": token_actual.token, "programa": programa},
+                url: url_pv + 'Enfoques/selectconvocatorias'
+            }).done(function (data) {
+                if (data == 'error_metodo')
+                {
+                    notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (data == 'error_token')
                     {
                         notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     } else

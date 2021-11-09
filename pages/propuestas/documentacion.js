@@ -404,6 +404,11 @@ $(document).ready(function () {
                                                                                 {                                                                                    
                                                                                     nombre_requisito="El total de la cofinanciación es superior al 70% del valor total del proyecto, se debe ajustar.";
                                                                                 }
+                                                                                
+                                                                                if(documento.nombre=="FLimitePresupuesto")
+                                                                                {                                                                                    
+                                                                                    nombre_requisito="El valor solicitado en cofinanciación supera el tope establecido para la convocatoria.";
+                                                                                }
 
                                                                                 html_table = html_table + '<li>' + nombre_requisito + '</li>';
                                                                             });
