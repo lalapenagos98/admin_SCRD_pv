@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    
-    
+
+
+
 
     <head>
 
@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>::Paanel Flujo de Pagos::</title>
+        <title>::Panel Flujo de Pagos::</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -85,30 +85,30 @@
                     <!-- /.col-lg-12 -->
                 </div>
 
-<!--                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <h5>Para tener en cuenta</h5>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
+                <!--                <div class="row">
                                     <div class="col-lg-12">
-
-
-                                        <p><strong>Antes de comenzar, lea por favor el siguiente contenido que le indicará algunos aspectos importantes para tener en cuenta:</strong></p>
-                                        <ul>
-                                            <li><strong>Rondas de evaluación:</strong> Es necesario verificar que las rondas que se crearon para ésta convocatoria cuenten con la información correspondiente.</li>
-                                            <li><strong>Criterios de evaluación:</strong> Los criterios de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.</li>
-                                            <li><strong>Grupos de evaluación:</strong> Los grupos de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.  </li>
-                                            <li><strong>Evaluación de las propuestas:</strong> Es necesario que todos los jurados hayan confirmado top individual.  </li>
-                                        </ul>
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                <h5>Para tener en cuenta</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                
+                
+                                                        <p><strong>Antes de comenzar, lea por favor el siguiente contenido que le indicará algunos aspectos importantes para tener en cuenta:</strong></p>
+                                                        <ul>
+                                                            <li><strong>Rondas de evaluación:</strong> Es necesario verificar que las rondas que se crearon para ésta convocatoria cuenten con la información correspondiente.</li>
+                                                            <li><strong>Criterios de evaluación:</strong> Los criterios de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.</li>
+                                                            <li><strong>Grupos de evaluación:</strong> Los grupos de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.  </li>
+                                                            <li><strong>Evaluación de las propuestas:</strong> Es necesario que todos los jurados hayan confirmado top individual.  </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+                                </div>-->
 
                 <!-- /.row -->
                 <div class="row">
@@ -157,25 +157,25 @@
                                         </div>
                                     </div>
 
-<!--                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Ronda de evaluación</label>
-                                                <select id='rondas' name="rondas" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6" id="select_grupos" >
-                                            <div class="form-group">
-                                                <label>Grupos de evaluación</label>
-                                                <select id='grupos_evaluacion' name="grupos_evaluacion" class="form-control" disabled="" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>-->
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label>Ronda de evaluación</label>
+                                                                                    <select id='rondas' name="rondas" class="form-control" >
+                                                                                        <option value="">:: Seleccionar ::</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6" id="select_grupos" >
+                                                                                <div class="form-group">
+                                                                                    <label>Grupos de evaluación</label>
+                                                                                    <select id='grupos_evaluacion' name="grupos_evaluacion" class="form-control" disabled="" >
+                                                                                        <option value="">:: Seleccionar ::</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                    
+                                                                        </div>-->
 
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
@@ -194,75 +194,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <!-- /.col-lg-12 -->
-                        <div class="panel-body" style="text-align: right">
-                            <button type="button" 
-                                    class="btn btn-success btn-circle btn-lg" 
-                                    id="deliberar" title="Deliberar" 
-                                    data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa  fa-mail-reply "></i>
-                            </button>
-
-                            <!--
-                            22-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón anular_deliberacion
-                            -->
-
-                            <button type="button"
-                                    class="btn btn-danger btn-circle btn-lg"
-                                    id="anular_deliberacion"
-                                    title="Anular deliberación"
-                                    data-toggle="modal" data-target="#anular_deliberacionModal">
-                                <i class="fa fa-step-backward "></i>
-                            </button>
-
-                            <button type="button"
-                                    class="btn btn-primary btn-circle btn-lg"
-                                    id="top_general"
-                                    title="Confirma top general"
-                                    data-target="#top_generalModal">
-                                <i class="fa fa-check-square-o "></i>
-                            </button>
-
-
-
-                            <!--
-                            15-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón asignar_estimulo
-                            -->
-                            <button type="button"
-                                    class="btn btn-alert btn-circle btn-lg"
-                                    id="asignar_estimulo"
-                                    title="Asignar estímulo"
-                                    data-target="#asignar_estimulo_Modal">
-                                <i class="fa fa-money "></i>
-                            </button>
-                            <!--
-                            12-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón generar_acta
-                            -->
-                            <button type="button"
-                                    class="btn btn-info btn-circle btn-lg"
-                                    id="genera_acta"
-                                    data-toggle="modal"
-                                    title="Generar acta"
-                                    data-target="#genera_acta_modal">
-                                <i class="fa fa-file-word-o "></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
                         <div class="alert alert-info" id="notificacion_periodo">
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="alert alert-danger" id="notificacion_evaluaciones">
@@ -283,11 +219,19 @@
                                         <table id="table_list" class="table" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th>Código de la propuesta</th>
+                                                    <th>Estado del pago</th>
+                                                    <th>Año</th>
+                                                    <th>Convocatoria</th>
+                                                    <th>Categoría</th>
                                                     <th>Nombre de la propuesta</th>
-                                                    <th>Total evaluación</th>
-                                                    <!--th>Estado de la evaluación</th-->
-                                                    <th>Acciones</th>
+                                                    <th>Código de la propuesta</th>
+                                                    <th>Participante</th>
+                                                    <th>Verificación Misional</th>
+                                                    <th>Verificación Financiero</th>
+                                                    <th>Verificación Director de Fomento</th>
+                                                    <th>Verificación Asesor</th>
+                                                    <th>Verificación Subsecretaría de Gobernanza</th>
+                                                    <!--<th>Acciones</th>-->
                                                 </tr>
                                             </thead>
                                         </table>
@@ -324,7 +268,7 @@
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Información básica
+                                Información básica d
                             </div>
                             <div class="panel-body">
                                 <div class="row">

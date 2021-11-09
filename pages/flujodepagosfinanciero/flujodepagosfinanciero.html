@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    
-    
+
+
+
 
     <head>
 
@@ -85,30 +85,30 @@
                     <!-- /.col-lg-12 -->
                 </div>
 
-<!--                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <h5>Para tener en cuenta</h5>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
+                <!--                <div class="row">
                                     <div class="col-lg-12">
-
-
-                                        <p><strong>Antes de comenzar, lea por favor el siguiente contenido que le indicará algunos aspectos importantes para tener en cuenta:</strong></p>
-                                        <ul>
-                                            <li><strong>Rondas de evaluación:</strong> Es necesario verificar que las rondas que se crearon para ésta convocatoria cuenten con la información correspondiente.</li>
-                                            <li><strong>Criterios de evaluación:</strong> Los criterios de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.</li>
-                                            <li><strong>Grupos de evaluación:</strong> Los grupos de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.  </li>
-                                            <li><strong>Evaluación de las propuestas:</strong> Es necesario que todos los jurados hayan confirmado top individual.  </li>
-                                        </ul>
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                <h5>Para tener en cuenta</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                
+                
+                                                        <p><strong>Antes de comenzar, lea por favor el siguiente contenido que le indicará algunos aspectos importantes para tener en cuenta:</strong></p>
+                                                        <ul>
+                                                            <li><strong>Rondas de evaluación:</strong> Es necesario verificar que las rondas que se crearon para ésta convocatoria cuenten con la información correspondiente.</li>
+                                                            <li><strong>Criterios de evaluación:</strong> Los criterios de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.</li>
+                                                            <li><strong>Grupos de evaluación:</strong> Los grupos de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.  </li>
+                                                            <li><strong>Evaluación de las propuestas:</strong> Es necesario que todos los jurados hayan confirmado top individual.  </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+                                </div>-->
 
                 <!-- /.row -->
                 <div class="row">
@@ -157,25 +157,25 @@
                                         </div>
                                     </div>
 
-<!--                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Ronda de evaluación</label>
-                                                <select id='rondas' name="rondas" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6" id="select_grupos" >
-                                            <div class="form-group">
-                                                <label>Grupos de evaluación</label>
-                                                <select id='grupos_evaluacion' name="grupos_evaluacion" class="form-control" disabled="" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>-->
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <div class="form-group">
+                                                                                    <label>Ronda de evaluación</label>
+                                                                                    <select id='rondas' name="rondas" class="form-control" >
+                                                                                        <option value="">:: Seleccionar ::</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6" id="select_grupos" >
+                                                                                <div class="form-group">
+                                                                                    <label>Grupos de evaluación</label>
+                                                                                    <select id='grupos_evaluacion' name="grupos_evaluacion" class="form-control" disabled="" >
+                                                                                        <option value="">:: Seleccionar ::</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                    
+                                                                        </div>-->
 
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
@@ -194,75 +194,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <!-- /.col-lg-12 -->
-                        <div class="panel-body" style="text-align: right">
-                            <button type="button" 
-                                    class="btn btn-success btn-circle btn-lg" 
-                                    id="deliberar" title="Deliberar" 
-                                    data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa  fa-mail-reply "></i>
-                            </button>
-
-                            <!--
-                            22-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón anular_deliberacion
-                            -->
-
-                            <button type="button"
-                                    class="btn btn-danger btn-circle btn-lg"
-                                    id="anular_deliberacion"
-                                    title="Anular deliberación"
-                                    data-toggle="modal" data-target="#anular_deliberacionModal">
-                                <i class="fa fa-step-backward "></i>
-                            </button>
-
-                            <button type="button"
-                                    class="btn btn-primary btn-circle btn-lg"
-                                    id="top_general"
-                                    title="Confirma top general"
-                                    data-target="#top_generalModal">
-                                <i class="fa fa-check-square-o "></i>
-                            </button>
-
-
-
-                            <!--
-                            15-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón asignar_estimulo
-                            -->
-                            <button type="button"
-                                    class="btn btn-alert btn-circle btn-lg"
-                                    id="asignar_estimulo"
-                                    title="Asignar estímulo"
-                                    data-target="#asignar_estimulo_Modal">
-                                <i class="fa fa-money "></i>
-                            </button>
-                            <!--
-                            12-06-2020
-                            Wilmer Gustavo Mogollón Duque
-                            Se incorpora botón generar_acta
-                            -->
-                            <button type="button"
-                                    class="btn btn-info btn-circle btn-lg"
-                                    id="genera_acta"
-                                    data-toggle="modal"
-                                    title="Generar acta"
-                                    data-target="#genera_acta_modal">
-                                <i class="fa fa-file-word-o "></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
                         <div class="alert alert-info" id="notificacion_periodo">
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="alert alert-danger" id="notificacion_evaluaciones">
@@ -283,10 +219,13 @@
                                         <table id="table_list" class="table" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th>Código de la propuesta</th>
+                                                    <th>Estado del pago</th>
+                                                    <th>Año</th>
+                                                    <th>Convocatoria</th>
+                                                    <th>Categoría</th>
                                                     <th>Nombre de la propuesta</th>
-                                                    <th>Total evaluación</th>
-                                                    <!--th>Estado de la evaluación</th-->
+                                                    <th>Código de la propuesta</th>
+                                                    <th>Participante</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
@@ -315,7 +254,7 @@
             <div class="modal-dialog modal-lg " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="evaluarModalLabel">Evaluación de la propuesta</h5>
+                        <h4 class="modal-title" id="evaluarModalLabel">Documentación de la propuesta ganadora</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -336,52 +275,286 @@
                                         <h5><b>Nombre de la propuesta:</b></h5>
                                         <span id="nombre_propuesta"></span>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <h5><b>Resumen de la propuesta:</b></h5>
-                                        <span id="resumen_propuesta"></span>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <h5><b>Objetivo de la propuesta:</b></h5>
-                                        <span id="objetivo_propuesta"></span>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h5><b>¿La propuesta se desarrollara en Bogotá D.C.?</b></h5>
-                                        <span id="bogota_propuesta"></span>
-                                    </div>
-
                                     <div id="parametros_propuesta">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Evaluaciones
+                                Documentos
                             </div>
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <table id="table_evaluaciones" class="table" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>Código del jurado</th>
-                                                    <th>Jurado evaluador</th>
-                                                    <th>Top individual</th>
-                                                    <th>Observación</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="table_evaluaciones_body">
-                                            </tbody>
-                                            <tfoot style="font-weight: bold">
-                                                <tr>
-                                                    <td>Top general</td>
-                                                    <td colspan="3"><span id="table_evaluaciones_top_general"></span></td>
 
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Requisito</th>
+                                                <th>Descripcion</th>
+                                                <th>Estado documento</th>
+                                                <th>Acciones</th>
+                                                <th>Ver información</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="archivos_table">
+
+                                        </tbody>
+                                    </table>
                                 </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Registrar variables del ganador
+                            </div>
+                            <div class="panel-body">
+                                <form id="asignar_est_form" role="form">
+                                    <fieldset id="fieldset_top_general">
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Número de resolución:<span class="icono_requerido">*</span></label>
+                                                    <input id="numero_resolucion" name="numero_resolucion" class="form-control" title="Número de Resolución" disabled>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fecha de Resolución:<span class="icono_requerido">*</span></label>
+                                                    <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                        <input class="form-control" id="fecha_resolucion" name="fecha_resolucion" size="16" type="text" value="" readonly disabled>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fecha de inicio de ejecución:<span class="icono_requerido">*</span></label>
+                                                    <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                        <input class="form-control" id="fecha_inicio_ejecucion" name="fecha_inicio_ejecucion" size="16" type="text" value="" readonly disabled>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fecha fin de ejecución:<span class="icono_requerido">*</span></label>
+                                                    <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                        <input class="form-control" id="fecha_fin_ejecucion" name="fecha_fin_ejecucion" size="16" type="text" value="" readonly disabled>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fecha de aprobación de garantía:<span class="icono_requerido">*</span></label>
+                                                    <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                        <input class="form-control" id="fecha_aprobacion_garantia" name="fecha_aprobacion_garantia" size="16" type="text" value="" readonly disabled>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fecha de informe de seguimiento a la supervisión:<span class="icono_requerido">*</span></label>
+                                                    <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                        <input class="form-control" id="fecha_informe_seguimiento_supervision" name="fecha_informe_seguimiento_supervision" size="16" type="text" value="" readonly disabled>
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Código presupuestal:<span class="icono_requerido">*</span></label>
+                                                    <input id="codpresu" name="codpresu" class="form-control" title="Código presupuestal" disabled>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Código del proyecto de inversión:<span class="icono_requerido">*</span></label>
+                                                    <input id="cpin" name="cpin" class="form-control" title="Código del proyecto de inversión" disabled>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>CDP:<span class="icono_requerido">*</span></label>
+                                                    <input id="cdp" name="cdp" class="form-control" title="CDP" required>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>CRP:<span class="icono_requerido">*</span></label>
+                                                    <input id="crp" name="crp" class="form-control" title="CRP" required>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Monto Asignado:<span class="icono_requerido">*</span></label>
+                                                    <input type="hidden" id="id_propuesta_misional" name="id_propuesta_misional"/>
+                                                    <input id="monto_asignado" name="monto_asignado" class="form-control" title="Monto AsignadoO" disabled>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+                                            <!--                                            <div class="col-lg-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>Radicado de cuenta en Orfeo:<span class="icono_requerido">*</span></label>
+                                                                                                <input id="radicado_cuenta_orfeo" name="radicado_cuenta_orfeo" class="form-control" title="Radicado de cuenta en ORFEO" disabled>
+                                                                                                p class="help-block">Digite el total de ganadores para la ronda.</p
+                                                                                            </div>
+                                                                                        </div>-->
+
+                                        </div>
+
+                                        <br/>
+                                        <br/>
+                                        <hr/>
+
+                                        <div class="table-responsive">
+                                            <h4>Listado de pagos</h4>
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th># Pago</th>
+                                                        <th>Valor pago total</th>
+                                                        <th>Valor_pago</th>
+                                                        <th>Estado</th>
+                                                        <th>Descargar archivo</th>
+                                                        <th>Ver información</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="pagos_table">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <br/>
+                                        <br/>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Código Interno del Registro Presupuestal:<span class="icono_requerido">*</span></label>
+                                                    <!--<input id="codigo_interno_registro_presupuestal" name="codigo_interno_registro_presupuestal" class="form-control" title="Código Interno del Registro Presupuestal" required>-->
+                                                    <select id='codigo_interno_registro_presupuestal' name="codigo_interno_registro_presupuestal" class="form-control" required>
+                                                        <option value="">:: Seleccionar ::</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Condición de Pago:<span class="icono_requerido">*</span></label>
+                                                    <select id='condicion_pago' name="condicion_pago" class="form-control" >
+                                                        <option value="A" selected>Abono en cuenta</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Vigencia de los Recusros:<span class="icono_requerido">*</span></label>
+                                                    <select id='vigencia_recursos' name="vigencia_recursos" class="form-control" >
+                                                        <option value="">:: Seleccionar ::</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2019">2019</option>
+                                                        <option value="2018">2018</option>
+                                                        <option value="2017">2017</option>
+                                                        <option value="2016">2016</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Fuente de los Recursos:<span class="icono_requerido">*</span></label>
+                                                    <select id='fuente_recursos' name="fuente_recursos" class="form-control" required>
+                                                        <option value="">:: Seleccionar ::</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Ordenador del gasto<span class="icono_requerido">*</span></label>
+                                                    <select id='ordenador_gasto' name="ordenador_gasto" class="form-control" required>
+                                                        <option value="">:: Seleccionar ::</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>ID del tercero: <small>ID TERCERO AL QUE SE LE PAGA LA OP</small><span class="icono_requerido">*</span></label>
+                                                    <input id="id_tercero" name="id_tercero" class="form-control" title="ID del tercero que recibe el pago" required disabled>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Cuenta contable (débito):<span class="icono_requerido">*</span></label>
+                                                    <input id="cuenta_contable_debito" name="cuenta_contable_debito" class="form-control" title="Cuenta contable (débito)" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Cuenta contable (crédito):<span class="icono_requerido">*</span></label>
+                                                    <input id="cuenta_contable_credito" name="cuenta_contable_credito" class="form-control" title="Cuenta contable (crédito)" disabled>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <br/>
+                                        <br/>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Observación de la Verificación:<span class="icono_requerido">*</span></label>
+                                                    <input type="hidden" id="id_propuesta_financiero" name="id_propuesta_financiero"/>
+                                                    <input id="observacion_verificacion_financiero" name="observacion_verificacion_financiero" class="form-control" title="Observación de la Verificación" required>
+                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <br/>
+                                        <br/>
+                                        <hr/>
+
+                                        <div class="row">
+                                            <div class="col-lg-6" style="text-align: center">
+                                                <button type="button" id="devolver_al_misional" class="btn btn-danger">Devolver al Misional</button>
+                                            </div>
+                                            <div class="col-lg-6" style="text-align: center">
+                                                <button type="button" id="aprobar_variable" class="btn btn-info">Aprobar Variables</button>
+                                            </div>                    
+                                        </div>
+
+
+                                    </fieldset>
+                                </form>
+
+
                             </div>
                         </div>
 
@@ -389,7 +562,7 @@
 
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="notificar_cancelar" >Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="notificar_cancelar" >Cancelar</button>
                         <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
                     </div>
 
@@ -399,546 +572,172 @@
         </div>
         <!-- Modal -->
 
-        <!-- Modal confirmar top general-->
-        <div class="modal fade" id="top_generalModal" tabindex="-1" role="dialog" aria-labelledby="top_generalModalLabel" >
-            <div class="modal-dialog modal-lg " role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="top_generalModalLabel">Top general</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form_top_general" role="form">
-                            <fieldset id="fieldset_top_general">
-
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Información básica
-                                    </div>
-                                    <div class="panel-body">
-
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <h5><b>Convocatoria:</b></h5>
-                                                <span id="nombre_convocatoria"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5><b>Ronda:</b></h5>
-                                                <span id="nombre_ronda"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5><b>Descripción:</b></h5>
-                                                <span id="descripcion_ronda"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5><b>Fecha inicio de la evaluación:</b></h5>
-                                                <span id="fecha_inicio_evaluacion"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5><b>Fecha fin de la evaluación:</b></h5>
-                                                <span id="fecha_fin_evaluacion"></span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h5><b>Fecha de deliberación:</b></h5>
-                                                <span id="fecha_deliberacion"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Total ganadores:</label>
-                                                    <input id="total_ganadores" name="total_ganadores" class="form-control" title="Total de ganadores de la ronda" required>
-                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Total suplentes:</label>
-                                                    <input id="total_suplentes" name="total_suplentes" class="form-control" title="Total de suplentes de la ronda" required>
-                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Recomendación de ganadores
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <table id="table_recomendacion_ganadores" class="table" style="width: 100%;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Código de la propuesta</th>
-                                                            <th>Nombre de la propuesta</th>
-                                                            <th>Top general</th>
-                                                            <th>Grupo evaluador</th>
-                                                            <th>Ver inhabilidades</th>
-                                                        </tr>
-                                                    </thead>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Aspectos destacados de las propuestas ganadoras
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <textarea id="aspectos" name="aspectos" class="form-control" rows="3" placeholder="Describa los aspectos destacados de las propuestas ganadoras (Si no cuenta con la información escriba no aplica)" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Recomendaciones para la ejecución de las propuestas ganadoras
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <textarea id="recomendaciones" name="recomendaciones" class="form-control" rows="3" placeholder="Describa las recomendaciones para la ejecución de las propuestas ganadoras (Si no cuenta con la información escriba no aplica)" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Comentarios generales sobre la convocatoria y las propuestas participantes
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <textarea id="comentarios" name="comentarios" class="form-control" rows="3" placeholder="Describa de los comentarios generales sobre la convocatoria y las propuestas participantes (Si no cuenta con la información escriba no aplica)" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div style="text-align: right;">
-                                    <button type="button" class="btn btn-danger" id="btn_declarar_desierta" data-toggle="modal" data-target="#genera_acta_modal_desierta" >Declarar desierta</button>
-                                    <button type="button" class="btn btn-primary" id="btn_aceptar_top" data-toggle="modal" data-target="#exampleModaltop">Aceptar top general</button>
-                                </div>
-
-                            </fieldset>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
 
         <!--
-        15-06-2020
-        Wilmer Gustavo Mogollón Duque
-        Se incorpora modal para asignar estímulos a cada propuesta
-        -->
-        <!-- Modal asignar estímulos a cada propuesta-->
-        <div class="modal fade" id="asignar_estimulo_Modal" tabindex="-1" role="dialog" aria-labelledby="asignar_estimulo_ModalLabel" >
-            <div class="modal-dialog modal-lg " role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="top_generalModalLabel">Asignar estímulos</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form_top_general_asignar" role="form">
-                            <fieldset id="fieldset_top_general">
-
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Recomendación de ganadores
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <table id="table_recomendacion_ganadores_asignar" class="table" style="width: 100%;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Código de la propuesta</th>
-                                                            <th>Nombre de la propuesta</th>
-                                                            <th>Top general</th>
-                                                            <th>Asignar estímulo</th>
-                                                        </tr>
-                                                    </thead>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
-                        <!--<button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button>-->
-                        <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-        <!-- Modal asignar estímulos a cada propuesta-->
-        <div class="modal fade" id="asignar_monto" tabindex="-1" role="dialog" aria-labelledby="asignar_montoLabel" >
-            <div class="modal-dialog modal-sm " role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="top_generalModalLabel">Asignar estímulos</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="asignar_est_form" role="form">
-                            <fieldset id="fieldset_top_general">
-
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        Asignar estímulo para la propuesta
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label>Valor del estímulo:</label>
-                                                    <input type="hidden" id="id_propuesta" name="id_propuesta"/>
-                                                    <input id="monto_asignado" name="monto_asignado" class="form-control" title="Valor del estímulo asignado a la ronda">
-                                                    <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelarasg">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptarasg" >Aceptar</button>
-                        <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-        <!--
-            06-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al enviar a deliberar y para acpetar top general.
+                28-09-2021
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal información complementaria
         -->
 
-        <!-- Modal enviar a deliberar -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensaje" style="display:none;">
-                            ¿Está seguro de enviar a deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-
-        <!-- Modal enviar a aceptar top general -->
-        <div class="modal fade" id="exampleModaltop" tabindex="-1" role="dialog" aria-labelledby="exampleModaltopLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModaltopLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajetop">
-                            ¿Está seguro de aceptar el top general?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelartop" >Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptartop" >Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-        <!--
-            12-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al generar acta.
-        -->
-
-        <!-- Modal generar acta -->
-        <div class="modal fade" id="genera_acta_modal" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajegn" style="display:none;">
-                            ¿Está seguro de generar el acta de deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelargn" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptargn" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-        <!--
-            15-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al generar acta de convocatoria desierta.
-        -->
-
-        <!-- Modal declarar convocatoria desierta -->
-        <div class="modal fade" id="genera_acta_modal_desierta" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modal_desiertaLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajeds" style="display:none;">
-                            ¿Está seguro de declarar la convocatoria desierta?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelards" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptards" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-
-        <!-- Modal anular deliberación -->
-        <div class="modal fade" id="anular_deliberacionModal" tabindex="-1" role="dialog" aria-labelledby="anular_deliberacionModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensaje_anular" style="display:none;">
-                            ¿Está seguro de anular la deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar_anular" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptar_anular" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-
-
-
-        <!-- Modal verificación inhabilidades -->
-
-        <div class="modal fade" id="modal_verificacion">
-
-            <div class="modal-dialog" style="width: 800px;  margin: auto;">
-                <div class="modal-content">
-                    <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
-                    <div class="loading centrado-porcentual"></div>
+        <div class="modal fade" id="complementar_informacion">
+            <div class="modal-dialog">
+                <div class="modal-content">                                                        
                     <!-- cabecera del diálogo -->
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Información de la propuesta</h4>                                                    
+                        <h4 class="modal-title">Información del documento</h4>                                                    
                     </div>
-                    <!-- cuerpo del diálogo -->                                                    
-                    <div class="modal-body" style="height: 450px; overflow-y: auto;">                                                                                                            
-                        <div class="row">
-                            <div class="col-lg-12">                                                                
-                                <table id="info_propuesta_verificacion_1" class="table table-bordered table-striped">                                    
-                                    <tbody>
-                                        <tr>
-                                            <th>Estado</th>
-                                            <td class="nombre_estado"></td>
-                                            <th>Código</th>
-                                            <td id="codigo_propuesta"></td>
-                                        </tr>
-                                        <tr>                                                                            
-                                            <th>Tipo de participante</th>
-                                            <td class="tipo_participante"></td>
-                                            <th>Nombre del participante</th>
-                                            <td class="nombre_participante"></td>
-                                        </tr>
-                                        <tr>                                                                            
-                                            <th colspan="1">Nombre de la propuesta</th>
-                                            <td colspan="3" class="nombre_propuesta"></td>
-                                        </tr>                                                                                                                                                                                
-                                    </tbody>
-                                </table>                                                                
-                            </div>
-                        </div> 
-                        <div id="contratistas" class="row" style="display: none">
-                            <div class="col-lg-12"> 
-                                <b>La propuesta actual tiene contratistas registrados como participantes, los cuales son:</b>
+                    <div class="loading centrado-porcentual"></div>             
+                    <!-- cuerpo del diálogo -->
+                    <div class="modal-body">
+                        <!--formulario cuenta bancaria-->
+                        <div id="cuenta_bancaria">
+                            <form id="formulario_complementar_informacion_cuenta_bancaria" action="" class="formulario_complementar_informacion_cuenta_bancaria" role="form" method="post">                                    
+                                <fieldset id="fieldset_cuenta">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <p><strong>1 - Certificación bancaria</strong></p>
+                                            <div class="form-group col-lg-6">
+                                                <label>Entidad Bancaria</label>
+                                                <input type="text" id="entidad_bancaria" name="entidad_bancaria" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label>Tipo de cuenta</label>
+                                                <input type="text" id="tipo_cuenta" name="tipo_cuenta" class="form-control" disabled>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label>Número de cuenta</label>
+                                                <input type="text" id="info_comp_numero_cuenta" name="info_comp_numero_cuenta" class="form-control" disabled>
+                                            </div>
+                                        </div>                                                                                                                                                                                                                                                                                                     
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                        <!--<button type="submit" class="btn btn-default" id="guardar_parametro_cuenta">Guardar</button>-->
+                                    </div>
+                                </div>
 
-                                <table class="table table-bordered table-striped">                                    
-                                    <thead>
-                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                            <th>Participante</th>
-                                            <th>Contratista en:</th>                                                                            
-                                        </tr>                                                                                                                                                                                                                                                        
-                                    </thead>
-                                    <tbody id="body_contratistas">                                                                        
 
-                                    </tbody>
-                                </table>                                                                                                                                
-                            </div>                                                            
-                        </div> 
-                        <div id="propuestas_pn" class="row" style="display: none">
-                            <div class="col-lg-12"> 
-                                <b>La propuesta actual cuenta con integrantes que participa en otras convocatorias, los cuales son:</b>
-
-                                <table class="table table-bordered table-striped">                                    
-                                    <thead>
-                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                            <th>Convocatoria</th>
-                                            <th>Categoría</th>   
-                                            <th>Tipo Rol</th>                        
-                                            <th>Participante</th>
-                                            <th>Propuesta código</th>                                                                                                                   
-                                            <th>Estado propuesta</th>
-                                        </tr>                                                                                                                                                                                                                                                        
-                                    </thead>
-                                    <tbody id="body_propuestas_pn">                                                                        
-
-                                    </tbody>
-                                </table>                                                                                                                                
-                            </div>                                                            
-                        </div> 
-                        <div id="propuestas_ganadoras_pn" class="row" style="display: none">
-                            <div class="col-lg-12"> 
-                                <b>La propuesta actual cuenta con integrantes que ya son ganadores en otras convocatorias, los cuales son:</b>
-
-                                <table class="table table-bordered table-striped">                                    
-                                    <thead>
-                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                            <th>Convocatoria</th>
-                                            <th>Categoría</th>   
-                                            <th>Tipo Rol</th>                        
-                                            <th>Participante</th>
-                                            <th>Propuesta código</th>                                                                                                                   
-                                            <th>Estado propuesta</th>
-                                        </tr>                                                                                                                                                                                                                                                        
-                                    </thead>
-                                    <tbody id="body_propuestas_ganadoras_pn">                                                                        
-
-                                    </tbody>
-                                </table>                                                                                                                                
-                            </div>                                                            
+                            </form> 
                         </div>
+                        <div id="rut">
+                            <!--formulario rut-->
+                            <form id="formulario_complementar_informacion_rut" action="" class="formulario_complementar_informacion_rut" role="form" method="post">                                    
+                                <fieldset id="fieldset_rut">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <p><strong>2 - Fotocopia del certificado de Registro Único Tributario (RUT)</strong></p>
+                                            <div class="form-group">
+                                                <label>Dirección del beneficiario</label>
 
-                        <div id="ganadoras_anios_anteriores" class="row" style="display: none">
-                            <div class="col-lg-12"> 
-                                <b>La propuesta actual cuenta con integrantes que ya fueron ganadores en años anteriores, los cuales son:</b>
+                                                <input type="text" id="info_comp_rut" name="info_comp" class="form-control" disabled>
+                                            </div>
+                                            <!--                                            <div class="form-group">
+                                                                                            <label>Observación de la verificación</label>
+                                                                                            <input type="hidden" id="propuesta_rut" name="propuesta_rut"/>
+                                                                                            <input type="hidden" id="programadocumento_rut" name="programadocumento_rut" value="2"/>
+                                                                                            <input type="hidden" id="label" name="label" value="Dirección del beneficiario"/>
+                                                                                            <input type="hidden" id="id_html" name="id_html" value="info_comp_rut"/>
+                                                                                            <input type="text" id="observacion_verificacion_rut" name="observacion_verificacion_rut" class="form-control">
+                                                                                        </div>-->
+                                        </div>                                                                                                                                                                                                                                                                                                     
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right">
 
-                                <table class="table table-bordered table-striped">                                    
-                                    <thead>
-                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                            <th>Año</th>
-                                            <th>Entidad</th>
-                                            <th>Convocatoria</th>                                                                            
-                                            <th>Categoría</th>   
-                                            <th>Propuesta</th>                                                                            
-                                            <th>Participante</th>
-                                            <th>Tipo participante</th>                                                                                                    
-                                            <th>Tipo Rol</th>                                                                            
-                                        </tr>                                                                                                                                                                                                                                                        
-                                    </thead>
-                                    <tbody id="body_ganadoras_anios_anteriores">                                                                        
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                        <!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_rut">Enviar a subsabar documento</button>
+                                                                                <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_rut">Aprobar documento</button>-->
+                                    </div>
+                                </div>
 
-                                    </tbody>
-                                </table>                                                                                                                                
-                            </div>                                                            
-                        </div> 
+                            </form>   
+                        </div>
+                        <div id="otros_documentos">
+                            <!--formulario otros-->
+                            <form id="formulario_complementar_informacion_otros" action="" class="formulario_complementar_informacion_otros" role="form" method="post">                                    
+                                <fieldset id="fieldset_otros">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <p><strong>Información adicional del documento</strong></p>
+                                            <div class="form-group">
+                                                <label>Descripción</label>
 
-                        <div id="jurados_seleccionados" class="row" style="display: none">
-                            <div class="col-lg-12"> 
-                                <b>La propuesta actual cuenta con integrantes que ya son jurados seleccionados, los cuales son:</b>
+                                                <input type="text" id="info_comp_otros" name="info_comp_otros" class="form-control" disabled>
+                                            </div>
+                                            <!--                                            <div class="form-group">
+                                                                                            <label>Observación de la verificación</label>
+                                                                                            <input type="hidden" id="propuesta_otros" name="propuesta_otros"/>
+                                                                                            <input type="hidden" id="programadocumento_otros" name="programadocumento_otros"/>
+                                                                                            <input type="hidden" id="label_otros" name="label_otros" value="Descripción"/>
+                                                                                            <input type="hidden" id="id_html_otros" name="id_html_otros" value="info_comp_otros"/>
+                                                                                            <input type="text" id="observacion_verificacion_otros" name="observacion_verificacion_otros" class="form-control">
+                                                                                        </div>-->
+                                        </div>                                                                                                                                                                                                                                                                                                     
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right">
 
-                                <table class="table table-bordered table-striped">                                    
-                                    <thead>
-                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                            <th>Convocatoria</th>
-                                            <th>Categoría</th>   
-                                            <th>Tipo Rol</th>                        
-                                            <th>Participante</th>                                                                            
-                                            <th>Estado postulación</th>
-                                        </tr>                                                                                                                                                                                                                                                        
-                                    </thead>
-                                    <tbody id="body_jurados_seleccionados">                                                                        
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                        <!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_otros">Enviar a subsabar documento</button>
+                                                                                <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_otros">Aprobar documento</button>-->
+                                    </div>
+                                </div>
 
-                                    </tbody>
-                                </table>                                                                                                                                
-                            </div>                                                            
-                        </div> 
+                            </form>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+                14-10-2021
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal información complementaria convocatoriadocumentos
+        -->
+
+        <div class="modal fade" id="complementar_informacion_convocatoria">
+            <div class="modal-dialog">
+                <div class="modal-content">                                                        
+                    <!-- cabecera del diálogo -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Información complementaria</h4>                                                    
+                    </div>
+                    <div class="loading centrado-porcentual"></div>             
+                    <!-- cuerpo del diálogo -->
+                    <div class="modal-body">
+                        <div id="info_complementaria_convocatoriadocumentos">
+                            <!--formulario rut-->
+                            <form id="formulario_complementaria_convocatoriadocumento" action="" class="formulario_complementar_informacion" role="form" method="post">                                    
+                                <fieldset id="fieldset_convocatoriadocumento">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label>Porcentaje a pagar</label>
+                                                <input type="number" id="porcentaje_pagar" name="porcentaje_pagar" class="form-control" min="1" max="100" disabled>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label>Radicado de cuenta en Orfeo:<span class="icono_requerido">*</span></label>
+                                                <input id="radicado_cuenta_orfeo" name="radicado_cuenta_orfeo" class="form-control" title="Radicado de cuenta en ORFEO" disabled>
+                                            </div>
+                                        </div>                                                                                                                                                                                                                                                                                                     
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right">
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                        <!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion">Enviar a subsabar documento</button>
+                                                                                <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion">Aprobar documento</button>-->
+                                    </div>
+                                </div>
+
+                            </form>   
+                        </div>
                     </div>
                 </div>
             </div>

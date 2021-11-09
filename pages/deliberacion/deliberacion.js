@@ -1,7 +1,12 @@
 $(document).ready(function () {
 
 
-
+    /*para permitir movilidad al cerrar el modal*/
+    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+        }
+    });
 
 //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
@@ -112,7 +117,7 @@ $(document).ready(function () {
         $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
             $('#grupos_evaluacion').val(null);
-            if($('#anio').val() >= 2021){
+            if ($('#anio').val() >= 2021) {
                 cargar_select_grupos(token_actual, $('#rondas').val());
             }
         });
@@ -131,7 +136,7 @@ $(document).ready(function () {
             } else {
 
                 if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                        alert("Debe seleccionar un grupo de evaluación");
+                    alert("Debe seleccionar un grupo de evaluación");
                 } else {
                     $('#resultado').focus();
                     validator_form(token_actual);
@@ -545,7 +550,7 @@ function cargar_tabla(token_actual) {
                     $("#notificacion_evaluaciones").show();
                     $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
                 }
-                
+
                 break;
         }
     }

@@ -7,11 +7,6 @@ $(document).ready(function () {
     var token_actual = getLocalStorage(name_local_storage);
     $("#notificacion_periodo").hide();
     $("#notificacion_evaluaciones").hide();
-    $("#deliberar").hide();
-    $("#confirmar_top_general").hide();
-    $("#anular_deliberacion").hide();
-    $("#asignar_estimulo").hide();
-    $("#genera_acta").hide();
     /*
      * 06-06-2020
      * Wilmer Gustavo Mogollón Duque
@@ -24,7 +19,7 @@ $(document).ready(function () {
     } else
     {
 //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Deliberación");
+        permiso_lectura(token_actual, "Flujo de Pagos");
         $('.convocatorias-search').select2();
         //Carga el select de entidad
         $.ajax({
@@ -112,7 +107,7 @@ $(document).ready(function () {
         $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
             $('#grupos_evaluacion').val(null);
-            if($('#anio').val() >= 2021){
+            if ($('#anio').val() >= 2021) {
                 cargar_select_grupos(token_actual, $('#rondas').val());
             }
         });
@@ -131,7 +126,7 @@ $(document).ready(function () {
             } else {
 
                 if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                        alert("Debe seleccionar un grupo de evaluación");
+                    alert("Debe seleccionar un grupo de evaluación");
                 } else {
                     $('#resultado').focus();
                     validator_form(token_actual);
@@ -522,34 +517,34 @@ function cargar_tabla(token_actual) {
      */
 
 
-    $.ajax({
-        type: 'GET',
-        url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
-        data: {"token": token_actual.token},
-    }).done(function (data) {
-        switch (data) {
-            default:
-
-                var json = JSON.parse(data);
-
-
-                $("#fecha_inicio_evaluacion").html(json.inicio.substr(0, 10));
-                $("#fecha_fin_evaluacion").html(json.fin.substr(0, 10));
-
-
-
-                $("#notificacion_periodo").html('La fecha de deliberación es: ' + json.deliberacion.substr(0, 10) + '.');
-                $("#notificacion_periodo").show();
-
-                if (json.evaluaciones_confirmadas === 0) {
-                    $("#notificacion_evaluaciones").show();
-                    $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
-                }
-                
-                break;
-        }
-    }
-    );
+//    $.ajax({
+//        type: 'GET',
+//        url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
+//        data: {"token": token_actual.token},
+//    }).done(function (data) {
+//        switch (data) {
+//            default:
+//
+//                var json = JSON.parse(data);
+//
+//
+//                $("#fecha_inicio_evaluacion").html(json.inicio.substr(0, 10));
+//                $("#fecha_fin_evaluacion").html(json.fin.substr(0, 10));
+//
+//
+//
+//                $("#notificacion_periodo").html('La fecha de deliberación es: ' + json.deliberacion.substr(0, 10) + '.');
+//                $("#notificacion_periodo").show();
+//
+//                if (json.evaluaciones_confirmadas === 0) {
+//                    $("#notificacion_evaluaciones").show();
+//                    $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
+//                }
+//
+//                break;
+//        }
+//    }
+//    );
 
 
 
@@ -565,11 +560,14 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
-            url: url_pv + "Deliberacion/all_propuestas",
+            url: url_pv + "Flujodepagos/all_propuestas_ganadoras",
             data:
                     {"token": token_actual.token,
-                        "ronda": $('#rondas').val(),
-                        "grupo": $('#grupos_evaluacion').val()
+                        "entidad": $('#entidad').val(),
+                        "convocatoria": $('#convocatorias').val(),
+                        "categoria": $('#categorias').val(),
+                        "anio": $('#anio').val()
+//                        "filtros": data
                     },
             //async: false
         },
@@ -581,32 +579,108 @@ function cargar_tabla(token_actual) {
 
         },
         "rowCallback": function (row, data, index) {
-            /*
-             
-             if ( data["aplica_perfil"] ){
-             $('td', row).css('background-color', '#dcf4dc');
-             }
-             else if ( !data["aplica_perfil"]){
-             $('td', row).css('background-color', '#f4dcdc');
-             }
-             */
+            if (row.misional==="Si") {
+                $('td', "Verificación Misional").css('background-color', '#dcf4dc');
+            } else if (row.misional==="No") {
+                $('td', row).css('background-color', '#f4dcdc');
+            }
         },
         "columns": [
+            {"data": "Estado del pago",
+                render: function (data, type, row) {
+                    return row.estado_pago;
+                },
+            },
+            {"data": "Año",
+                render: function (data, type, row) {
+                    return row.anio;
+                },
+            },
+            {"data": "Convocatoria",
+                render: function (data, type, row) {
+                    return row.convocatoria;
+                },
+            },
+            {"data": "Categoría",
+                render: function (data, type, row) {
+                    return row.categoria;
+                },
+            },
+            {"data": "Nombre de la propuesta",
+                render: function (data, type, row) {
+                    return row.propuesta;
+                },
+            },
             {"data": "Código de la propuesta",
                 render: function (data, type, row) {
                     return row.codigo;
                 },
             },
-            {"data": "Nombre de la propuesta",
+            {"data": "Participante",
                 render: function (data, type, row) {
-                    return row.nombre;
+                    return row.participante;
                 },
             },
-            {"data": "Top general",
+            {"data": "Verificación Misional",
                 render: function (data, type, row) {
-                    return row.promedio;
+                    if (row.misional === "No") {
+                        return '<button id="misional" title="Aún no cuenta con la verificación" type="button" class="btn btn-danger">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    }
+                    if (row.misional === "Si-No") {
+                        return '<button id="misional" title="Fue devuelto a verificación del Misional" type="button" class="btn btn-warning">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    }
+                    if (row.misional === "Si") {
+                        return '<button id="misional" title="Ya cuenta con la verificación" type="button" class="btn btn-success">'
+                                + '<span class="glyphicon glyphicon-ok"></span></button>';
+                    }
                 },
             },
+            {"data": "Verificación Financiero",
+                render: function (data, type, row) {
+                    if (row.financiero === "No") {
+                        return '<button id="financiero" title="Aún no cuenta con la verificación" class="btn btn-danger">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    } else {
+                        return '<button id="financiero" title="Ya cuenta con la verificación" class="btn btn-success">'
+                                + '<span class="glyphicon glyphicon-ok"></span></button>';
+                    }
+                },
+            },
+            {"data": "Verificación Directopr de Fomento",
+                render: function (data, type, row) {
+                    if (row.fomento === "No") {
+                        return '<button id="fomento" title="Aún no cuenta con la verificación" class="btn btn-danger">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    } else {
+                        return '<button id="fomento" title="Ya cuenta con la verificación" class="btn btn-success">'
+                                + '<span class="glyphicon glyphicon-ok"></span></button>';
+                    }
+                },
+            },
+            {"data": "Verificación Asesor",
+                render: function (data, type, row) {
+                    if (row.asesor === "No") {
+                        return '<button id="asesor" title="Aún no cuenta con la verificación" class="btn btn-danger">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    } else {
+                        return '<button id="asesor" title="Ya cuenta con la verificación" class="btn btn-success">'
+                                + '<span class="glyphicon glyphicon-ok"></span></button>';
+                    }
+                },
+            },
+            {"data": "Verificación Subsecretaría de Gobernanza",
+                render: function (data, type, row) {
+                    if (row.subsecretaria === "No") {
+                        return '<button id="subsecretaria" title="Aún no cuenta con la verificación" class="btn btn-danger">'
+                                + '<span class="glyphicon glyphicon-remove"></span></button>';
+                    } else {
+                        return '<button id="subsecretaria" title="Ya cuenta con la verificación" class="btn btn-success">'
+                                + '<span class="glyphicon glyphicon-ok"></span></button>';
+                    }
+                },
+            }
             /*{"data": "Estado de la evaluación",
              render: function ( data, type, row ) {
              return row.estado_evaluacion;
@@ -618,13 +692,13 @@ function cargar_tabla(token_actual) {
              render: function ( data, type, row ) {
              return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
              },
-             },*/
+             },
             {"data": "aciones",
                 render: function (data, type, row) {
                     return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#evaluarModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
                             + '<span class="glyphicon glyphicon-eye-open"></span></button>';
                 },
-            }
+            }*/
 
 
 

@@ -113,7 +113,8 @@
                                                     <th>Complementar información</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tabla_administrativos">                                                
+                                            <tbody id="tabla_administrativos">                                              
+                                            <tbody id="tabla_convocatoriaadministrativos">                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -126,40 +127,6 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>                                    
-                <!--                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                Documentación técnicos
-                                            </div>                             
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>N°</th>
-                                                                    <th>Requisito</th>
-                                                                    <th>Descripción</th>
-                                                                    <th>Tipos de archivos permitidos</th>
-                                                                    <th>Tamaño máximo permitido</th>
-                                                                    <th>Cargar archivo</th>
-                                                                    <th>Cargar link</th>                                                    
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tabla_tecnicos">                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                 /.row (nested) 
-                                            </div>
-                                             /.panel-body 
-                                        </div>
-                                         /.panel 
-                                    </div>
-                                     /.col-lg-12 
-                                </div>-->
 
                 <form id="asignar_est_form" role="form">
                     <fieldset id="fieldset_top_general">
@@ -188,8 +155,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                     </fieldset>
                 </form>
@@ -236,6 +201,56 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="tabla_archivos">                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="modal fade" id="cargar_documento_convocatoria">
+                    <div class="modal-dialog">
+                        <div class="modal-content">                                                        
+                            <!-- cabecera del diálogo -->
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Formulario de la documentación convocatoria</h4>                                                    
+                            </div>
+                            <div class="loading centrado-porcentual"></div>             
+                            <!-- cuerpo del diálogo -->
+                            <div class="modal-body">
+                                <form id="formulario_documento_convocatoria" action="" class="formulario_documento_convocatoria" role="form" method="post" enctype="multipart/form-data">                                    
+                                    <fieldset id="fieldset_documentacion_convocatoria">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Archivo (<span id="archivos_permitidos_convocatoria"></span>)<span class="icono_requerido">*</span></label>
+                                                    <!--<input type="file" id="archivo" name="archivo" class="validar inactivar_estado_propuesta">-->                                                
+                                                    <input type="file" id="archivo_convocatoria" name="archivo" class="validar">                                                
+                                                    <input type="hidden" id="documento" name="documento" /> 
+                                                    <input type="hidden" id="permitidos" name="permitidos" /> 
+                                                    <input type="hidden" id="tamano" name="tamano" />
+                                                </div>                                                                                                                                                                                                                                                                                                        
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Archivo</th>
+                                                    <th>Ver Archivo</th>
+                                                    <th>Eliminar</th>                                                        
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tabla_archivos_convocatoria">                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -317,33 +332,77 @@
                                                 <div class="row">
                                                     <p><strong>1 - Certificación bancaria</strong></p>
                                                     <div class="form-group">
-                                                        <label>Código del banco</label>
-                                                        <select name="codigo_banco" id="codigo_banco">
-                                                            <option value="" selected="">::Seleccionar::</option>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
+                                                        <label>Entidad Bancaria</label>
+
+                                                        <select   class="form-control" id="entidad_bancaria" name="entidad_bancaria">
+                                                            <option   selected="" value="">::Seleccionar::</option>
+                                                            <option   value="1"> BANCO DE BOGOTA </option>
+                                                            <option   value="2"> BANCO POPULAR </option>
+                                                            <option   value="6"> ITAU CORPBANCA COLOMBIA S.A. </option>
+                                                            <option   value="7"> BANCOLOMBIA </option>
+                                                            <option   value="9"> Citibank </option>
+                                                            <option   value="12"> BANCO GNB SUDAMERIS </option>
+                                                            <option   value="13"> BBVA </option>
+                                                            <option   value="14"> ITAU </option>
+                                                            <option   value="23"> BANCO DE OCCIDENTE </option>
+                                                            <option   value="31"> BANCOLDEX S.A </option>
+                                                            <option   value="32"> BANCO CAJA SOCIAL BCSC </option>
+                                                            <option   value="40"> BANCO AGRARIO </option>
+                                                            <option   value="42"> BNP PARIBAS COLOMBIA CORPORACION FINANCIERA S.A. </option>
+                                                            <option   value="47"> BANCO MUNDO MUJER </option>
+                                                            <option   value="51"> DAVIVIENDA </option>
+                                                            <option   value="52"> AV VILLAS </option>
+                                                            <option   value="53"> BANCO W S.A. </option>
+                                                            <option   value="59"> BANCO DE LAS MICROFINANZAS BANCAMIA S.A. </option>
+                                                            <option   value="60"> BANCO PICHINCHA S.A. </option>
+                                                            <option   value="61"> BANCOOMEVA </option>
+                                                            <option   value="62"> BANCO FALABELLA </option>
+                                                            <option   value="63"> FINANDINA </option>
+                                                            <option   value="65"> BANCO SANTANDER DE NEGOCIOS COLOMBIA SA </option>
+                                                            <option   value="66"> BANCO COOPERATIVO COOPCENTRAL </option>
+                                                            <option   value="67"> MIBANCO S.A. </option>
+                                                            <option   value="69"> BANCO SERFINANZA S.A. </option>
+                                                            <option   value="70"> LULO BANK S.A. </option>
+                                                            <option   value="71"> BANCO J.P. MORGAN COLOMBIA S.A. </option>
+                                                            <option   value="101"> BANCO ACH </option>
+                                                            <option   value="121"> FINANCIERA JURISCOOP S.A. </option>
+                                                            <option   value="151"> RAPPIPAY </option>
+                                                            <option   value="283"> COOPERATIVA FINANCIERA DE ANTIOQUIA </option>
+                                                            <option   value="289"> COOPERATIVA FINANCIERA COTRAFA </option>
+                                                            <option   value="291"> COOFINEP COOPERATIVA FINANCIERA </option>
+                                                            <option   value="292"> CONFIAR </option>
+                                                            <option   value="303"> GIROS Y FINANZAS COMPANIA DE FINANCIAMIENTO S.A. </option>
+                                                            <option   value="370"> COLTEFINANCIERA S.A. </option>
+                                                            <option   value="507"> NEQUI - BANCOLOMBIA </option>
+                                                            <option   value="550"> DECEVAL S.A </option>
+                                                            <option   value="551"> DAVIPLATA </option>
+                                                            <option   value="558"> BANCO CREDIFINANCIERA SA </option>
+                                                            <option   value="637"> IRIS </option>
+                                                            <option   value="683"> DTN </option>
+                                                            <option   value="684"> FONDO DE GARANTÍAS DE FINANCIE </option>
+                                                            <option   value="685"> DGCPTN SISTEMA GENERAL DE REGALIAS </option>
+                                                            <option   value="801"> MOVII </option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Tipo de cuenta</label>
-                                                        <select name="tipo_cuenta" id="tipo_cuenta">
+                                                        <select class="form-control" name="tipo_cuenta" id="tipo_cuenta">
                                                             <option value="" selected="">::Seleccionar::</option>
-                                                            <option value="1">Cuenta de ahorros</option>
-                                                            <option value="2">Cuenta corriente</option>
-                                                            <option value="3">Cuenta de Nómina</option>
+                                                            <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                                                            <option value="Cuenta corriente">Cuenta corriente</option>
+                                                            <option value="Cuenta de Nómina">Cuenta de Nómina</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Número de cuenta</label>
-                                                        <input type="text" id="info_comp" name="info_comp" class="form-control">
+                                                        <input type="hidden" id="programadocumento" name="programadocumento"/>
+                                                        <input type="hidden" id="label_banco_cuenta" name="label_banco_cuenta" value="banco"/>
+                                                        <input type="hidden" id="id_html_banco_cuenta" name="id_html_banco_cuenta" value="entidad_bancaria"/>
+                                                        <input type="hidden" id="label_tipo_cuenta" name="label_tipo_cuenta" value="tipo_cuenta"/>
+                                                        <input type="hidden" id="id_html_tipo_cuenta" name="id_html_tipo_cuenta" value="tipo_cuenta"/>
+                                                        <input type="hidden" id="label_numero_cuenta" name="label_numero_cuenta" value="numero_cuenta"/>
+                                                        <input type="hidden" id="id_html_numero_cuenta" name="id_html_numero_cuenta" value="info_comp_numero_cuenta"/>
+                                                        <input type="text" id="info_comp_numero_cuenta" name="info_comp_numero_cuenta" class="form-control">
                                                     </div>
                                                 </div>                                                                                                                                                                                                                                                                                                     
                                             </div>
@@ -351,7 +410,8 @@
                                         <div class="row">
                                             <div class="col-lg-12" style="text-align: right">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
-                                                <button type="submit" class="btn btn-default" id="guardar_parametro_cuenta">Guardar</button>
+                                                <button type="button" class="btn btn-default" id="guardar_parametro_cuenta">Guardar</button>
+                                                <button type="button" class="btn btn-default" id="actualizar_parametro_cuenta">Guardar</button>
                                             </div>
                                         </div>
 
@@ -360,17 +420,17 @@
                                 </div>
                                 <div id="rut">
                                     <!--formulario rut-->
-                                    <form id="formulario_complementar_informacion_rut" action="" class="formulario_complementar_informacion" role="form" method="post">                                    
+                                    <form id="formulario_complementar_informacion_rut" action="" class="formulario_complementar_informacion_rut" role="form" method="post">                                    
                                         <fieldset id="fieldset_rut">
                                             <div class="col-lg-12">
                                                 <div class="row">
                                                     <p><strong>2 - Fotocopia del certificado de Registro Único Tributario (RUT)</strong></p>
                                                     <div class="form-group">
                                                         <label>Dirección del beneficiario</label>
-                                                        <input type="hidden" id="programadocumento" name="programadocumento" value="2"/>
+                                                        <input type="hidden" id="programadocumento" name="programadocumento"/>
                                                         <input type="hidden" id="label" name="label" value="Dirección del beneficiario"/>
                                                         <input type="hidden" id="id_html" name="id_html" value="info_comp_rut"/>
-                                                        <input type="text" id="info_comp_rut" name="info_comp" class="form-control">
+                                                        <input type="text" id="info_comp_rut" name="info_comp_rut" class="form-control">
                                                     </div>
                                                 </div>                                                                                                                                                                                                                                                                                                     
                                             </div>
@@ -380,6 +440,84 @@
 
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
                                                 <button type="button" class="btn btn-default" id="guardar_parametro_rut">Guardar</button>
+                                                <button type="button" class="btn btn-default" id="actualizar_parametro_rut">Guardar</button>
+                                            </div>
+                                        </div>
+
+                                    </form>   
+                                </div>
+                                <div id="otros_documentos">
+                                    <!--formulario rut-->
+                                    <form id="formulario_complementar_informacion_otros" action="" class="formulario_complementar_informacion_otros" role="form" method="post">                                    
+                                        <fieldset id="fieldset_otros">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <p><strong>Información adicional del documento</strong></p>
+                                                    <div class="form-group">
+                                                        <label>Descripción</label>
+                                                        <input type="hidden" id="programadocumento" name="programadocumento"/>
+                                                        <input type="hidden" id="label_otros" name="label_otros" value="Descripción"/>
+                                                        <input type="hidden" id="id_html_otros" name="id_html_otros" value="info_comp_otros"/>
+                                                        <input type="text" id="info_comp_otros" name="info_comp_otros" class="form-control">
+                                                    </div>
+                                                </div>                                                                                                                                                                                                                                                                                                     
+                                            </div>
+                                        </fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-12" style="text-align: right">
+
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                                <button type="button" class="btn btn-default" id="guardar_parametro_otros">Guardar</button>
+                                                <button type="button" class="btn btn-default" id="actualizar_parametro_otros">Guardar</button>
+                                            </div>
+                                        </div>
+
+                                    </form>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!--
+                28-09-2021
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal información complementaria convocatoriadocumentos
+                -->
+
+                <div class="modal fade" id="complementar_informacion_convocatoria">
+                    <div class="modal-dialog">
+                        <div class="modal-content">                                                        
+                            <!-- cabecera del diálogo -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Información complementaria</h4>                                                    
+                            </div>
+                            <div class="loading centrado-porcentual"></div>             
+                            <!-- cuerpo del diálogo -->
+                            <div class="modal-body">
+                                <div id="info_complementaria_convocatoriadocumentos">
+                                    <!--formulario rut-->
+                                    <form id="formulario_complementaria_convocatoriadocumento" action="" class="formulario_complementar_informacion" role="form" method="post">                                    
+                                        <fieldset id="fieldset_convocatoriadocumento">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label>Descripción de la documentación</label>
+                                                        <input type="hidden" id="convocatoriadocumento" name="convocatoriadocumento"/>
+                                                        <input type="hidden" id="label_convocatoriadocumento" name="label_convocatoriadocumento" value="descripcion_informe"/>
+                                                        <input type="hidden" id="id_html_convocatoriadocumento" name="id_html_convocatoriadocumento" value="info_comp_convocatoriadocumento"/>
+                                                        <input type="text" id="info_comp_convocatoriadocumento" name="info_comp_convocatoriadocumento" class="form-control">
+                                                    </div>
+                                                </div>                                                                                                                                                                                                                                                                                                     
+                                            </div>
+                                        </fieldset>
+                                        <div class="row">
+                                            <div class="col-lg-12" style="text-align: right">
+
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                                                <button type="button" class="btn btn-default" id="guardar_parametro_convocatoriadocumento">Guardar</button>
+                                                <button type="button" class="btn btn-default" id="actualizar_parametro_convocatoriadocumento">Guardar</button>
                                             </div>
                                         </div>
 

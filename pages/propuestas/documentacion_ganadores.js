@@ -5,8 +5,23 @@ $(document).ready(function () {
 
 
 
-    $("#cuenta_bancaria").hide();
-    $("#rut").hide();
+    $("#formulario_complementar_informacion_cuenta_bancaria").hide();
+    $("#formulario_complementar_informacion_rut").hide();
+    $("#formulario_complementar_informacion_otros").hide();
+    $("#formulario_complementar_informacion_rut").hide();
+    $("#guardar_parametro_cuenta").hide();
+    $("#actualizar_parametro_cuenta").hide();
+    $("#guardar_parametro_rut").hide();
+    $("#actualizar_parametro_rut").hide();
+    $("#actualizar_parametro_convocatoriadocumento").hide();
+    $("#guardar_parametro_convocatoriadocumento").hide();
+
+//    /*para permitir movilidad al cerrar el modal*/
+//    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+//        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+//            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+//        }
+//    });
 
 
     /*Validar si se puede editar información*/
@@ -25,6 +40,53 @@ $(document).ready(function () {
     $("#guardar_parametro_rut").click(function () {
         token_actual = getLocalStorage(name_local_storage);
         agregar_informacion_complementaria_documentacion(token_actual, $('#programadocumento').val(), $('#label').val(), $('#id_html').val(), $('#info_comp_rut').val());
+        $('#complementar_informacion').modal('hide');
+//        limpiarFormulario();
+    });
+
+    $("#actualizar_parametro_rut").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        actualizar_informacion_complementaria_documentacion(token_actual, $('#programadocumento').val(), $('#label').val(), $('#id_html').val(), $('#info_comp_rut').val());
+        $('#complementar_informacion').modal('hide');
+//        limpiarFormulario();
+    });
+
+    $("#guardar_parametro_cuenta").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        agregar_informacion_complementaria_documentacion_cuenta(token_actual, $('#programadocumento').val(), $('#label_banco_cuenta').val(), $('#id_html_banco_cuenta').val(), $('#label_tipo_cuenta').val(), $('#id_html_tipo_cuenta').val(), $('#label_numero_cuenta').val(), $('#id_html_numero_cuenta').val(), $('#info_comp_numero_cuenta').val(), $('#entidad_bancaria').val(), $('#tipo_cuenta').val());
+//        limpiarFormulario();
+    });
+
+    $("#actualizar_parametro_cuenta").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        actualizar_informacion_complementaria_documentacion_cuenta(token_actual, $('#programadocumento').val(), $('#label_banco_cuenta').val(), $('#id_html_banco_cuenta').val(), $('#label_tipo_cuenta').val(), $('#id_html_tipo_cuenta').val(), $('#label_numero_cuenta').val(), $('#id_html_numero_cuenta').val(), $('#info_comp_numero_cuenta').val(), $('#entidad_bancaria').val(), $('#tipo_cuenta').val());
+//        limpiarFormulario();
+    });
+
+    $("#guardar_parametro_otros").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        agregar_informacion_complementaria_documentacion_otros(token_actual, $('#programadocumento').val(), $('#label_otros').val(), $('#id_html_otros').val(), $('#info_comp_otros').val());
+        $('#complementar_informacion').modal('hide');
+//        limpiarFormulario();
+    });
+
+    $("#actualizar_parametro_otros").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        actualizar_informacion_complementaria_documentacion_otros(token_actual, $('#programadocumento').val(), $('#label_otros').val(), $('#id_html_otros').val(), $('#info_comp_otros').val());
+        $('#complementar_informacion').modal('hide');
+//        limpiarFormulario();
+    });
+
+    $("#guardar_parametro_convocatoriadocumento").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        agregar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, $('#convocatoriadocumento').val(), $('#label_convocatoriadocumento').val(), $('#id_html_convocatoriadocumento').val(), $('#info_comp_convocatoriadocumento').val());
+        $('#complementar_informacion').modal('hide');
+//        limpiarFormulario();
+    });
+
+    $("#actualizar_parametro_convocatoriadocumento").click(function () {
+        token_actual = getLocalStorage(name_local_storage);
+        actualizar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, $('#convocatoriadocumento').val(), $('#label_convocatoriadocumento').val(), $('#id_html_convocatoriadocumento').val(), $('#info_comp_convocatoriadocumento').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
     });
@@ -194,6 +256,13 @@ $(document).ready(function () {
 
                                                                                 $("#tabla_administrativos").append(html_table);
 
+                                                                                var html_table = '';
+                                                                                $.each(json.convocatoriaadministrativos, function (key2, documento) {
+                                                                                    html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_administrativo_informacion_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria" id="complementaria_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></td></tr>';
+                                                                                });
+
+                                                                                $("#tabla_convocatoriaadministrativos").append(html_table);
+
                                                                                 html_table = '';
                                                                                 $.each(json.tecnicos, function (key2, documento) {
                                                                                     html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_tecnico_documento" data-toggle="modal" data-target="#cargar_documento"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_tecnico_link" data-toggle="modal" data-target="#complementar_informacion"><span class="glyphicon glyphicon-pencil"></span></button></td></tr>';
@@ -213,6 +282,18 @@ $(document).ready(function () {
                                                                                     cargar_tabla_archivos(token_actual, documento, json.estado);
                                                                                 });
 
+                                                                                $(".btn_convocatoria_documento").click(function () {
+                                                                                    var documento = $(this).attr("title");
+                                                                                    var permitidos = $(this).attr("lang");
+                                                                                    var tamano = $(this).attr("dir");
+                                                                                    $("#archivos_permitidos").html(permitidos);
+                                                                                    $("#documento").val(documento);
+                                                                                    $("#permitidos").val(permitidos);
+                                                                                    $("#tamano").val(tamano);
+
+                                                                                    cargar_tabla_archivos_convocatoria(token_actual, documento, json.estado);
+                                                                                });
+
                                                                                 $(".btn_tecnico_link").click(function () {
                                                                                     var documento = $(this).attr("title");
                                                                                     $("#documento").val(documento);
@@ -225,11 +306,76 @@ $(document).ready(function () {
                                                                                     var documento = $(this).attr("title");
 
                                                                                     switch (documento) {
+
                                                                                         case '1':
-                                                                                            $("#cuenta_bancaria").modal('show');
+                                                                                            $("#formulario_complementar_informacion_cuenta_bancaria").modal('show');
+                                                                                            $("#formulario_complementar_informacion_rut").modal('hide');
+                                                                                            $("#formulario_complementar_informacion_otros").hide();
+                                                                                            var id_propuesta = getURLParameter('p');
+
+                                                                                            $.ajax({
+                                                                                                type: 'GET',
+                                                                                                url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_cuenta/propuesta/' + id_propuesta,
+                                                                                                data: {
+                                                                                                    "token": token_actual.token,
+                                                                                                    "documento": documento
+                                                                                                },
+                                                                                            }).done(function (data) {
+
+                                                                                                switch (data) {
+                                                                                                    case 'error':
+                                                                                                        notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                        break;
+                                                                                                    case 'error_metodo':
+                                                                                                        notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                        break;
+                                                                                                    case 'error_token':
+                                                                                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                                                                                        //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
+                                                                                                        break;
+                                                                                                    case 'acceso_denegado':
+                                                                                                        notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                                                                                                        break;
+                                                                                                    default:
+
+                                                                                                        var json = JSON.parse(data);
+
+
+                                                                                                        if (json.banco) {
+                                                                                                            $("#entidad_bancaria").attr("value", json.banco.valor);
+                                                                                                        } else {
+                                                                                                            $("#entidad_bancaria").attr("value", "");
+                                                                                                        }
+
+                                                                                                        if (json.tipo_cuenta) {
+                                                                                                            $("#tipo_cuenta").attr("value", json.tipo_cuenta.valor);
+                                                                                                        } else {
+                                                                                                            $("#entidad_bancaria").attr("value", "");
+                                                                                                        }
+
+                                                                                                        if (json.numero_cuenta) {
+                                                                                                            $("#info_comp_numero_cuenta").attr("value", json.numero_cuenta.valor);
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#actualizar_parametro_cuenta").show();
+                                                                                                            $("#guardar_parametro_cuenta").hide();
+                                                                                                        } else {
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#info_comp_numero_cuenta").attr("value", "");
+                                                                                                            $("#guardar_parametro_cuenta").show();
+                                                                                                            $("#actualizar_parametro_cuenta").hide();
+                                                                                                        }
+
+                                                                                                        break;
+                                                                                                }
+
+                                                                                            }
+                                                                                            );
                                                                                             break;
+
                                                                                         case '2':
-                                                                                            $("#rut").modal('show');
+                                                                                            $("#formulario_complementar_informacion_rut").modal('show');
+                                                                                            $("#formulario_complementar_informacion_otros").hide();
+                                                                                            $("#formulario_complementar_informacion_cuenta_bancaria").modal('hide');
                                                                                             var id_propuesta = getURLParameter('p');
                                                                                             $.ajax({
                                                                                                 type: 'GET',
@@ -258,6 +404,64 @@ $(document).ready(function () {
                                                                                                         var json = JSON.parse(data);
                                                                                                         if (json.id) {
                                                                                                             $("#info_comp_rut").attr("value", json.valor);
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#actualizar_parametro_rut").show();
+                                                                                                            $("#guardar_parametro_rut").hide();
+                                                                                                        } else {
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#guardar_parametro_rut").show();
+                                                                                                            $("#actualizar_parametro_rut").hide();
+                                                                                                        }
+
+                                                                                                        break;
+                                                                                                }
+
+                                                                                            }
+                                                                                            );
+                                                                                            break;
+                                                                                        default:
+                                                                                            $("#formulario_complementar_informacion_otros").show();
+                                                                                            $("#formulario_complementar_informacion_rut").modal('hide');
+                                                                                            $("#formulario_complementar_informacion_cuenta_bancaria").modal('hide');
+                                                                                            document.getElementById("formulario_complementar_informacion_otros").reset();
+                                                                                            var id_propuesta = getURLParameter('p');
+                                                                                            $.ajax({
+                                                                                                type: 'GET',
+                                                                                                url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_otros/propuesta/' + id_propuesta,
+                                                                                                data: {
+                                                                                                    "token": token_actual.token,
+                                                                                                    "documento": documento
+                                                                                                },
+                                                                                            }).done(function (data) {
+
+                                                                                                switch (data) {
+                                                                                                    case 'error':
+                                                                                                        notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                        break;
+                                                                                                    case 'error_metodo':
+                                                                                                        notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                        break;
+                                                                                                    case 'error_token':
+                                                                                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                                                                                        //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
+                                                                                                        break;
+                                                                                                    case 'acceso_denegado':
+                                                                                                        notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                                                                                                        break;
+                                                                                                    default:
+                                                                                                        document.getElementById("formulario_complementar_informacion_otros").reset();
+                                                                                                        var json = JSON.parse(data);
+                                                                                                        if (json.id) {
+
+                                                                                                            $("#info_comp_otros").attr("value", json.valor);
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#actualizar_parametro_otros").show();
+                                                                                                            $("#guardar_parametro_otros").hide();
+                                                                                                        } else {
+                                                                                                            $("#info_comp_otros").attr("value", "");
+                                                                                                            $("#programadocumento").attr("value", documento);
+                                                                                                            $("#guardar_parametro_otros").show();
+                                                                                                            $("#actualizar_parametro_otros").hide();
                                                                                                         }
 
                                                                                                         break;
@@ -267,6 +471,59 @@ $(document).ready(function () {
                                                                                             );
                                                                                             break;
                                                                                     }
+
+                                                                                });
+                                                                                /*
+                                                                                 * 13-06-2021
+                                                                                 * Wilmer Gustavo Mogollón
+                                                                                 * Se agrega acción al botón btn_administrativo_informacion_convocatoria para guardar información complementaria
+                                                                                 */
+                                                                                $(".btn_administrativo_informacion_convocatoria").click(function () {
+
+                                                                                    var documento = $(this).attr("title");
+
+                                                                                    var id_propuesta = getURLParameter('p');
+                                                                                    $.ajax({
+                                                                                        type: 'GET',
+                                                                                        url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_convocatoriadocumento/propuesta/' + id_propuesta,
+                                                                                        data: {
+                                                                                            "token": token_actual.token,
+                                                                                            "documento": documento
+                                                                                        },
+                                                                                    }).done(function (data) {
+
+                                                                                        switch (data) {
+                                                                                            case 'error':
+                                                                                                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                break;
+                                                                                            case 'error_metodo':
+                                                                                                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                                                                                                break;
+                                                                                            case 'error_token':
+                                                                                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                                                                                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
+                                                                                                break;
+                                                                                            case 'acceso_denegado':
+                                                                                                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                                                                                                break;
+                                                                                            default:
+                                                                                                var json = JSON.parse(data);
+                                                                                                if (json.id) {
+                                                                                                    $("#info_comp_convocatoriadocumento").attr("value", json.valor);
+                                                                                                    $("#convocatoriadocumento").attr("value", documento);
+                                                                                                    $("#actualizar_parametro_convocatoriadocumento").show();
+                                                                                                    $("#guardar_parametro_convocatoriadocumento").hide();
+                                                                                                } else {
+                                                                                                    $("#convocatoriadocumento").attr("value", documento);
+                                                                                                    $("#guardar_parametro_convocatoriadocumento").show();
+                                                                                                    $("#actualizar_parametro_convocatoriadocumento").hide();
+                                                                                                }
+
+                                                                                                break;
+                                                                                        }
+
+                                                                                    }
+                                                                                    );
 
                                                                                 });
 
@@ -280,7 +537,7 @@ $(document).ready(function () {
                                                     }
                                                 });
 
-                                                $('input[type="file"]').change(function (evt) {
+                                                $("#archivo").change(function (evt) {
 //                                                $(".btn_tecnico_documento").click(function (evt) {
 
                                                     var f = evt.target.files[0];
@@ -348,6 +605,94 @@ $(document).ready(function () {
                                                                                         } else {
                                                                                             notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
                                                                                             cargar_tabla_archivos(token_actual, documento);
+                                                                                        }
+
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                });
+                                                            }
+                                                        } else
+                                                        {
+                                                            notify("danger", "ok", "Documentación:", "Archivo no permitido");
+                                                        }
+
+                                                    };
+                                                    // Leer en el archivo como una URL de datos.                
+                                                    reader.readAsDataURL(f);
+                                                });
+
+                                                $("#archivo_convocatoria").change(function (evt) {
+//                                                $(".btn_tecnico_documento").click(function (evt) {
+
+                                                    var f = evt.target.files[0];
+                                                    var reader = new FileReader();
+
+                                                    // Cierre para capturar la información del archivo.
+                                                    reader.onload = function (fileLoadedEvent) {
+//                                                        alert ($("#info_comp").attr('value'));
+                                                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                                                        var srcName = f.name;
+                                                        var info_comp = f.info_comp;
+                                                        var srcSize = f.size;
+                                                        var srcType = f.type;
+                                                        var ext = srcName.split('.');
+                                                        // ahora obtenemos el ultimo valor despues el punto
+                                                        // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
+                                                        srcExt = ext[ext.length - 1];
+
+                                                        var permitidos = $("#permitidos").val();
+                                                        var permitidos_mayuscula = $("#permitidos").val().toUpperCase();
+                                                        var documento = $("#documento").val();
+                                                        var tamano = $("#tamano").val();
+
+                                                        var extensiones = permitidos.split(',');
+                                                        var extensiones_mayuscula = permitidos_mayuscula.split(',');
+
+                                                        if (extensiones.includes(srcExt) || extensiones_mayuscula.includes(srcExt))
+                                                        {
+                                                            //mb -> bytes
+                                                            permitidotamano = tamano * 1000 * 1000;
+                                                            if (srcSize > permitidotamano)
+                                                            {
+                                                                notify("danger", "ok", "Documentación:", "El tamaño del archivo excede el permitido (" + tamano + " MB)");
+                                                            } else
+                                                            {
+                                                                $.post(url_pv + 'PropuestasDocumentacionganadores/guardar_archivo_convocatoria', {documento: documento, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "Menu Participante", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value'), info_comp: $("#info_comp").attr('value')}).done(function (data) {
+                                                                    if (data == 'error_metodo')
+                                                                    {
+                                                                        notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                                    } else
+                                                                    {
+                                                                        if (data == 'error_token')
+                                                                        {
+                                                                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                                                        } else
+                                                                        {
+
+                                                                            if (data == 'acceso_denegado')
+                                                                            {
+                                                                                notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                                                                            } else
+                                                                            {
+                                                                                if (data == 'error_carpeta')
+                                                                                {
+                                                                                    notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo en la carpeta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                                                } else
+                                                                                {
+                                                                                    if (data == 'error_archivo')
+                                                                                    {
+                                                                                        notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                                                    } else
+                                                                                    {
+                                                                                        if (data == 'error_ya_tiene_documentos') {
+                                                                                            notify("danger", "ok", "Usuario:", "Ya tiene un documento asociado a este requisito");
+                                                                                        } else {
+                                                                                            notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                                                                            cargar_tabla_archivos_convocatoria(token_actual, documento);
                                                                                         }
 
                                                                                     }
@@ -588,6 +933,11 @@ $(document).ready(function () {
     }
 });
 
+//Agrego para limpiar el formulario
+function limpiarFormulario() {
+    document.getElementById("formulario_complementar_informacion_otros").reset();
+}
+
 function cargar_tabla_archivos(token_actual, documento, estado) {
     //Realizo la peticion para cargar el formulario
     $.ajax({
@@ -628,7 +978,7 @@ function cargar_tabla_archivos(token_actual, documento, estado) {
 
 
                         $.each(json, function (key2, documento) {
-                            html_table = html_table + '<tr class="tr_' + documento.id + '"><td>' + documento.nombre + '</td><td><button type="button" onclick="download_file(\'' + documento.id_alfresco + '\')" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button></td><td><button onclick="eliminar(\'' + documento.id + '\')" type="button" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+                            html_table = html_table + '<tr class="tr_' + documento.id + '"><td>' + documento.nombre + '</td><td><button type="button" onclick="download_file(\'' + documento.id_alfresco + '\')" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button></td><td><button onclick="eliminar(\'' + documento.id + '\')" id="eliminar_archivo" type="button" class="btn btn-danger eliminar_archivo" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
                         });
                         $("#tabla_archivos").append(html_table);
 
@@ -639,6 +989,68 @@ function cargar_tabla_archivos(token_actual, documento, estado) {
         }
     });
 }
+
+
+/*
+ * 12-10-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función garcar tabla archivos para convocatoriadocumento
+ */
+
+function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
+    //Realizo la peticion para cargar el formulario
+    $.ajax({
+        type: 'GET',
+        data: {documento: documento, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "Menu Participante", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value')},
+        url: url_pv + 'PropuestasDocumentacionganadores/buscar_archivos_convocatoria'
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+            } else
+            {
+                if (data == 'crear_propuesta')
+                {
+                    location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                } else
+                {
+                    if (data == 'acceso_denegado')
+                    {
+                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                    } else
+                    {
+                        var json = JSON.parse(data);
+
+                        var html_table = '';
+                        $("#tabla_archivos_convocatoria").html("");
+
+                        var disabled = 'disabled="disabled"';
+                        if (estado == 7)
+                        {
+                            disabled = '';
+                        }
+
+
+                        $.each(json, function (key2, documento) {
+                            html_table = html_table + '<tr class="tr_' + documento.id + '"><td>' + documento.nombre + '</td><td><button type="button" onclick="download_file(\'' + documento.id_alfresco + '\')" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button></td><td><button onclick="eliminar(\'' + documento.id + '\')" type="button" id="eliminar_archivo" class="btn btn-danger eliminar_archivo" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+                        });
+                        $("#tabla_archivos_convocatoria").append(html_table);
+
+                    }
+                }
+
+            }
+        }
+    });
+}
+
+
+
 
 function cargar_tabla_link(token_actual, documento, estado) {
     //Realizo la peticion para cargar el formulario
@@ -887,7 +1299,7 @@ function validator_form(token_actual) {
 
 
 
-function agregar_observacion_documentacion(token_actual, id_ronda) {
+function agregar_observacion_documentacion(token_actual, id_propuesta, info_general) {
 
     $.ajax({
         type: 'PUT',
@@ -929,7 +1341,18 @@ function agregar_observacion_documentacion(token_actual, id_ronda) {
                 $("#fieldset_documentacion").attr("disabled", "");
                 $("#fieldset_cuenta").attr("disabled", "");
                 $("#fieldset_rut").attr("disabled", "");
+                $("#fieldset_otros").attr("disabled", "");
+                $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+                $("#fieldset_convocatoriadocumento").attr("disabled", "");
+                $("#guardar_parametro_cuenta").attr("disabled", "");
+                $("#actualizar_parametro_cuenta").attr("disabled", "");
                 $("#guardar_parametro_rut").attr("disabled", "");
+                $("#actualizar_parametro_rut").attr("disabled", "");
+                $("#guardar_parametro_otros").attr("disabled", "");
+                $("#actualizar_parametro_otros").attr("disabled", "");
+                $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+                $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+                $(".eliminar_archivo").attr("disabled", "");
                 //cargar_tabla_ganadores(token_actual);
                 break;
         }
@@ -980,6 +1403,394 @@ function agregar_informacion_complementaria_documentacion(token_actual, programa
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
+                document.getElementById("formulario_complementar_informacion_rut").reset();
+                $('.modal-backdrop').remove();
+                break;
+        }
+
+    });
+}
+
+
+/*
+ * 04-10-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega metodo actualizar_informacion_complementaria_documentacion 
+ */
+
+function actualizar_informacion_complementaria_documentacion(token_actual, programadocumento, label, id_html, info_comp) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/actualizar_informacion_complementaria/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&programadocumento=" + programadocumento
+                + "&label=" + label
+                + "&id_html=" + id_html
+                + "&info_comp=" + info_comp
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion').modal('hide');
+                document.getElementById("formulario_complementar_informacion_rut").reset();
+                $('.modal-backdrop').remove();
+                break;
+        }
+
+    });
+}
+
+
+function agregar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, convocatoriadocumento, label_convocatoriadocumento, id_html_convocatoriadocumento, info_comp_convocatoriadocumento) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/agregar_informacion_complementaria_convocatoriadocumento/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&convocatoriadocumento=" + convocatoriadocumento
+                + "&label_convocatoriadocumento=" + label_convocatoriadocumento
+                + "&id_html_convocatoriadocumento=" + id_html_convocatoriadocumento
+                + "&info_comp_convocatoriadocumento=" + info_comp_convocatoriadocumento
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion_convocatoria').modal('hide');
+                break;
+        }
+
+    });
+}
+
+
+function actualizar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, convocatoriadocumento, label_convocatoriadocumento, id_html_convocatoriadocumento, info_comp_convocatoriadocumento) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/actualizar_informacion_complementaria_convocatoriadocumento/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&convocatoriadocumento=" + convocatoriadocumento
+                + "&label_convocatoriadocumento=" + label_convocatoriadocumento
+                + "&id_html_convocatoriadocumento=" + id_html_convocatoriadocumento
+                + "&info_comp_convocatoriadocumento=" + info_comp_convocatoriadocumento
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion_convocatoria').modal('hide');
+                break;
+        }
+
+    });
+}
+
+
+function agregar_informacion_complementaria_documentacion_otros(token_actual, programadocumento, label_otros, id_html_otros, info_comp_otros) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/agregar_informacion_complementaria_otros/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&programadocumento=" + programadocumento
+                + "&label_otros=" + label_otros
+                + "&id_html_otros=" + id_html_otros
+                + "&info_comp_otros=" + info_comp_otros
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion').modal('hide');
+                document.getElementById("formulario_complementar_informacion_otros").reset();
+                break;
+        }
+
+    });
+}
+
+
+function actualizar_informacion_complementaria_documentacion_otros(token_actual, programadocumento, label_otros, id_html_otros, info_comp_otros) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/actualizar_informacion_complementaria_otros/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&programadocumento=" + programadocumento
+                + "&label_otros=" + label_otros
+                + "&id_html_otros=" + id_html_otros
+                + "&info_comp_otros=" + info_comp_otros
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion').modal('hide');
+                document.getElementById("formulario_complementar_informacion_otros").reset();
+                break;
+        }
+
+    });
+}
+
+/*
+ * 22-10-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agregan funciones para agregar y editar parametros cuenta bancaria
+ */
+function agregar_informacion_complementaria_documentacion_cuenta(token_actual, programadocumento, label_banco_cuenta, id_html_banco_cuenta, label_tipo_cuenta, id_html_tipo_cuenta, label_numero_cuenta, id_html_numero_cuenta, info_comp_numero_cuenta, entidad_bancaria, tipo_cuenta) {
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/agregar_informacion_complementaria_cuenta/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&programadocumento=" + programadocumento
+                + "&label_banco_cuenta=" + label_banco_cuenta
+                + "&id_html_banco_cuenta=" + id_html_banco_cuenta
+                + "&label_tipo_cuenta=" + label_tipo_cuenta
+                + "&id_html_tipo_cuenta=" + id_html_tipo_cuenta
+                + "&label_numero_cuenta=" + label_numero_cuenta
+                + "&id_html_numero_cuenta=" + id_html_numero_cuenta
+                + "&info_comp_numero_cuenta=" + info_comp_numero_cuenta
+                + "&entidad_bancaria=" + entidad_bancaria
+                + "&tipo_cuenta=" + tipo_cuenta
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp_numero_cuenta':
+                notify("danger", "remove", "Usuario:", "Debe agregar el número de cuenta bancaria");
+                break;
+            case 'error_info_comp_tipo_cuenta':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de cuenta bancaria");
+                break;
+            case 'error_info_comp_entidad_bancaria':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar la entidad bancaria");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion').modal('hide');
+                $('.modal-backdrop').remove();
+                break;
+        }
+
+    });
+}
+
+
+function actualizar_informacion_complementaria_documentacion_cuenta(token_actual, programadocumento, label_banco_cuenta, id_html_banco_cuenta, label_tipo_cuenta, id_html_tipo_cuenta, label_numero_cuenta, id_html_numero_cuenta, info_comp_numero_cuenta, entidad_bancaria, tipo_cuenta) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'PropuestasDocumentacionganadores/actualizar_informacion_complementaria_cuenta/propuesta/' + getURLParameter('p'),
+        data: "&modulo=Menu Participante&token=" + token_actual.token
+                + "&programadocumento=" + programadocumento
+                + "&label_banco_cuenta=" + label_banco_cuenta
+                + "&id_html_banco_cuenta=" + id_html_banco_cuenta
+                + "&label_tipo_cuenta=" + label_tipo_cuenta
+                + "&id_html_tipo_cuenta=" + id_html_tipo_cuenta
+                + "&label_numero_cuenta=" + label_numero_cuenta
+                + "&id_html_numero_cuenta=" + id_html_numero_cuenta
+                + "&info_comp_numero_cuenta=" + info_comp_numero_cuenta
+                + "&entidad_bancaria=" + entidad_bancaria
+                + "&tipo_cuenta=" + tipo_cuenta
+
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'error_info_comp':
+                notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
+                break;
+            case 'error_info_comp_numero_cuenta':
+                notify("danger", "remove", "Usuario:", "Debe agregar el número de cuenta bancaria");
+                break;
+            case 'error_info_comp_tipo_cuenta':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de cuenta bancaria");
+                break;
+            case 'error_info_comp_entidad_bancaria':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar la entidad bancaria");
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
+                $('#complementar_informacion').modal('hide');
+                $('.modal-backdrop').remove();
                 break;
         }
 
@@ -1032,7 +1843,18 @@ function validar_estado_envio_documentacion(token_actual, id_propuesta) {
                         $("#fieldset_documentacion").attr("disabled", "");
                         $("#fieldset_cuenta").attr("disabled", "");
                         $("#fieldset_rut").attr("disabled", "");
+                        $("#fieldset_otros").attr("disabled", "");
+                        $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+                        $("#fieldset_convocatoriadocumento").attr("disabled", "");
+                        $("#guardar_parametro_cuenta").attr("disabled", "");
+                        $("#actualizar_parametro_cuenta").attr("disabled", "");
                         $("#guardar_parametro_rut").attr("disabled", "");
+                        $("#actualizar_parametro_rut").attr("disabled", "");
+                        $("#guardar_parametro_otros").attr("disabled", "");
+                        $("#actualizar_parametro_otros").attr("disabled", "");
+                        $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+                        $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+                        $(".eliminar_archivo").attr("disabled", "");
                     }
                 }
         }
