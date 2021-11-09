@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>::Información del participante::</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- validator bootstrap -->
+        <link href='../../dist/libraries/bootstrap-validator/bootstrapValidator.css' rel='stylesheet'>
+
+        <!-- DataTables Select CSS -->
+        <link href="../../dist/libraries/datatables-select/select.bootstrap.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="../../dist/libraries/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+        <!-- Bootstrap animate -->
+        <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Autocompletar -->
+        <link href="../../dist/libraries/jquery-ui-1.12.1.autocomplete/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+        <!-- css principales de la aplicacion -->
+        <link href="../../dist/css/main.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Datepicker animate -->
+        <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav id="menu_principal" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="loading centrado-porcentual"></div>                 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Información del participante</h1>
+                    </div>
+                    <div class="panel-body" style="text-align: right">                    
+                        <button type="button" id="link_terminos" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Regresar"><i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button type="button" id="link_propuestas" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Siguiente"><i class="fa fa-arrow-right"></i>
+                        </button>                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Formulario para el registro de la persona jurídica
+                            </div>
+                            <div class="panel-body">
+                                <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo de documento de identificación  <span class="icono_requerido">*</span></label>
+                                                <select id='tipo_documento' name="tipo_documento" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Número de Nit <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="numero_documento" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>DV <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="dv" class="form-control" maxlength="8">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Razón Social <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="primer_nombre" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Tiene RUT? <span class="icono_requerido">*</span></label>
+                                                <select id='tiene_rut' name="tiene_rut" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="Sí">Sí</option>
+                                                    <option value="No">No</option>                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿cuál es el código CIIU de su actividad principal?</label>
+                                                <select id='ciiu' name="ciiu" class="form-control" disabled="disabled">
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>País<span class="icono_requerido">*</span></label>
+                                                <select id='pais' name="pais" class="form-control">                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">                                            
+                                            <div class="form-group">
+                                                <label>Departamento<span class="icono_requerido">*</span></label>
+                                                <select id='departamento' name="departamento" class="form-control">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>                                            
+                                    </div>
+                                    <div class="row">                                                                            
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Ciudad<span class="icono_requerido">*</span></label>
+                                                <select id='ciudad_residencia' name="ciudad_residencia" class="form-control">                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                             </div>
+                                        </div>     
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Localidad<span class="icono_requerido">*</span></label>
+                                                <select id='localidad_residencia' name="localidad_residencia" class="form-control" >                                                                                                        
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>                                    
+                                    <div class="row">                                                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Barrio</label>
+                                                <select id='barrio_residencia' name="barrio_residencia" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Estrato<span class="icono_requerido">*</span></label>
+                                                <select id='estrato' name="estrato" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">                                                                                
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Dirección<span class="icono_requerido">*</span></label>
+                                                <input type="text" name="direccion_residencia" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Área</label>
+                                                <select id='area' name="area" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="Urbana">Urbana</option>
+                                                    <option value="Rural">Rural</option>                                                    
+                                                </select>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Teléfono fijo</label>
+                                                <input type="text" name="numero_telefono" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Número de celular <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="numero_celular" class="form-control">
+                                            </div>
+                                        </div>                                        
+                                    </div>                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Objeto Social <span class="icono_requerido">*</span></label>
+                                                <textarea id="objeto_social" name="objeto_social" class="form-control" rows="3"></textarea>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Fecha de Constitución <span class="icono_requerido">*</span></label>
+                                                <div class="input-group date calendario" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" name="fecha_nacimiento" size="16" type="text" value="" readonly>
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Correo electrónico de la entidad <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="correo_electronico" class="form-control">
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Cuenta con sede?</label>
+                                                <select id='cuenta_sede' name="cuenta_sede" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo de sede</label>
+                                                <select id='tipo_sede' name="tipo_sede" class="form-control">                                                    
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Tiene redes sociales personales?</label>
+                                                <select id='tiene_redes' name="tiene_redes" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="Sí">Sí</option>
+                                                    <option value="No">No</option>                                                    
+                                                </select>
+                                            </div>                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Instagram</label>
+                                                <input type="text" name="instagram" class="form-control si_tiene_redes" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Twitter</label>
+                                                <input type="text" name="twitter" class="form-control si_tiene_redes" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Facebook</label>
+                                                <input type="text" name="facebook" class="form-control si_tiene_redes" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Tik ToK</label>
+                                                <input type="text" name="tik_tok" class="form-control si_tiene_redes" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>LinkedIn</label>
+                                                <input type="text" name="linked_in" class="form-control si_tiene_redes" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>¿Cuenta con espacios de circulación de contenidos en línea?</label>
+                                                <select id='tiene_paginas' name="tiene_paginas" class="form-control" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="Sí">Sí</option>
+                                                    <option value="No">No</option>                                                    
+                                                </select>
+                                            </div>                                                                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Página web</label>
+                                                <input type="text" name="pagina_web" class="form-control si_tiene_espacios" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>YouTube</label>
+                                                <input type="text" name="you_tube" class="form-control si_tiene_espacios" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Vimeo</label>
+                                                <input type="text" name="vimeo" class="form-control si_tiene_espacios" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Blog</label>
+                                                <input type="text" name="blog" class="form-control si_tiene_espacios" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Podcast</label>
+                                                <input type="text" name="podcast" class="form-control si_tiene_espacios" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="id" name="id" />
+                                            <input type="hidden" id="conv" name="conv" />                                            
+                                            <button type="submit" class="btn btn-default">Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <input type="hidden" id="programa" />
+                                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Esta seguro que la información del participante esta correcta?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+                                                <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../../dist/js/sb-admin-2.js"></script>
+
+        <!-- validator bootstrap -->
+        <script src='../../dist/libraries/bootstrap-validator/bootstrapValidator.min.js'></script>
+        <script src='../../dist/libraries/bootstrap-validator/language/es_ES.js'></script>
+
+        <!-- DataTables -->
+        <script src="../../dist/libraries/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="../../dist/libraries/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="../../dist/libraries/datatables-responsive/dataTables.responsive.js"></script>
+        <script src="../../dist/libraries/datatables-select/dataTables.select.min.js"></script>
+
+        <!-- Bootstrap Notify-->
+        <script src="../../dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
+
+        <!-- Autocompletar-->
+        <script src="../../dist/libraries/jquery-ui-1.12.1.autocomplete/jquery-ui.js" type="text/javascript"></script>
+
+        <!-- Datepicker animate -->
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+        <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
+
+        <!-- funcionalidades principales -->
+        <script src='../../dist/js/main.js'></script>
+        <script src='../../dist/js/jquery.loadJSON.js'></script>
+        <script src='perfil_persona_juridica.js'></script>        
+
+    </body>
+</html>
