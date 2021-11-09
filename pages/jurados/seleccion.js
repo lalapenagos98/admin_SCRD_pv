@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             $.ajax({
                 type: 'POST',
                 data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-                url: url_pv + 'Administrador/menu'
+                url: url_pv + 'Administrador/menu_funcionario'
             }).done(function (result) {
                 if (result == 'error_token')
                 {

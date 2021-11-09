@@ -270,7 +270,8 @@
         <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
 
         <!-- funcionalidades principales -->
-        <script src="https://qa-sso.scrd.gov.co/auth/js/keycloak.js"></script><script src='../../dist/js/main.js'></script>                
+        <script src="https://qa-sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src='../../dist/js/main_funcionairo.js'></script>                
         <script src='../../dist/js/jquery.loadJSON.js'></script>        
 
         <script>
@@ -294,7 +295,7 @@
                                         $.ajax({
                                             type: 'POST',
                                             data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-                                            url: url_pv + 'Administrador/menu'
+                                            url: url_pv + 'Administrador/menu_funcionario'
                                         }).done(function (result) {
                                             if (result == 'error_token')
                                             {
