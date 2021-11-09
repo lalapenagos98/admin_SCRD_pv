@@ -18,11 +18,11 @@ keycloak.init(initOptions).then(function (authenticated) {
             $.ajax({
                 type: 'POST',
                 data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
-                url: url_pv + 'Administrador/menu'
+                url: url_pv + 'Administrador/menu_funcionario'
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    location.href = url_pv_admin + 'index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -80,12 +80,12 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if (data == 'error_token')
                     {
-                        //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        //location.href = url_pv_admin + 'index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                     } else
                     {
                         if (data == 'error')
                         {
-                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            location.href = url_pv_admin + 'index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                         } else
                         {
                             var json = JSON.parse(data);

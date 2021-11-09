@@ -196,7 +196,7 @@ function issetLocalStorage() {
         return true
     } else
     {
-        location.href = 'index.html?msg=Debe actualizar su navegador.&msg_tipo=danger';
+        location.href = 'index_funcionario.html?msg=Debe actualizar su navegador.&msg_tipo=danger';
         return false;
     }
 }
@@ -230,17 +230,17 @@ function permiso_lectura(token_actual, modulo)
     }).done(function (data) {
         if (data == 'error_metodo')
         {
-            location.href = '../index/index.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+            location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
         } else
         {
             if (data == 'error')
             {
-                location.href = '../index/index.html?msg=Se registro un error en la consulta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+                location.href = '../index/index_funcionario.html?msg=Se registro un error en la consulta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
             } else
             {
                 if (data == 'acceso_denegado')
                 {
-                    location.href = '../index/index.html?msg=Acceso denegado.&msg_tipo=danger';
+                    location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
                 }
             }
         }
@@ -257,17 +257,17 @@ function permiso_lectura_keycloak(token_actual, modulo)
     }).done(function (data) {
         if (data == 'error_metodo')
         {
-            location.href = '../index/index.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+            location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
         } else
         {
             if (data == 'error_token')
             {
-                location.href = '../index/index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
             } else
             {
                 if (data == 'acceso_denegado')
                 {
-                    location.href = '../index/index.html?msg=Acceso denegado.&msg_tipo=danger';
+                    location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
                 }
             }
         }        
@@ -277,33 +277,11 @@ function permiso_lectura_keycloak(token_actual, modulo)
 //Logaut
 function logout()
 {
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    //Si el token no esta activo o se presenta un error se elimina la variable del session storage
-    var token_actual = getLocalStorage(name_local_storage);
-
-    $.ajax({
-        type: 'POST',
-        data: {"token": token_actual.token},
-        url: url_pv + 'Session/cerrar_session/'
-    }).done(function (data) {
-        if (data == 'error_metodo')
-        {
-            location.href = '../index/index.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
-        } else
-        {
-            if (data == 'error')
-            {
-                location.href = '../index/index.html?msg=Se registro un error en la consulta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
-            } else
-            {
-                if (data == 'ok')
-                {
-                    removeLocalStorage(name_local_storage)
-                    location.href = '../../index.html?msg=Cerró su sesión con éxito.&msg_tipo=success';
-                }
-            }
-        }
+    
+    keycloak.init(initOptions).then(function () {
+        keycloak.logout();
     });
+    
 }
 
 //Iniciamos el documento

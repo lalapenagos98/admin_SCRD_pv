@@ -1,47 +1,63 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
+//Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
+//Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Encuestas");
-
-        
-        //Asignamos el valor a input id y encuesta
-        $("#id").attr('value', "");        
-        $("#encuesta").attr('value', getURLParameter('id'));        
-        
-        //Realizo la peticion para cargar el formulario
-        if ($("#encuesta").val() != "") {
-
-            //Limpio el formulario de los anexos
-            $('#nuevo_evento').on('hidden.bs.modal', function () {
-                $("#valores").val('');
-                $("#label").val("");
-                $("#orden").val("");
-                $("#tipo_parametro option[value='']").prop("selected", true);
-                $("#id").val("");
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-ADMINISTRACION-ENCUESTAS");
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
             });
 
-            //Agrego url para retornar
-            $(".regresar").attr("onclick", "location.href='update.html?id=" + $("#id").attr('value') + "'");
 
-            //Cargar datos de la tabla
-            cargar_tabla(token_actual);
+            //Asignamos el valor a input id y encuesta
+            $("#id").attr('value', "");
+            $("#encuesta").attr('value', getURLParameter('id'));
 
-        } else
-        {
-            location.href = 'list.html?msg=Debe seleccionar una entrevista, para poder continuar.&msg_tipo=danger';
+            //Realizo la peticion para cargar el formulario
+            if ($("#encuesta").val() != "") {
+
+                //Limpio el formulario de los anexos
+                $('#nuevo_evento').on('hidden.bs.modal', function () {
+                    $("#valores").val('');
+                    $("#label").val("");
+                    $("#orden").val("");
+                    $("#tipo_parametro option[value='']").prop("selected", true);
+                    $("#id").val("");
+                });
+
+                //Agrego url para retornar
+                $(".regresar").attr("onclick", "location.href='update.html?id=" + $("#id").attr('value') + "'");
+
+                //Cargar datos de la tabla
+                cargar_tabla(token_actual);
+
+            } else
+            {
+                location.href = 'list.html?msg=Debe seleccionar una entrevista, para poder continuar.&msg_tipo=danger';
+            }
+
+            validator_form(token_actual);
+            $(".check_activar_t").attr("checked", "true");
         }
-
-        validator_form(token_actual);
-        $(".check_activar_t").attr("checked", "true");
     }
 });
 
@@ -69,7 +85,7 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El orden es requerido'},
                     numeric: {message: 'Debe ingresar solo numeros'}
                 }
-            },            
+            },
         }
     }).on('success.form.bv', function (e) {
         // Prevent form submission
@@ -81,8 +97,8 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         var formData = new FormData(document.getElementById("form_nuevo_documento"));
-        formData.append("modulo", "Encuestas");
-        formData.append("token", token_actual.token);        
+        formData.append("modulo", "SICON-ADMINISTRACION-ENCUESTAS");
+        formData.append("token", token_actual.token);
 
         if ($("#id").val().length < 1) {
             //Se realiza la peticion con el fin de guardar el registro actual
@@ -147,7 +163,7 @@ function validator_form(token_actual) {
                 {
                     if (result == 'error_token')
                     {
-
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                     } else
                     {
                         if (result == 'acceso_denegado')
@@ -200,14 +216,15 @@ function cargar_tabla(token_actual)
         "lengthMenu": [30, 40, 50],
         "ajax": {
             url: url_pv + "Encuestas/all_params",
-            data: {"token": token_actual.token, "encuesta": $("#encuesta").attr('value')}
+            data: {"token": token_actual.token, "encuesta": $("#encuesta").attr('value')},
+            type: "POST"
         },
         "drawCallback": function (settings) {
             $(".check_activar_t").attr("checked", "true");
             $(".check_activar_f").removeAttr("checked");
             acciones_categoria(token_actual);
             //Cargo el formulario, para crear o editar
-            cargar_formulario(token_actual);            
+            cargar_formulario(token_actual);
         },
         "columns": [
             {"data": "encuesta"},
@@ -229,7 +246,7 @@ function cargar_formulario(token_actual)
         $("#id").attr('value', $(this).attr('title'))
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "id": $("#id").attr('value')},
             url: url_pv + 'Encuestas/search_param/'
         }).done(function (data) {
@@ -244,13 +261,13 @@ function cargar_formulario(token_actual)
                 } else
                 {
                     var json = JSON.parse(data);
-                    
+
                     //Cargo el select de los tipo_parametro
                     $('#tipo_parametro').find('option').remove();
                     $("#tipo_parametro").append('<option value="">:: Seleccionar ::</option>');
                     if (json.tipo_parametro.length > 0) {
                         $.each(json.tipo_parametro, function (key, registro) {
-                            if(registro=="Lista desplegable")
+                            if (registro == "Lista desplegable")
                             {
                                 $("#tipo_parametro").append('<option value="' + registro + '">' + registro + '</option>');
                             }
@@ -259,7 +276,7 @@ function cargar_formulario(token_actual)
 
                     //Cargo el formulario con los datos
                     $('#form_nuevo_documento').loadJSON(json.convocatoriaspropuestasparametros);
-                    $("#obligatorio option[value='"+json.convocatoriaspropuestasparametros.obligatorio+"']").prop("selected", true);                    
+                    $("#obligatorio option[value='" + json.convocatoriaspropuestasparametros.obligatorio + "']").prop("selected", true);
                     $("#valores").val(json.convocatoriaspropuestasparametros.valores);
 
 
@@ -290,7 +307,7 @@ function acciones_categoria(token_actual)
         //Peticion para inactivar el evento
         $.ajax({
             type: 'DELETE',
-            data: {"token": token_actual.token, "modulo": "Encuestas", "active": active},
+            data: {"token": token_actual.token, "modulo": "SICON-ADMINISTRACION-ENCUESTAS", "active": active},
             url: url_pv + 'Encuestas/delete_param/' + $(this).attr("title")
         }).done(function (data) {
             if (data == 'Si' || data == 'No')
