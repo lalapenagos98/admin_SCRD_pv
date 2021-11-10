@@ -30,8 +30,8 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             //Realizo la peticion para cargar el formulario
             $.ajax({
-                type: 'POST',
-                data: {"token": token_actual.token, "modulo": "SICON-PROPUESTAS-GANADORES"},
+                type: 'GET',
+                data: {"token": token_actual.token, "modulo": "Registro de ganadores"},
                 url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
             }).done(function (data) {
                 if (data == 'error_metodo')
@@ -65,23 +65,31 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 });
                             }
 
-                        //Cargos el select de localidades
-                        $('#certifica').find('option').remove();
-                        $("#certifica").append('<option value="">:: Seleccionar ::</option>');
-                        if (json.certifica.length > 0) {
-                            $.each(json.certifica, function (key, usuario) {
-                                var selected = '';
-                                $("#certifica").append('<option value="' + usuario.id + '" ' + selected + ' >' + usuario.username + ' - ' + usuario.primer_nombre + ' ' + usuario.segundo_nombre + ' ' + usuario.primer_apellido + ' ' + usuario.segundo_apellido + '</option>');
-                            });
-                        }
+                            //Cargos el select de localidades
+                            $('#certifica').find('option').remove();
+                            $("#certifica").append('<option value="">:: Seleccionar ::</option>');
+                            if (json.certifica.length > 0) {
+                                $.each(json.certifica, function (key, usuario) {
+                                    var selected = '';
+                                    $("#certifica").append('<option value="' + usuario.id + '" ' + selected + ' >' + usuario.username + ' - ' + usuario.primer_nombre + ' ' + usuario.segundo_nombre + ' ' + usuario.primer_apellido + ' ' + usuario.segundo_apellido + '</option>');
+                                });
+                            }
 
-                        if (json.entidades.length > 0) {
-                            //var selected;
-                            $.each(json.estados_propuestas, function (key, estado_propuesta) {
-                                if (estado_propuesta.id != 7 && estado_propuesta.id != 20)
-                                {
-                                    $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
-                                }
+                            if (json.entidades.length > 0) {
+                                //var selected;
+                                $.each(json.estados_propuestas, function (key, estado_propuesta) {
+                                    if (estado_propuesta.id != 7 && estado_propuesta.id != 20)
+                                    {
+                                        $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
+                                    }
+                                });
+                            }
+
+                            validator_form(token_actual);
+
+                            //Valido cual va a hacer el estado de la propuesta
+                            $('.estado_btn').click(function () {
+                                $("#estado").val($(this).attr("title"));
                             });
 
                             $('#no_ganador').click(function () {
@@ -89,7 +97,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 $.ajax({
                                     type: 'POST',
                                     url: url_pv + 'PropuestasGanadoras/editar_propuesta',
-                                    data: "id=" + $("#id").val() + "&estado=44&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
+                                    data: "id=" + $("#id").val() + "&estado=44&modulo=Registro de ganadores&token=" + token_actual.token
                                 }).done(function (result) {
                                     var result = result.trim();
 
@@ -428,7 +436,7 @@ function cargar_tabla(token_actual)
             $("#busqueda").attr("value", "1");
         } else
         {
-            $('#table_list').DataTable().ajax.reload( null, false ); 
+            $('#table_list').DataTable().ajax.reload(null, false);
         }
     } else
     {
@@ -536,7 +544,7 @@ function cargar_tabla(token_actual)
                                         $("#busqueda").attr("value", "1");
                                     } else
                                     {
-                                        $('#table_list').DataTable().ajax.reload( null, false ); 
+                                        $('#table_list').DataTable().ajax.reload(null, false);
                                     }
                                 } else
                                 {
