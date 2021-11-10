@@ -108,19 +108,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $("#busqueda").attr("value", "1");
                     } else
                     {
-                        $('#table_list').DataTable().draw();
+                        $('#table_list').DataTable().ajax.reload(null, false);
                     }
                 } else
                 {
-                    $('#table_list').DataTable().ajax.reload( null, false ); 
-                }
-            } else
-            {
-                if ($("#convocatoria").val() != "")
-                {
-
-                    var mensaje;
-                    if ($("#convocatoria option:selected").attr("dir") == "true")
+                    if ($("#convocatoria").val() != "")
                     {
 
                         var mensaje;
@@ -171,7 +163,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                     $("#busqueda").attr("value", "1");
                                                 } else
                                                 {
-                                                    $('#table_list').DataTable().draw();
+                                                    $('#table_list').DataTable().ajax.reload(null, false);
                                                 }
                                             } else
                                             {
@@ -206,8 +198,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                     {
                         $.ajax({
                             type: 'POST',
-                            data: {"modulo": "SICON-PROPUESTAS-VALIDAR", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
-                            url: url_pv + 'PropuestasValidar/select_convocatorias'
+                            data: {"modulo": "SICON-PROPUESTAS-GANADORES", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
+                            url: url_pv + 'PropuestasGanadoras/select_convocatorias'
                         }).done(function (data) {
                             if (data == 'error_metodo')
                             {
@@ -234,15 +226,6 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                                         $("#convocatoria").selectpicker('refresh');
 
-                                                $("#busqueda").attr("value", "1");
-                                            } else
-                                            {
-                                                $('#table_list').DataTable().ajax.reload( null, false ); 
-                                            }
-                                        } else
-                                        {
-                                            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                        }
                                     }
                                 }
                             }
@@ -595,7 +578,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
                             $('#modal_verificacion_2').modal('hide');
                             $('#modal_verificacion_1').modal('hide');
 
-                            $('#table_list').DataTable().ajax.reload( null, false ); 
+                            $('#table_list').DataTable().ajax.reload(null, false);
                         }
                     }
                 }
@@ -712,7 +695,7 @@ function cargar_tabla(token_actual) {
             {"data": "ver_reporte"}
         ]
     });
-    
+
     $('.guardar_por_que_habilita').click(function () {
         if ($("#por_que_habilita").val() != "")
         {
@@ -769,7 +752,7 @@ function cargar_tabla(token_actual) {
             notify("danger", "ok", "Habilitar propuestas:", "La justificación de habilitar la propuesta es obligatoria");
         }
     });
-    
+
 }
 
 function cargar_verificacion_1(token_actual, propuesta) {
@@ -1284,7 +1267,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
 function download_file(cod)
 {
     var token_actual = JSON.parse(JSON.stringify(keycloak));
-    
+
     $.AjaxDownloader({
         url: url_pv + 'PropuestasDocumentacion/download_file_back/',
         data: {
@@ -1293,7 +1276,7 @@ function download_file(cod)
             modulo: "SICON-PROPUESTAS-VERIFICACION"
         }
     });
-    
+
 }
 
 //guardar verificacion 1
@@ -1380,14 +1363,14 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
 function guardar_por_que_habilita()
 {
     $('.guardar_por_que_habilita').click(function () {
-       if($("#por_que_habilita").val()!="")
+        if ($("#por_que_habilita").val() != "")
         {
-            var token_habilitar = getLocalStorage(name_local_storage);
-            
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
             $.ajax({
                 type: 'POST',
                 url: url_pv + 'PropuestasValidar/guardar_habilitacion',
-                data: {"token": token_habilitar.token, "modulo": "Validar propuestas", "propuesta": $("#propuesta").val(), "numero_habilitar": $("#numero_habilitar").val(), "por_que_habilita": $("#por_que_habilita").val()},
+                data: {"token": token_actual.token, "modulo": "SICON-PROPUESTAS-VERIFICACION", "propuesta": $("#propuesta").val(), "numero_habilitar": $("#numero_habilitar").val(), "por_que_habilita": $("#por_que_habilita").val()},
             }).done(function (result) {
 
                 if (result == 'error_metodo')
@@ -1422,21 +1405,33 @@ function guardar_por_que_habilita()
                                     $('#modal_habilitar_1').modal('hide');
                                     $(".por_que_habilita").html('');
                                     $("textarea#por_que_habilita").val('');
-                                    $('#table_list').DataTable().ajax.reload( null, false ); 
+                                    $('#table_list').DataTable().ajax.reload(null, false);
                                 }
                             }
                         }
                     }
                 }
 
-function certificado(id,programa){
+            });
+
+
+        } else
+        {
+            notify("danger", "ok", "Habilitar propuestas:", "La justificación de habilitar la propuesta es obligatoria");
+        }
+    });
+
+
+}
+
+function certificado(id, programa) {
     var url = "reporte_propuesta_inscrita_back.php";
-    if(programa===2){
+    if (programa === 2) {
         url = "reporte_propuesta_inscrita_pdac_back.php";
     }
-    
+
     var token_actual = JSON.parse(JSON.stringify(keycloak));
-    
+
     $.AjaxDownloader({
         url: url_pv_report + url,
         data: {
@@ -1445,5 +1440,5 @@ function certificado(id,programa){
             modulo: "SICON-PROPUESTAS-VERIFICACION"
         }
     });
-    
+
 }

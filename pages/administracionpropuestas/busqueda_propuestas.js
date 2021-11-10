@@ -141,19 +141,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $("#busqueda").attr("value", "1");
                     } else
                     {
-                        $('#table_list').DataTable().draw();
+                        $('#table_list').DataTable().ajax.reload(null, false);
                     }
                 } else
                 {
-                    $('#table_list').DataTable().ajax.reload( null, false ); 
-                }
-            } else
-            {
-                if ($("#convocatoria").val() != "")
-                {
-
-                    var mensaje;
-                    if ($("#convocatoria option:selected").attr("dir") == "true")
+                    if ($("#convocatoria").val() != "")
                     {
 
                         var mensaje;
@@ -257,7 +249,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                     $("#busqueda").attr("value", "1");
                                                 } else
                                                 {
-                                                    $('#table_list').DataTable().draw();
+                                                    $('#table_list').DataTable().ajax.reload(null, false);
                                                 }
                                             } else
                                             {
@@ -268,13 +260,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 }
                             });
                         }
-
                     } else
                     {
                         notify("danger", "ok", "Propuestas:", "Debe seleccionar la convocatoria");
                     }
                 }
-
             });
 
             $('#entidad, #anio').change(function () {
@@ -310,74 +300,16 @@ keycloak.init(initOptions).then(function (authenticated) {
                                         notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
                                     } else
                                     {
-                                        if (data == 'ingresar')
-                                        {
-                                            if ($("#busqueda").val() == "0")
-                                            {
-                                                //Cargar datos en la tabla actual
-                                                $('#table_list').DataTable({
-                                                    "language": {
-                                                        "url": "../../dist/libraries/datatables/js/spanish.json"
-                                                    },
-                                                    "searching": false,
-                                                    "processing": true,
-                                                    "serverSide": true,
-                                                    "ordering": false,
-                                                    "lengthMenu": [50, 75, 100],
-                                                    "ajax": {
-                                                        url: url_pv + "PropuestasBusquedas/buscar_propuestas",
-                                                        data: function (d) {
-                                                            var params = new Object();
-                                                            params.anio = $('#anio').val();
-                                                            params.entidad = $('#entidad').val();
-                                                            params.convocatoria = $("#id_convocatoria").val();
-                                                            params.categoria = $('#categoria').val();
-                                                            params.codigo = $('#codigo').val();
-                                                            params.estado = $('#estado_propuesta').val();
-                                                            d.params = JSON.stringify(params);
-                                                            d.token = token_actual.token;
-                                                            d.modulo = "Búsqueda de propuestas";
-                                                        },
-                                                    },
-                                                    "columnDefs": [{
-                                                    "targets": 0,
-                                                    "render": function (data, type, row, meta) {
-                                                                //Verificar cual es la categoria padre
-                                                                var categoria = row.convocatoria;
-                                                                if (row.categoria != null) {
-                                                                    row.convocatoria = row.categoria;
-                                                                    row.categoria = categoria;
-                                                                }
-                                                                return row.estado;
-                                                            }
-                                                        }
-                                                    ],
-                                                    "drawCallback": function (settings) {
-                                                        cargar_propuesta(token_actual);
-                                                    },
-                                                    "columns": [
-                                                        {"data": "estado"},
-                                                        {"data": "anio"},
-                                                        {"data": "entidad"},
-                                                        {"data": "convocatoria"},
-                                                        {"data": "categoria"},
-                                                        {"data": "propuesta"},
-                                                        {"data": "codigo"},
-                                                        {"data": "participante"},
-                                                        {"data": "ver_reporte"},
-                                                        {"data": "ver_propuesta"}
-                                                    ]
-                                                });
+                                        var json = JSON.parse(data);
 
-                                                $("#busqueda").attr("value", "1");
-                                            } else
-                                            {
-                                                $('#table_list').DataTable().ajax.reload( null, false ); 
-                                            }
-                                        } else
-                                        {
-                                            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                        }
+                                        $('#convocatoria').find('option').remove();
+                                        $("#convocatoria").append('<option value="">:: Seleccionar ::</option>');
+                                        $.each(json, function (key, value) {
+                                            $("#convocatoria").append('<option dir="' + value.tiene_categorias + '" lang="' + value.diferentes_categorias + '" value="' + value.id + '">' + value.nombre + '</option>');
+                                        });
+
+                                        $("#convocatoria").selectpicker('refresh');
+
                                     }
                                 }
                             }
@@ -612,14 +544,14 @@ function download_file(cod)
 
 }
 
-function certificado(id,programa){
+function certificado(id, programa) {
     var url = "reporte_propuesta_inscrita_back.php";
-    if(programa===2){
+    if (programa === 2) {
         url = "reporte_propuesta_inscrita_pdac_back.php";
     }
-    
+
     var token_actual = JSON.parse(JSON.stringify(keycloak));
-    
+
     $.AjaxDownloader({
         url: url_pv_report + url,
         data: {
@@ -628,5 +560,5 @@ function certificado(id,programa){
             modulo: "SICON-PROPUESTAS-VERIFICACION"
         }
     });
-    
+
 }

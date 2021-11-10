@@ -9,6 +9,13 @@ keycloak.init(initOptions).then(function (authenticated) {
     $("#asignar_estimulo").hide();
     $("#genera_acta").hide();
 
+    /*
+     * 06-06-2020
+     * Wilmer Gustavo Mogollón Duque
+     * Se agrega el botón top_general al hide
+     */
+    $("#top_general").hide();
+
     if (authenticated === false) {
         keycloak.login();
     } else {
@@ -36,20 +43,46 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
-            /*
-             * 06-06-2020
-             * Wilmer Gustavo Mogollón Duque
-             * Se agrega el botón top_general al hide
-             */
-            $("#top_general").hide();
-            //Verifica si el token actual tiene acceso de lectura
-
 
             $('.convocatorias-search').select2();
 
-            init(token_actual);
-            //cargar_datos_formulario(token_actual);
-            validator_form(token_actual);
+            //Carga el select de entidad
+            $.ajax({
+                type: 'GET',
+                data: {"token": token_actual.token},
+                url: url_pv + 'Entidades/all_select/',
+                success: function (data) {
+
+                    switch (data) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_metodo':
+                            notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                            break;
+                        default:
+                            json_entidades = JSON.parse(data);
+                            $('#entidad').find('option').remove();
+                            $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                            if (json_entidades.length > 0) {
+                                $.each(json_entidades, function (key, entidad) {
+                                    $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
+                                });
+                            }
+
+                            break;
+                    }
+
+
+                }
+            });
 
             //Carga el select de años
             $('#anio').find('option').remove();
@@ -99,30 +132,27 @@ keycloak.init(initOptions).then(function (authenticated) {
             //carga el select grupos evaluación
             $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
-            $('#grupos_evaluacion').val(null);
-            if($('#anio').val() >= 2021){
-                cargar_select_grupos(token_actual, $('#rondas').val());
-            }
-        });
-        /*
-         * 20-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Agrego un if para controlar que seleccione la ronda de evaluación
-         */
+                $('#grupos_evaluacion').val(null);
+                if ($('#anio').val() >= 2021) {
+                    cargar_select_grupos(token_actual, $('#rondas').val());
+                }
+            });
+            /*
+             * 20-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Agrego un if para controlar que seleccione la ronda de evaluación
+             */
 
 
-        //carga la tabla con los criterios de busqueda
-        $('#buscar').click(function () {
+            //carga la tabla con los criterios de busqueda
+            //carga la tabla con los criterios de busqueda
+            $('#buscar').click(function () {
 
-            if ($('#rondas').val() === "") {
-                alert("Debe seleccionar la ronda de evaluación");
-            } else {
-
-                if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                        alert("Debe seleccionar un grupo de evaluación");
+                if ($('#rondas').val() === "") {
+                    alert("Debe seleccionar la ronda de evaluación");
                 } else {
 
-                    if ($('#grupos_evaluacion').val() === "") {
+                    if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
                         alert("Debe seleccionar un grupo de evaluación");
                     } else {
                         $('#resultado').focus();
@@ -133,6 +163,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
             });
+
             $("#top_general").click(function () {
 
                 cargar_info_top_general(token_actual, $('#rondas').val());
@@ -590,7 +621,7 @@ function cargar_tabla(token_actual) {
                     $("#notificacion_evaluaciones").show();
                     $("#notificacion_evaluaciones").html('Estimado usuario, recuerde que es necesario que todos los jurados confirmen su top individual para que las evaluaciones de las propuestas se listen en el módulo de deliberación. ');
                 }
-                
+
                 break;
         }
     }
@@ -958,7 +989,7 @@ function deliberar(token_actual, id_ronda, id_grupo) {
 }
 
 function cargar_info_top_general(token_actual, id_ronda) {
-    
+
     var id_convocatoria;
     $("#fieldset_top_general").removeAttr("disabled");
     //se verifica que las evaluaciones esten confirmadas

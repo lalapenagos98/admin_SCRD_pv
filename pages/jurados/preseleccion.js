@@ -65,7 +65,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             //cargar_tabla(token_actual);
             //$("#exampleModal").modal("toggle");
         });
-        
+
         /*
          * 22-09-2021
          * Wilmer Gustavo Mogollón Duque
@@ -80,9 +80,9 @@ keycloak.init(initOptions).then(function (authenticated) {
             $("#baceptargn").show();
         });
         $("#baceptargn").click(function () {
-            if($("#categorias").val()===""){
+            if ($("#categorias").val() === "") {
                 generar_acta_jurados_preseleccionados(token_actual, $("#convocatorias").val());
-            }else{
+            } else {
                 generar_acta_jurados_preseleccionados(token_actual, $("#categorias").val());
             }
 //            generar_acta_jurados_preseleccionados(token_actual, $('#rondas').val());
@@ -121,158 +121,81 @@ keycloak.init(initOptions).then(function (authenticated) {
                         },
                     }
                 }
-            });
-            
-            
-            $('.convocatorias-search').select2();
-            
-            
-            
-            init(token_actual);//Validar que es
-            //cargar_datos_formulario(token_actual);
-            validator_form(token_actual);
-            //carga select_convocatorias
-            $('#anio').change(function () {
-                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-                $('#select_categorias').hide();
-                $('#convocatorias').val(null);
-                $('#categorias').val(null);
-                cargar_tabla(token_actual);
-            });
-            //carga select convocatorias
-            $('#entidad').change(function () {
-                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-                $('#select_categorias').hide();
-                $('#convocatorias').val(null);
-                $('#categorias').val(null);
-                cargar_tabla(token_actual);
-            });
-            //carga el select categorias
-            $('#convocatorias').change(function () {
-                cargar_select_categorias(token_actual, $('#convocatorias').val());
-                $('#categorias').val(null);
-                cargar_tabla(token_actual);
-            });
-            $('#categorias').change(function () {
 
-                cargar_tabla(token_actual);
-            });
-            //carga la tabla con los criterios de busqueda
-            $('#buscar').click(function () {
-                
-                $('#resultado').focus();
-                cargar_tabla(token_actual);
-            });
-            
-            $('#buscar_banco').click(function () {
-            });
-            
-            $('#formulario_busqueda_banco').click(function () {
-            });
-            
-            $("#exampleModal").on('hide.bs.modal', function () {
-                $('#filtro').val(null);
-                $('#palabra_clave').val(null);
-                $("#formulario_busqueda_banco").trigger("reset");
-            });
-            $("#evaluar").on('hide.bs.modal', function () {
+            }
+        })
+                .on('error.field.bv', function (e, data) {
 
-            });
-            $("#form_aplica_perfil").bootstrapValidator({
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    descripcion_evaluacion: {
-                        enabled: false,
-                        validators: {
-                            notEmpty: {
-                                message: 'Digite la razón por la cual no aplica el perfil.'
-                            }
-                        }
-                    },
-                    'option_aplica_perfil': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Debe seleccionar si aplica ó no el perfil.'
-                            },
-                        }
+                    if (data.field == "option_aplica_perfil") {
+                        notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica ó no el perfil.");
                     }
 
-                }
-            })
-                    .on('error.field.bv', function (e, data) {
+                })
+                .on('success.form.bv', function (e) {
 
-                        if (data.field == "option_aplica_perfil") {
-                            notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica ó no el perfil.");
-                        }
+                    // Prevent form submission
+                    e.preventDefault();
+                    // Get the form instance
+                    var $form = $(e.target);
 
-                    })
-                    .on('success.form.bv', function (e) {
+                    // Get the BootstrapValidator instance
+                    var bv = $form.data('bootstrapValidator');
 
-                        // Prevent form submission
-                        e.preventDefault();
-                        // Get the form instance
-                        var $form = $(e.target);
-                        // Get the BootstrapValidator instance
-                        var bv = $form.data('bootstrapValidator');
-                        evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
-                        bv.resetForm();
-                    });
-            $("#alertModalSelbaceptar").click(function () {
-                $('#select_categorias_2').hide();
-                $('#categorias').val($('#categorias_2').val());
-                $("#panel_tabs").show();
-            });
-            
-            $("#optionsRadiosInline1").click(function () {
+                    evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
 
-                $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', false);
-            });
-            
-            $("#optionsRadiosInline2").click(function () {
+                    bv.resetForm();
 
-                if (this.checked) {
-                    $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', true);
-                    $('#form_aplica_perfil').bootstrapValidator('validateField', 'descripcion_evaluacion');
-                }
+                });
 
-            });
-            
-            $("#baceptar").click(function () {
-                $('#alertModal').modal('hide');
-                confirmar_evaluacion(token_actual, $("#id_perfil_selecionado").val(), $("#id_participante_sel").val());
-                $('#evaluar').modal('hide');
-            });
-            
-            $("#liberar_jurados").click(function () {
-                if ($("#convocatorias").val() === "") {
-                    $('#mensaje_seleccionar_convocatoria').show();
-                    $('#bcancelar_liberar').show();
-                    $('#mensaje_liberar').hide();
-                    $('#baceptar_liberar').hide();
-                } else {
-                    $('#mensaje_liberar').show();
-                    $('#bcancelar_liberar').show();
-                    $('#baceptar_liberar').show();
-                    $('#mensaje_seleccionar_convocatoria').hide();
-                }
-            });
-            
-            $("#baceptar_liberar").click(function () {
-                $('#confirmar_liberar').modal('hide');
-                if ($("#categorias").val() === "") {
-                    liberar_postulaciones(token_actual, $("#convocatorias").val());
-                } else {
-                    liberar_postulaciones(token_actual, $("#categorias").val());
-                }
-            });
+        $("#alertModalSelbaceptar").click(function () {
+            $('#select_categorias_2').hide();
+            $('#categorias').val($('#categorias_2').val());
+            $("#panel_tabs").show();
+        });
 
+        $("#optionsRadiosInline1").click(function () {
 
+            $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', false);
+        });
 
-        }
+        $("#optionsRadiosInline2").click(function () {
+
+            if (this.checked) {
+                $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', true);
+                $('#form_aplica_perfil').bootstrapValidator('validateField', 'descripcion_evaluacion');
+            }
+
+        });
+
+        $("#baceptar").click(function () {
+            $('#alertModal').modal('hide');
+            confirmar_evaluacion(token_actual, $("#id_perfil_selecionado").val(), $("#id_participante_sel").val());
+            $('#evaluar').modal('hide');
+        });
+
+        $("#liberar_jurados").click(function () {
+            if ($("#convocatorias").val() === "") {
+                $('#mensaje_seleccionar_convocatoria').show();
+                $('#bcancelar_liberar').show();
+                $('#mensaje_liberar').hide();
+                $('#baceptar_liberar').hide();
+            } else {
+                $('#mensaje_liberar').show();
+                $('#bcancelar_liberar').show();
+                $('#baceptar_liberar').show();
+                $('#mensaje_seleccionar_convocatoria').hide();
+            }
+        });
+
+        $("#baceptar_liberar").click(function () {
+            $('#confirmar_liberar').modal('hide');
+            if ($("#categorias").val() === "") {
+                liberar_postulaciones(token_actual, $("#convocatorias").val());
+            } else {
+                liberar_postulaciones(token_actual, $("#categorias").val());
+            }
+        });
+
     }
 }).catch(function () {
     location.href = url_pv_admin + 'error_keycloak.html';
@@ -284,7 +207,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 function init(token_actual) {
 //Realizo la peticion para cargar el formulario
     $.ajax({
-        type: 'POST',//Se cambia de petición GET a POST
+        type: 'POST', //Se cambia de petición GET a POST
         data: {"token": token_actual.token, "id": $("#id").attr('value')},
         url: url_pv + 'Juradospreseleccion/init/'
     }).done(function (data) {
@@ -303,7 +226,7 @@ function init(token_actual) {
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                 break;
             default:
-                
+
 
                 var json = JSON.parse(data);
                 //Cargos el select de convocatorias jurado
