@@ -680,6 +680,12 @@ function cargar_tabla(token_actual) {
                                 + '<span class="glyphicon glyphicon-ok"></span></button>';
                     }
                 },
+            },
+            {"data": "aciones",
+                render: function (data, type, row) {
+                    return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#estadopagoModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
+                            + '<span class="glyphicon glyphicon-eye-open"></span></button>';
+                },
             }
             /*{"data": "Estado de la evaluación",
              render: function ( data, type, row ) {
@@ -693,12 +699,7 @@ function cargar_tabla(token_actual) {
              return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
              },
              },
-            {"data": "aciones",
-                render: function (data, type, row) {
-                    return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#evaluarModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
-                            + '<span class="glyphicon glyphicon-eye-open"></span></button>';
-                },
-            }*/
+            */
 
 
 
