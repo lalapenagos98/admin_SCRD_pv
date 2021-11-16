@@ -45,44 +45,48 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
             $('.convocatorias-search').select2();
+            //Verifica si el token actual tiene acceso de lectura
+            init(token_actual);
+            //cargar_datos_formulario(token_actual);
+            validator_form(token_actual);
 
             //Carga el select de entidad
-            $.ajax({
-                type: 'GET',
-                data: {"token": token_actual.token},
-                url: url_pv + 'Entidades/all_select/',
-                success: function (data) {
-
-                    switch (data) {
-                        case 'error':
-                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                            break;
-                        case 'error_metodo':
-                            notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                            break;
-                        case 'error_token':
-                            //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                            notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
-                            break;
-                        case 'acceso_denegado':
-                            notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                            break;
-                        default:
-                            json_entidades = JSON.parse(data);
-                            $('#entidad').find('option').remove();
-                            $("#entidad").append('<option value="">:: Seleccionar ::</option>');
-                            if (json_entidades.length > 0) {
-                                $.each(json_entidades, function (key, entidad) {
-                                    $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
-                                });
-                            }
-
-                            break;
-                    }
-
-
-                }
-            });
+//            $.ajax({
+//                type: 'GET',
+//                data: {"token": token_actual.token},
+//                url: url_pv + 'Entidades/all_select/',
+//                success: function (data) {
+//
+//                    switch (data) {
+//                        case 'error':
+//                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+//                            break;
+//                        case 'error_metodo':
+//                            notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+//                            break;
+//                        case 'error_token':
+//                            //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+//                            notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
+//                            break;
+//                        case 'acceso_denegado':
+//                            notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+//                            break;
+//                        default:
+//                            json_entidades = JSON.parse(data);
+//                            $('#entidad').find('option').remove();
+//                            $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+//                            if (json_entidades.length > 0) {
+//                                $.each(json_entidades, function (key, entidad) {
+//                                    $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
+//                                });
+//                            }
+//
+//                            break;
+//                    }
+//
+//
+//                }
+//            });
 
             //Carga el select de años
             $('#anio').find('option').remove();
