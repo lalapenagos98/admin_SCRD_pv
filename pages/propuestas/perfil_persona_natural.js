@@ -144,7 +144,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "pais": pais},
-                                                        url: url_pv + 'Departamentos/select'
+                                                        url: url_pv + 'Departamentos/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -210,7 +210,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "pais": pais_nacimiento},
-                                                        url: url_pv + 'Departamentos/select'
+                                                        url: url_pv + 'Departamentos/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -242,7 +242,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "departamento": departamento},
-                                                        url: url_pv + 'Ciudades/select'
+                                                        url: url_pv + 'Ciudades/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -273,7 +273,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "departamento": departamento},
-                                                        url: url_pv + 'Ciudades/select'
+                                                        url: url_pv + 'Ciudades/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -304,7 +304,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad},
-                                                        url: url_pv + 'Barrios/select'
+                                                        url: url_pv + 'Barrios/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
