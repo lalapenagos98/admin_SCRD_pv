@@ -53,7 +53,7 @@ $(document).ready(function () {
                                     $.ajax({
                                         type: 'GET',
                                         data: {"token": token_actual.token},
-                                        url: url_pv + 'Paises/select'
+                                        url: url_pv + 'Paises/select_participantes'
                                     }).done(function (data) {
                                         if (data === 'error_metodo')
                                         {
@@ -82,7 +82,7 @@ $(document).ready(function () {
                                     $.ajax({
                                         type: 'GET',
                                         data: {"token": token_actual.token, "ciudad": 151},
-                                        url: url_pv + 'Localidades/select'
+                                        url: url_pv + 'Localidades/select_participantes'
                                     }).done(function (data) {
                                         if (data == 'error_metodo')
                                         {
