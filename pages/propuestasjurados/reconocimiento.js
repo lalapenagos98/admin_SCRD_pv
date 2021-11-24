@@ -237,7 +237,7 @@ function validator_form(token_actual) {
             },
             institucion: {
                 validators: {
-                    notEmpty: {message: 'La entidad es requerida'}
+                    notEmpty: {message: 'La institución es requerida'}
                 }
             },
             anio: {

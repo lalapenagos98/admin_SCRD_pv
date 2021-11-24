@@ -168,7 +168,7 @@ function cargar_select_lineas(token_actual) {
                 //Cargos el select de líneas estratégicas
                 $('#linea').find('option').remove();
                 $("#linea").append('<option value="">:: Seleccionar ::</option>');
-                if (json != null && json.length > 0) {
+                if (json !== null && json.length > 0) {
                     $.each(json, function (key, array) {
                         $("#linea").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
                     });

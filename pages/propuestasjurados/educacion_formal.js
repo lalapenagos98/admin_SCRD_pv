@@ -367,12 +367,12 @@
           fields: {
               nivel_educacion:{
                 validators: {
-                    notEmpty: {message: 'La categoria es requerida'}
+                    notEmpty: {message: 'El nivel de educación es requerido'}
                 }
               },
               titulo: {
                   validators: {
-                      notEmpty: {message: 'El tipo de documento de identificación es requerido'}
+                      notEmpty: {message: 'El título obtenido es requerido'}
                   }
               },
               institucion: {
