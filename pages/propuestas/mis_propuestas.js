@@ -135,8 +135,8 @@ $(document).ready(function () {
                                 row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Ver encuesta"><span class="fa fa-edit"></span></button></a>';
                             }
                             
-                            //Se agrega un nuevo boton en acciones, para realizar el cambio de integrante
-                            /*
+                            //Se agrega un nuevo boton en acciones cuando es ganador
+                            
                             if(row.id_estado==34)
                             {
 //                                href_propuesta = "cambio_integrante.html?perfil=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
@@ -146,7 +146,7 @@ $(document).ready(function () {
                                 row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-success btn_tooltip" title="Documentación ganadores"><span class="fa fa-folder-o"></span></button></a>';
                                 
                             }
-                            */
+                            
                            
                             //Valido el programa PDAC
                             if(row.programa==2)
