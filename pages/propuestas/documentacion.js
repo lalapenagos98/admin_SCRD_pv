@@ -264,8 +264,14 @@ $(document).ready(function () {
                                                                                         notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                                                                     } else
                                                                                     {
-                                                                                        notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
-                                                                                        cargar_tabla_archivos(token_actual, documento);
+                                                                                        if (data == 'error_periodo_convocatoria')
+                                                                                        {
+                                                                                            notify("danger", "ok", "Convocatorias:", "La convocatoria ya no se encuentra disponible para inscribir su propuesta.");
+                                                                                        } else
+                                                                                        {
+                                                                                            notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                                                                            cargar_tabla_archivos(token_actual, documento);
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -397,6 +403,11 @@ $(document).ready(function () {
                                                                                 if(documento.nombre=="FPorcentajePresupuesto")
                                                                                 {                                                                                    
                                                                                     nombre_requisito="El total de la cofinanciación es superior al 70% del valor total del proyecto, se debe ajustar.";
+                                                                                }
+                                                                                
+                                                                                if(documento.nombre=="FLimitePresupuesto")
+                                                                                {                                                                                    
+                                                                                    nombre_requisito="El valor solicitado en cofinanciación supera el tope establecido para la convocatoria.";
                                                                                 }
 
                                                                                 html_table = html_table + '<li>' + nombre_requisito + '</li>';
@@ -786,10 +797,15 @@ function validator_form(token_actual) {
                         {
                             notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo en la carpeta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         } else
-                        {
-                            notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
-                            cargar_tabla_link(token_actual, documento);
-
+                        {                            
+                            if (data == 'error_periodo_convocatoria')
+                            {
+                                notify("danger", "ok", "Convocatorias:", "La convocatoria ya no se encuentra disponible para inscribir su propuesta.");
+                            } else
+                            {
+                                notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                cargar_tabla_link(token_actual, documento);
+                            }
                         }
                     }
                 }

@@ -122,14 +122,18 @@ $(document).ready(function () {
                                                                     {
 
                                                                         var json = JSON.parse(data);
-                                                                        if(json.convocatoria_padre_categoria=="621")
+                                                                        if(json.convocatoria_padre_categoria=="621" || json.convocatoria_padre_categoria=="1187")
                                                                         {
                                                                             $(".campos_metropolitano").css("display","block");
+                                                                            $(".campos_locales").css("display","none");
+                                                                            $("#nombre_justificacion").html('Antecedentes y justificación del proyecto');
                                                                         }
                                                                         else
                                                                         {
                                                                             $(".div_alianza").css("display","block");                                                                            
                                                                             $(".localidad_principal").css("display","block");                                                                            
+                                                                            $("#nombre_justificacion").html('Justificación');
+                                                                            $(".campos_locales").css("display","block");
                                                                         }
                                                                         //eliminó disabled todos los componentes
                                                                         if (json.estado == 7)
@@ -238,6 +242,31 @@ $(document).ready(function () {
                                                                                 $("#alcance_territorial").append('<option value="' + medio + '" >' + medio + '</option>');
                                                                             });
                                                                         }
+                                                                        
+                                                                        //Cargo el select de enfoque_proyecto 
+                                                                        if (json.enfoque_proyecto.length > 0) {
+                                                                            $.each(json.enfoque_proyecto, function (key, medio) {
+                                                                                var selected = '';
+                                                                                if (medio == json.propuesta.enfoque_proyecto)
+                                                                                {
+                                                                                    selected = 'selected="selected"';
+                                                                                }
+                                                                                $("#enfoque_proyecto").append('<option value="' + medio + '" >' + medio + '</option>');
+                                                                            });
+                                                                        }
+                                                                        
+                                                                        //Cargo el select de medir_impacto 
+                                                                        if (json.medir_impacto.length > 0) {
+                                                                            $("#medir_impacto").append('<option value="" >:: Seleccionar ::</option>');
+                                                                            $.each(json.medir_impacto, function (key, medio) {
+                                                                                var selected = '';
+                                                                                if (medio == json.propuesta.medir_impacto)
+                                                                                {                                                                                    
+                                                                                    selected = 'selected="selected"';
+                                                                                }
+                                                                                $("#medir_impacto").append('<option value="' + medio + '" >' + medio + '</option>');
+                                                                            });
+                                                                        }
 
                                                                         //Cargo el select de linea_estrategica                                
                                                                         if (json.linea_estrategica.length > 0) {
@@ -289,7 +318,16 @@ $(document).ready(function () {
                                                                                 $("#alcance_territorial option[value='" + e + "']").prop("selected", true);
                                                                             });
                                                                         }
-
+                                                                        
+                                                                        //Set los valores enfoque_proyecto
+                                                                        $("#enfoque_proyecto option:selected").removeAttr("selected");
+                                                                        $("#enfoque_proyecto option:selected").prop("selected", false);                                                                        
+                                                                        if(json.propuesta.enfoque_proyecto !== '' &&  json.propuesta.enfoque_proyecto !== null){
+                                                                            $.each(JSON.parse(json.propuesta.enfoque_proyecto), function (i, e) {
+                                                                                $("#enfoque_proyecto option[value='" + e + "']").prop("selected", true);
+                                                                            });
+                                                                        }
+                                                                        
                                                                         //Set los valores linea_estrategica
                                                                         $("#linea_estrategica option:selected").removeAttr("selected");
                                                                         $("#linea_estrategica option:selected").prop("selected", false);
@@ -310,6 +348,7 @@ $(document).ready(function () {
 
                                                                         //Cargo el formulario con los datos
                                                                         $('#formulario_principal').loadJSON(json.propuesta);
+                                                                        
 
                                                                         if(json.propuesta.alianza_sectorial)
                                                                         {
@@ -343,6 +382,14 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".caracter_justificacion").html(2000 - json.propuesta.justificacion.length);
                                                                         }
+                                                                        if(json.propuesta.resumen!=null)
+                                                                        {
+                                                                            $(".caracter_resumen").html(2000 - json.propuesta.resumen.length);
+                                                                        }
+                                                                        if(json.propuesta.seleccion_area!=null)
+                                                                        {
+                                                                            $(".caracter_seleccion_area").html(2000 - json.propuesta.seleccion_area.length);
+                                                                        }
                                                                         if(json.propuesta.atencedente!=null)
                                                                         {
                                                                             $(".caracter_atencedente").html(2000 - json.propuesta.atencedente.length);
@@ -355,9 +402,13 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".caracter_impacto").html(2000 - json.propuesta.impacto.length);
                                                                         }
+                                                                        if(json.propuesta.enfoques_seleccionados!=null)
+                                                                        {
+                                                                            $(".caracter_enfoques_seleccionados").html(2000 - json.propuesta.enfoques_seleccionados.length);
+                                                                        }
                                                                         if(json.propuesta.mecanismos_cualitativa!=null)
                                                                         {
-                                                                            $(".caracter_mecanismos_cualitativa").html(2000 - json.propuesta.mecanismos_cualitativa.length);
+                                                                            $(".caracter_mecanismos_cualitativa").html(1000 - json.propuesta.mecanismos_cualitativa.length);
                                                                         }
                                                                         if(json.propuesta.mecanismos_cuantitativa!=null)
                                                                         {
@@ -366,13 +417,21 @@ $(document).ready(function () {
                                                                         
                                                                         if(json.propuesta.proyeccion_reconocimiento!=null)
                                                                         {
-                                                                            $(".caracter_proyeccion_reconocimiento").html(2000 - json.propuesta.proyeccion_reconocimiento.length);
+                                                                            $(".caracter_proyeccion_reconocimiento").html(500 - json.propuesta.proyeccion_reconocimiento.length);
                                                                         }
+                                                                        
+                                                                        if(json.propuesta.construccion_reconocimiento!=null)
+                                                                        {
+                                                                            $(".caracter_construccion_reconocimiento").html(500 - json.propuesta.construccion_reconocimiento.length);
+                                                                        }
+                                                                        
                                                                         if(json.propuesta.impacto_proyecto!=null)
                                                                         {
-                                                                            $(".caracter_impacto_proyecto").html(2000 - json.propuesta.impacto_proyecto.length);
+                                                                            $(".caracter_impacto_proyecto").html(500 - json.propuesta.impacto_proyecto.length);
                                                                         }
 
+                                                                        $("#mecanismos_cualitativa_local").val(json.propuesta.mecanismos_cualitativa);
+                                                                        
                                                                         //Valido formulario
                                                                         validator_form(token_actual);
 
@@ -392,7 +451,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad},
-                                                        url: url_pv + 'Upzs/select'
+                                                        url: url_pv + 'Upzs/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -421,7 +480,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad},
-                                                        url: url_pv + 'Barrios/select'
+                                                        url: url_pv + 'Barrios/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -456,7 +515,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad, "upz": upz},
-                                                        url: url_pv + 'Barrios/select'
+                                                        url: url_pv + 'Barrios/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {

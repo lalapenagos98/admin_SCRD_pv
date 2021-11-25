@@ -82,7 +82,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             data: {"token": token_actual.token, "ciudad": 151},
-            url: url_pv + 'Localidades/select'
+            url: url_pv + 'Localidades/select_jurado'
         }).done(function (data) {
             if (data == 'error_metodo')
             {
@@ -112,7 +112,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "localidad": localidad},
-                url: url_pv + 'Barrios/select'
+                url: url_pv + 'Barrios/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -200,7 +200,7 @@ function cargar_select_tipodocumentos(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Tiposdocumentos/select/'
+        url: url_pv + 'Tiposdocumentos/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de tipo de documento
@@ -219,7 +219,7 @@ function cargar_select_sexo(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Sexos/select/'
+        url: url_pv + 'Sexos/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de sexo
@@ -258,7 +258,7 @@ function cargar_select_identidad(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Identidadesgeneros/select/'
+        url: url_pv + 'Identidadesgeneros/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de identidad genero

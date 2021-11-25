@@ -1,197 +1,214 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+keycloak.init(initOptions).then(function (authenticated) {
+    //Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Convocatorias");
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-        //Realizo la peticion para cargar el formulario
-        if ($("#id").val() != "") {
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-CONVOCATORIAS-CONFIGURACION");
 
-            //Establesco los text area html
-            $('.textarea_html').jqte();
-
-            //Limpio el formulario de los anexos
-            $('#nuevo_evento').on('hidden.bs.modal', function () {
-                $("#descripcion").jqteVal('');
-                $("#nombre").val("");
-                $("#orden").val("");
-                $("#tipo_documento option[value='']").prop("selected", true);
-                $("#id_registro").val("");
-            });
-
-            //Agrego url para retornar
-            $(".regresar").attr("onclick", "location.href='update.html?id=" + $("#id").attr('value') + "'");
-            
-            //Realizo la peticion para cargar el formulario
+            //Cargamos el menu principal
             $.ajax({
-                type: 'GET',
-                data: {"token": token_actual.token, "id": $("#id").attr('value')},
-                url: url_pv + 'Convocatorias/search/'
-            }).done(function (data) {
-                if (data == 'error_metodo')
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "modulo": "SICON-CONVOCATORIAS-CONFIGURACION-UPDATE"},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
                 {
-                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                 } else
                 {
-                    if (data == 'error')
+                    $("#menu_principal").html(result);
+                }
+            });
+
+            //Realizo la peticion para cargar el formulario
+            if ($("#id").val() != "") {
+
+                //Establesco los text area html
+                $('.textarea_html').jqte();
+
+                //Limpio el formulario de los anexos
+                $('#nuevo_evento').on('hidden.bs.modal', function () {
+                    $("#descripcion").jqteVal('');
+                    $("#nombre").val("");
+                    $("#orden").val("");
+                    $("#tipo_documento option[value='']").prop("selected", true);
+                    $("#id_registro").val("");
+                });
+
+                //Agrego url para retornar
+                $(".regresar").attr("onclick", "location.href='update.html?id=" + $("#id").attr('value') + "'");
+
+                //Realizo la peticion para cargar el formulario
+                $.ajax({
+                    type: 'POST',
+                    data: {"token": token_actual.token, "id": $("#id").attr('value')},
+                    url: url_pv + 'Convocatorias/search/'
+                }).done(function (data) {
+                    if (data == 'error_metodo')
                     {
-                        location.href = url_pv_admin + 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     } else
                     {
-                        if (data == 'error_token')
+                        if (data == 'error')
                         {
-                            location.href = url_pv + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            location.href = url_pv_admin + 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
                         } else
                         {
-                            var json = JSON.parse(data);
+                            if (data == 'error_token')
+                            {
+                                location.href = url_pv + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            } else
+                            {
+                                var json = JSON.parse(data);
 
-                            if (typeof json.convocatoria.id === 'number') {
+                                if (typeof json.convocatoria.id === 'number') {
 
-                                //Limpio select de categorias
-                                $('#convocatoria').find('option').remove();
+                                    //Limpio select de categorias
+                                    $('#convocatoria').find('option').remove();
 
-                                //Valido si la convocatoria tiene categorias                                            
-                                if (json.convocatoria.tiene_categorias == true)
-                                {
-                                    $("#tiene_categorias").val("Si");                                    
-                                    
-                                    $(".diferentes_requisitos").css("display", "block");
-                                    //Cargo el select de las categorias                                                
-                                    if (json.categorias.length > 0) {
-                                        $.each(json.categorias, function (key, categoria) {
-                                            $("#convocatoria").append('<option value="' + categoria.id + '" >' + categoria.nombre + '</option>');
-                                        });
+                                    //Valido si la convocatoria tiene categorias                                            
+                                    if (json.convocatoria.tiene_categorias == true)
+                                    {
+                                        $("#tiene_categorias").val("Si");
+
+                                        $(".diferentes_requisitos").css("display", "block");
+                                        //Cargo el select de las categorias                                                
+                                        if (json.categorias.length > 0) {
+                                            $.each(json.categorias, function (key, categoria) {
+                                                $("#convocatoria").append('<option value="' + categoria.id + '" >' + categoria.nombre + '</option>');
+                                            });
+                                        }
+                                    } else
+                                    {
+                                        $("#tiene_categorias").val("No");
+                                        $(".diferentes_requisitos").css("display", "none");
                                     }
-                                } else
-                                {
-                                    $("#tiene_categorias").val("No");
-                                    $(".diferentes_requisitos").css("display", "none");
                                 }
                             }
                         }
                     }
-                }
-            });
-
-            //Cargar datos de la tabla
-            cargar_tabla(token_actual);
-
-            //Permite crear el href para crear el reporte de listas
-            $('#tipo_documento').on('change', function () {
-                var tipo = $('#tipo_documento').val();
-                var href="javascript:void(0);";
-                var id = $("#id").attr('value');
-                
-                if($("#tiene_categorias").val()=="Si")
-                {
-                    id = $("#convocatoria").val();
-                }
-                
-                if(tipo=="Listado de participantes inscritos")
-                {
-                    href=url_pv_report+"listado_propuesta_inscrita.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listados rechazados y documentos por subsanar")
-                {
-                    href=url_pv_report+"listado_propuesta_rechazados_subsanar.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listado de habilitados y rechazados")
-                {
-                    href=url_pv_report+"listado_propuesta_rechazados_habilitados.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listado de habilitados")
-                {
-                    href=url_pv_report+"listado_propuesta_habilitados.php?id=" + id + "&token=" + token_actual.token;
-                }    
-                
-                if(tipo=="Listado de preinscritos")
-                {
-                    href=url_pv_report+"listado_propuesta_pre_inscrita.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                $("#link_reporte").attr("href", href);
-                
-            });
-            
-            $('.generar_listado_xls').click(function () {
-                var id = $("#id").attr('value');
-                var token_actual = getLocalStorage(name_local_storage);
-                
-                if($("#tiene_categorias").val()=="Si")
-                {
-                    id = $("#convocatoria").val();
-                }
-                
-                $.AjaxDownloader({
-                    data : {
-                        token   : token_actual.token,
-                        id   : id,
-                        tipo   : $('#tipo_documento').val(),
-                    },
-                    url: url_pv + 'PropuestasWS/listados_xls/'
                 });
 
-            });
-            
-            
-            //Permite crear el href para crear el reporte de listas
-            $('#convocatoria').on('change', function () {
-                var tipo = $('#tipo_documento').val();
-                var href="javascript:void(0);";
-                var id = $("#id").attr('value');
-                
-                if($("#tiene_categorias").val()=="Si")
-                {
-                    id = $("#convocatoria").val();
-                }
-                
-                if(tipo=="Listado de participantes inscritos")
-                {
-                    href=url_pv_report+"listado_propuesta_inscrita.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listados rechazados y documentos por subsanar")
-                {
-                    href=url_pv_report+"listado_propuesta_rechazados_subsanar.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listado de habilitados y rechazados")
-                {
-                    href=url_pv_report+"listado_propuesta_rechazados_habilitados.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listado de habilitados")
-                {
-                    href=url_pv_report+"listado_propuesta_habilitados.php?id=" + id + "&token=" + token_actual.token;
-                }
-                
-                if(tipo=="Listado de preinscritos")
-                {
-                    href=url_pv_report+"listado_propuesta_pre_inscrita.php?id=" + id + "&token=" + token_actual.token;
-                }             
-                
-                $("#link_reporte").attr("href", href);
-                
-            });
+                //Cargar datos de la tabla
+                cargar_tabla(token_actual);
 
-        } else
-        {
-            location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+                //Permite crear el href para crear el reporte de listas
+                $('#tipo_documento').on('change', function () {
+                    var tipo = $('#tipo_documento').val();
+                    var href = "javascript:void(0);";
+                    var id = $("#id").attr('value');
+
+                    if ($("#tiene_categorias").val() == "Si")
+                    {
+                        id = $("#convocatoria").val();
+                    }
+
+                    if (tipo == "Listado de participantes inscritos")
+                    {
+                        href = url_pv_report + "listado_propuesta_inscrita.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listados rechazados y documentos por subsanar")
+                    {
+                        href = url_pv_report + "listado_propuesta_rechazados_subsanar.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de habilitados y rechazados")
+                    {
+                        href = url_pv_report + "listado_propuesta_rechazados_habilitados.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de habilitados")
+                    {
+                        href = url_pv_report + "listado_propuesta_habilitados.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de preinscritos")
+                    {
+                        href = url_pv_report + "listado_propuesta_pre_inscrita.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    $("#link_reporte").attr("href", href);
+
+                });
+
+                $('.generar_listado_xls').click(function () {
+                    var id = $("#id").attr('value');
+                    var token_actual = getLocalStorage(name_local_storage);
+
+                    if ($("#tiene_categorias").val() == "Si")
+                    {
+                        id = $("#convocatoria").val();
+                    }
+
+                    $.AjaxDownloader({
+                        data: {
+                            token: token_actual.token,
+                            id: id,
+                            tipo: $('#tipo_documento').val(),
+                        },
+                        url: url_pv + 'PropuestasWS/listados_xls/'
+                    });
+
+                });
+
+
+                //Permite crear el href para crear el reporte de listas
+                $('#convocatoria').on('change', function () {
+                    var tipo = $('#tipo_documento').val();
+                    var href = "javascript:void(0);";
+                    var id = $("#id").attr('value');
+
+                    if ($("#tiene_categorias").val() == "Si")
+                    {
+                        id = $("#convocatoria").val();
+                    }
+
+                    if (tipo == "Listado de participantes inscritos")
+                    {
+                        href = url_pv_report + "listado_propuesta_inscrita.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listados rechazados y documentos por subsanar")
+                    {
+                        href = url_pv_report + "listado_propuesta_rechazados_subsanar.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de habilitados y rechazados")
+                    {
+                        href = url_pv_report + "listado_propuesta_rechazados_habilitados.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de habilitados")
+                    {
+                        href = url_pv_report + "listado_propuesta_habilitados.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    if (tipo == "Listado de preinscritos")
+                    {
+                        href = url_pv_report + "listado_propuesta_pre_inscrita.php?id=" + id + "&token=" + token_actual.token;
+                    }
+
+                    $("#link_reporte").attr("href", href);
+
+                });
+
+            } else
+            {
+                location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+            }
+
+            validator_form(token_actual);
+            $(".check_activar_t").attr("checked", "true");
         }
-
-        validator_form(token_actual);
-        $(".check_activar_t").attr("checked", "true");
     }
 });
 
@@ -241,7 +258,7 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         var formData = new FormData(document.getElementById("form_nuevo_documento"));
-        formData.append("modulo", "Convocatorias");
+        formData.append("modulo", "SICON-CONVOCATORIAS-CONFIGURACION");
         formData.append("token", token_actual.token);
         formData.append("convocatoria_padre_categoria", $("#id").attr('value'));
         formData.append("anexos", "listados");
@@ -361,7 +378,8 @@ function cargar_tabla(token_actual)
         "lengthMenu": [10, 20, 30],
         "ajax": {
             url: url_pv + "Convocatoriasanexos/all",
-            data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "anexos": "listados"}
+            data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "anexos": "listados"},
+            type: "POST"
         },
         "drawCallback": function (settings) {
             $(".check_activar_t").attr("checked", "true");
@@ -382,17 +400,17 @@ function cargar_tabla(token_actual)
             {"data": "activar_registro"},
             {"data": "acciones"}
         ],
-        "columnDefs": [ {
-            "targets": 0,                                        
-            "render": function ( data, type, row, meta ) {
-              if(data==null){
-                  row.convocatoria=row.categoria;
-                  row.categoria="";
-              }  
-              return row.convocatoria;
-            }
-          },{ orderable: false, targets: '_all' }
-            ]
+        "columnDefs": [{
+                "targets": 0,
+                "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        row.convocatoria = row.categoria;
+                        row.categoria = "";
+                    }
+                    return row.convocatoria;
+                }
+            }, {orderable: false, targets: '_all'}
+        ]
     });
 
 }
@@ -404,7 +422,7 @@ function cargar_formulario(token_actual)
         $("#id_registro").attr('value', $(this).attr('title'))
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "id": $("#id_registro").attr('value'), "anexos": "listados"},
             url: url_pv + 'Convocatoriasanexos/search/'
         }).done(function (data) {
@@ -462,7 +480,7 @@ function download_file(token_actual)
 function activar_registro(id, token_actual) {
     $.ajax({
         type: 'DELETE',
-        data: {"token": token_actual, "modulo": "Convocatorias"},
+        data: {"token": token_actual, "modulo": "SICON-CONVOCATORIAS-CONFIGURACION"},
         url: url_pv + 'Convocatoriasrecursos/delete/' + id
     }).done(function (data) {
         if (data == 'Si' || data == 'No')
@@ -508,7 +526,7 @@ function acciones_categoria(token_actual)
         //Peticion para inactivar el evento
         $.ajax({
             type: 'DELETE',
-            data: {"token": token_actual.token, "modulo": "Convocatorias", "active": active},
+            data: {"token": token_actual.token, "modulo": "SICON-CONVOCATORIAS-CONFIGURACION", "active": active},
             url: url_pv + 'Convocatoriasanexos/delete/' + $(this).attr("title")
         }).done(function (data) {
             if (data == 'Si' || data == 'No')

@@ -35,24 +35,24 @@
 
         <!-- Bootstrap animate -->
         <link href="dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
-        
+
         <link href="dist/css/main.css" rel="stylesheet" type="text/css"/>
-        
+
         <link  rel="icon"   href="dist/img/scrd_logo.png" type="image/png" />
     </head>
 
     <body>
         <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
         <div class="modal fade" id="my_loader" role="dialog">
-          <div class="modal-dialog">    
+            <div class="modal-dialog">    
                 <div class="loader" style="margin: 0 auto;"></div>             
-          </div>
+            </div>
         </div>
         <div class="container">                        
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div style="text-align: center">
-                    <img src="dist/img/logo-secretaria-cultura.png" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" />
+                        <img src="dist/img/logo-secretaria-cultura.png" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" />
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -90,9 +90,18 @@
                                                 <a href="recordar_contrasena.html">¿Olvidó su contraseña?</a>
                                             </div>
                                         </div>                                    
-                                    </div>
+                                    </div>                                    
                                 </fieldset>
                             </form>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <button type="button" onclick='keycloak_login()' class="btn btn-primary btn-lg btn-block"><i class="fa fa-user"></i> Soy Funcionario <i class="fa fa-user"></i></button>
+                                    </div>
+                                </div>                                        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,6 +127,8 @@
         <!-- Bootstrap Notify-->
         <script src="dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
 
+        <script src="https://qa-sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        
         <script src='index.js'></script>
 
         <script src='dist/js/jquery.loadJSON.js'></script>
@@ -132,10 +143,10 @@
                 //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
                 //Si el token no esta activo o se presenta un error se elimina la variable del session storage
                 var token = getLocalStorage(name_local_storage);
-                
+
                 if ((token != null) || (token != "") || (token != "undefined"))
-                {                    
-                    $.ajax({                        
+                {
+                    $.ajax({
                         data: {"token": token},
                         type: 'POST',
                         url: url_pv + 'Session/verificar_token/'
@@ -143,8 +154,7 @@
                         if (data == 'error_metodo')
                         {
                             notify("danger", "ok", "Login:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        } 
-                        else
+                        } else
                         {
                             if (data == 'false')
                             {
@@ -214,14 +224,19 @@
                                     notify("danger", "ok", "Login:", "La contraseña no es la correcta, si no la recuerda por favor ingresar a ¿Olvidó su contraseña?.");
                                 } else
                                 {
-                                    var json = JSON.parse(data);  
-                                    if (typeof json.usuario !== 'undefined') {
-                                        setLocalStorage(name_local_storage,data);
-                                        location.href='pages/index/index.html?msg=Bienvenido(a) '+json.usuario+' al Sistema de Convocatorias&msg_tipo=success';
-                                    }
-                                    else
+                                    if (data == 'error_activo')
                                     {
-                                        notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        notify("danger", "ok", "Login:", "El usuario no se encuentra activo, por favor activarlo en la bandeja de entrada de su cuenta de correo electrónico " + $("#username").val());
+                                    } else
+                                    {
+                                        var json = JSON.parse(data);
+                                        if (typeof json.usuario !== 'undefined') {
+                                            setLocalStorage(name_local_storage, data);
+                                            location.href = 'pages/index/index.html?msg=Bienvenido(a) ' + json.usuario + ' al Sistema de Convocatorias&msg_tipo=success';
+                                        } else
+                                        {
+                                            notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        }
                                     }
                                 }
                             }
@@ -232,6 +247,34 @@
                     bv.resetForm();
                 });
             }
+
+            function keycloak_login() {
+                //Conexión al keycloak
+                var keycloak = Keycloak({
+                    url: 'https://qa-sso.scrd.gov.co/auth',
+                    realm: 'SCRD',
+                    clientId: 'sicon-ui'    
+                });
+                
+                //Configuración de respuesta del keycloak
+                var initOptions = {
+                    onLoad: 'check-sso',
+                    silentCheckSsoRedirectUri: url_pv_admin + 'silent-check-sso.html',    
+                    redirectUri: url_pv_admin+'pages/index/index_funcionario.html'
+                };
+
+                //Array del consumo con el back
+                keycloak.init(initOptions).then(function (authenticated) {
+                    //Si no esta autenticado lo obliga a ingresar al keycloak
+                    if (authenticated === false)
+                    {
+                        keycloak.login();
+                    } else
+                    {
+                        location.href = url_pv_admin+'pages/index/index_funcionario.html'
+                    }
+                });            
+            }        
         </script>
 
     </body>
