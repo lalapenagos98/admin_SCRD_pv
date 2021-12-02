@@ -30,8 +30,8 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             //Realizo la peticion para cargar el formulario
             $.ajax({
-                type: 'GET',
-                data: {"token": token_actual.token, "modulo": "Registro de ganadores"},
+                type: 'POST',
+                data: {"token": token_actual.token, "modulo": "SICON-PROPUESTAS-GANADORES"},
                 url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
             }).done(function (data) {
                 if (data == 'error_metodo')
@@ -97,7 +97,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 $.ajax({
                                     type: 'POST',
                                     url: url_pv + 'PropuestasGanadoras/editar_propuesta',
-                                    data: "id=" + $("#id").val() + "&estado=44&modulo=Registro de ganadores&token=" + token_actual.token
+                                    data: "id=" + $("#id").val() + "&estado=44&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
                                 }).done(function (result) {
                                     var result = result.trim();
 
@@ -587,15 +587,34 @@ function cargar_formulario(token_actual)
                 {
                     var json = JSON.parse(data);
 
-                    var href_cer = url_pv_report + 'reporte_certificacion.php?entidad=' + json[1].entidad + '&tp=' + json[1].tp + '&id=' + json[0].codigo + '&token=' + token_actual.token;
+                    //var href_cer = url_pv_report + 'reporte_certificacion.php?entidad=' + json[1].entidad + '&tp=' + json[1].tp + '&id=' + json[0].codigo + '&token=' + token_actual.token;
 
-                    $("#generar_certificado").attr('href', href_cer);
+                    $("#generar_certificado").attr('onclick', "certificado('" + json[1].entidad + "','" + json[1].tp + "','" + json[0].codigo + "')");
 
                     //Cargo el formulario con los datos
                     $('#formulario_principal').loadJSON(json[0]);
                 }
             }
         });
+    });
+
+}
+
+
+function certificado(entidad,tp,id){
+    var url = "reporte_certificacion_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,
+            entidad: entidad,
+            tp: tp,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-GANADORES"
+        }
     });
 
 }

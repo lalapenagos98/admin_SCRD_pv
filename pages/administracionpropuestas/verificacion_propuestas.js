@@ -561,7 +561,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                     var extensiones = permitidos.split(',');
                     var extensiones_mayuscula = permitidos_mayuscula.split(',');
-
+                    
                     if (extensiones.includes(srcExt) || extensiones_mayuscula.includes(srcExt))
                     {
                         //mb -> bytes
@@ -572,9 +572,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                         } else
                         {
 
-                            var token_actual = getLocalStorage(name_local_storage);
-
-                            $.post(url_pv + 'PropuestasVerificacion/guardar_archivo_rechazo', {pd_verificacion: pd_verificacion, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "Verificación de propuestas"}).done(function (data) {
+                            console.log(token_actual.token);
+                            $.post(url_pv + 'PropuestasVerificacion/guardar_archivo_rechazo', {pd_verificacion: pd_verificacion, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "SICON-PROPUESTAS-VERIFICACION"}).done(function (data) {
                                 if (data == 'error_metodo')
                                 {
                                     notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");

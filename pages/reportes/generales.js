@@ -137,7 +137,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                     } else
                                                     {
                                                         $.AjaxDownloader({
-                                                            url: url_pv_report + 'reporte_persona_natural.php',
+                                                            url: url_pv_report + 'reporte_persona_natural_back.php',
                                                             data: {
                                                                 nd: numero_documento,
                                                                 anio: $("#anio").val(),
@@ -151,7 +151,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                 $('#btn_inhabilidades').click(function () {
                                                     var codigos = $("#inhabilidades_codigos").val();
                                                     $.AjaxDownloader({
-                                                        url: url_pv_report + 'reporte_inhabilidades_propuestas.php',
+                                                        url: url_pv_report + 'reporte_inhabilidades_propuestas_back.php',
                                                         data: {
                                                             codigos: codigos,
                                                             token: token_actual.token,

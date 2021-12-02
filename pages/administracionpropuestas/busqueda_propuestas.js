@@ -524,23 +524,16 @@ function cargar_tabla_link(token_actual, documento) {
 //Funcion para descargar archivo
 function download_file(cod)
 {
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
-        $.AjaxDownloader({
-            url: url_pv + 'PropuestasDocumentacion/download_file/',
-            data: {
-                cod: cod,
-                token: token_actual.token,
-                modulo: "SICON-PROPUESTAS-BUSQUEDA"
-            }
-        });
-    }
+    $.AjaxDownloader({
+        url: url_pv + 'PropuestasDocumentacion/download_file_back/',
+        data: {
+            cod: cod,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+        }
+    });
 
 }
 
