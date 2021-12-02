@@ -105,6 +105,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     var tipo = $('#tipo_documento').val();
                     var href = "javascript:void(0);";
                     var id = $("#id").attr('value');
+                    var reporte='';
 
                     if ($("#tiene_categorias").val() == "Si")
                     {
@@ -113,36 +114,41 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                     if (tipo == "Listado de participantes inscritos")
                     {
+                        reporte='listado_propuesta_inscrita_back.php';
                         href = url_pv_report + "listado_propuesta_inscrita.php?id=" + id + "&token=" + token_actual.token;
                     }
 
                     if (tipo == "Listados rechazados y documentos por subsanar")
                     {
+                        reporte='listado_propuesta_rechazados_subsanar_back.php';
                         href = url_pv_report + "listado_propuesta_rechazados_subsanar.php?id=" + id + "&token=" + token_actual.token;
                     }
 
                     if (tipo == "Listado de habilitados y rechazados")
                     {
+                        reporte='listado_propuesta_rechazados_habilitados_back.php';
                         href = url_pv_report + "listado_propuesta_rechazados_habilitados.php?id=" + id + "&token=" + token_actual.token;
                     }
 
                     if (tipo == "Listado de habilitados")
                     {
+                        reporte='listado_propuesta_habilitados_back.php';
                         href = url_pv_report + "listado_propuesta_habilitados.php?id=" + id + "&token=" + token_actual.token;
                     }
 
                     if (tipo == "Listado de preinscritos")
                     {
+                        reporte='listado_propuesta_pre_inscrita_back.php';
                         href = url_pv_report + "listado_propuesta_pre_inscrita.php?id=" + id + "&token=" + token_actual.token;
                     }
 
-                    $("#link_reporte").attr("href", href);
+                    $("#link_reporte").attr("onclick", "generar_listado('"+reporte+"','"+id+"')");
 
                 });
 
                 $('.generar_listado_xls').click(function () {
                     var id = $("#id").attr('value');
-                    var token_actual = getLocalStorage(name_local_storage);
+                    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
                     if ($("#tiene_categorias").val() == "Si")
                     {
@@ -549,6 +555,21 @@ function acciones_categoria(token_actual)
                 }
             }
         });
+    });
+
+}
+
+function generar_listado(url,id) {
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,            
+            token: token_actual.token,
+            modulo: "SICON-CONVOCATORIAS-CONFIGURACION"
+        }
     });
 
 }

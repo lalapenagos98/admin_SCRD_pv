@@ -402,3 +402,60 @@ keycloak.init(initOptions).then(function (authenticated) {
         }
     }
 });
+
+function listado_contratistas(anio, entidad,convocatoria) {
+    var url = "listado_entidades_convocatorias_listado_contratistas_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            convocatoria:convocatoria,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function listado_participantes(anio, entidad,convocatoria) {
+    var url = "listado_entidades_convocatorias_listado_participantes_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            convocatoria:convocatoria,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function listado_no_inscritas(anio, entidad,convocatoria) {
+    var url = "listado_entidades_convocatorias_listado_no_inscritas_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            convocatoria:convocatoria,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+
+

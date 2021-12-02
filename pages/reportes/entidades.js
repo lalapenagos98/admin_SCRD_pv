@@ -246,3 +246,88 @@ keycloak.init(initOptions).then(function (authenticated) {
         }
     }
 });
+
+function estado_propuesta(anio, entidad) {
+    var url = "listado_entidades_convocatorias_estado_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function proximas_cerrar(anio, entidad) {
+    var url = "listado_entidades_convocatorias_cerrar_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function cantidad_jurados(anio, entidad) {
+    var url = "listado_entidades_convocatorias_total_jurados_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function listado_jurados(anio, entidad) {
+    var url = "listado_entidades_convocatorias_listado_jurados_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
+
+function reporte_ganadores(anio, entidad) {
+    var url = "reporte_ganadores_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            anio: anio,
+            entidad:entidad,
+            token: token_actual.token,
+            modulo: "SICON-REPORTES-ENTIDADES"
+        }
+    });
+
+}
