@@ -672,7 +672,7 @@ function acciones_registro_documento(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -784,7 +784,7 @@ function acciones_registro_educacion_formal(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -920,7 +920,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -1056,7 +1056,7 @@ function acciones_registro_experiencia(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -1167,7 +1167,7 @@ function acciones_registro_experiencia_jurado(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -1279,7 +1279,7 @@ function acciones_registro_reconocimiento(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
@@ -1393,7 +1393,7 @@ function acciones_registro_publicaciones(token_actual) {
         var cod = $(this).attr('id');
         $.AjaxDownloader({
             type: 'POST',
-            url: url_pv + 'PropuestasJurados/download_file/',
+            url: url_pv + 'PropuestasJurados/download_file_preseleccion/',
             data: {
                 cod: cod,
                 token: token_actual.token
