@@ -561,7 +561,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                     var extensiones = permitidos.split(',');
                     var extensiones_mayuscula = permitidos_mayuscula.split(',');
-                    
+
                     if (extensiones.includes(srcExt) || extensiones_mayuscula.includes(srcExt))
                     {
                         //mb -> bytes
@@ -572,7 +572,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                         } else
                         {
 
-                            console.log(token_actual.token);
                             $.post(url_pv + 'PropuestasVerificacion/guardar_archivo_rechazo', {pd_verificacion: pd_verificacion, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "SICON-PROPUESTAS-VERIFICACION"}).done(function (data) {
                                 if (data == 'error_metodo')
                                 {
@@ -789,6 +788,23 @@ function cargar_verificacion_1(token_actual, propuesta) {
                 } else
                 {
                     var json = JSON.parse(data);
+
+
+                    //Cargo el select de los rechazos genrales de la propuesta
+                    $('#tipo_rechazo').find('option').remove();
+                    $("#tipo_rechazo").append('<option value="">:: Seleccionar ::</option>');
+                    if (json.tipo_rechazos.length > 0) {
+                        $.each(json.tipo_rechazos, function (key, rechazo) {
+                            var selected = '';
+                            if (rechazo == json.propuesta.tipo_rechazo)
+                            {
+                                selected = 'selected="selected"';
+                            }
+                            $("#tipo_rechazo").append('<option value="' + rechazo + '" ' + selected + ' >' + rechazo + '</option>');
+                        });
+                    }
+                    //Observaciones generales del rechazo
+                    $("#observacion_rechazo").val(json.propuesta.observacion_rechazo);
 
                     if (json.programa === 2)
                     {
@@ -1449,3 +1465,67 @@ function certificado(id, programa) {
     });
 
 }
+
+function guardar_rechazo() {
+    
+    if ($("#tipo_rechazo").val() == "")
+    {
+        notify("danger", "ok", "Convocatorias:", "El tipo de rechazo es requerido");
+    }
+    else
+    {
+        if ($("#observacion_rechazo").val() == "")
+        {
+            notify("danger", "ok", "Convocatorias:", "Las observaciones del rechazo son requeridas");
+        }
+        else
+        {
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+            
+            $.post(url_pv + 'PropuestasVerificacion/guardar_rechazo', {tipo_rechazo: $("#tipo_rechazo").val(), observacion_rechazo: $("#observacion_rechazo").val(), "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "SICON-PROPUESTAS-VERIFICACION"}).done(function (data) {
+                if (data == 'error_metodo')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (data == 'error_token')
+                    {
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    } else
+                    {
+
+                        if (data == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                        } else
+                        {
+                            if (data == 'crear_propuesta')
+                            {
+                                notify("danger", "ok", "Convocatorias:", "No se permite cargar la propuesta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            } else
+                            {
+                                if (data == 'error_actualizar')
+                                {
+                                    notify("danger", "ok", "Convocatorias:", "Se registro un error al actualizar la propuesta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                } else
+                                {
+                                    if (data == 'error_rechazo')
+                                    {
+                                        notify("danger", "ok", "Convocatorias:", "Solo se puede rechazar la propuesta si esta en estado Inscrita");
+                                    } else
+                                    {
+                                        notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el rechazo de la propuesta.");
+                                        $('#modal_verificacion_1').modal('hide');
+                                        $('#table_list').DataTable().ajax.reload(null, false);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+
+

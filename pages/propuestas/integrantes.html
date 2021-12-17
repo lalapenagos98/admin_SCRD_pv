@@ -75,6 +75,9 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
+                <div id="mensaje_agru" class="alert alert-info" style="display: none">
+                    Tenga en cuenta que debe registrar el <b>representante principal</b> y el <b>representante suplente</b> en los integrantes de la agrupación, de lo contrario no podrá inscribir su propuesta. 
+                </div>
                 <div class="modal fade" id="nuevo_integrante">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -100,10 +103,11 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>¿Representante?<span class="icono_requerido">*</span></label>
-                                                <select id='representante' name="representante" class="form-control" >                                                    
-                                                    <option value="true">Sí</option>
-                                                    <option value="false" selected="selected">No</option>
+                                                <label>¿Tipo de representante?<span class="icono_requerido">*</span></label>
+                                                <select id='tipo_representante' name="tipo_representante" class="form-control" >                                                    
+                                                    <option value="Noaplica" selected="selected">No aplica</option>
+                                                    <option value="Principal">Principal</option>
+                                                    <option value="Suplente">Suplente</option>                                                    
                                                 </select>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div> 
@@ -522,7 +526,7 @@
                                                     <th>Segundo nombre</th>
                                                     <th>Primer apellido</th>
                                                     <th>Segundo apellido</th>
-                                                    <th>¿Representante?</th>
+                                                    <th>¿Tipo de representante?</th>
                                                     <th>Rol que desempeña o ejecuta en la propuesta</th>
                                                     <th>¿Activo?</th>
                                                     <th>Acciones</th>

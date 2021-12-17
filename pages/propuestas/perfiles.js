@@ -112,6 +112,7 @@ $(document).ready(function () {
                                                         $("#programa").val(json.programa);                                                                                                                
                                                         $("#nombre_convocatoria_par").val(json.nombre_convocatoria_par);
                                                         $("#convocatoria_padre").val(json.convocatoria_padre);                                                        
+                                                        $("#convocatoria_nombre").val(json.nombre_convocatoria);                                                        
                                                     }
                                                 }
                                             });
@@ -299,9 +300,16 @@ $(document).ready(function () {
                                                     notify("danger", "ok", "Convocatorias:", "No puede iniciar el procedo de inscripción de la propuesta, debido a que ya cuenta con una propuesta en la convocatoria ("+$("#nombre_convocatoria_par").val()+") , para visualizar sus propuestas por favor ingrese al menú Mis propuestas.");
                                                 } else
                                                 {
-                                                var json = JSON.parse(data);
+                                                    if (data == 'error_participacion')
+                                                    {
+                                                        notify("danger", "ok", "Convocatorias:", "No puede iniciar la inscripción de la propuesta, debido a que su número de documento ya esta en proceso de inscripción en la convocatoria ("+$("#convocatoria_nombre").val()+") , comuníquese con la mesa de ayuda convocatorias@scrd.gov.co para mayor información.");
+                                                    } else
+                                                    {
+                                                    
+                                                    var json = JSON.parse(data);
 
-                                                location.href = redirect + ".html?m=" + m + "&id=" + id + "&p=" + json;                                        
+                                                    location.href = redirect + ".html?m=" + m + "&id=" + id + "&p=" + json;                                        
+                                                    }
                                                 }
                                             }                                                                                                                                    
                                         }

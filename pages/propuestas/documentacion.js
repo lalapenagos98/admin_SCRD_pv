@@ -355,6 +355,11 @@ $(document).ready(function () {
                                                                                     nombre_requisito="No ha ingresado el representante de la agrupación.";
                                                                                 }
                                                                                 
+                                                                                if(documento.nombre=="RSIntegrante")
+                                                                                {
+                                                                                    nombre_requisito="No ha ingresado el representante suplente de la agrupación.";
+                                                                                }
+                                                                                
                                                                                 if(documento.nombre=="FPropuesta")
                                                                                 {                                                                                    
                                                                                     nombre_requisito="No ha ingresado información en el formulario de la propuesta.";
