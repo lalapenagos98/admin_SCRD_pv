@@ -462,12 +462,12 @@ function cargar_tabla(token_actual) {
                     }
                 },
             },
-            /*{"data": "aciones",
+            {"data": "aciones",
                 render: function (data, type, row) {
                     return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#estadopagoModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
                             + '<span class="glyphicon glyphicon-eye-open"></span></button>';
                 },
-            }*/
+            }
             /*{"data": "Estado de la evaluación",
              render: function ( data, type, row ) {
              return row.estado_evaluacion;
@@ -495,10 +495,8 @@ function cargar_tabla(token_actual) {
 function acciones_registro(token_actual) {
 
     $(".btn_ver").click(function () {
-
         cargar_info_basica(token_actual, $(this).attr("id_propuesta"));
-        cargar_evaluaciones(token_actual, $(this).attr("id_propuesta"));
-        $("#table_evaluaciones_top_general").html($(this).attr("top_general"));
+        cargar_info_pago(token_actual, $(this).attr("id_propuesta"));
     });
     /*
      * Se incorpora para cargar el formulario del estímulo
@@ -557,13 +555,13 @@ function acciones_registro(token_actual) {
 
 function cargar_info_basica(token_actual, id_propuesta) {
 
-    $("#codigo_propuesta").html("");
-    $("#nombre_propuesta").html("");
-    $("#resumen_propuesta").html("");
-    $("#objetivo_propuesta").html("");
-    $("#bogota_propuesta").html("");
+    $("#codigo_propuesta_pago").html("");
+    $("#nombre_propuesta_pago").html("");
+    $("#resumen_propuesta_pago").html("");
+    $("#objetivo_propuesta_pago").html("");
+    $("#bogota_propuesta_pago").html("");
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'PropuestasEvaluacion/propuestas/' + id_propuesta,
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -587,11 +585,11 @@ function cargar_info_basica(token_actual, id_propuesta) {
                 var json = JSON.parse(data);
                 //informacion básica de la propuesta
                 if (json.propuesta) {
-                    $("#codigo_propuesta").html(json.propuesta.codigo);
-                    $("#nombre_propuesta").html(json.propuesta.nombre);
-                    $("#resumen_propuesta").html(json.propuesta.resumen);
-                    $("#objetivo_propuesta").html(json.propuesta.objetivo);
-                    $("#bogota_propuesta").html((json.propuesta.objetivo) ? "Si" : "No");
+                    $("#codigo_propuesta_pago").html(json.propuesta.codigo);
+                    $("#nombre_propuesta_pago").html(json.propuesta.nombre);
+                    $("#resumen_propuesta_pago").html(json.propuesta.resumen);
+                    $("#objetivo_propuesta_pago").html(json.propuesta.objetivo);
+                    $("#bogota_propuesta_pago").html((json.propuesta.objetivo) ? "Si" : "No");
                 }
 
                 //información extra(parametros) de la apropuesta
@@ -662,6 +660,59 @@ function cargar_info_basica(token_actual, id_propuesta) {
     );
 }
 
+
+
+/*
+ * 29-12-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función cargar_info_pago
+ */
+
+
+function cargar_info_pago(token_actual, id_propuesta) {
+
+    $("#estado_pago").html("");
+    $("#descripcion_estado").html("");
+//    $("#resumen_propuesta_pago").html("");
+//    $("#objetivo_propuesta_pago").html("");
+//    $("#bogota_propuesta_pago").html("");
+    $.ajax({
+        type: 'POST',
+        url: url_pv + 'Flujodepagos/cargar_info_pagos/propuesta/' + id_propuesta,
+        data: {"token": token_actual.token},
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                break;
+            default:
+
+                var json = JSON.parse(data);
+                //informacion básica de la propuesta
+                if (json.propuesta) {
+                    $("#estado_pago").html(json.ordenpagos.estado);
+                    $("#descripcion_estado").html(json.descripcion_mensaje);
+//                    $("#resumen_propuesta_pago").html(json.propuesta.resumen);
+//                    $("#objetivo_propuesta_pago").html(json.propuesta.objetivo);
+//                    $("#bogota_propuesta_pago").html((json.propuesta.objetivo) ? "Si" : "No");
+                }
+                break;
+        }
+
+    }
+    );
+}
 
 function validator_form(token_actual) {
 
