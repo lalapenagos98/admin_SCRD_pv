@@ -741,7 +741,8 @@ function cargar_tabla(token_actual)
         "destroy": true,
         "serverSide": true,
         "ordering": false,
-        "lengthMenu": [10, 20, 30],
+        "searching": false,
+        "bLengthChange" : false,
         "ajax": {
             url: url_pv + "Personasnaturales/cargar_tabla_integrantes_cambio",
             data: {"token": token_actual.token, "participante": $("#participante").attr('value'), "conv": $("#conv").attr('value'), "modulo": "Menu Participante", "m": getURLParameter('perfil'), "p": getURLParameter('p'), "tipo": $("#tipo").attr('value')}
@@ -758,9 +759,52 @@ function cargar_tabla(token_actual)
             {"data": "primer_nombre"},
             {"data": "segundo_nombre"},
             {"data": "primer_apellido"},
-            {"data": "segundo_apellido"},            
-            {"data": "rol"},
+            {"data": "segundo_apellido"},
+            {"data": "representante"},
+            {"data": "rol"},            
+            {"data": "estado_cambio_integrante"},                        
             {"data": "acciones"}
+        ],
+        "columnDefs": [{
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    if ($("#tipo").val() == "EquipoTrabajo")
+                    {
+                        if (row.director == true)
+                        {
+                            row.director = "<b>Sí</b>";
+                        } else
+                        {
+                            row.director = "No";
+                        }
+                        return row.director;
+                    } else
+                    {
+                        if (row.representante == true)
+                        {
+                            row.representante = "<b>Principal</b>";
+                        }
+                        
+                        if(row.estado_cambio_integrante==null)
+                        {
+                          row.estado_cambio_integrante='Sin iniciar';  
+                        }
+                        
+                        if (row.representante_suplente == true)
+                        {
+                            row.representante = "<b>Suplente</b>";
+                        }
+                        
+                        if (row.representante == false && row.representante_suplente == false)
+                        {
+                            row.representante = "<b>No aplica</b>";
+                        }
+                        
+                        
+                        return row.representante;
+                    }
+                }
+            }
         ]
     });
 

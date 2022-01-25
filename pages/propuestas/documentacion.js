@@ -131,6 +131,9 @@ $(document).ready(function () {
                                                                                     $(".inactivar_estado_propuesta").removeAttr("disabled");   
                                                                                 }
                                                                                 
+                                                                                $(".nombre_convocatoria").html(json.nombre_convocatoria);
+                                                                                
+                                                                                
                                                                                 $("#programa").val(json.programa);
                                                                                 
                                                                                 if (getURLParameter('m') == "pj")

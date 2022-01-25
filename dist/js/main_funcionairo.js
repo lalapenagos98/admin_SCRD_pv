@@ -8,7 +8,7 @@ var name_local_storage_keycloak = "token_keycloak";
 
 //Conexión al keycloak
 var keycloak = Keycloak({
-    url: 'https://qa-sso.scrd.gov.co/auth',
+    url: 'https://dev-sso.scrd.gov.co/auth',
     realm: 'SCRD',
     clientId: 'sicon-ui'    
 });
@@ -221,33 +221,6 @@ function removeLocalStorage(nombre)
 }
 
 //Funcion para lavidar permiso de lectura
-function permiso_lectura(token_actual, modulo)
-{
-    $.ajax({
-        type: 'POST',
-        data: {"token": token_actual.token, modulo: modulo},
-        url: url_pv + 'Session/permiso_lectura/'
-    }).done(function (data) {
-        if (data == 'error_metodo')
-        {
-            location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
-        } else
-        {
-            if (data == 'error')
-            {
-                location.href = '../index/index_funcionario.html?msg=Se registro un error en la consulta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
-            } else
-            {
-                if (data == 'acceso_denegado')
-                {
-                    location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
-                }
-            }
-        }
-    });
-}
-
-//Funcion para lavidar permiso de lectura
 function permiso_lectura_keycloak(token_actual, modulo)
 {
     $.ajax({
@@ -257,17 +230,17 @@ function permiso_lectura_keycloak(token_actual, modulo)
     }).done(function (data) {
         if (data == 'error_metodo')
         {
-            location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+            //location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
         } else
         {
             if (data == 'error_token')
             {
-                location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
             } else
             {
                 if (data == 'acceso_denegado')
                 {
-                    location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
+                    //location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
                 }
             }
         }        

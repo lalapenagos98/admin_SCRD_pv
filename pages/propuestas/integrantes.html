@@ -75,8 +75,20 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <div id="mensaje_agru" class="alert alert-info" style="display: none">
-                    Tenga en cuenta que debe registrar el <b>representante principal</b> y el <b>representante suplente</b> en los integrantes de la agrupación, de lo contrario no podrá inscribir su propuesta. 
+                <div id="mensaje_agru" style="display: none">
+                    <div class="col-lg-12">                        
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Antes de diligenciar el formulario, por favor lea la siguiente información:
+                            </div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li>Recuerde que se debe registrar la totalidad de los integrantes de la agrupación.</li>
+                                    <li>Tenga en cuenta que se debe registrar tanto al <b>representante principal</b> como al <b>representante suplente</b> en los integrantes de la agrupación, de lo contrario no podrá continuar con la inscripción de la propuesta.</li>                        
+                                </ul>
+                            </div>                        
+                        </div>
+                    </div>                    
                 </div>
                 <div class="modal fade" id="nuevo_integrante">
                     <div class="modal-dialog modal-lg">
@@ -492,6 +504,14 @@
                                                 <input type="text" name="podcast" class="form-control si_tiene_espacios" disabled="disabled">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Bajo gravedad de juramento informo que no soy contratista de la Secretaria Distrital de Cultura, Recreación y Deporte - SCRD, de sus entidades adscritas  (el Instituto Distrital de las Artes – IDARTES, el Instituto Distrital de Patrimonio Cultural – IDPC, la Orquesta Filarmónica de Bogotá – OFB ni la Fundación Gilberto Álzate Avendaño – FUGA), de su entidad vinculada (Canal  Capital).</label>
+                                                <input type="checkbox" name="afirmacion_no_contratista" value="Si" />
+                                            </div>
+                                        </div>                                                                                
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
