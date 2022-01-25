@@ -230,17 +230,17 @@ function permiso_lectura_keycloak(token_actual, modulo)
     }).done(function (data) {
         if (data == 'error_metodo')
         {
-            //location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
+            location.href = '../index/index_funcionario.html?msg=Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co&msg_tipo=danger';
         } else
         {
             if (data == 'error_token')
             {
-                //location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
             } else
             {
                 if (data == 'acceso_denegado')
                 {
-                    //location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
+                    location.href = '../index/index_funcionario.html?msg=Acceso denegado.&msg_tipo=danger';
                 }
             }
         }        
