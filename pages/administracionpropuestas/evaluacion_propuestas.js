@@ -731,7 +731,7 @@ function cargar_info_basica(token_actual, id_propuesta, id_evaluacion) {
                     $("#nombre_propuesta").html(json.propuesta.nombre);
                     $("#resumen_propuesta").html(json.propuesta.resumen);
                     $("#objetivo_propuesta").html(json.propuesta.objetivo);
-                    $("#bogota_propuesta").html((json.propuesta.objetivo) ? "Si" : "No");
+                    $("#bogota_propuesta").html((json.propuesta.bogota) ? "Si" : "No");
                 }
 
                 //información extra(parametros) de la apropuesta
