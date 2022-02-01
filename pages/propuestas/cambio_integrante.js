@@ -526,6 +526,11 @@ $(document).ready(function () {
                                                                                                     } else
                                                                                                     {
                                                                                                         notify("success", "ok", "Integrantes:", "Se Guardó con el éxito la solicitud para el nuevo integrante.");
+                                                                                                        
+                                                                                                        //Cargar datos de la tabla
+                                                                                                        cargar_tabla(token_actual);
+                                                                                                        $("#registro_cambio_integrante").hide("slow");
+                                                                        
                                                                                                     }
                                                                                                 }
                                                                                             }

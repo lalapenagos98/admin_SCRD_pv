@@ -206,6 +206,11 @@ $(document).ready(function () {
                         validators: {
                             notEmpty: {message: 'Debe confirmar la convocatoria a la cual desea realizar la inscripción de la propuesta, es requerido'}
                         }
+                    },
+                    acepta_ganador: {
+                        validators: {
+                            notEmpty: {message: 'Debe confirmar ¿En caso de ser ganador acepta asumir las retenciones que apliquen según la normatividad vigente y que dependen de su calidad tributaria?, es requerido'}
+                        }
                     }
                 }
             }).on('success.form.bv', function (e) {
