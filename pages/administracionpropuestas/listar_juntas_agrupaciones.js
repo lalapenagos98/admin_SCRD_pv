@@ -369,3 +369,22 @@ keycloak.init(initOptions).then(function (authenticated) {
         }
     }
 });
+
+function certificado(id, programa) {
+    var url = "reporte_propuesta_inscrita_back.php";
+    if (programa === 2) {
+        url = "reporte_propuesta_inscrita_pdac_back.php";
+    }
+
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+        }
+    });
+
+}

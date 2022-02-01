@@ -2011,6 +2011,9 @@ function liberar_postulaciones(token_actual, convocatoria) {
             case 'deshabilitado':
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                 break;
+            case 'faltan_grupos':
+                notify("danger", "remove", "Usuario:", "Aún no se han creado los grupos de evaluación, por lo tanto no puede liberar las postulaciones.");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Las postulaciones fueron liberadas con éxito.");
                 cargar_tabla(token_actual);

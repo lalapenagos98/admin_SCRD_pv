@@ -1,4 +1,5 @@
-$(document).ready(function () {
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
 
 
 
@@ -26,14 +27,12 @@ $(document).ready(function () {
 
     //Aprobar convocatoriadocumento
     $("#actualizar_observacion_verificacion").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
         actualizar_observacion_verificacion_convocatoriadocumento(token_actual, $('#convocatoriadocumento').val(), $('#label').val(), $('#id_html').val(), $('#observacion_verificacion').val(), $('#propuesta').val(), $('#porcentaje_pagar').val(), $('#radicado_cuenta_orfeo').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
     });
     //Enviar a subsanar convocatoriadocumento
     $("#subsanar_observacion_verificacion").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
         subsanar_observacion_verificacion_convocatoriadocumento(token_actual, $('#convocatoriadocumento').val(), $('#label').val(), $('#id_html').val(), $('#observacion_verificacion').val(), $('#propuesta').val(), $('#porcentaje_pagar').val(), $('#radicado_cuenta_orfeo').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
@@ -44,14 +43,14 @@ $(document).ready(function () {
 
     //Aprobar convocatoriadocumento
     $("#actualizar_observacion_verificacion_rut").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         actualizar_observacion_verificacion_rut(token_actual, $('#programadocumento_rut').val(), $('#label').val(), $('#id_html').val(), $('#observacion_verificacion_rut').val(), $('#propuesta_rut').val());
         $('#complementar_informacion').modal('hide');
     });
 
     //Enviar a subsanar convocatoriadocumento
     $("#subsanar_observacion_verificacion_rut").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         subsanar_observacion_verificacion_rut(token_actual, $('#programadocumento_rut').val(), $('#label').val(), $('#id_html').val(), $('#observacion_verificacion_rut').val(), $('#propuesta_rut').val());
         $('#complementar_informacion').modal('hide');
     });
@@ -60,14 +59,14 @@ $(document).ready(function () {
 
     //Aprobar convocatoriadocumento
     $("#actualizar_observacion_verificacion_cuenta").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         actualizar_observacion_verificacion_cuenta(token_actual, $('#programadocumento_cuenta').val(), $('#label_cuenta_observacon').val(), $('#id_html_cuenta_observacon').val(), $('#observacion_verificacion_cuenta').val(), $('#propuesta_cuenta').val());
         $('#complementar_informacion').modal('hide');
     });
 
     //Enviar a subsanar convocatoriadocumento
     $("#subsanar_observacion_verificacion_cuenta").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         subsanar_observacion_verificacion_cuenta(token_actual, $('#programadocumento_cuenta').val(), $('#label_cuenta_observacon').val(), $('#id_html_cuenta_observacon').val(), $('#observacion_verificacion_cuenta').val(), $('#propuesta_cuenta').val());
         $('#complementar_informacion').modal('hide');
     });
@@ -76,14 +75,14 @@ $(document).ready(function () {
 
     //Aprobar convocatoriadocumento
     $("#actualizar_observacion_verificacion_otros").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         actualizar_observacion_verificacion_otros(token_actual, $('#programadocumento_otros').val(), $('#label_otros').val(), $('#id_html_otros').val(), $('#observacion_verificacion_otros').val(), $('#propuesta_otros').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
     });
     //Enviar a subsanar convocatoriadocumento
     $("#subsanar_observacion_verificacion_otros").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         subsanar_observacion_verificacion_otros(token_actual, $('#programadocumento_otros').val(), $('#label_otros').val(), $('#id_html_otros').val(), $('#observacion_verificacion_otros').val(), $('#propuesta_otros').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
@@ -92,7 +91,7 @@ $(document).ready(function () {
     //Para aprobar documentación
 
     $("#aprobar_documentacion").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         aprobar_documentacion_ganador_misional(token_actual, $('#id_propuesta_misional').val(), $('#fecha_aprobacion_garantia').val(), $('#fecha_informe_seguimiento_supervision').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
@@ -101,210 +100,203 @@ $(document).ready(function () {
     //Para devolver documentación
 
     $("#devolver_documentacion").click(function () {
-        token_actual = getLocalStorage(name_local_storage);
+//        token_actual = getLocalStorage(name_local_storage);
         devolver_documentacion_ganador_misional(token_actual, $('#id_propuesta_misional').val(), $('#fecha_aprobacion_garantia').val(), $('#fecha_informe_seguimiento_supervision').val());
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
     });
 
 
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
-//Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Flujo de Pagos Misional");
-        $('.convocatorias-search').select2();
-        //Carga el select de entidad
-        $.ajax({
-            type: 'GET',
-            data: {"token": token_actual.token},
-            url: url_pv + 'Entidades/all_select/',
-            success: function (data) {
+    if (authenticated === false) {
+        keycloak.login();
+    } else {
 
-                switch (data) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                        notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                        break;
-                    default:
-                        json_entidades = JSON.parse(data);
-                        $('#entidad').find('option').remove();
-                        $("#entidad").append('<option value="">:: Seleccionar ::</option>');
-                        if (json_entidades.length > 0) {
-                            $.each(json_entidades, function (key, entidad) {
-                                $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
-                            });
-                        }
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-                        break;
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-PAGOS-MISIONAL");
+
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
                 }
+            });
 
 
+
+            $('.convocatorias-search').select2();
+            
+            
+            //Verifica si el token actual tiene acceso de lectura
+            init(token_actual);
+            //cargar_datos_formulario(token_actual);
+            validator_form(token_actual);
+            
+            
+            //Carga el select de años
+            $('#anio').find('option').remove();
+            $("#anio").append('<option value="">:: Seleccionar ::</option>');
+            for (i = (new Date()).getFullYear(); i >= 2016; i--) {
+                $("#anio").append('<option value="' + i + '" >' + i + '</option>');
             }
-        });
-        //Carga el select de años
-        $('#anio').find('option').remove();
-        $("#anio").append('<option value="">:: Seleccionar ::</option>');
-        for (i = (new Date()).getFullYear(); i >= 2016; i--) {
-            $("#anio").append('<option value="' + i + '" >' + i + '</option>');
-        }
 
 //carga select_convocatorias
-        $('#anio').change(function () {
-            $('#convocatorias').val(null);
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#categorias').val(null);
-            $("#categorias").attr('disabled', '');
-            $('#rondas').val(null);
-            //cargar_tabla(token_actual);
-        });
-        //carga select convocatorias
-        $('#entidad').change(function () {
-            $('#convocatorias').val(null);
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#categorias').val(null);
-            $("#categorias").attr('disabled', '');
-            $('#rondas').val(null);
-            //cargar_tabla(token_actual);
-        });
-        //carga el select categorias
-        $('#convocatorias').change(function () {
-            $("#categorias").attr('disabled', '');
-            $('#categorias').val(null);
-            cargar_select_categorias(token_actual, $('#convocatorias').val());
-            $('#rondas').val(null);
-            cargar_select_rondas(token_actual, $('#convocatorias').val());
-            //cargar_tabla(token_actual);
-        });
-        //carga el select rondas
-        $('#categorias').change(function () {
-            $('#rondas').val(null);
-            cargar_select_rondas(token_actual, $('#categorias').val());
-            // cargar_tabla(token_actual);
-        });
-        /*
-         * 22-04-2021
-         * Wilmer Gustavo Mogollón Duque
-         * Se agrega el select grupos_evaluacion
-         */
-        //carga el select grupos evaluación
-        $('#rondas').change(function () {
+            $('#anio').change(function () {
+                $('#convocatorias').val(null);
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#categorias').val(null);
+                $("#categorias").attr('disabled', '');
+                $('#rondas').val(null);
+                //cargar_tabla(token_actual);
+            });
+            //carga select convocatorias
+            $('#entidad').change(function () {
+                $('#convocatorias').val(null);
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#categorias').val(null);
+                $("#categorias").attr('disabled', '');
+                $('#rondas').val(null);
+                //cargar_tabla(token_actual);
+            });
+            //carga el select categorias
+            $('#convocatorias').change(function () {
+                $("#categorias").attr('disabled', '');
+                $('#categorias').val(null);
+                cargar_select_categorias(token_actual, $('#convocatorias').val());
+                $('#rondas').val(null);
+                cargar_select_rondas(token_actual, $('#convocatorias').val());
+                //cargar_tabla(token_actual);
+            });
+            //carga el select rondas
+            $('#categorias').change(function () {
+                $('#rondas').val(null);
+                cargar_select_rondas(token_actual, $('#categorias').val());
+                // cargar_tabla(token_actual);
+            });
+            /*
+             * 22-04-2021
+             * Wilmer Gustavo Mogollón Duque
+             * Se agrega el select grupos_evaluacion
+             */
+            //carga el select grupos evaluación
+            $('#rondas').change(function () {
 //            $("#categorias").attr('disabled', '');
-            $('#grupos_evaluacion').val(null);
-            if ($('#anio').val() >= 2021) {
-                cargar_select_grupos(token_actual, $('#rondas').val());
-            }
-        });
-        /*
-         * 20-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Agrego un if para controlar que seleccione la ronda de evaluación
-         */
-
-
-        //carga la tabla con los criterios de busqueda
-        $('#buscar').click(function () {
-
-            if ($('#rondas').val() === "") {
-                alert("Debe seleccionar la ronda de evaluación");
-            } else {
-
-                if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                    alert("Debe seleccionar un grupo de evaluación");
-                } else {
-                    $('#resultado').focus();
-                    validator_form(token_actual);
-                    cargar_tabla(token_actual);
+                $('#grupos_evaluacion').val(null);
+                if ($('#anio').val() >= 2021) {
+                    cargar_select_grupos(token_actual, $('#rondas').val());
                 }
-            }
+            });
+            /*
+             * 20-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Agrego un if para controlar que seleccione la ronda de evaluación
+             */
 
 
-        });
-        $("#top_general").click(function () {
+            //carga la tabla con los criterios de busqueda
+            $('#buscar').click(function () {
 
-            cargar_info_top_general(token_actual, $('#rondas').val());
-        });
-        $("#total_ganadores").change(function () {
-            cargar_tabla_ganadores(token_actual);
-        });
-        $("#total_suplentes").change(function () {
-            cargar_tabla_ganadores(token_actual);
-        });
-        $("#baceptartop").click(function () {
-            confirmar_top_general(token_actual, $('#rondas').val());
-            $('#exampleModaltop').modal('hide');
-            $('#top_generalModal').modal('hide');
-        });
-        /*
-         * 06-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorporan acciones a los botones para que muestre un mensaje de alerta
-         */
+                if ($('#rondas').val() === "") {
+                    alert("Debe seleccionar la ronda de evaluación");
+                } else {
 
-        //deliberar
-        $("#deliberar").click(function () {
+                    if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
+                        alert("Debe seleccionar un grupo de evaluación");
+                    } else {
+                        $('#resultado').focus();
+                        validator_form(token_actual);
+                        cargar_tabla(token_actual);
+                    }
+                }
 
-            $("#mensaje").show();
-            $("#bcancelar").show();
-            $("#baceptar").show();
-        });
-        $("#baceptar").click(function () {
 
-            deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
-            $('#exampleModal').modal('toggle');
-            $('#deliberar').prop('disabled', true);
-        });
-        /*
-         * 12-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
-         */
+            });
+            $("#top_general").click(function () {
 
-        //deliberar
-        $("#genera_acta").click(function () {
+                cargar_info_top_general(token_actual, $('#rondas').val());
+            });
+            $("#total_ganadores").change(function () {
+                cargar_tabla_ganadores(token_actual);
+            });
+            $("#total_suplentes").change(function () {
+                cargar_tabla_ganadores(token_actual);
+            });
+            $("#baceptartop").click(function () {
+                confirmar_top_general(token_actual, $('#rondas').val());
+                $('#exampleModaltop').modal('hide');
+                $('#top_generalModal').modal('hide');
+            });
+            /*
+             * 06-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorporan acciones a los botones para que muestre un mensaje de alerta
+             */
 
-            $("#mensajegn").show();
-            $("#bcancelargn").show();
-            $("#baceptargn").show();
-        });
-        $("#baceptargn").click(function () {
-            generar_acta_preseleccionados(token_actual, $('#rondas').val());
-            $('#genera_acta_modal').modal('hide');
-        });
-        //Aceptar top generar
-        $("#btn_aceptar_top").click(function () {
+            //deliberar
+            $("#deliberar").click(function () {
 
-            validator_form_confirmar(token_actual);
-        });
-        /*
-         * 22-06-2020
-         * Wilmer Gustavo Mogollón Duque
-         * Se incorpora la acción para el botón anular_deliberacion
-         */
-        //Anular deliberación
+                $("#mensaje").show();
+                $("#bcancelar").show();
+                $("#baceptar").show();
+            });
+            $("#baceptar").click(function () {
 
-        $("#anular_deliberacion").click(function () {
+                deliberar(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
+                $('#exampleModal').modal('toggle');
+                $('#deliberar').prop('disabled', true);
+            });
+            /*
+             * 12-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorporan acciones a los botones para que muestre un mensaje de alerta para generar el acta
+             */
 
-            $("#mensaje_anular").show();
-            $("#bcancelar_anular").show();
-            $("#baceptar_anular").show();
-        });
-        $("#baceptar_anular").click(function () {
+            //deliberar
+            $("#genera_acta").click(function () {
 
-            anular_deliberacion(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
-            $('#anular_deliberacionModal').modal('hide');
-        });
+                $("#mensajegn").show();
+                $("#bcancelargn").show();
+                $("#baceptargn").show();
+            });
+            $("#baceptargn").click(function () {
+                generar_acta_preseleccionados(token_actual, $('#rondas').val());
+                $('#genera_acta_modal').modal('hide');
+            });
+            //Aceptar top generar
+            $("#btn_aceptar_top").click(function () {
+
+                validator_form_confirmar(token_actual);
+            });
+            /*
+             * 22-06-2020
+             * Wilmer Gustavo Mogollón Duque
+             * Se incorpora la acción para el botón anular_deliberacion
+             */
+            //Anular deliberación
+
+            $("#anular_deliberacion").click(function () {
+
+                $("#mensaje_anular").show();
+                $("#bcancelar_anular").show();
+                $("#baceptar_anular").show();
+            });
+            $("#baceptar_anular").click(function () {
+
+                anular_deliberacion(token_actual, $('#rondas').val(), $('#grupos_evaluacion').val());
+                $('#anular_deliberacionModal').modal('hide');
+            });
 //        $("#form_top_general").bootstrapValidator({
 //            feedbackIcons: {
 //                valid: 'glyphicon glyphicon-ok',
@@ -323,84 +315,151 @@ $(document).ready(function () {
 //            }
 //        })
 
-        //validador formulario Notificación de impedimento
-        $('#form_top_general').bootstrapValidator({
+            //validador formulario Notificación de impedimento
+            $('#form_top_general').bootstrapValidator({
 
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                total_ganadores: {
-                    validators: {
-                        notEmpty: {message: 'El número de ganadores es requerido'}
-                    }
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
                 },
-                total_suplentes: {
-                    validators: {
-                        notEmpty: {message: 'El número de ganadores es requerido'}
-                    }
-                },
-                aspectos: {
-                    validators: {
-                        notEmpty: {message: 'La descripción de los aspectos es requerida'}
-                    }
-                },
-                recomendaciones: {
-                    validators: {
-                        notEmpty: {message: 'La descripción de las recomendaciones es requerida'}
-                    }
-                },
-                comentarios: {
-                    enabled: false,
-                    validators: {
-                        notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                fields: {
+                    total_ganadores: {
+                        validators: {
+                            notEmpty: {message: 'El número de ganadores es requerido'}
+                        }
+                    },
+                    total_suplentes: {
+                        validators: {
+                            notEmpty: {message: 'El número de ganadores es requerido'}
+                        }
+                    },
+                    aspectos: {
+                        validators: {
+                            notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                        }
+                    },
+                    recomendaciones: {
+                        validators: {
+                            notEmpty: {message: 'La descripción de las recomendaciones es requerida'}
+                        }
+                    },
+                    comentarios: {
+                        enabled: false,
+                        validators: {
+                            notEmpty: {message: 'La descripción de los aspectos es requerida'}
+                        }
                     }
                 }
-            }
-        });
-        //Declaración desierta
-        $("#btn_declarar_desierta").click(function () {
+            });
+            //Declaración desierta
+            $("#btn_declarar_desierta").click(function () {
 
-            $('#form_top_general').bootstrapValidator('enableFieldValidators', 'comentarios', true);
-            $('#form_top_general').bootstrapValidator('validateField', 'comentarios');
-            $("#mensajeds").show();
-            $("#bcancelards").show();
-            $("#baceptards").show();
-        });
-        $("#baceptards").click(function () {
-            declarar_convocatoria_desierta(token_actual, $('#rondas').val());
-            $('#genera_acta_modal_desierta').modal('hide');
-            $('#top_generalModal').moda10000l('hide');
-        });
-        /*
-         * Botón para guardar el estímulo de la propuesta
-         */
+                $('#form_top_general').bootstrapValidator('enableFieldValidators', 'comentarios', true);
+                $('#form_top_general').bootstrapValidator('validateField', 'comentarios');
+                $("#mensajeds").show();
+                $("#bcancelards").show();
+                $("#baceptards").show();
+            });
+            $("#baceptards").click(function () {
+                declarar_convocatoria_desierta(token_actual, $('#rondas').val());
+                $('#genera_acta_modal_desierta').modal('hide');
+                $('#top_generalModal').moda10000l('hide');
+            });
+            /*
+             * Botón para guardar el estímulo de la propuesta
+             */
 
-        $("#baceptarasg").click(function () {
+            $("#baceptarasg").click(function () {
 
-            token_actual = getLocalStorage(name_local_storage);
-            asignar_monto(token_actual, $('#id_propuesta').val(), $('#monto_asignado').val());
-            $('#asignar_monto').modal('hide');
-            limpiarFormulario();
-        });
-        /*
-         * 15-06-2020
-         * Wilmer Gistavo Mogollón Duque
-         * Se agrega acción al botón  para llamar a la función 
-         */
-        $("#asignar_estimulo").click(function () {
-            cargar_info_top_general_asignar(token_actual, $('#rondas').val());
-        });
-
+                token_actual = getLocalStorage(name_local_storage);
+                asignar_monto(token_actual, $('#id_propuesta').val(), $('#monto_asignado').val());
+                $('#asignar_monto').modal('hide');
+                limpiarFormulario();
+            });
+            /*
+             * 15-06-2020
+             * Wilmer Gistavo Mogollón Duque
+             * Se agrega acción al botón  para llamar a la función 
+             */
+            $("#asignar_estimulo").click(function () {
+                cargar_info_top_general_asignar(token_actual, $('#rondas').val());
+            });
 
 
 
-        validator_form(token_actual);
+
+            validator_form(token_actual);
+        }
+
     }
 
 });
+
+
+function init(token_actual) {
+    //Realizo la peticion para cargar el formulario
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token, "id": $("#id").attr('value')},
+        url: url_pv + 'Flujodepagosmisional/init/'
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            default:
+
+                var json = JSON.parse(data);
+
+                //Carga el select de entidad
+                $('#entidad').find('option').remove();
+                $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                if (json.entidades.length > 0) {
+                    $.each(json.entidades, function (key, entidad) {
+                        $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
+                    });
+                }
+
+                //Carga el select de años
+                $('#anio').find('option').remove();
+                $("#anio").append('<option value="">:: Seleccionar ::</option>');
+                if (json.anios.length > 0) {
+                    $.each(json.anios, function (key, value) {
+                        $("#anio").append('<option value="' + value + '" >' + value + '</option>');
+                    });
+                }
+
+                //Carga el select tipo jurado
+                $('#select_tipo_jurado').find('option').remove();
+                $("#select_tipo_jurado").append('<option value="">:: Seleccionar ::</option>');
+                if (json.tipos_jurado.length > 0) {
+                    $.each(json.tipos_jurado, function (key, tipo) {
+                        $("#select_tipo_jurado").append('<option value="' + tipo.id + '" >' + tipo.nombre + '</option>');
+                    });
+                }
+
+
+
+                break;
+        }
+
+    });
+
+
+
+}
+
 //Agrego para limpiar el formulario
 function limpiarFormulario() {
     document.getElementById("asignar_est_form").reset();
@@ -411,8 +470,8 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 
     $.ajax({
-        type: 'GET',
-        url: url_pv + 'Deliberacion/select_convocatorias',
+        type: 'POST',
+        url: url_pv + 'Flujodepagosmisional/select_convocatorias',
         data: {"token": token_actual.token, "anio": anio, "entidad": entidad},
     }).done(function (data) {
 
@@ -454,8 +513,8 @@ function cargar_select_categorias(token_actual, convocatoria) {
 
 
     $.ajax({
-        type: 'GET',
-        url: url_pv + 'Deliberacion/select_categorias',
+        type: 'POST',
+        url: url_pv + 'Flujodepagosmisional/select_categorias',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
 
@@ -493,97 +552,6 @@ function cargar_select_categorias(token_actual, convocatoria) {
 }
 
 
-/*
- * 22-04-2021
- * Wilmer Gustavo Mogollón Duque
- * Se agrega la función cargar_select_grupos
- */
-
-function cargar_select_grupos(token_actual, ronda) {
-
-
-    $.ajax({
-        type: 'GET',
-        url: url_pv + 'Deliberacion/select_grupos',
-        data: {"token": token_actual.token, "ronda": ronda},
-    }).done(function (data) {
-
-        switch (data) {
-            case 'error':
-                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                break;
-            case 'error_metodo':
-                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                break;
-            case 'error_token':
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_categorias");
-                break;
-            case 'acceso_denegado':
-                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                break;
-            default:
-                var json = JSON.parse(data);
-                $('#grupos_evaluacion').find('option').remove();
-                $("#grupos_evaluacion").append('<option value="">:: Seleccionar ::</option>');
-                if (json !== null && json.length > 0) {
-                    $("#grupos_evaluacion").removeAttr('disabled');
-                    //Cargos el select de areasconocimientos
-                    $.each(json, function (key, array) {
-                        $("#grupos_evaluacion").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
-                    });
-                }
-
-                break;
-        }
-
-    }
-    );
-}
-
-function cargar_select_rondas(token_actual, convocatoria) {
-
-    $.ajax({
-        type: 'GET',
-        url: url_pv + 'Rondas/select_rondas',
-        data: {"token": token_actual.token, "convocatoria": convocatoria},
-    }).done(function (data) {
-
-        switch (data) {
-            case 'error':
-                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                break;
-            case 'error_metodo':
-                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                break;
-            case 'error_token':
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                //notify("danger", "error_token", "URL:", "Rondas/select_rondas");
-                break;
-            case 'acceso_denegado':
-                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                break;
-            default:
-
-                var json = JSON.parse(data);
-                $('#rondas').find('option').remove();
-                $("#rondas").append('<option value="">:: Seleccionar ::</option>');
-                //$('#rondas').hide();
-
-                if (json != null && json.length > 0) {
-//Cargos el select de areasconocimientos
-//$('#rondas').show();
-                    $.each(json, function (key, array) {
-                        $("#rondas").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
-                    });
-                }
-
-                break;
-        }
-
-    }
-    );
-}
 
 function cargar_tabla(token_actual) {
 
@@ -595,13 +563,6 @@ function cargar_tabla(token_actual) {
 
     $("#notificacion_periodo").hide();
     $("#notificacion_evaluaciones").hide();
-    //Muestro los botones
-    $("#deliberar").show();
-    $("#confirmar_top_general").show().slow;
-    $("#top_general").show().slow;
-    $("#anular_deliberacion").show().slow;
-    $("#genera_acta").show().slow;
-    $("#asignar_estimulo").show().slow;
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     //var data =  ( $('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
@@ -625,6 +586,7 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Flujodepagosmisional/all_propuestas_ganadoras",
             data:
                     {"token": token_actual.token,
@@ -790,7 +752,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
     $("#objetivo_propuesta").html("");
     $("#bogota_propuesta").html("");
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Flujodepagosmisional/propuestas_ganadoras/' + id_propuesta,
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -878,7 +840,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 $("#otros_documentos").hide();
                                 //Llamada para verificar el parametro cuenta
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_cuenta/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -937,7 +899,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                                 //Llamada para verificar la observación 
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_observacion_documentacion_cuenta/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -991,7 +953,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 $("#otros_documentos").hide();
                                 //llamada para verificar parametro
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -1030,7 +992,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                                 //llamada para verificar observación
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_observacion_documentacion_rut/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -1086,7 +1048,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 document.getElementById("formulario_complementar_informacion_otros").reset();
                                 //llamada para verificar parametro
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_otros/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -1131,7 +1093,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 );
                                 //llamada para verificar observación
                                 $.ajax({
-                                    type: 'GET',
+                                    type: 'POST',
                                     url: url_pv + 'PropuestasDocumentacionganadores/verificar_observacion_documentacion_otros/propuesta/' + id_propuesta,
                                     data: {
                                         "token": token_actual.token,
@@ -1213,7 +1175,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                         //llamada para verificar parametro
                         $.ajax({
-                            type: 'GET',
+                            type: 'POST',
                             url: url_pv + 'PropuestasDocumentacionganadores/verificar_propuestas_parametros_ganadores_convocatoriadocumento/propuesta/' + id_propuesta,
                             data: {
                                 "token": token_actual.token,
@@ -1254,7 +1216,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                         //llamada para verificar observación
                         $.ajax({
-                            type: 'GET',
+                            type: 'POST',
                             url: url_pv + 'PropuestasDocumentacionganadores/verificar_observacion_documentacion_convocatoriadocumento/propuesta/' + id_propuesta,
                             data: {
                                 "token": token_actual.token,
@@ -1322,7 +1284,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                     //Cargo el id file
                     var cod = $(this).attr('id');
                     $.AjaxDownloader({
-                        url: url_pv + 'PropuestasEvaluacion/download_file/',
+                        url: url_pv + 'Flujodepagosmisional/download_file/',
                         data: {
                             cod: cod,
                             token: token_actual.token
@@ -2493,7 +2455,7 @@ function actualizar_observacion_verificacion_convocatoriadocumento(token_actual,
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/actualizar_observacion_verificacion_convocatoriadocumento/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&convocatoriadocumento=" + convocatoriadocumento
                 + "&label_convocatoriadocumento=" + label_convocatoriadocumento
                 + "&id_html_convocatoriadocumento=" + id_html_convocatoriadocumento
@@ -2553,7 +2515,7 @@ function subsanar_observacion_verificacion_convocatoriadocumento(token_actual, c
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/subsanar_observacion_verificacion_convocatoriadocumento/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&convocatoriadocumento=" + convocatoriadocumento
                 + "&label_convocatoriadocumento=" + label_convocatoriadocumento
                 + "&id_html_convocatoriadocumento=" + id_html_convocatoriadocumento
@@ -2607,7 +2569,7 @@ function actualizar_observacion_verificacion_rut(token_actual, programadocumento
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/actualizar_observacion_verificacion_rut/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_rut=" + programadocumento_rut
                 + "&label=" + label
                 + "&id_html=" + id_html
@@ -2656,7 +2618,7 @@ function subsanar_observacion_verificacion_rut(token_actual, programadocumento_r
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/subsanar_observacion_verificacion_rut/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_rut=" + programadocumento_rut
                 + "&label=" + label
                 + "&id_html=" + id_html
@@ -2705,7 +2667,7 @@ function actualizar_observacion_verificacion_cuenta(token_actual, programadocume
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/actualizar_observacion_verificacion_cuenta/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_cuenta=" + programadocumento_cuenta
                 + "&label_cuenta_observacon=" + label_cuenta_observacon
                 + "&id_html_cuenta_observacon=" + id_html_cuenta_observacon
@@ -2754,7 +2716,7 @@ function subsanar_observacion_verificacion_cuenta(token_actual, programadocument
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/subsanar_observacion_verificacion_cuenta/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_cuenta=" + programadocumento_cuenta
                 + "&label_cuenta_observacon=" + label_cuenta_observacon
                 + "&id_html_cuenta_observacon=" + id_html_cuenta_observacon
@@ -2803,7 +2765,7 @@ function actualizar_observacion_verificacion_otros(token_actual, programadocumen
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/actualizar_observacion_verificacion_otros/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_otros=" + programadocumento_otros
                 + "&label_otros=" + label_otros
                 + "&id_html_otros=" + id_html_otros
@@ -2852,7 +2814,7 @@ function subsanar_observacion_verificacion_otros(token_actual, programadocumento
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/subsanar_observacion_verificacion_otros/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&programadocumento_otros=" + programadocumento_otros
                 + "&label_otros=" + label_otros
                 + "&id_html_otros=" + id_html_otros
@@ -2900,7 +2862,7 @@ function aprobar_documentacion_ganador_misional(token_actual, id_propuesta, fech
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Flujodepagosmisional/aprobar_documentacion_ganador_misional/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&fecha_aprobacion_garantia=" + fecha_aprobacion_garantia
                 + "&fecha_informe_seguimiento_supervision=" + fecha_informe_seguimiento_supervision
 
@@ -2958,7 +2920,7 @@ function devolver_documentacion_ganador_misional(token_actual, id_propuesta, fec
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Flujodepagosmisional/devolver_documentacion_ganador_misional/propuesta/' + id_propuesta,
-        data: "&modulo=Flujo de Pagos Misional&token=" + token_actual.token
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
                 + "&fecha_aprobacion_garantia=" + fecha_aprobacion_garantia
                 + "&fecha_informe_seguimiento_supervision=" + fecha_informe_seguimiento_supervision
 

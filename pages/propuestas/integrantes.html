@@ -75,6 +75,21 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
+                <div id="mensaje_agru" style="display: none">
+                    <div class="col-lg-12">                        
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Antes de diligenciar el formulario, por favor lea la siguiente información:
+                            </div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li>Recuerde que se debe registrar la totalidad de los integrantes de la agrupación.</li>
+                                    <li>Tenga en cuenta que se debe registrar tanto al <b>representante principal</b> como al <b>representante suplente</b> en los integrantes de la agrupación, de lo contrario no podrá continuar con la inscripción de la propuesta.</li>                        
+                                </ul>
+                            </div>                        
+                        </div>
+                    </div>                    
+                </div>
                 <div class="modal fade" id="nuevo_integrante">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -100,10 +115,11 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>¿Representante?<span class="icono_requerido">*</span></label>
-                                                <select id='representante' name="representante" class="form-control" >                                                    
-                                                    <option value="true">Sí</option>
-                                                    <option value="false" selected="selected">No</option>
+                                                <label>¿Tipo de representante?<span class="icono_requerido">*</span></label>
+                                                <select id='tipo_representante' name="tipo_representante" class="form-control" >                                                    
+                                                    <option value="Noaplica" selected="selected">No aplica</option>
+                                                    <option value="Principal">Principal</option>
+                                                    <option value="Suplente">Suplente</option>                                                    
                                                 </select>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div> 
@@ -490,6 +506,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Bajo gravedad de juramento informo que no soy contratista de la Secretaria Distrital de Cultura, Recreación y Deporte - SCRD, de sus entidades adscritas  (el Instituto Distrital de las Artes – IDARTES, el Instituto Distrital de Patrimonio Cultural – IDPC, la Orquesta Filarmónica de Bogotá – OFB ni la Fundación Gilberto Álzate Avendaño – FUGA), de su entidad vinculada (Canal  Capital).</label>
+                                                <input type="checkbox" name="afirmacion_no_contratista" value="Si" />
+                                            </div>
+                                        </div>                                                                                
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="id" name="id" />
                                             <input type="hidden" id="conv" name="conv" /> 
@@ -522,7 +546,7 @@
                                                     <th>Segundo nombre</th>
                                                     <th>Primer apellido</th>
                                                     <th>Segundo apellido</th>
-                                                    <th>¿Representante?</th>
+                                                    <th>¿Tipo de representante?</th>
                                                     <th>Rol que desempeña o ejecuta en la propuesta</th>
                                                     <th>¿Activo?</th>
                                                     <th>Acciones</th>

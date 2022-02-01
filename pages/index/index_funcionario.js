@@ -22,7 +22,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    //location.href = url_pv_admin + 'index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -38,18 +38,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                 if (data == 'ok')
                 {
                     $(".manuales_internos").css("display", "block");
-                }        
-            });
-            
-            //Muestra los manuales del ciudadano
-            $.ajax({
-                type: 'POST',
-                data: {"token": token_actual.token, modulo: "SICON-HOME-CIUDADANO"},
-                url: url_pv + 'Session/permiso_lectura_keycloak/'
-            }).done(function (data) {
-                if (data == 'ok')
-                {
-                    $(".manuales_externos").css("display", "block");
                 }        
             });
             

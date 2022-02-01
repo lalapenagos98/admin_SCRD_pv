@@ -1351,6 +1351,11 @@ function validator_form(token_actual) {
                 validators: {
                     numeric: {message: 'Debe ingresar solo numeros'}
                 }
+            },
+            correo_misional: {
+                validators: {
+                    notEmpty: {message: 'Debe el ingresar el correo electrónico institucional del funcionario misional'}
+                }
             }
         }
     }).on('success.form.bv', function (e) {

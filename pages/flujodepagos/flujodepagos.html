@@ -343,6 +343,90 @@
         </div>
         <!-- Modal -->
 
+
+        <!--
+        29-12-2021
+        Wilmer Gustavo Mogollón Duque
+        Se agrega modal para seguimiento al pago
+        -->
+        <!-- Modal evaluacion de la propuesta-->
+        <div class="modal fade" id="estadopagoModal" tabindex="-1" role="dialog" aria-labelledby="estadopagoModallLabel" >
+            <div class="modal-dialog modal-lg " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="evaluarModalLabel">Estado del pago</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Información básica d la propuesta
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5><b>Código de la propuesta:</b></h5>
+                                        <span id="codigo_propuesta_pago"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5><b>Nombre de la propuesta:</b></h5>
+                                        <span id="nombre_propuesta_pago"></span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h5><b>Resumen de la propuesta:</b></h5>
+                                        <span id="resumen_propuesta_pago"></span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h5><b>Objetivo de la propuesta:</b></h5>
+                                        <span id="objetivo_propuesta_pago"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5><b>¿La propuesta se desarrollara en Bogotá D.C.?</b></h5>
+                                        <span id="bogota_propuesta_pago"></span>
+                                    </div>
+
+                                    <div id="parametros_propuesta_pago">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Estado del pago
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <h5><b>Estado del pago</b></h5>
+                                            <span id="estado_pago"></span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5><b>Descripción</b></h5>
+                                            <span id="descripcion_estado"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="notificar_cancelar" >Aceptar</button>
+                        <!--button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button-->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+
         <!-- Modal confirmar top general-->
         <div class="modal fade" id="top_generalModal" tabindex="-1" role="dialog" aria-labelledby="top_generalModalLabel" >
             <div class="modal-dialog modal-lg " role="document">
@@ -931,7 +1015,8 @@
         <script src="../../dist/js/select2.min.js"></script>
 
         <!-- funcionalidades principales -->
-        <script src='../../dist/js/main.js'></script>
+        <script src="https://dev-sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src='../../dist/js/main_funcionairo.js'></script>
         <script src='flujodepagos.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>
     </body>

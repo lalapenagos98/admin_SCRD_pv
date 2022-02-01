@@ -196,12 +196,18 @@ function validator_form(token_actual) {
                                 notify("danger", "ok", "Integrantes:", "No puede registrar mas de un representante.");
                             } else
                             {
-                                if (isNaN(result)) {
-                                    notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                } else
+                                if (result == 'error_representante_suplente')
                                 {
-                                    notify("success", "ok", "Integrantes:", "Se Guardó con el éxito el integrante.");
-                                    cargar_tabla(token_actual);
+                                    notify("danger", "ok", "Integrantes:", "No puede registrar mas de un representante suplente.");
+                                } else
+                                {                                
+                                    if (isNaN(result)) {
+                                        notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                    } else
+                                    {
+                                        notify("success", "ok", "Integrantes:", "Se Guardó con el éxito el integrante.");
+                                        cargar_tabla(token_actual);
+                                    }
                                 }
                             }
                         }
@@ -354,10 +360,17 @@ function cargar_tabla(token_actual)
                 "render": function (data, type, row, meta) {
                     if (row.representante == true)
                     {
-                        row.representante = "Sí";
-                    } else
+                        row.representante = "<b>Principal</b>";
+                    }
+
+                    if (row.representante_suplente == true)
                     {
-                        row.representante = "No";
+                        row.representante = "<b>Suplente</b>";
+                    }
+
+                    if (row.representante == false && row.representante_suplente == false)
+                    {
+                        row.representante = "<b>No aplica</b>";
                     }
                     return row.representante;
                 }
@@ -396,6 +409,21 @@ function cargar_formulario(token_actual)
                     $('#por_que_actualiza_text').html(json.por_que_actualiza_text);
 
                     $("#representante option[value='" + json.participante.representante + "']").prop('selected', true);
+                    
+                    if(json.participante.representante==true)
+                    {
+                        $("#tipo_representante option[value='Principal']").prop('selected', true);
+                    }
+                    
+                    if(json.participante.representante_suplente==true)
+                    {
+                        $("#tipo_representante option[value='Suplente']").prop('selected', true);
+                    }
+                    
+                    if(json.participante.representante==false && json.participante.representante_suplente==false)
+                    {
+                        $("#tipo_representante option[value='Noaplica']").prop('selected', true);
+                    }
 
                     $("#active option[value='" + json.participante.active + "']").prop('selected', true);
 

@@ -537,6 +537,13 @@ function validator_form(token_actual) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            afirmacion_no_contratista: {
+                validators: {
+                    notEmpty: {
+                        message: 'Es requerida la afirmación de que, Bajo gravedad de juramento informo que no soy contratista.'
+                    }
+                }
+            },
             tipo_documento: {
                 validators: {
                     notEmpty: {message: 'El tipo de documento de identificación es requerido'}
