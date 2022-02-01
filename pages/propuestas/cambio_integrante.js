@@ -593,7 +593,7 @@ $(document).ready(function () {
                             notify("danger", "ok", "Documentación:", "El tamaño del archivo excede el permitido (" + tamano + " MB)");
                         } else
                         {
-                            $.post(url_pv + 'PropuestasDocumentacion/guardar_archivo', {documento: documento, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, conv: getURLParameter('id'), modulo: "Menu Participante", m: getURLParameter('perfil'), propuesta: $("#propuesta").attr('value'), nuevo_integrante: true}).done(function (data) {
+                            $.post(url_pv + 'PropuestasDocumentacion/guardar_archivo_nuevo_integrante', {documento: documento, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, conv: getURLParameter('id'), modulo: "Menu Participante", m: getURLParameter('perfil'), propuesta: $("#propuesta").attr('value'), nuevo_integrante: true}).done(function (data) {
                                 if (data == 'error_metodo')
                                 {
                                     notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
@@ -1468,7 +1468,7 @@ function validator_form_link(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         // Valido si el id existe, con el fin de eviarlo al metodo correcto
-        $('#formulario_link').attr('action', url_pv + 'PropuestasDocumentacion/guardar_link');
+        $('#formulario_link').attr('action', url_pv + 'PropuestasDocumentacion/guardar_link_nuevo_integrante');
 
         var documento = $("#documento").val();
 
