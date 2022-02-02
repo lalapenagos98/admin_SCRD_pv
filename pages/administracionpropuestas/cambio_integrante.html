@@ -170,7 +170,7 @@
                                 </li>
                                 <li class=""><a href="#cargue_documentos" data-toggle="tab">Documentación Administrativa</a>
                                 </li>                                                
-                                <li class=""><a href="#finalizar_cambio" data-toggle="tab">Realizar cambio de integrante</a>
+                                <li class=""><a href="#finalizar_cambio" data-toggle="tab">Validar cambio de integrante</a>
                                 </li>                                                
                             </ul>
 
@@ -628,8 +628,8 @@
                                                         <th>Descripción</th>
                                                         <th>Tipos de archivos permitidos</th>
                                                         <th>Tamaño máximo permitido</th>
-                                                        <th>Cargar archivo</th>
-                                                        <th>Cargar link</th>                                                    
+                                                        <th>Ver archivos</th>
+                                                        <th>Ver links</th>                                                    
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tabla_administrativos">                                                
@@ -641,14 +641,30 @@
                                     <!-- /.col-lg-12 -->
                                 </div>
                                 <div class="tab-pane fade" id="finalizar_cambio">
+                                    
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <br/>
-                                            <div class="alert alert-danger">
-                                                ¿Esta seguro de reemplazar a <span class="alert-link integrante"></span>?
-                                            </div>                          
+                                        <br/>
+                                        <div class="alert alert-danger">
+                                            ¿Esta seguro de reemplazar a <span class="alert-link integrante"></span>?
+                                        </div>    
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Observaciones de la subsanación o del rechazo</label>
+                                                <textarea id="observaciones_integrante" name="observaciones_integrante" class="form-control" rows="3"></textarea>                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">                                                                      
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" id="cambio-btn-si">Si</button>                                                    
+                                                <button type="button" name="Se enviá notificación de subsanación al participante." title="52" class="btn btn-success validar_solicitud" id="enviar_notificacion">Enviar notificación de subsanación</button>                                                    
+                                                <button type="button" name="Se rechaza la solicitud de cambio de integrante." title="51" class="btn btn-danger validar_solicitud" id="rechazar_solicitud">Rechazar la solicitud</button>                                                    
+                                                <button type="button" name="Se aprueba la solicitud de cambio de integrante." title="50" class="btn btn-primary validar_solicitud" id="aceptar_solicitud">Aceptar la solicitud</button>                                                    
                                             </div>
                                         </div>
                                         <!-- /.panel -->
@@ -664,7 +680,7 @@
                                     <!-- cabecera del diálogo -->
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Formulario de la documentación</h4>                                                    
+                                        <h4 class="modal-title">Archivos cargados para el nuevo integrante</h4>                                                    
                                     </div>
                                     <div class="loading centrado-porcentual"></div>             
                                     <!-- cuerpo del diálogo -->
@@ -694,7 +710,7 @@
                                     <!-- cabecera del diálogo -->
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title">Formulario de la documentación</h4>                                                    
+                                        <h4 class="modal-title">Links cargados para el nuevo integrante</h4>                                                    
                                     </div>
                                     <div class="loading centrado-porcentual"></div>             
                                     <!-- cuerpo del diálogo -->
@@ -760,7 +776,7 @@
         <script src="../../dist/libraries/ajaxdownloader/ajaxdownloader.min.js" type="text/javascript"></script>
 
         <!-- funcionalidades principales -->
-        <script src="https://qa-sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src="https://dev-sso.scrd.gov.co/auth/js/keycloak.js"></script>
         <script src='../../dist/js/main_funcionairo.js'></script>
         <script src='cambio_integrante.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>

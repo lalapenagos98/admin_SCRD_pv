@@ -604,6 +604,78 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
+            $(".validar_solicitud").click(function () {
+
+                var tipo = $(this).attr('id');
+                var id_estado = $(this).attr('title');
+                var mensaje = $(this).attr('name');
+                var enviar = true;                
+                if( tipo=="enviar_notificacion" || tipo=="rechazar_solicitud" )
+                {
+                    if ($("#observaciones_integrante").val() === "")
+                    {
+                        enviar = false;                
+                    }
+                }
+                
+                if(enviar)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: url_pv + 'Personasnaturales/validar_cambio_integrante',
+                        data: "id=" + $("#id_participante_reemplazo").attr('value') + "&conv=" + $("#convocatoria").val() + "&propuesta=" + $("#propuestas").val() + "&estado_cambio_integrante="+id_estado+"&tipo="+tipo+"&modulo=SICON-PROPUESTAS-CAMBIO-INTEGRANTE&token=" + token_actual.token+"&observaciones_integrante="+$("#observaciones_integrante").val()
+                    }).done(function (result) {
+                        var result = result.trim();
+
+                        if (result == 'error')
+                        {
+                            notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        } else
+                        {
+                            if (result == 'error_token')
+                            {
+                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            } else
+                            {
+                                if (result == 'acceso_denegado')
+                                {
+                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                } else
+                                {
+                                    if (result == 'error_metodo')
+                                    {
+                                        notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                    } else
+                                    {
+                                        if (result == 'error_email')
+                                        {
+                                            notify("danger", "ok", "Convocatorias:", "Error al enviar la notificación del cambio de integrante, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co para mayor información.");
+                                        } else
+                                        {
+                                            if (isNaN(result)) {
+                                                notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                notify("success", "ok", "Integrantes:", mensaje);
+
+                                                //Cargar datos de la tabla
+                                                cargar_tabla(token_actual);
+                                                $("#registro_cambio_integrante").hide("slow");
+                                            }
+                                        }                                                                                    
+                                    }
+                                }
+                            }
+                        }
+
+                    }); 
+                }
+                else
+                {
+                    notify("danger", "ok", "Integrantes:", "Las observaciones de la subsanación o del rechazo, es requerida");
+                }                           
+        });
+
         }
     }
 });
@@ -1034,4 +1106,20 @@ function cargar_tabla_link(token_actual, documento) {
             }
         }
     });
+}
+
+//Funcion para descargar archivo
+function download_file(cod)
+{
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv + 'PropuestasDocumentacion/download_file_back/',
+        data: {
+            cod: cod,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+        }
+    });
+
 }
