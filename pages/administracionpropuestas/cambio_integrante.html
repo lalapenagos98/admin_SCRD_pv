@@ -120,12 +120,12 @@
                 </div>      
                 <br/>
                 <!-- /.row -->
-                
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Propuestas por subsanar
+                                Participantes que solicitaron cambio de integrante
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -142,7 +142,7 @@
                                                     <th>¿Tipo de representante?</th>
                                                     <th>Rol que desempeña o ejecuta en la propuesta</th>
                                                     <th>Estado del cambio de integrante</th>
-                                                    <th>Realizar Cambio</th>
+                                                    <th>Validar Cambio</th>
                                                 </tr>
                                             </thead>
                                         </table>                                       
@@ -155,6 +155,587 @@
                         <!-- /.panel -->
                     </div>
                     <!-- /.col-lg-12 -->
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Registro de información del nuevo integrante 
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div id="registro_cambio_integrante" style="display: none" class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-pills">
+                                <li class="active"><a href="#formulario_registro" data-toggle="tab">Formulario</a>
+                                </li>
+                                <li class=""><a href="#cargue_documentos" data-toggle="tab">Documentación Administrativa</a>
+                                </li>                                                
+                                <li class=""><a href="#finalizar_cambio" data-toggle="tab">Validar cambio de integrante</a>
+                                </li>                                                
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="formulario_registro">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post" enctype="multipart/form-data">                                    
+                                                <br/>
+                                                <div class="alert alert-danger">
+                                                    Información ingresada por el participante, con el fin de reemplazara a <span class="alert-link integrante"></span>.
+                                                </div>                                                    
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Rol que desempeña o ejecuta en la propuesta <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="rol" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>¿Tipo de representante?<span class="icono_requerido">*</span></label>
+                                                            <select id='tipo_representante' name="tipo_representante" class="form-control" disabled>                                                    
+                                                                <option value="Noaplica" selected="selected">No aplica</option>
+                                                                <option value="Principal">Principal</option>
+                                                                <option value="Suplente">Suplente</option>                                                    
+                                                            </select>                                                
+                                                        </div>                                                                                                                                                                                                                                                                                                        
+                                                    </div> 
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Tipo de documento de identificación  <span class="icono_requerido">*</span></label>
+                                                            <select id='tipo_documento' name="tipo_documento" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Número de documento de identificación <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="numero_documento" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Primer nombre <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="primer_nombre" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Segundo nombre</label>
+                                                            <input type="text" name="segundo_nombre" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Primer apellido <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="primer_apellido" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Segundo apellido</label>
+                                                            <input type="text" name="segundo_apellido" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿Tiene RUT? <span class="icono_requerido">*</span></label>
+                                                            <select id='tiene_rut' name="tiene_rut" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>                                                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿cuál es el código CIIU de su actividad principal?</label>
+                                                            <select id='ciiu' name="ciiu" class="form-control" disabled="disabled">
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>¿Cuenta usted con matrícula mercantil? <span class="icono_requerido">*</span></label>
+                                                            <select id='tiene_matricula' name="tiene_matricula" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>                                                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Sexo <span class="icono_requerido">*</span></label>
+                                                            <select id='sexo' name="sexo" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Orientación Sexual <span class="icono_requerido">*</span></label>
+                                                            <select id='orientacion_sexual' name="orientacion_sexual" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Identidad de género <span class="icono_requerido">*</span></label>
+                                                            <select id='identidad_genero' name="identidad_genero" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Grupo étnico <span class="icono_requerido">*</span></label>
+                                                            <select id='grupo_etnico' name="grupo_etnico" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿Tiene usted algún tipo de discapacidad? <span class="icono_requerido">*</span></label>
+                                                            <select id='discapacidad' name="discapacidad" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                        
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿A qué régimen de salud pertenece? <span class="icono_requerido">*</span></label>
+                                                            <select id='regimen_salud' name="regimen_salud" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Contributivo">Contributivo</option>
+                                                                <option value="Subsidiado">Subsidiado</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿Es usted víctima del conflicto armado? <span class="icono_requerido">*</span></label>
+                                                            <select id='es_victima' name="es_victima" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>
+                                                                <option value="Prefiero no responder">Prefiero no responder</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Fecha de nacimiento <span class="icono_requerido">*</span></label>
+                                                            <div class="input-group date calendario" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                                <input class="form-control" name="fecha_nacimiento" size="16" type="text" value="" readonly>
+                                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>País de nacimiento <span class="icono_requerido">*</span></label>
+                                                            <select id='pais_nacimiento' name="pais_nacimiento" class="form-control">                                                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">                                            
+                                                        <div class="form-group">
+                                                            <label>Departamento de nacimiento <span class="icono_requerido">*</span></label>
+                                                            <select id='departamento_nacimiento' name="departamento_nacimiento" class="form-control">                                                    
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                            
+                                                </div> 
+                                                <div class="row">                                        
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Ciudad de nacimiento <span class="icono_requerido">*</span></label>
+                                                            <select id='ciudad_nacimiento' name="ciudad_nacimiento" class="form-control">                                                    
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>                                                                                        
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>País de residencia <span class="icono_requerido">*</span></label>
+                                                            <select id='pais' name="pais" class="form-control">                                                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">                                        
+                                                    <div class="col-lg-6">                                            
+                                                        <div class="form-group">
+                                                            <label>Departamento de residencia <span class="icono_requerido">*</span></label>
+                                                            <select id='departamento' name="departamento" class="form-control">                                                    
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>                                            
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Ciudad de residencia <span class="icono_requerido">*</span></label>
+                                                            <select id='ciudad_residencia' name="ciudad_residencia" class="form-control">                                                    
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>     
+                                                </div>                                    
+                                                <div class="row">                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Localidad de residencia <span class="icono_requerido">*</span></label>
+                                                            <select id='localidad_residencia' name="localidad_residencia" class="form-control" >                                                                                                        
+                                                            </select>
+                                                        </div>                                                                                                                                                                                                                                                                                                        
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Barrio de residencia</label>
+                                                            <select id='barrio_residencia' name="barrio_residencia" class="form-control" >                                                    
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>                                                                                                                                                                                                                                                                                                        
+                                                    </div>
+                                                </div>                                                                        
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Dirección de residencia <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="direccion_residencia" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Dirección correspondencia</label>
+                                                            <input type="text" name="direccion_correspondencia" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Estrato<span class="icono_requerido">*</span></label>
+                                                            <select id='estrato' name="estrato" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Área</label>
+                                                            <select id='area' name="area" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Urbana">Urbana</option>
+                                                                <option value="Rural">Rural</option>                                                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">                                        
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Teléfono fijo</label>
+                                                            <input type="text" name="numero_telefono" class="form-control">
+                                                        </div>
+                                                    </div>                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Número de celular personal <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="numero_celular" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>Correo electrónico <span class="icono_requerido">*</span></label>
+                                                            <input type="text" name="correo_electronico" class="form-control">
+                                                        </div>
+                                                    </div>                                    
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label>¿Tiene redes sociales personales?</label>
+                                                            <select id='tiene_redes' name="tiene_redes" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>                                                    
+                                                            </select>
+                                                        </div>                                                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Instagram</label>
+                                                            <input type="text" name="instagram" class="form-control si_tiene_redes" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Twitter</label>
+                                                            <input type="text" name="twitter" class="form-control si_tiene_redes" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Facebook</label>
+                                                            <input type="text" name="facebook" class="form-control si_tiene_redes" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Tik ToK</label>
+                                                            <input type="text" name="tik_tok" class="form-control si_tiene_redes" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>LinkedIn</label>
+                                                            <input type="text" name="linked_in" class="form-control si_tiene_redes" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>¿Cuenta con espacios de circulación de contenidos en línea?</label>
+                                                            <select id='tiene_paginas' name="tiene_paginas" class="form-control" >
+                                                                <option value="">:: Seleccionar ::</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>                                                    
+                                                            </select>
+                                                        </div>                                                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Página web</label>
+                                                            <input type="text" name="pagina_web" class="form-control si_tiene_espacios" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>YouTube</label>
+                                                            <input type="text" name="you_tube" class="form-control si_tiene_espacios" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Vimeo</label>
+                                                            <input type="text" name="vimeo" class="form-control si_tiene_espacios" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Blog</label>
+                                                            <input type="text" name="blog" class="form-control si_tiene_espacios" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Podcast</label>
+                                                            <input type="text" name="podcast" class="form-control si_tiene_espacios" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Bajo gravedad de juramento informo que no soy contratista de la Secretaria Distrital de Cultura, Recreación y Deporte - SCRD, de sus entidades adscritas  (el Instituto Distrital de las Artes – IDARTES, el Instituto Distrital de Patrimonio Cultural – IDPC, la Orquesta Filarmónica de Bogotá – OFB ni la Fundación Gilberto Álzate Avendaño – FUGA), de su entidad vinculada (Canal  Capital).</label>
+                                                            <input type="checkbox" name="afirmacion_no_contratista" value="Si" />
+                                                        </div>
+                                                    </div>                                                                                
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label>Justifique el cambio de integrante en la agrupación<span class="icono_requerido">*</span></label>
+                                                            <textarea id="por_que_actualiza" name="por_que_actualiza" class="form-control" rows="3"></textarea>                                                
+                                                        </div>
+                                                    </div>                                        
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12" style="text-align: right">
+                                                        <input type="hidden" id="id" name="id" />
+                                                        <input type="hidden" id="tipo" name="tipo" value="Integrante"/> 
+                                                        <input type="hidden" id="propuesta" name="propuesta" /> 
+                                                        <input type="hidden" id="id_participante_reemplazo" name="id_participante_reemplazo"/>                                                             
+                                                    </div>
+                                                </div>                                
+                                            </form>
+                                        </div>                                                
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="cargue_documentos">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <br/>
+                                            <div class="alert alert-danger">
+                                                Documentación administrativa ingresada por el participante, con el fin de reemplazara a <span class="alert-link integrante"></span>.
+                                            </div>  
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Requisito</th>
+                                                        <th>Descripción</th>
+                                                        <th>Tipos de archivos permitidos</th>
+                                                        <th>Tamaño máximo permitido</th>
+                                                        <th>Ver archivos</th>
+                                                        <th>Ver links</th>                                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tabla_administrativos">                                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.panel -->
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <div class="tab-pane fade" id="finalizar_cambio">
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                        <br/>
+                                        <div class="alert alert-danger">
+                                            ¿Esta seguro de reemplazar a <span class="alert-link integrante"></span>?
+                                        </div>    
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Observaciones de la subsanación o del rechazo</label>
+                                                <textarea id="observaciones_integrante" name="observaciones_integrante" class="form-control" rows="3"></textarea>                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">                                                                      
+                                            <div class="modal-footer">
+                                                <button type="button" name="Se enviá notificación de subsanación al participante." title="52" class="btn btn-success validar_solicitud" id="enviar_notificacion">Enviar notificación de subsanación</button>                                                    
+                                                <button type="button" name="Se rechaza la solicitud de cambio de integrante." title="51" class="btn btn-danger validar_solicitud" id="rechazar_solicitud">Rechazar la solicitud</button>                                                    
+                                                <button type="button" name="Se aprueba la solicitud de cambio de integrante." title="50" class="btn btn-primary validar_solicitud" id="aceptar_solicitud">Aceptar la solicitud</button>                                                    
+                                            </div>
+                                        </div>
+                                        <!-- /.panel -->
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                            </div>                                                
+                        </div>
+
+                        <div class="modal fade" id="cargar_documento">
+                            <div class="modal-dialog">
+                                <div class="modal-content">                                                        
+                                    <!-- cabecera del diálogo -->
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Archivos cargados para el nuevo integrante</h4>                                                    
+                                    </div>
+                                    <div class="loading centrado-porcentual"></div>             
+                                    <!-- cuerpo del diálogo -->
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Archivo</th>
+                                                            <th>Ver Archivo</th>                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tabla_archivos">                                                
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="cargar_link">
+                            <div class="modal-dialog">
+                                <div class="modal-content">                                                        
+                                    <!-- cabecera del diálogo -->
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Links cargados para el nuevo integrante</h4>                                                    
+                                    </div>
+                                    <div class="loading centrado-porcentual"></div>             
+                                    <!-- cuerpo del diálogo -->
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Link</th>                                                                                                                                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tabla_link">                                                
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>                                        
+                    <!-- /.panel-body -->
                 </div>
                 <!-- /.row -->
             </div>
