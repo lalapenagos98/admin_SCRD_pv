@@ -135,7 +135,7 @@
          // cargo los datos
          $.ajax({
              type: 'GET',
-             url: url_pv + 'Tiposdocumentos/select',
+             url: url_pv + 'Tiposdocumentos/select_jurado',
              data: {"token": token_actual.token},
          }).done(function (data) {
 
@@ -164,7 +164,7 @@
          // cargo los datos
          $.ajax({
              type: 'GET',
-             url: url_pv + 'Sexos/select',
+             url: url_pv + 'Sexos/select_jurado',
              data: {"token": token_actual.token},
          }).done(function (data) {
 
@@ -227,7 +227,7 @@
          // cargo los datos
          $.ajax({
              type: 'GET',
-             url: url_pv + 'Identidadesgeneros/select',
+             url: url_pv + 'Identidadesgeneros/select_jurado',
              data: {"token": token_actual.token},
          }).done(function (data) {
 

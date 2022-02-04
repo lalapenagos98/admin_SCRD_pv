@@ -80,6 +80,7 @@
                             <div class="panel-body"> 
                                 <input type="hidden" id="id" name="id" />
                                 <input type="hidden" id="nombre_convocatoria_par"/>
+                                <input type="hidden" id="convocatoria_nombre"/>
                                 <input type="hidden" id="convocatoria_padre"/>
                                 <form id="formulario_principal" action="" class="form_validator" role="form" method="post">
                                     <div class="row">
@@ -140,6 +141,15 @@
                                             <div class="form-group">
                                                 <label id="titulo_convocatoria"></label>
                                                 <select id='nombre_convocatoria' name="nombre_convocatoria" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-12 inactivo">
+                                            <div class="form-group">
+                                                <label>¿En caso de ser ganador acepta asumir las retenciones que apliquen según la normatividad vigente y que dependen de su calidad tributaria?</label>
+                                                <select id='acepta_ganador' name="acepta_ganador" class="form-control" >                                                    
                                                     <option value="true">Sí</option>
                                                     <option value="" selected="selected">No</option>
                                                 </select>                                                

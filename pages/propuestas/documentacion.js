@@ -131,6 +131,9 @@ $(document).ready(function () {
                                                                                     $(".inactivar_estado_propuesta").removeAttr("disabled");   
                                                                                 }
                                                                                 
+                                                                                $(".nombre_convocatoria").html(json.nombre_convocatoria);
+                                                                                
+                                                                                
                                                                                 $("#programa").val(json.programa);
                                                                                 
                                                                                 if (getURLParameter('m') == "pj")
@@ -353,6 +356,11 @@ $(document).ready(function () {
                                                                                 if(documento.nombre=="RIntegrante")
                                                                                 {
                                                                                     nombre_requisito="No ha ingresado el representante de la agrupación.";
+                                                                                }
+                                                                                
+                                                                                if(documento.nombre=="RSIntegrante")
+                                                                                {
+                                                                                    nombre_requisito="No ha ingresado el representante suplente de la agrupación.";
                                                                                 }
                                                                                 
                                                                                 if(documento.nombre=="FPropuesta")

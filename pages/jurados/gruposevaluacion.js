@@ -1,119 +1,149 @@
-$(document).ready(function () {
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
+//Si no esta autenticado lo obliga a ingresar al keycloak
 
 
+    if (authenticated === false) {
+        keycloak.login();
+    } else {
 
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-//Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    var token_actual = getLocalStorage(name_local_storage);
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-JURADOS-GRUPOS-EVALUACION");
+            
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
+            });
+            
+            $('.convocatorias-search').select2();
 
-        $('.convocatorias-search').select2();
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Jurados");
-        init(token_actual);
-        //carga select_convocatorias
-        $('#anio').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
-        //carga select convocatorias
-        $('#entidad').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
-        //carga el select categorias
-        $('#convocatorias').change(function () {
-            cargar_select_categorias(token_actual, $('#convocatorias').val());
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-            if ($('#convocatorias').val() !== '') {
-                $('#crear_grupo').show();
-                $('#habilitar_evaluaciones').show();
-            } else {
-                $('#crear_grupo').hide();
-                $('#habilitar_evaluaciones').hide();
-            }
-        });
-        $('#categorias').change(function () {
-            cargar_tabla(token_actual);
-        });
-        $("#crear_grupo").click(function () {
-            $("#form_grupo").trigger("reset");
-            //$(".form_grupo").bootstrapValidator('resetForm', true);
-            cargar_select_grupos(token_actual);
+            init(token_actual);
+
+            //carga select_convocatorias
+            $('#anio').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
+            //carga select convocatorias
+            $('#entidad').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
+            //carga el select categorias
+            $('#convocatorias').change(function () {
+                cargar_select_categorias(token_actual, $('#convocatorias').val());
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+                if ($('#convocatorias').val() !== '') {
+                    $('#crear_grupo').show();
+                    $('#habilitar_evaluaciones').show();
+                } else {
+                    $('#crear_grupo').hide();
+                    $('#habilitar_evaluaciones').hide();
+                }
+            });
+            $('#categorias').change(function () {
+                cargar_tabla(token_actual);
+            });
+            $("#crear_grupo").click(function () {
+                $("#form_grupo").trigger("reset");
+                //$(".form_grupo").bootstrapValidator('resetForm', true);
+                cargar_select_grupos(token_actual);
+                /*
+                 * 22-04-2020
+                 * WILMER GUSTAVO MOGOLLÓN DUQUE
+                 * Se modifica el data para enviar el valor de la categoría.
+                 */
+                cargar_select_rondas(token_actual, $('#convocatorias').val(), $('#categorias').val());
+                cargar_tabla_jurados_aceptaron(token_actual);
+            });
+            $("#crear_grupoModal_cancelar").click(function () {
+                $("#crear_grupoModal").modal("hide");
+            });
+            $("#crear_grupoModal").on('hide.bs.modal', function () {
+                $("#form_grupo").trigger("reset");
+                //$(".form_grupo").bootstrapValidator('resetForm', true);
+                $(".form_grupo").bootstrapValidator('destroy', true);
+            });
+            /*$("#editar_grupoModal_aceptar").click(function(){
+             //crear_grupo(token_actual);
+             $("#editar_grupoModal").modal("hide");
+             
+             });*/
+
+            $("#editar_grupoModal_cancelar").click(function () {
+                $("#editar_grupoModal").modal("hide");
+            });
+            $("#editar_grupoModal").on('hide.bs.modal', function () {
+                $("#form_grupo_editar").trigger("reset");
+            });
+
             /*
-             * 22-04-2020
-             * WILMER GUSTAVO MOGOLLÓN DUQUE
-             * Se modifica el data para enviar el valor de la categoría.
+             * 09-03-2021
+             * Wilmer Gustavo Mogollón Duque
+             * Se agrega función paa controlar el comportamiento del modal de habilitar evaluaciones
              */
-            cargar_select_rondas(token_actual, $('#convocatorias').val(), $('#categorias').val());
-            cargar_tabla_jurados_aceptaron(token_actual);
-        });
-        $("#crear_grupoModal_cancelar").click(function () {
-            $("#crear_grupoModal").modal("hide");
-        });
-        $("#crear_grupoModal").on('hide.bs.modal', function () {
-            $("#form_grupo").trigger("reset");
-            //$(".form_grupo").bootstrapValidator('resetForm', true);
-            $(".form_grupo").bootstrapValidator('destroy', true);
-        });
-        /*$("#editar_grupoModal_aceptar").click(function(){
-         //crear_grupo(token_actual);
-         $("#editar_grupoModal").modal("hide");
-         
-         });*/
 
-        $("#editar_grupoModal_cancelar").click(function () {
-            $("#editar_grupoModal").modal("hide");
-        });
-        $("#editar_grupoModal").on('hide.bs.modal', function () {
-            $("#form_grupo_editar").trigger("reset");
-        });
+            //habilitar_evaluaciones
+            $("#habilitar_evaluaciones").click(function () {
 
-        /*
-         * 09-03-2021
-         * Wilmer Gustavo Mogollón Duque
-         * Se agrega función paa controlar el comportamiento del modal de habilitar evaluaciones
-         */
+                $("#mensajehabilitar").show();
+                $("#bcancelarhabilitar").show();
+                $("#baceptarhabilitar").show();
+            });
 
-        //habilitar_evaluaciones
-        $("#habilitar_evaluaciones").click(function () {
+            $("#baceptarhabilitar").click(function () {
+                if ($('#categorias').val() !== '') {
+                    habilitar_evaluaciones(token_actual, $('#categorias').val());
+                } else {
+                    habilitar_evaluaciones(token_actual, $('#convocatorias').val());
+                }
+                $('#habilitar_evaluaciones_modal').modal('hide');
+            });
 
-            $("#mensajehabilitar").show();
-            $("#bcancelarhabilitar").show();
-            $("#baceptarhabilitar").show();
-        });
-
-        $("#baceptarhabilitar").click(function () {
-            if ($('#categorias').val() !== '') {
-                habilitar_evaluaciones(token_actual, $('#categorias').val());
-            } else {
-                habilitar_evaluaciones(token_actual, $('#convocatorias').val());
-            }
-            $('#habilitar_evaluaciones_modal').modal('hide');
-        });
-    }
+        }
 
 
+    }//
+
+
+}).catch(function () {
+    location.href = url_pv_admin + 'error_keycloak.html';
 });
+
+
+
+
+
 function init(token_actual) {
     $('#crear_grupo').hide();
     $('#habilitar_evaluaciones').hide();
     //Realizo la peticion para cargar el formulario
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "id": $("#id").attr('value')},
-        url: url_pv + 'Juradospreseleccion/init/'
+        url: url_pv + 'Gruposevaluacion/init/'
     }).done(function (data) {
 
         switch (data) {
@@ -160,8 +190,8 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 
     $.ajax({
-        type: 'GET',
-        url: url_pv + 'Juradospreseleccion/select_convocatorias',
+        type: 'POST',
+        url: url_pv + 'Gruposevaluacion/select_convocatorias',
         data: {"token": token_actual.token, "anio": anio, "entidad": entidad},
     }).done(function (data) {
 
@@ -201,8 +231,8 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 function cargar_select_categorias(token_actual, convocatoria) {
 
     $.ajax({
-        type: 'GET',
-        url: url_pv + 'Juradospreseleccion/select_categorias',
+        type: 'POST',
+        url: url_pv + 'Gruposevaluacion/select_categorias',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
 
@@ -258,6 +288,7 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Gruposevaluacion/all_grupos_evaluacion",
             data:
                     {"token": token_actual.token,
@@ -319,7 +350,7 @@ function cargar_tabla(token_actual) {
                             '<button id="' + row.id + '" title="Confirmar grupo de evaluación" type="button" class="btn btn-warning btn_confirmar" >'
                             + '<span class="glyphicon glyphicon-ok"></span></button>' : "") +
                             '<button id="' + row.id + '" title="Editar grupo de evaluación" type="button" class="btn btn-primary btn_editar" data-toggle="modal" data-target="#editar_grupoModal" >'
-                            + '<span class="glyphicon glyphicon-edit"></span></button>'+
+                            + '<span class="glyphicon glyphicon-edit"></span></button>' +
                             '<button id="' + row.id + '" title="Desactivar grupo de evaluación" type="button" class="btn btn-danger btn_desactivar"  >'
                             + '<span class="glyphicon glyphicon-thumbs-down"></span></button>';
                 },
@@ -352,7 +383,7 @@ function acciones_registro(token_actual) {
         desactivar_grupo(token_actual, $(this).attr("id"));
     });
 
-    
+
 
 
 
@@ -363,7 +394,7 @@ function cargar_select_rondas(token_actual, convocatoria, categoria) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Gruposevaluacion/select_rondas',
         /*
          * 22-04-2020
@@ -409,7 +440,7 @@ function cargar_select_grupos(token_actual) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Gruposevaluacion/select_grupos',
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -459,6 +490,7 @@ function cargar_tabla_jurados_aceptaron(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Gruposevaluacion/jurados_aceptaron",
             data:
                     {"token": token_actual.token,
@@ -589,7 +621,7 @@ function crear_grupo(token_actual) {
         type: 'PUT',
         url: url_pv + 'Gruposevaluacion/new',
         data: $("#form_grupo").serialize()
-                + "&modulo=Jurados&token=" + token_actual.token
+                + "&modulo=SICON-JURADOS-GRUPOS-EVALUACION&token=" + token_actual.token
     }).done(function (data) {
 
 
@@ -631,7 +663,7 @@ function crear_grupo(token_actual) {
 function cargar_select_rondas_editar(token_actual, convocatoria, categoria, grupo) { //se agrega categoría
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Gruposevaluacion/select_rondas_editar',
         data: {"token": token_actual.token, "convocatoria": convocatoria, "categoria": categoria, "grupo": grupo}, //se agrega categoría a data
     }).done(function (data) {
@@ -677,7 +709,7 @@ function cargar_grupo(token_actual, grupo) {
 
     $('#form_grupo_editar_fieldset').removeAttr('disabled');
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Gruposevaluacion/grupo/' + grupo,
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -726,6 +758,7 @@ function cargar_tabla_jurados_aceptaron_editar(token_actual, grupo) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Gruposevaluacion/jurados_aceptaron_and_evaluadores",
             data:
                     {"token": token_actual.token,
@@ -848,7 +881,7 @@ function editar_grupo(token_actual, grupo) {
         type: 'PUT',
         url: url_pv + 'Gruposevaluacion/grupo/' + grupo,
         data: $("#form_grupo_editar").serialize()
-                + "&modulo=Jurados&token=" + token_actual.token
+                + "&modulo=SICON-JURADOS-GRUPOS-EVALUACION&token=" + token_actual.token
                 + "&convocatoria=" + $('#convocatorias').val()
                 + "&categoria=" + $('#categorias').val()
                 + "&ronda=" + $('.rondas_editar').val()
@@ -887,7 +920,7 @@ function confirmar_grupo(token_actual, grupo) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Gruposevaluacion/confirmar/' + grupo,
-        data: "modulo=Jurados&token=" + token_actual.token
+        data: "modulo=SICON-JURADOS-GRUPOS-EVALUACION&token=" + token_actual.token
 
     }).done(function (data) {
 
@@ -930,7 +963,7 @@ function desactivar_grupo(token_actual, grupo) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Gruposevaluacion/desactivar/' + grupo,
-        data: "modulo=Jurados&token=" + token_actual.token
+        data: "modulo=SICON-JURADOS-GRUPOS-EVALUACION&token=" + token_actual.token
 
     }).done(function (data) {
 
@@ -974,7 +1007,7 @@ function habilitar_evaluaciones(token_actual, id_convocatoria) {
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Gruposevaluacion/habilitar_evaluaciones/' + id_convocatoria,
-        data: "modulo=Jurados&token=" + token_actual.token
+        data: "modulo=SICON-JURADOS-GRUPOS-EVALUACION&token=" + token_actual.token
 
     }).done(function (data) {
 

@@ -1,191 +1,207 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+keycloak.init(initOptions).then(function (authenticated) {
+    //Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Reporte Contratistas");
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-        //Realizo la peticion para cargar el formulario
-        $.ajax({
-            type: 'GET',
-            data: {"token": token_actual.token, "modulo": "Reporte Contratistas"},
-            url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
-        }).done(function (data) {
-            if (data == 'error_metodo')
-            {
-                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-            } else
-            {
-                if (data == 'error')
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-REPORTES-CONTRATISTAS");
+
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
                 {
                     location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                 } else
                 {
-                    if (data == 'acceso_denegado')
+                    $("#menu_principal").html(result);
+                }
+            });
+
+            //Realizo la peticion para cargar el formulario
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "modulo": "SICON-REPORTES-CONTRATISTAS"},
+                url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
+            }).done(function (data) {
+                if (data == 'error_metodo')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (data == 'error')
                     {
-                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                     } else
                     {
-                        var json = JSON.parse(data);
-
-                        $("#entidad").append('<option value="">:: Seleccionar ::</option>');
-                        if (json.entidades.length > 0) {
-                            $.each(json.entidades, function (key, entidad) {
-                                $("#entidad").append('<option value="' + entidad.id + '"  >' + entidad.nombre + '</option>');
-                            });
-                        }
-                    }
-                }
-            }
-        });
-
-        //Cargar datos en la tabla actual
-        var dataTable = $('#table_list').DataTable({
-            "language": {
-                "url": "../../dist/libraries/datatables/js/spanish.json"
-            },
-            "processing": true,
-            "serverSide": true,
-            "lengthMenu": [50, 75, 100],
-            "ajax": {
-                data: function (d) {
-                    d.entidad = $('#entidad').val();
-                    d.modulo = "Reporte Contratistas";
-                    d.token = token_actual.token;
-                },
-                url: url_pv + 'Reportes/generar_reportes_contratistas'
-            },
-            "drawCallback": function (settings) {
-                $(".cargar_contratista").click(function () {
-
-                    var token_actual = getLocalStorage(name_local_storage);
-
-                    //Realizo la peticion para cargar el formulario
-                    $.ajax({
-                        type: 'GET',
-                        data: {"token": token_actual.token},
-                        url: url_pv + 'ConvocatoriasFormatos/buscar_contratista/' + $(this).attr("title")
-                    }).done(function (data) {
-                        if (data == 'error_metodo')
+                        if (data == 'acceso_denegado')
                         {
-                            notify("danger", "ok", "Paises:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
                         } else
                         {
-                            if (data == 'error')
-                            {
-                                notify("danger", "ok", "Paises:", "El pais no se encuentra registrado, por favor registrarse");
-                            } else
-                            {
-                                var json = JSON.parse(data);
+                            var json = JSON.parse(data);
 
-                                if (typeof json.id === 'number') {
-                                    $('#form_nuevo_cronograma').loadJSON(data);
-                                    $("#active option[value='" + json.active + "']").prop('selected', true);
-                                }
+                            $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                            if (json.entidades.length > 0) {
+                                $.each(json.entidades, function (key, entidad) {
+                                    $("#entidad").append('<option value="' + entidad.id + '"  >' + entidad.nombre + '</option>');
+                                });
                             }
                         }
-                    });
-                });
-            },
-            "columns": [
-                {"data": "entidad"},
-                {"data": "numero_documento"},
-                {"data": "primer_nombre"},
-                {"data": "segundo_nombre"},
-                {"data": "primer_apellido"},
-                {"data": "segundo_apellido"},
-                {"data": "active"},
-                {"data": "acciones"}
-            ],
-            "columnDefs": [{
-                    "targets": 0,
-                    "render": function (data, type, row, meta) {                                                            
-                        if(row.active==true)
-                        {
-                            row.active="Sí";    
-                        }
-                        if(row.active==false)
-                        {
-                            row.active="No";    
-                        }                        
-                        return row.entidad;
                     }
                 }
-            ]
-        });
+            });
 
-        $('#entidad').change(function () {
-            dataTable.draw();
-        });
+            //Cargar datos en la tabla actual
+            var dataTable = $('#table_list').DataTable({
+                "language": {
+                    "url": "../../dist/libraries/datatables/js/spanish.json"
+                },
+                "processing": true,
+                "serverSide": true,
+                "lengthMenu": [50, 75, 100],
+                "ajax": {
+                    data: function (d) {
+                        d.entidad = $('#entidad').val();
+                        d.modulo = "SICON-REPORTES-CONTRATISTAS";
+                        d.token = token_actual.token;
+                    },
+                    url: url_pv + 'Reportes/generar_reportes_contratistas',
+                    type: "POST"
+                },
+                "drawCallback": function (settings) {
+                    $(".cargar_contratista").click(function () {
 
-        $('input[type="file"]').change(function (evt) {
-
-            if ($("#entidad").val() == "")
-            {
-                notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas debe seleccionar una entidad.");
-            } else
-            {
-                var f = evt.target.files[0];
-                var reader = new FileReader();
-
-                // Cierre para capturar la información del archivo.
-                reader.onload = function (fileLoadedEvent) {
-                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                    var srcName = f.name;
-                    var srcSize = f.size;
-                    var srcType = f.type;
-                    var token_actual = getLocalStorage(name_local_storage);
-                    
-                    var ext = srcName.split('.');
-                    // ahora obtenemos el ultimo valor despues el punto
-                    // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
-                    srcExt = ext[ext.length - 1];                                                                                                
-                    if (srcExt == "txt")
-                    {
-                        $.post(url_pv + 'ConvocatoriasFormatos/cargar_contratistas_csv', {srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, token: token_actual.token, modulo: "Reporte Contratistas", entidad: $("#entidad").val()}).done(function (data) {
-                            if (data == "error_columnas")
+                        //Realizo la peticion para cargar el formulario
+                        $.ajax({
+                            type: 'post',
+                            data: {"token": token_actual.token},
+                            url: url_pv + 'ConvocatoriasFormatos/buscar_contratista/' + $(this).attr("title")
+                        }).done(function (data) {
+                            if (data == 'error_metodo')
                             {
-                                notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con las columnas requeridas.");
+                                notify("danger", "ok", "Paises:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                             } else
                             {
-                                if (data == "error_cabecera")
+                                if (data == 'error')
                                 {
-                                    notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con la cabecera.");
+                                    notify("danger", "ok", "Paises:", "El pais no se encuentra registrado, por favor registrarse");
                                 } else
                                 {
-                                    notify("info", "ok", "Cargue exitoso:", data);
+                                    var json = JSON.parse(data);
+
+                                    if (typeof json.id === 'number') {
+                                        $('#form_nuevo_cronograma').loadJSON(data);
+                                        $("#active option[value='" + json.active + "']").prop('selected', true);
+                                    }
                                 }
                             }
                         });
-                    } else
-                    {
-                        notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas, el archivo debe ser en formato txt.");
+                    });
+                },
+                "columns": [
+                    {"data": "entidad"},
+                    {"data": "numero_documento"},
+                    {"data": "primer_nombre"},
+                    {"data": "segundo_nombre"},
+                    {"data": "primer_apellido"},
+                    {"data": "segundo_apellido"},
+                    {"data": "active"},
+                    {"data": "acciones"}
+                ],
+                "columnDefs": [{
+                        "targets": 0,
+                        "render": function (data, type, row, meta) {
+                            if (row.active == true)
+                            {
+                                row.active = "Sí";
+                            }
+                            if (row.active == false)
+                            {
+                                row.active = "No";
+                            }
+                            return row.entidad;
+                        }
                     }
+                ]
+            });
+
+            $('#entidad').change(function () {
+                dataTable.draw();
+            });
+
+            $('input[type="file"]').change(function (evt) {
+
+                if ($("#entidad").val() == "")
+                {
+                    notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas debe seleccionar una entidad.");
+                } else
+                {
+                    var f = evt.target.files[0];
+                    var reader = new FileReader();
+
+                    // Cierre para capturar la información del archivo.
+                    reader.onload = function (fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        var srcName = f.name;
+                        var srcSize = f.size;
+                        var srcType = f.type;
+                        var token_actual = getLocalStorage(name_local_storage);
+
+                        var ext = srcName.split('.');
+                        // ahora obtenemos el ultimo valor despues el punto
+                        // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
+                        srcExt = ext[ext.length - 1];
+                        if (srcExt == "txt")
+                        {
+                            $.post(url_pv + 'ConvocatoriasFormatos/cargar_contratistas_csv', {srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, token: token_actual.token, modulo: "SICON-REPORTES-CONTRATISTAS", entidad: $("#entidad").val()}).done(function (data) {
+                                if (data == "error_columnas")
+                                {
+                                    notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con las columnas requeridas.");
+                                } else
+                                {
+                                    if (data == "error_cabecera")
+                                    {
+                                        notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con la cabecera.");
+                                    } else
+                                    {
+                                        notify("info", "ok", "Cargue exitoso:", data);
+                                    }
+                                }
+                            });
+                        } else
+                        {
+                            notify("danger", "ok", "Contratistas:", "Para poder cargar la base de contratistas, el archivo debe ser en formato txt.");
+                        }
 
 
-                };
-                // Leer en el archivo como una URL de datos.                
-                reader.readAsDataURL(f);
-            }
+                    };
+                    // Leer en el archivo como una URL de datos.                
+                    reader.readAsDataURL(f);
+                }
 
-        });
+            });
 
-        $('.close').click(function () {
-            $("#form_nuevo_cronograma").bootstrapValidator('resetForm', true); //for older version
-        });
+            $('.close').click(function () {
+                $("#form_nuevo_cronograma").bootstrapValidator('resetForm', true); //for older version
+            });
 
-        validator_form(token_actual,dataTable);
+            validator_form(token_actual, dataTable);
+        }
     }
 });
 
-function validator_form(token_actual,dataTable) {
+function validator_form(token_actual, dataTable) {
 //Validar el formulario
     $('#form_nuevo_cronograma').bootstrapValidator({
         feedbackIcons: {
@@ -233,7 +249,7 @@ function validator_form(token_actual,dataTable) {
         $.ajax({
             type: 'PUT',
             url: url_pv + 'ConvocatoriasFormatos/editar_contratista/' + $("#id_registro").attr('value'),
-            data: $form.serialize() + "&modulo=Paises&token=" + token_actual.token
+            data: $form.serialize() + "&modulo=SICON-REPORTES-CONTRATISTAS&token=" + token_actual.token
         }).done(function (result) {
             if (result == 'error')
             {

@@ -82,7 +82,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             data: {"token": token_actual.token, "ciudad": 151},
-            url: url_pv + 'Localidades/select'
+            url: url_pv + 'Localidades/select_jurado'
         }).done(function (data) {
             if (data == 'error_metodo')
             {
@@ -112,7 +112,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "localidad": localidad},
-                url: url_pv + 'Barrios/select'
+                url: url_pv + 'Barrios/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -200,7 +200,7 @@ function cargar_select_tipodocumentos(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Tiposdocumentos/select/'
+        url: url_pv + 'Tiposdocumentos/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de tipo de documento
@@ -219,7 +219,7 @@ function cargar_select_sexo(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Sexos/select/'
+        url: url_pv + 'Sexos/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de sexo
@@ -258,7 +258,7 @@ function cargar_select_identidad(token_actual) {
     $.ajax({
         type: 'GET',
         data: {"token": token_actual.token},
-        url: url_pv + 'Identidadesgeneros/select/'
+        url: url_pv + 'Identidadesgeneros/select_jurado/'
     }).done(function (data) {
         var json = JSON.parse(data);
         //Cargos el select de identidad genero
@@ -611,7 +611,7 @@ function validator_form(token_actual) {
                             cargar_datos_formulario(token_actual);
                             break;
                         default:
-                            notify("success", "ok", "Convocatorias:", "Se creó el registro con éxito.");
+                            notify("success", "ok", "Convocatorias:", "Se creó el registro con éxito. Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
                             //Cargar datos de la tabla de rondas
                             //cargar_tabla_criterio($("#convocatoria_ronda").attr('value'),token_actual);
                             $("#idd").val(data);
@@ -621,7 +621,7 @@ function validator_form(token_actual) {
                              * Wilmer Gustavo Mogollón Duque
                              * Se agrega alert con información pertinente a los pasos que debe seguir
                              */
-                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
+//                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
                             break;
                     }
 
@@ -659,7 +659,7 @@ function validator_form(token_actual) {
                             cargar_datos_formulario(token_actual);
                             break;
                         default:
-                            notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
+                            notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito. Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
                             //Cargar datos de la tabla de rondas
                             //cargar_tabla_criterio($("#convocatoria_ronda").attr('value'),token_actual);
                             $("#idd").val(data);
@@ -669,7 +669,7 @@ function validator_form(token_actual) {
                              * Wilmer Gustavo Mogollón Duque
                              * Se agrega alert con información pertinente a los pasos que debe seguir
                              */
-                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
+//                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
                             break;
                     }
 
@@ -677,7 +677,7 @@ function validator_form(token_actual) {
             }
             $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
             //$form.bootstrapValidator('destroy', true);
-            bv.resetForm();
+//            bv.resetForm();
         }
 
 

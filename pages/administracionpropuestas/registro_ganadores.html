@@ -259,7 +259,7 @@
                                                                 <div class="col-lg-12" style="text-align: right">
                                                                     <input type="hidden" id="id" name="id" />                                                                                                                
                                                                     <input type="hidden" id="estado" name="estado" />
-                                                                    <a id="generar_certificado" href="javascript::void(0)" target="_blank">Generar certificado</a>                                                                    
+                                                                    <a id="generar_certificado" href="javascript:void(0)">Generar certificado</a>                                                                    
                                                                     <button id="no_ganador" type="button" title="44" class="btn btn-default">Marcar como no ganadora</button>
                                                                     <button type="submit" title="34" class="btn btn-primary estado_btn">Marcar como ganadora</button>
                                                                 </div>
@@ -318,7 +318,8 @@
         <script src="../../dist/libraries/ajaxdownloader/ajaxdownloader.min.js" type="text/javascript"></script>
                 
         <!-- funcionalidades principales -->
-        <script src='../../dist/js/main.js'></script>
+        <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src='../../dist/js/main_funcionairo.js'></script>
         <script src='registro_ganadores.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>
 
