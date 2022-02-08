@@ -1031,7 +1031,7 @@ function cargar_formulario(token_actual)
 {
 
     $(".cargar_cambio_integrante").click(function () {
-        if ($(this).attr('translate') === '49') {
+        if ($(this).attr('translate') === '49' || $(this).attr('translate') === '50' || $(this).attr('translate') === '51') {
             notify("danger", "ok", "Convocatorias:", "No es posible ver la información, debido a que su solicitud esta en estado Enviado a la entidad para aprobar.");
             $("#registro_cambio_integrante").hide("slow");
         } else

@@ -623,7 +623,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     $.ajax({
                         type: 'POST',
                         url: url_pv + 'Personasnaturales/validar_cambio_integrante',
-                        data: "id=" + $("#id_participante_reemplazo").attr('value') + "&conv=" + $("#convocatoria").val() + "&propuesta=" + $("#propuestas").val() + "&estado_cambio_integrante="+id_estado+"&tipo="+tipo+"&modulo=SICON-PROPUESTAS-CAMBIO-INTEGRANTE&token=" + token_actual.token+"&observaciones_integrante="+$("#observaciones_integrante").val()
+                        data: "id=" + $("#id_participante_reemplazo").attr('value') + "&conv=" + $("#convocatoria").val() + "&propuesta=" + $("#propuestas").val() + "&estado_cambio_integrante="+id_estado+"&tipo_notificacion="+tipo+"&modulo=SICON-PROPUESTAS-CAMBIO-INTEGRANTE&token=" + token_actual.token+"&observaciones_integrante="+$("#observaciones_integrante").val()
                     }).done(function (result) {
                         var result = result.trim();
 
@@ -634,7 +634,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -761,6 +761,13 @@ function cargar_formulario(token_actual)
 {
 
     $(".cargar_cambio_integrante").click(function () {
+        
+        if ($(this).attr('translate') !== '49') {
+            notify("danger", "ok", "Convocatorias:", "No es posible ver la información, debido a que su solicitud no esta en estado (Enviado a la entidad para aprobar).");
+            $("#registro_cambio_integrante").hide("slow");
+        } 
+        else
+        {
 
         $("#formulario_principal input,#formulario_principal select,#formulario_principal button[type=submit],#formulario_principal textarea").attr("disabled","disabled");   
         
@@ -1014,6 +1021,8 @@ function cargar_formulario(token_actual)
         //En el elemento HTML
         //var new_position = $('#ver').offset();        
         //window.scrollTo(new_position.left,new_position.top);
+
+    }
 
 
     });
