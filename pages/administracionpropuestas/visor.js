@@ -11,7 +11,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             var token_actual = JSON.parse(JSON.stringify(keycloak));
 
             //Verifica si el token actual tiene acceso de lectura
-            permiso_lectura_keycloak(token_actual.token, "SICON-AJUSTAR-INTEGRANTES");
+            permiso_lectura_keycloak(token_actual.token, "SICON-PROPUESTAS-VERIFICACION");
 
             //Cargamos el menu principal
             $.ajax({
