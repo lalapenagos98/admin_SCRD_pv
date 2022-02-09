@@ -156,7 +156,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         var srcName = f.name;
                         var srcSize = f.size;
                         var srcType = f.type;
-                        var token_actual = getLocalStorage(name_local_storage);
+                        var token_actual = JSON.parse(JSON.stringify(keycloak));
 
                         var ext = srcName.split('.');
                         // ahora obtenemos el ultimo valor despues el punto
