@@ -727,7 +727,8 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
 }
 
 function cargar_tabla() {
-    //Actualizo el token
+    
+    //Actualizo el tokenn
     keycloak.updateToken(9999).then(function (refreshed) {
 
         var token_actual = JSON.parse(JSON.stringify(keycloak));
