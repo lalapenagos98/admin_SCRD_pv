@@ -727,10 +727,13 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
 }
 
 function cargar_tabla() {
-    //Actualizo el token
+    
+    //Actualizo el tokenn
     keycloak.updateToken(9999).then(function (refreshed) {
 
         var token_actual = JSON.parse(JSON.stringify(keycloak));
+        
+        console.log(token_actual);
 
         $('#table_list').DataTable({
             "language": {
@@ -753,6 +756,8 @@ function cargar_tabla() {
                     params.estado = $('#estado_propuesta').val();
                     d.params = JSON.stringify(params);
                     d.token = token_actual.token;
+                    d.tokenentidades = token_actual.idTokenParsed.entidades;
+                    d.tokenareas = token_actual.idTokenParsed.areas;
                     d.modulo = "SICON-PROPUESTAS-VERIFICACION";
                 },
                 type: "POST"
