@@ -572,10 +572,7 @@ function cargar_formulario(token_actual, id_postulacion){
 
                 var json = JSON.parse(data);
 
-                var href_cer = url_pv_report + 'reporte_certificacion.php?entidad=' + json.entidad.nombre + '&tp=' + json.tp + '&id=' + json.notificacion.id + '&token=' + token_actual.token;
-
-
-                $("#generar_certificado").attr('href', href_cer);
+                $("#generar_certificado").attr('onclick', "certificado('" + json.entidad.nombre + "','" + json.tp + "','" + json.notificacion.id + "')");
 
 
                 if (json.notificacion) {
@@ -822,6 +819,24 @@ function validator_form(token_actual) {
 //        $("#registrarganadorModal").modal("toggle");
 
 
+    });
+
+}
+
+function certificado(entidad,tp,id){
+    var url = "reporte_certificacion_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,
+            entidad: entidad,
+            tp: tp,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-GANADORES"
+        }
     });
 
 }
