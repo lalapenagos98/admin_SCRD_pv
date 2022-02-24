@@ -149,14 +149,17 @@ function form_edit_page(page, id)
     {
         url = "update";
         name = "_self";
-
+        
+        window.open(url + ".html?id=" + id, name);
     }
     if (page == 2)
     {
-        url = url_pv_site + "publicar";
+        url = url_pv_site + id;
         name = "_blank";
+        
+        window.open(url, name);
     }
-    window.open(url + ".html?id=" + id, name);
+    
 }
 
 /* Función para cargar alertas */

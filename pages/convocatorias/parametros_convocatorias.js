@@ -59,7 +59,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     {
                         if (data == 'error')
                         {
-                            location.href = url_pv_admin + 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+                            location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
                         } else
                         {
                             if (data == 'error_token')
