@@ -175,7 +175,7 @@
                                         }).done(function (result) {
                                             if (result == 'error_token')
                                             {
-                                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                             } else
                                             {
                                                 $("#menu_principal").html(result);
@@ -311,8 +311,8 @@
                                             {
                                                 if (isNaN(result)) {
                                                     if (result == "error_alfresco")
-                                                    {
-                                                        location.href = 'update.html?id=' + result + '&msg=Se creó la convocatoria con éxito, pero se genero un error con alfresco, por favor informar a la mesa de ayuda convocatorias@scrd.gov.co.&msg_tipo=warning';
+                                                    {                                                        
+                                                        notify("danger", "ok", "Convocatorias:", "Se creó la convocatoria con éxito, pero se genero un error con alfresco, por favor informar a la mesa de ayuda convocatorias@scrd.gov.co.");
                                                     } else
                                                     {
                                                         notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");

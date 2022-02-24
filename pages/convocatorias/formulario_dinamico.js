@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -44,7 +44,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     {
                         if (data == 'error_token')
                         {
-                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         } else
                         {
                             if (data == 'acceso_denegado')
@@ -53,13 +53,13 @@ keycloak.init(initOptions).then(function (authenticated) {
                             } else
                             {
                                 if (data == 'crear_perfil')
-                                {
-                                    location.href = url_pv_admin + 'pages/perfilesparticipantes/persona_natural.html?msg=Para poder inscribir la propuesta debe crear el perfil de persona natural.&msg_tipo=danger';
+                                {                                    
+                                    notify("danger", "ok", "Convocatorias:", "La propuesta no cuenta con el perfil de PN");
                                 } else
                                 {
                                     if (data == 'error_cod_propuesta')
                                     {
-                                        location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=El código de la propuesta no es valido.&msg_tipo=danger';
+                                        notify("danger", "ok", "Convocatorias:", "La propuesta no esta registrada");
                                     } else
                                     {
 
@@ -203,7 +203,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 var json = JSON.parse(data);
@@ -231,7 +231,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 var json = JSON.parse(data);
@@ -266,7 +266,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 var json = JSON.parse(data);

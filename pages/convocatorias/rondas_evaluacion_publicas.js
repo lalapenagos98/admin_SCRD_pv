@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -393,7 +393,7 @@ function validator_form(token_actual) {
                         notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         break;
                     case 'error_token':
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         break;
                     case 'acceso_denegado':
                         notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -425,7 +425,7 @@ function validator_form(token_actual) {
                         notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
                         break;
                     case 'error_token':
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         break;
                     case 'acceso_denegado':
                         notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -488,7 +488,7 @@ function acciones_ronda(token_actual) {
                     notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     break;
                 case 'error_token':
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     break;
                 case 'acceso_denegado':
                     notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -577,7 +577,7 @@ function acciones_ronda(token_actual) {
                     notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     break;
                 case 'error_token':
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     break;
                 case 'acceso_denegado':
                     notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -610,7 +610,7 @@ function acciones_ronda(token_actual) {
                     notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     break;
                 case 'error_token':
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     break;
                 case 'acceso_denegado':
                     notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -812,7 +812,7 @@ function validator_form_criterio(token_actual, idRonda) {
                         notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         break;
                     case 'error_token':
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         break;
                     case 'acceso_denegado':
                         notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -849,7 +849,7 @@ function validator_form_criterio(token_actual, idRonda) {
                         notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         break;
                     case 'error_token':
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         break;
                     case 'acceso_denegado':
                         notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -919,7 +919,7 @@ function acciones_criterio(token_actual) {
                     notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                     break;
                 case 'error_token':
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     break;
                 case 'acceso_denegado':
                     notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
