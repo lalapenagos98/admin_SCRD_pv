@@ -10,6 +10,9 @@
 
     $("#idc").val($("#id").val());
     $("#id").val(null);
+    
+    $("#back_step").attr("title", "");
+    $("#back_step").attr("data-original-title", "");
 
      //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
      var token_actual = getLocalStorage(name_local_storage);
@@ -21,8 +24,23 @@
      {
          //Verifica si el token actual tiene acceso de lectura
          permiso_lectura(token_actual, "Menu Participante");
+         
+         
+         determinar_modalidad(token_actual);
 
-        $("#back_step").attr("onclick", " location.href = 'educacion_no_formal.html?m=2&id="+  $("#idc").val()+"' ");
+        alert("Recuerde diligenciar toda la información requerida para este formulario");
+        
+        if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
+            $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id=" + $("#idc").val() + "' ");
+            $("#back_step").attr("title", " Ingresar la información sobre educación formal. ");
+            $("#back_step").attr("data-original-title", " Ingresar la información sobre educación formal. ");
+        } 
+        if ($("#modalidad_participa_educacion").val() === "Experto sin título universitario"){
+            $("#back_step").attr("onclick", " location.href = 'educacion_no_formal.html?m=2&id=" + $("#idc").val() + "' ");
+            $("#back_step").attr("title", " Ingresar la información sobre educación no formal. ");
+            $("#back_step").attr("data-original-title", " Ingresar la información sobre educación no formal. ");
+        }
+        
         $("#next_step").attr("onclick", " location.href = 'experiencia_jurado.html?m=2&id="+  $("#idc").val()+"' ");
 
         //Peticion para buscar ciudades
@@ -86,6 +104,56 @@
        }
 
  });
+ 
+ 
+/*
+ * 28-01-2022
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función para determinar la categorís en la que participa el jurado
+ */
+
+
+function determinar_modalidad(token_actual) {
+
+
+    // cargo los datos
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'PropuestasJurados/propuesta',
+        data: {"token": token_actual.token, "idc": $("#idc").val(), "modulo": "Menu Participante"},
+        //data: $form.serialize() + "&modulo=Menu Participante&token=" + token_actual.token,
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            default:
+
+                var json = JSON.parse(data);
+
+                $('#modalidad_participa_educacion').val("");
+
+                $('#modalidad_participa_educacion').val(json.propuesta.modalidad_participa);
+
+                break;
+        }
+
+    }
+
+    );
+
+}
 
  function cargar_datos_formulario(token_actual){
 

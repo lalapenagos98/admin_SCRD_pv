@@ -1,128 +1,152 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-    var token_actual = getLocalStorage(name_local_storage);
-
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-    } else
-    {
-        $('.convocatorias-search').select2();
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Jurados");
-        init(token_actual);
-        //cargar_datos_formulario(token_actual);
-        validator_form(token_actual);
-
-        //carga select_convocatorias
-        $('#anio').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
-
-        //carga select convocatorias
-        $('#entidad').change(function () {
-            cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
-            $('#select_categorias').hide();
-            $('#convocatorias').val(null);
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
-
-        //carga el select categorias
-        $('#convocatorias').change(function () {
-            cargar_select_categorias(token_actual, $('#convocatorias').val());
-            $('#categorias').val(null);
-            cargar_tabla(token_actual);
-        });
-
-        $('#categorias').change(function () {
-
-            cargar_tabla(token_actual);
-        });
-
-        //carga la tabla con los criterios de busqueda
-        $('#buscar').click(function () {
-            //  alert("buscando");
-            $('#resultado').focus();
-            cargar_tabla(token_actual);
-        });
+//Array del consumo con el back
+keycloak.init(initOptions).then(function (authenticated) {
+//Si no esta autenticado lo obliga a ingresar al keycloak
 
 
-        $("#exampleModal").on('hide.bs.modal', function () {
-            $('#filtro').val(null);
-            $('#palabra_clave').val(null);
-            $("#formulario_busqueda_banco").trigger("reset");
-        });
+    if (authenticated === false) {
+        keycloak.login();
+    } else {
 
-        $("#evaluar").on('hide.bs.modal', function () {
-
-        });
-
-        $(".guardar_aplica_perfil").click(function () {
-
-            //Se evalua si algun radiobutton es seleccionado
-            if ($("input[name=option_aplica_perfil]:checked").length == 0) {
-
-                notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica el perfil o no");
-                return false;
-            }
-
-            if ($('.guardar_aplica_perfil').hasClass('disabled')) {
-                return false;
-            } else {
-                evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
-            }
-
-        });
-
-        $("#alertModalSelbaceptar").click(function () {
-            //  $("#alertModalSel").modal("hide");
-            //seleccionar_jurado(token_actual,  $("#id_jurados_postulados").val(),   $("#id_participante_sel").val() );
-            $('#select_categorias_2').hide();
-            $('#categorias').val($('#categorias_2').val());
-            $("#panel_tabs").show();
-
-        });
-
-        $("#notificar_aceptar").click(function () {
-
-            notificar(token_actual, $("#id_jurado_postulado").val());
-        });
-
-        $("#notificarModal").on('hide.bs.modal', function () {
-            // $('.form_notificar').bootstrapValidator('resetFormData', true);
-            //$(".form_notificar").trigger("reset");
-            //$('.form_notificar').data('bootstrapValidator').destroy()
-            //console.log("estado...ssssll");
-        });
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
 
-        /*
-         * Botón para registrar el ganador
-         */
 
-        $("#baceptargan").click(function () {
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-JURADOS-REGISTRO-GANADORES");
+
+            //Cargamos el menu principal
+            $.ajax({
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result === 'error_token')
+                {
+                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                } else
+                {
+                    $("#menu_principal").html(result);
+                }
+            });
+
+            $('.convocatorias-search').select2();
+            //Verifica si el token actual tiene acceso de lectura
+            init(token_actual);
+            //cargar_datos_formulario(token_actual);
+            validator_form(token_actual);
+
+            //carga select_convocatorias
+            $('#anio').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
+
+            //carga select convocatorias
+            $('#entidad').change(function () {
+                cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
+                $('#select_categorias').hide();
+                $('#convocatorias').val(null);
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
+
+            //carga el select categorias
+            $('#convocatorias').change(function () {
+                cargar_select_categorias(token_actual, $('#convocatorias').val());
+                $('#categorias').val(null);
+                cargar_tabla(token_actual);
+            });
+
+            $('#categorias').change(function () {
+
+                cargar_tabla(token_actual);
+            });
+
+            //carga la tabla con los criterios de busqueda
+            $('#buscar').click(function () {
+                //  alert("buscando");
+                $('#resultado').focus();
+                cargar_tabla(token_actual);
+            });
+
+
+            $("#exampleModal").on('hide.bs.modal', function () {
+                $('#filtro').val(null);
+                $('#palabra_clave').val(null);
+                $("#formulario_busqueda_banco").trigger("reset");
+            });
+
+            $("#evaluar").on('hide.bs.modal', function () {
+
+            });
+
+            $(".guardar_aplica_perfil").click(function () {
+
+                //Se evalua si algun radiobutton es seleccionado
+                if ($("input[name=option_aplica_perfil]:checked").length == 0) {
+
+                    notify("danger", "remove", "Usuario:", "Debe seleccionar si aplica el perfil o no");
+                    return false;
+                }
+
+                if ($('.guardar_aplica_perfil').hasClass('disabled')) {
+                    return false;
+                } else {
+                    evaluar_perfil(token_actual, $("#id_jurados_postulados").val(), $("#id_participante_sel").val());
+                }
+
+            });
+
+            $("#alertModalSelbaceptar").click(function () {
+                //  $("#alertModalSel").modal("hide");
+                //seleccionar_jurado(token_actual,  $("#id_jurados_postulados").val(),   $("#id_participante_sel").val() );
+                $('#select_categorias_2').hide();
+                $('#categorias').val($('#categorias_2').val());
+                $("#panel_tabs").show();
+
+            });
+
+            $("#notificar_aceptar").click(function () {
+
+                notificar(token_actual, $("#id_jurado_postulado").val());
+            });
+
+            $("#notificarModal").on('hide.bs.modal', function () {
+                // $('.form_notificar').bootstrapValidator('resetFormData', true);
+                //$(".form_notificar").trigger("reset");
+                //$('.form_notificar').data('bootstrapValidator').destroy()
+                //console.log("estado...ssssll");
+            });
+
+
+            /*
+             * Botón para registrar el ganador
+             */
+
+            $("#baceptargan").click(function () {
 
 //            alert("Hola");
 //            alert($('#id_jurado_postulado').val());
 
-            token_actual = getLocalStorage(name_local_storage);
+//                token_actual = getLocalStorage(name_local_storage);
 //            registrar_ganador_jurado(token_actual, $('#id_jurado_postulado').val(), $('#numero_resolucion').val(), $('#fecha_resolucion').val(), $('#monto_asignado').val(), $('#codigo_presupuestal').val(), $('#codigo_proyecto_inversion').val(), $('#cdp').val(), $('#crp').val());
 //            validator_form(token_actual);
 
 //            limpiarFormulario();
 
-        });
+            });
 
-
+        }
     }
 
+}).catch(function () {
+    location.href = url_pv_admin + 'error_keycloak.html';
 });
 
 //Agrego para limpiar el formulario
@@ -135,7 +159,7 @@ function limpiarFormulario() {
 function init(token_actual) {
     //Realizo la peticion para cargar el formulario
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: {"token": token_actual.token, "id": $("#id").attr('value')},
         url: url_pv + 'Registroganadoresjurados/init/'
     }).done(function (data) {
@@ -201,13 +225,13 @@ function init(token_actual) {
  * Se incorpora función registrar_ganador_jurado
  */
 
-function registrar_ganador_jurado(token_actual, id_jurado_postulado, numero_resolucion, fecha_resolucion, monto_asignado, codigo_presupuestal, codigo_proyecto_inversion, cdp, crp, valor_estimulo, fecha_inicio_ejecucion, fecha_fin_ejecucion, nombre_resolucion ) {
+function registrar_ganador_jurado(token_actual, id_jurado_postulado, numero_resolucion, fecha_resolucion, monto_asignado, codigo_presupuestal, codigo_proyecto_inversion, cdp, crp, valor_estimulo, fecha_inicio_ejecucion, fecha_fin_ejecucion, nombre_resolucion) {
 
 
     $.ajax({
         type: 'PUT',
         url: url_pv + 'Registroganadoresjurados/registrar_ganador_jurado/postulacion/' + id_jurado_postulado,
-        data: "&modulo=Jurados&token=" + token_actual.token + "&numero_resolucion=" + numero_resolucion + "&fecha_resolucion=" + fecha_resolucion + "&codigo_presupuestal=" + codigo_presupuestal + "&codigo_proyecto_inversion=" + codigo_proyecto_inversion + "&cdp=" + cdp + "&crp=" + crp + "&valor_estimulo=" + valor_estimulo + "&fecha_inicio_ejecucion=" + fecha_inicio_ejecucion + "&fecha_fin_ejecucion=" + fecha_fin_ejecucion + "&nombre_resolucion=" + nombre_resolucion
+        data: "&modulo=SICON-JURADOS-REGISTRO-GANADORES&token=" + token_actual.token + "&numero_resolucion=" + numero_resolucion + "&fecha_resolucion=" + fecha_resolucion + "&codigo_presupuestal=" + codigo_presupuestal + "&codigo_proyecto_inversion=" + codigo_proyecto_inversion + "&cdp=" + cdp + "&crp=" + crp + "&valor_estimulo=" + valor_estimulo + "&fecha_inicio_ejecucion=" + fecha_inicio_ejecucion + "&fecha_fin_ejecucion=" + fecha_fin_ejecucion + "&nombre_resolucion=" + nombre_resolucion
 
     }).done(function (data) {
 
@@ -247,7 +271,7 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Registroganadoresjurados/select_convocatorias',
         data: {"token": token_actual.token, "anio": anio, "entidad": entidad},
     }).done(function (data) {
@@ -290,7 +314,7 @@ function cargar_select_categorias(token_actual, convocatoria) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Registroganadoresjurados/select_categorias',
         data: {"token": token_actual.token, "convocatoria": convocatoria},
     }).done(function (data) {
@@ -352,6 +376,7 @@ function cargar_tabla(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
+            type: 'POST',
             url: url_pv + "Registroganadoresjurados/all_seleccionados",
             data:
                     {"token": token_actual.token,
@@ -522,57 +547,53 @@ function genera_carta_acpetacion(token_actual, postulacion) {
  * Se incorpora función cargar_formulario para el registro de ganadores
  */
 
-function cargar_formulario(token_actual, id_postulacion)
-{
+function cargar_formulario(token_actual, id_postulacion){
     $.ajax({
-            type: 'GET',
-            url: url_pv + 'Registroganadoresjurados/postulacion/' + id_postulacion,
-            data: {"token": token_actual.token},
-        }).done(function (data) {
+        type: 'POST',
+        url: url_pv + 'Registroganadoresjurados/postulacion/' + id_postulacion,
+        data: {"token": token_actual.token},
+    }).done(function (data) {
 
-            switch (data) {
-                case 'error':
-                    notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                    break;
-                case 'error_metodo':
-                    notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                    break;
-                case 'error_token':
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                    //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
-                    break;
-                case 'acceso_denegado':
-                    notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
-                    break;
-                default:
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", "PropuestasEvaluacion/propuestas/"+id_propuesta);
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                break;
+            default:
 
-                    var json = JSON.parse(data);
-                    
-                    var href_cer = url_pv_report+'reporte_certificacion.php?entidad='+json.entidad.nombre+'&tp='+json.tp+'&id='+json.notificacion.id+'&token='+token_actual.token;
-                    
-                    
-                    $("#generar_certificado").attr('href',href_cer);
+                var json = JSON.parse(data);
+
+                $("#generar_certificado").attr('onclick', "certificado('" + json.entidad.nombre + "','" + json.tp + "','" + json.notificacion.id + "')");
 
 
-                    if (json.notificacion) {
-                        $("#numero_resolucion").attr("value", json.notificacion.numero_resolucion);
-                        $("#fecha_resolucion").attr("value", json.notificacion.fecha_resolucion);
-                        $("#fecha_inicio_ejecucion").attr("value", json.notificacion.fecha_inicio_ejecucion);
-                        $("#fecha_fin_ejecucion").attr("value", json.notificacion.fecha_fin_ejecucion);
-                        $("#nombre_resolucion").attr("value", json.notificacion.nombre_resolucion);
-                        $("#codigo_presupuestal").attr("value", json.notificacion.codigo_presupuestal);
-                        $("#codigo_proyecto_inversion").attr("value", json.notificacion.codigo_proyecto_inversion);
-                        $("#cdp").attr("value", json.notificacion.cdp);
-                        $("#crp").attr("value", json.notificacion.crp);
-                        $("#valor_estimulo").attr("value", json.notificacion.valor_estimulo);
-                    }
+                if (json.notificacion) {
+                    $("#numero_resolucion").attr("value", json.notificacion.numero_resolucion);
+                    $("#fecha_resolucion").attr("value", json.notificacion.fecha_resolucion);
+                    $("#fecha_inicio_ejecucion").attr("value", json.notificacion.fecha_inicio_ejecucion);
+                    $("#fecha_fin_ejecucion").attr("value", json.notificacion.fecha_fin_ejecucion);
+                    $("#nombre_resolucion").attr("value", json.notificacion.nombre_resolucion);
+                    $("#codigo_presupuestal").attr("value", json.notificacion.codigo_presupuestal);
+                    $("#codigo_proyecto_inversion").attr("value", json.notificacion.codigo_proyecto_inversion);
+                    $("#cdp").attr("value", json.notificacion.cdp);
+                    $("#crp").attr("value", json.notificacion.crp);
+                    $("#valor_estimulo").attr("value", json.notificacion.valor_estimulo);
+                }
 
-                    break;
-
-            }
+                break;
 
         }
-        );
+
+    }
+    );
 
 }
 
@@ -798,6 +819,24 @@ function validator_form(token_actual) {
 //        $("#registrarganadorModal").modal("toggle");
 
 
+    });
+
+}
+
+function certificado(entidad,tp,id){
+    var url = "reporte_certificacion_back.php";
+    
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+    $.AjaxDownloader({
+        url: url_pv_report + url,
+        data: {
+            id: id,
+            entidad: entidad,
+            tp: tp,
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-GANADORES"
+        }
     });
 
 }

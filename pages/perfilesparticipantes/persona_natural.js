@@ -18,7 +18,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             data: {"token": token_actual.token},
-            url: url_pv + 'Paises/select'
+            url: url_pv + 'Paises/select_participantes'
         }).done(function (data) {
             if (data == 'error_metodo')
             {
@@ -52,7 +52,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             data: {"token": token_actual.token,"ciudad":151},
-            url: url_pv + 'Localidades/select'
+            url: url_pv + 'Localidades/select_participantes'
         }).done(function (data) {
             if (data == 'error_metodo')
             {
@@ -86,7 +86,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "pais": pais},
-                url: url_pv + 'Departamentos/select'
+                url: url_pv + 'Departamentos/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -155,7 +155,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "pais": pais_nacimiento},
-                url: url_pv + 'Departamentos/select'
+                url: url_pv + 'Departamentos/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -187,7 +187,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "departamento": departamento},
-                url: url_pv + 'Ciudades/select'
+                url: url_pv + 'Ciudades/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -218,7 +218,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "departamento": departamento},
-                url: url_pv + 'Ciudades/select'
+                url: url_pv + 'Ciudades/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -249,7 +249,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 data: {"token": token_actual.token, "localidad": localidad},
-                url: url_pv + 'Barrios/select'
+                url: url_pv + 'Barrios/select_participantes'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -537,6 +537,13 @@ function validator_form(token_actual) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            afirmacion_no_contratista: {
+                validators: {
+                    notEmpty: {
+                        message: 'Es requerida la afirmación de que, Bajo gravedad de juramento informo que no soy contratista.'
+                    }
+                }
+            },
             tipo_documento: {
                 validators: {
                     notEmpty: {message: 'El tipo de documento de identificación es requerido'}

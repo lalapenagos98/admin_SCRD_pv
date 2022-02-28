@@ -183,7 +183,7 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         // Valido si el id existe, con el fin de eviarlo al metodo correcto
-        $('#formulario_principal').attr('action', url_pv + 'Encuestas/new_encuesta_param');
+        $('#formulario_principal').attr('action', url_pv + 'Encuestas/new_encuesta_param_ciudadano');
 
         //Se realiza la peticion con el fin de guardar el registro actual
         $.ajax({

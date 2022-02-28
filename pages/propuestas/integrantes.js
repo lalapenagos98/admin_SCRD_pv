@@ -13,6 +13,9 @@ $(document).ready(function () {
 
         $("#link_propuestas").attr("onclick", "location.href = '" + href_regresar + "'");
         $("#link_documentacion").attr("onclick", "location.href = '" + href_siguiente + "'");
+        
+        $("#mensaje_agru").css("display","block");
+        
     }
 
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
@@ -76,7 +79,7 @@ $(document).ready(function () {
                                             $.ajax({
                                                 type: 'GET',
                                                 data: {"token": token_actual.token},
-                                                url: url_pv + 'Paises/select'
+                                                url: url_pv + 'Paises/select_participantes'
                                             }).done(function (data) {
                                                 if (data == 'error_metodo')
                                                 {
@@ -110,7 +113,7 @@ $(document).ready(function () {
                                             $.ajax({
                                                 type: 'GET',
                                                 data: {"token": token_actual.token, "ciudad": 151},
-                                                url: url_pv + 'Localidades/select'
+                                                url: url_pv + 'Localidades/select_participantes'
                                             }).done(function (data) {
                                                 if (data == 'error_metodo')
                                                 {
@@ -144,7 +147,7 @@ $(document).ready(function () {
                                                 $.ajax({
                                                     type: 'GET',
                                                     data: {"token": token_actual.token, "pais": pais},
-                                                    url: url_pv + 'Departamentos/select'
+                                                    url: url_pv + 'Departamentos/select_participantes'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
                                                     {
@@ -210,7 +213,7 @@ $(document).ready(function () {
                                                 $.ajax({
                                                     type: 'GET',
                                                     data: {"token": token_actual.token, "pais": pais_nacimiento},
-                                                    url: url_pv + 'Departamentos/select'
+                                                    url: url_pv + 'Departamentos/select_participantes'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
                                                     {
@@ -242,7 +245,7 @@ $(document).ready(function () {
                                                 $.ajax({
                                                     type: 'GET',
                                                     data: {"token": token_actual.token, "departamento": departamento},
-                                                    url: url_pv + 'Ciudades/select'
+                                                    url: url_pv + 'Ciudades/select_participantes'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
                                                     {
@@ -273,7 +276,7 @@ $(document).ready(function () {
                                                 $.ajax({
                                                     type: 'GET',
                                                     data: {"token": token_actual.token, "departamento": departamento},
-                                                    url: url_pv + 'Ciudades/select'
+                                                    url: url_pv + 'Ciudades/select_participantes'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
                                                     {
@@ -304,7 +307,7 @@ $(document).ready(function () {
                                                 $.ajax({
                                                     type: 'GET',
                                                     data: {"token": token_actual.token, "localidad": localidad},
-                                                    url: url_pv + 'Barrios/select'
+                                                    url: url_pv + 'Barrios/select_participantes'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
                                                     {
@@ -574,6 +577,13 @@ function validator_form(token_actual) {
         },
         excluded: [':disabled'],
         fields: {
+            afirmacion_no_contratista: {
+                validators: {
+                    notEmpty: {
+                        message: 'Es requerida la afirmación de que, Bajo gravedad de juramento informo que no soy contratista.'
+                    }
+                }
+            },
             tipo_documento: {
                 validators: {
                     notEmpty: {message: 'El tipo de documento de identificación es requerido'}
@@ -743,22 +753,19 @@ function validator_form(token_actual) {
             }
         }
         
-        
-        // Prevent form submission
-        e.preventDefault();
-        // Get the form instance
-        var $form = $(e.target);
-
-        // Get the BootstrapValidator instance
-        var bv = $form.data('bootstrapValidator');
-
-        // Valido si el id existe, con el fin de eviarlo al metodo correcto
-        $('#formulario_principal').attr('action', url_pv + 'Personasnaturales/crear_integrante');
-
         if(enviar)
         {
-            
+            // Prevent form submission
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
 
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+
+            // Valido si el id existe, con el fin de eviarlo al metodo correcto
+            $('#formulario_principal').attr('action', url_pv + 'Personasnaturales/crear_integrante');
+            
             //Se realiza la peticion con el fin de guardar el registro actual
             $.ajax({
                 type: 'POST',
@@ -792,24 +799,41 @@ function validator_form(token_actual) {
                                     notify("danger", "ok", "Integrantes:", "No puede registrar mas de un representante.");
                                 } else
                                 {
-                                    if (isNaN(result)) {
-                                        notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                    if (result == 'error_representante_suplente')
+                                    {
+                                        notify("danger", "ok", "Integrantes:", "No puede registrar mas de un representante suplente.");
                                     } else
                                     {
-                                        notify("success", "ok", "Integrantes:", "Se Guardó con el éxito el integrante.");
-                                        cargar_tabla(token_actual);
-                                    }
+                                        if (result == 'error_participacion')
+                                        {
+                                            notify("danger", "ok", "Convocatorias:", "No puede registrar este integrante, debido a que su número de documento ya esta en proceso de inscripción en esta convocatoria con otra propuesta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co para mayor información.");
+                                        } 
+                                        else
+                                        {
+                                            if (isNaN(result)) {
+                                                notify("danger", "ok", "Integrantes:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                notify("success", "ok", "Integrantes:", "Se Guardó con el éxito el integrante.");
+                                                cargar_tabla(token_actual);
+                                                
+                                                $('#nuevo_integrante').modal('toggle');
+                                                
+                                                $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);                                                
+                                                bv.resetForm();
+                                            }
+                                        }
+                                    }                                                                                                            
                                 }
                             }
                         }
                     }
                 }
 
-            });
-
-            $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
-            bv.resetForm();
-            $('#nuevo_integrante').modal('toggle');
+            });      
+            
+            $(".formulario_principal").data('bootstrapValidator').resetForm();
+            
         }
 
     });
@@ -866,11 +890,20 @@ function cargar_tabla(token_actual)
                     {
                         if (row.representante == true)
                         {
-                            row.representante = "<b>Sí</b>";
-                        } else
-                        {
-                            row.representante = "No";
+                            row.representante = "<b>Principal</b>";
                         }
+                        
+                        if (row.representante_suplente == true)
+                        {
+                            row.representante = "<b>Suplente</b>";
+                        }
+                        
+                        if (row.representante == false && row.representante_suplente == false)
+                        {
+                            row.representante = "<b>No aplica</b>";
+                        }
+                        
+                        
                         return row.representante;
                     }
                 }
@@ -1003,7 +1036,24 @@ function cargar_formulario(token_actual)
 
                     $("#pais_nacimiento option[value='" + json.pais_nacimiento_id + "']").prop('selected', true);
 
+                    //Se coloca como comentario debido a que ya se maneja tipo de reprtesentante
                     $("#representante option[value='" + json.participante.representante + "']").prop('selected', true);
+                    
+                    if(json.participante.representante==true)
+                    {
+                        $("#tipo_representante option[value='Principal']").prop('selected', true);
+                    }
+                    
+                    if(json.participante.representante_suplente==true)
+                    {
+                        $("#tipo_representante option[value='Suplente']").prop('selected', true);
+                    }
+                    
+                    if(json.participante.representante==false && json.participante.representante_suplente==false)
+                    {
+                        $("#tipo_representante option[value='Noaplica']").prop('selected', true);
+                    }
+                    
 
                     $("#director option[value='" + json.participante.director + "']").prop('selected', true);
 

@@ -1,89 +1,106 @@
-$(document).ready(function () {
-
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-    var token_actual = getLocalStorage(name_local_storage);
-
-    //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-    if ($.isEmptyObject(token_actual)) {
-        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+keycloak.init(initOptions).then(function (authenticated) {
+    //Si no esta autenticado lo obliga a ingresar al keycloak
+    if (authenticated === false)
+    {
+        keycloak.login();
     } else
     {
+        //Guardamos el token en el local storage
+        if (typeof keycloak === 'object') {
 
-        //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Convocatorias");
+            var token_actual = JSON.parse(JSON.stringify(keycloak));
 
-        //Realizo la peticion para cargar el formulario
-        if ($("#id").val() != "") {
+            //Verifica si el token actual tiene acceso de lectura
+            permiso_lectura_keycloak(token_actual.token, "SICON-CONVOCATORIAS-CONFIGURACION");
 
-            //Establesco los text area html
-            $('.textarea_html').jqte();
-
-            //Limpio el formulario de los anexos
-            $('#nuevo_evento').on('hidden.bs.modal', function () {
-                $("#descripcion").jqteVal('');
-                $("#nombre").val("");
-                $("#orden").val("");
-                $("#tipo_documento option[value='']").prop("selected", true);
-                $("#id_registro").val("");
-            });
-
-            //Cargar datos de la tabla
-            cargar_tabla(token_actual);
-            
-            
-            //2020-02-21
-            //Si esta publica no puede hacer ninguna accion
-            /*
+            //Cargamos el menu principal
             $.ajax({
-                type: 'GET',
-                data: {"token": token_actual.token, "id": $("#id").attr('value'), "tipo_requisito": "Tecnicos"},
-                url: url_pv + 'Convocatorias/search/'
-            }).done(function (data) {
-                if (data == 'error_metodo')
+                type: 'POST',
+                data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "modulo": "SICON-CONVOCATORIAS-CONFIGURACION-UPDATE"},
+                url: url_pv + 'Administrador/menu_funcionario'
+            }).done(function (result) {
+                if (result == 'error_token')
                 {
-                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
-                    if (data == 'error')
-                    {
-                        location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
-                    } else
-                    {
-                        if (data == 'error_token')
-                        {
-                            location.href = url_pv + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                        } else
-                        {
-                            var json = JSON.parse(data);
-
-                            if (typeof json.convocatoria.id === 'number') {
-
-                                //Si la convocatoria fue publicada 5
-                                if(json.convocatoria.estado==5){
-                                    
-                                    $("#table_registros input,select,textarea").attr("disabled","disabled");                                       
-                                    $("#table_registros .cargar_formulario").attr("disabled","disabled");                                       
-                                    $("#table_registros .cargar_formulario" ).prop( "disabled", true ); //Disable
-                                    $(".input-sm").css("display","none");                                       
-                                    $(".paginate_button").css("display","none");                                       
-                                    $("#form_nuevo_documento input,select,button[type=submit],textarea").attr("disabled","disabled");                                       
-                                                                        
-                                    $(".jqte_editor").prop('contenteditable','false');                                    
-                                }
-                            }
-                        }
-                    }
+                    $("#menu_principal").html(result);
                 }
-            });            
-            */
-           
-        } else
-        {
-            location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
-        }
+            });
 
-        validator_form(token_actual);
-        $(".check_activar_t").attr("checked", "true");
+            //Realizo la peticion para cargar el formulario
+            if ($("#id").val() != "") {
+
+                //Establesco los text area html
+                $('.textarea_html').jqte();
+
+                //Limpio el formulario de los anexos
+                $('#nuevo_evento').on('hidden.bs.modal', function () {
+                    $("#descripcion").jqteVal('');
+                    $("#nombre").val("");
+                    $("#orden").val("");
+                    $("#tipo_documento option[value='']").prop("selected", true);
+                    $("#id_registro").val("");
+                });
+
+                //Cargar datos de la tabla
+                cargar_tabla(token_actual);
+
+
+                //2020-02-21
+                //Si esta publica no puede hacer ninguna accion
+                /*
+                 $.ajax({
+                 type: 'GET',
+                 data: {"token": token_actual.token, "id": $("#id").attr('value'), "tipo_requisito": "Tecnicos"},
+                 url: url_pv + 'Convocatorias/search/'
+                 }).done(function (data) {
+                 if (data == 'error_metodo')
+                 {
+                 notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                 } else
+                 {
+                 if (data == 'error')
+                 {
+                 location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+                 } else
+                 {
+                 if (data == 'error_token')
+                 {
+                 location.href = url_pv + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                 } else
+                 {
+                 var json = JSON.parse(data);
+                 
+                 if (typeof json.convocatoria.id === 'number') {
+                 
+                 //Si la convocatoria fue publicada 5
+                 if(json.convocatoria.estado==5){
+                 
+                 $("#table_registros input,select,textarea").attr("disabled","disabled");                                       
+                 $("#table_registros .cargar_formulario").attr("disabled","disabled");                                       
+                 $("#table_registros .cargar_formulario" ).prop( "disabled", true ); //Disable
+                 $(".input-sm").css("display","none");                                       
+                 $(".paginate_button").css("display","none");                                       
+                 $("#form_nuevo_documento input,select,button[type=submit],textarea").attr("disabled","disabled");                                       
+                 
+                 $(".jqte_editor").prop('contenteditable','false');                                    
+                 }
+                 }
+                 }
+                 }
+                 }
+                 });            
+                 */
+
+            } else
+            {
+                location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+            }
+
+            validator_form(token_actual);
+            $(".check_activar_t").attr("checked", "true");
+        }
     }
 });
 
@@ -133,7 +150,7 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         var formData = new FormData(document.getElementById("form_nuevo_documento"));
-        formData.append("modulo", "Convocatorias");
+        formData.append("modulo", "SICON-CONVOCATORIAS-CONFIGURACION");
         formData.append("token", token_actual.token);
         formData.append("convocatoria_padre_categoria", $("#id").attr('value'));
         formData.append("anexos", "documentacion");
@@ -156,7 +173,7 @@ function validator_form(token_actual) {
                 {
                     if (result == 'error_token')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (result == 'acceso_denegado')
@@ -252,11 +269,12 @@ function cargar_tabla(token_actual)
         "serverSide": true,
         "lengthMenu": [10, 20, 30],
         columnDefs: [
-            { orderable: false, targets: '_all' }
+            {orderable: false, targets: '_all'}
         ],
         "ajax": {
             url: url_pv + "Convocatoriasanexos/all",
-            data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "anexos": "resoluciones"}
+            data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "anexos": "resoluciones"},
+            type: "POST"
         },
         "drawCallback": function (settings) {
             $(".check_activar_t").attr("checked", "true");
@@ -284,13 +302,13 @@ function cargar_formulario(token_actual)
     $(".cargar_formulario").click(function () {
         //Cargo el id actual
         $("#id_registro").attr('value', $(this).attr('title'))
-        
-        $("#tipo_documento").removeAttr("disabled");                                       
-        $("#tipo_documento" ).prop( "disabled", false ); //Disable
-        
+
+        $("#tipo_documento").removeAttr("disabled");
+        $("#tipo_documento").prop("disabled", false); //Disable
+
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "id": $("#id_registro").attr('value'), "anexos": "resoluciones"},
             url: url_pv + 'Convocatoriasanexos/search/'
         }).done(function (data) {
@@ -301,7 +319,7 @@ function cargar_formulario(token_actual)
             {
                 if (data == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     var json = JSON.parse(data);
@@ -348,7 +366,7 @@ function download_file(token_actual)
 function activar_registro(id, token_actual) {
     $.ajax({
         type: 'DELETE',
-        data: {"token": token_actual, "modulo": "Convocatorias"},
+        data: {"token": token_actual, "modulo": "SICON-CONVOCATORIAS-CONFIGURACION"},
         url: url_pv + 'Convocatoriasrecursos/delete/' + id
     }).done(function (data) {
         if (data == 'Si' || data == 'No')
@@ -394,7 +412,7 @@ function acciones_categoria(token_actual)
         //Peticion para inactivar el evento
         $.ajax({
             type: 'DELETE',
-            data: {"token": token_actual.token, "modulo": "Convocatorias", "active": active},
+            data: {"token": token_actual.token, "modulo": "SICON-CONVOCATORIAS-CONFIGURACION", "active": active},
             url: url_pv + 'Convocatoriasanexos/delete/' + $(this).attr("title")
         }).done(function (data) {
             if (data == 'Si' || data == 'No')

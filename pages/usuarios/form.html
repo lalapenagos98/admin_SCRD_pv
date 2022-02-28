@@ -35,7 +35,7 @@
 
         <!-- Bootstrap animate -->
         <link href="../../dist/libraries/bootstrap-notify-3.1.3/animate.css" rel="stylesheet" type="text/css"/>
-        
+
         <!-- Datepicker animate -->
         <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 
@@ -75,104 +75,104 @@
                             </div>
                             <div class="panel-body">                                
                                 <form id="form_validator" action="http://localhost/crud_pv/api/Usuarios/new" class="form_validator" role="form" method="post">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Primer nombre</label>
-                                            <input type="text" name="primer_nombre" class="form-control" />                                                
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Primer nombre</label>
+                                                <input type="text" name="primer_nombre" class="form-control" />                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Segundo nombre</label>
+                                                <input type="text" name="segundo_nombre" class="form-control"  />                                                
+                                            </div>                                        
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Segundo nombre</label>
-                                            <input type="text" name="segundo_nombre" class="form-control"  />                                                
-                                        </div>                                        
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Primer apellido</label>
-                                            <input type="text" name="primer_apellido" class="form-control"  />
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Primer apellido</label>
+                                                <input type="text" name="primer_apellido" class="form-control"  />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Segundo apellido</label>
-                                            <input type="text" name="segundo_apellido" class="form-control" />
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Segundo apellido</label>
+                                                <input type="text" name="segundo_apellido" class="form-control" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>    
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="email" name="username" class="form-control"  />
+                                    </div>    
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="email" name="username" class="form-control"  />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Clave</label>
-                                            <input type="password" name="password" class="form-control"  />
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Clave</label>
+                                                <input type="password" name="password" class="form-control"  />
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>     
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>¿Certifica en la entidad?</label><br/>
-                                            <select id='certifica' name="certifica" class="form-control" >                                                    
-                                                <option value="">:: Seleccionar ::</option>
-                                                <option value="true">Sí</option>
-                                                <option value="false">No</option>
-                                            </select>                                                                
-                                        </div>                                                                                                                                                                                                                                                                                                        
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Cargo en la entidad</label>
-                                            <input type="text" name="cargo" class="form-control" />                                                
+                                    </div>     
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Certifica en la entidad?</label><br/>
+                                                <select id='certifica' name="certifica" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="true">Sí</option>
+                                                    <option value="false">No</option>
+                                                </select>                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
-                                    </div>
-                                </div>     
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>¿Activo?</label><br/>
-                                            <select id='active' name="active" class="form-control" >                                                    
-                                                <option value="">:: Seleccionar ::</option>
-                                                <option value="true">Sí</option>
-                                                <option value="false">No</option>
-                                            </select>                                                                
-                                        </div>                                                                                                                                                                                                                                                                                                        
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>&nbsp;</label><br/>
-                                            <button id="perfiles" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop_perfiles" >Abrir ventana de perfiles</button>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Cargo en la entidad</label>
+                                                <input type="text" name="cargo" class="form-control" />                                                
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>     
-                                <div class="row">                                                                        
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                    </div>     
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Activo?</label><br/>
+                                                <select id='active' name="active" class="form-control" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="true">Sí</option>
+                                                    <option value="false">No</option>
+                                                </select>                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button id="perfiles" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop_perfiles" >Abrir ventana de perfiles</button>
+                                            </div>
+                                        </div>
+                                    </div>     
+                                    <div class="row">                                                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
                                                 <label>&nbsp;</label><br/>
                                                 <button id="areas" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop_areas" >Abrir ventana de areas</button>
+                                            </div>
+                                        </div>   
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button id="entidades" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop_entidades" >Abrir ventana de entidades</button>
+                                            </div>
                                         </div>
-                                    </div>   
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>&nbsp;</label><br/>
-                                            <button id="entidades" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#pop_entidades" >Abrir ventana de entidades</button>
+                                    </div>     
+                                    <div class="row">
+                                        <div class="col-lg-12" style="text-align: right">
+                                            <input type="hidden" id="id" name="id" />
+                                            <button type="submit" class="btn btn-default" >Guardar</button>                                            
                                         </div>
-                                    </div>
-                                </div>     
-                                <div class="row">
-                                    <div class="col-lg-12" style="text-align: right">
-                                        <input type="hidden" id="id" name="id" />
-                                        <button type="submit" class="btn btn-default" >Guardar</button>                                            
-                                    </div>
-                                </div>  
+                                    </div>  
                                 </form>
                                 <div class="modal fade" id="pop_perfiles">
                                     <div class="modal-dialog">
@@ -268,335 +268,282 @@
         <!-- Datepicker animate -->
         <script src="../../dist/libraries/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
         <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
-        
+
         <!-- funcionalidades principales -->
-        <script src='../../dist/js/main.js'></script>
+        <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src='../../dist/js/main_funcionairo.js'></script>                
         <script src='../../dist/js/jquery.loadJSON.js'></script>        
 
         <script>
-                            $(document).ready(function () {
-
-                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-                                var token_actual = getLocalStorage(name_local_storage);
-
-                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-                                if ($.isEmptyObject(token_actual)) {
-                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            //Array del consumo con el back
+                            keycloak.init(initOptions).then(function (authenticated) {
+                                //Si no esta autenticado lo obliga a ingresar al keycloak
+                                if (authenticated === false)
+                                {
+                                    keycloak.login();
                                 } else
                                 {
-                                    permiso_lectura(token_actual, "Usuarios");
+                                    //Guardamos el token en el local storage
+                                    if (typeof keycloak === 'object') {
 
-                                    //Establesco la accion del formulario
-                                    $('#form_validator').attr('action', url_pv + 'Usuarios/new');
+                                        var token_actual = JSON.parse(JSON.stringify(keycloak));
+                                    
+                                        //Verifica si el token actual tiene acceso de lectura
+                                        permiso_lectura_keycloak(token_actual.token, "SICON-SEGURIDAD-USUARIOS");
 
-                                    //Cargar el select de sexos
-                                    $.ajax({
-                                        type: 'GET',
-                                        data: {"token": token_actual.token},
-                                        url: url_pv + 'Sexos/select'
-                                    }).done(function (data) {
-                                        if (data == 'error_metodo')
-                                        {
-                                            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                        } else
-                                        {
-                                            if (data == 'error')
-                                            {
-                                                notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
-                                            } else
-                                            {
-                                                var json = JSON.parse(data);
-                                                $("#sexo").append('<option value="">:: Seleccionar ::</option>');
-                                                if (json.length > 0) {
-                                                    $.each(json, function (key, value) {
-                                                        $("#sexo").append('<option value="' + value.id + '">' + value.nombre + '</option>');
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                    //Cargar el select de tipos de documentos
-                                    $.ajax({
-                                        type: 'GET',
-                                        data: {"token": token_actual.token},
-                                        url: url_pv + 'Tiposdocumentos/select'
-                                    }).done(function (data) {
-
-                                        if (data == 'error_metodo')
-                                        {
-                                            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                        } else
-                                        {
-                                            if (data == 'error')
-                                            {
-                                                notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
-                                            } else
-                                            {
-                                                var json = JSON.parse(data);
-                                                $("#tipo_documento").append('<option value="">:: Seleccionar ::</option>');
-                                                if (json.length > 0) {
-                                                    $.each(json, function (key, value) {
-                                                        $("#tipo_documento").append('<option value="' + value.id + '">' + value.nombre + '</option>');
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                    //Valido si el id hidden contiene información, con el fin de realizar la peticion y cargar el formulario
-                                    if ($('#id').val().length > 0) {
-
-                                        //Cargo el popup y el boton de perfiles
-                                        $("#perfiles").css("display", "block");
-                                        $("#entidades").css("display", "block");
-                                        $("#areas").css("display", "block");
-
-                                        //Realizo la peticion para cargar el formulario
+                                        //Cargamos el menu principal
                                         $.ajax({
-                                            type: 'GET',
-                                            data: {"token": token_actual.token},
-                                            url: url_pv + 'Usuarios/search/' + $("#id").attr('value')
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
+                                            type: 'POST',
+                                            data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub')},
+                                            url: url_pv + 'Administrador/menu_funcionario'
+                                        }).done(function (result) {
+                                            if (result == 'error_token')
                                             {
-                                                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                                             } else
                                             {
-                                                if (data == 'error')
-                                                {
-                                                    notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
-                                                } else
-                                                {
-                                                    var json = JSON.parse(data);
-
-                                                    if (typeof json.id === 'number') {
-                                                        $('#form_validator').loadJSON(json);
-                                                        $("#active option[value='" + json.active + "']").prop('selected', true);
-                                                        $("#certifica option[value='" + json.certifica + "']").prop('selected', true);
-                                                    }
-                                                }
+                                                $("#menu_principal").html(result);
                                             }
                                         });
 
-                                        //Cargar los perfiles del usuario actual
-                                        cargar_perfiles(token_actual);
-                                        cargar_entidades(token_actual);
-                                        cargar_areas(token_actual);
+                                        //Establesco la accion del formulario
+                                        $('#form_validator').attr('action', url_pv + 'Usuarios/new');
+
+                                        //Valido si el id hidden contiene información, con el fin de realizar la peticion y cargar el formulario
+                                        if ($('#id').val().length > 0) {
+
+                                            //Cargo el popup y el boton de perfiles
+                                            $("#perfiles").css("display", "block");
+                                            $("#entidades").css("display", "block");
+                                            $("#areas").css("display", "block");
+
+                                            //Realizo la peticion para cargar el formulario
+                                            $.ajax({
+                                                type: 'POST',
+                                                data: {"token": token_actual.token},
+                                                url: url_pv + 'Usuarios/search/' + $("#id").attr('value')
+                                            }).done(function (data) {
+                                                if (data == 'error_metodo')
+                                                {
+                                                    notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                } else
+                                                {
+                                                    if (data == 'error')
+                                                    {
+                                                        notify("danger", "ok", "Usuarios:", "El usuario no se encuentra registrado, por favor registrarse");
+                                                    } else
+                                                    {
+                                                        var json = JSON.parse(data);
+
+                                                        if (typeof json.id === 'number') {
+                                                            $('#form_validator').loadJSON(json);
+                                                            $("#active option[value='" + json.active + "']").prop('selected', true);
+                                                            $("#certifica option[value='" + json.certifica + "']").prop('selected', true);
+                                                        }
+                                                    }
+                                                }
+                                            });
+
+                                            //Cargar los perfiles del usuario actual
+                                            cargar_perfiles(token_actual.token);
+                                            cargar_entidades(token_actual.token);
+                                            cargar_areas(token_actual.token);
+
+                                        }
+
+                                        validator_form(token_actual.token);
+
 
                                     }
-
-                                    validator_form(token_actual);
                                 }
-
+                            }).catch(function () {
+                                location.href = url_pv_admin + 'error_keycloak.html';
                             });
 
-                            function guardar_perfil(id) {
-                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-                                var token_actual = getLocalStorage(name_local_storage);
+                            function guardar_perfil(id, token) {
 
-                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-                                if ($.isEmptyObject(token_actual)) {
-                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                if ($("#perfil_" + id).prop('checked')) {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        data: {"token": token, perfil: id, usuario: $("#id").attr('value'), modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosperfiles/new/'
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario perfil:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
+                                            {
+                                                notify("danger", "ok", "Usuario perfil:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    notify("success", "ok", "Usuario perfil:", "Se creó el perfil para el usuario actual con éxito.");
+                                                }
+                                            }
+                                        }
+                                    });
                                 } else
                                 {
-                                    if ($("#perfil_" + id).prop('checked')) {
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            data: {"token": token_actual.token, perfil: id, usuario: $("#id").attr('value'), modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosperfiles/new/'
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
+                                    $.ajax({
+                                        type: 'DELETE',
+                                        data: {"token": token, modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosperfiles/delete/' + $("#id").attr('value') + '/' + id
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario perfil:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
                                             {
-                                                notify("danger", "ok", "Usuario perfil:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                notify("danger", "ok", "Usuario perfil:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                             } else
                                             {
-                                                if (data == 'error')
+                                                if (data == 'acceso_denegado')
                                                 {
-                                                    notify("danger", "ok", "Usuario perfil:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                                                 } else
                                                 {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario perfil:", "Se creó el perfil para el usuario actual con éxito.");
-                                                    }
+                                                    notify("success", "ok", "Usuario perfil:", "Se eliminó el perfil para el usuario actual con éxito.");
                                                 }
                                             }
-                                        });
-                                    } else
-                                    {
-                                        $.ajax({
-                                            type: 'DELETE',
-                                            data: {"token": token_actual.token, modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosperfiles/delete/' + $("#id").attr('value') + '/' + id
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
-                                            {
-                                                notify("danger", "ok", "Usuario perfil:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                            } else
-                                            {
-                                                if (data == 'error')
-                                                {
-                                                    notify("danger", "ok", "Usuario perfil:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                                } else
-                                                {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario perfil:", "Se eliminó el perfil para el usuario actual con éxito.");
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
                             }
 
-                            function guardar_entidad(id) {
-                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-                                var token_actual = getLocalStorage(name_local_storage);
+                            function guardar_entidad(id, token) {
 
-                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-                                if ($.isEmptyObject(token_actual)) {
-                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                if ($("#entidad_" + id).prop('checked')) {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        data: {"token": token, entidad: id, usuario: $("#id").attr('value'), modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosentidades/new/'
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario entidad:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
+                                            {
+                                                notify("danger", "ok", "Usuario entidad:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    notify("success", "ok", "Usuario entidad:", "Se creó la entidad para el usuario actual con éxito.");
+                                                }
+                                            }
+                                        }
+                                    });
                                 } else
                                 {
-                                    if ($("#entidad_" + id).prop('checked')) {
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            data: {"token": token_actual.token, entidad: id, usuario: $("#id").attr('value'), modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosentidades/new/'
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
+                                    $.ajax({
+                                        type: 'DELETE',
+                                        data: {"token": token, modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosentidades/delete/' + $("#id").attr('value') + '/' + id
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario entidad:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
                                             {
-                                                notify("danger", "ok", "Usuario entidad:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                notify("danger", "ok", "Usuario entidad:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                             } else
                                             {
-                                                if (data == 'error')
+                                                if (data == 'acceso_denegado')
                                                 {
-                                                    notify("danger", "ok", "Usuario entidad:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                                                 } else
                                                 {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario entidad:", "Se creó la entidad para el usuario actual con éxito.");
-                                                    }
+                                                    notify("success", "ok", "Usuario entidad:", "Se eliminó la entidad para el usuario actual con éxito.");
                                                 }
                                             }
-                                        });
-                                    } else
-                                    {
-                                        $.ajax({
-                                            type: 'DELETE',
-                                            data: {"token": token_actual.token, modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosentidades/delete/' + $("#id").attr('value') + '/' + id
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
-                                            {
-                                                notify("danger", "ok", "Usuario entidad:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                            } else
-                                            {
-                                                if (data == 'error')
-                                                {
-                                                    notify("danger", "ok", "Usuario entidad:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                                } else
-                                                {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario entidad:", "Se eliminó la entidad para el usuario actual con éxito.");
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
+
                             }
 
-                            function guardar_area(id) {
-                                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
-                                var token_actual = getLocalStorage(name_local_storage);
+                            function guardar_area(id, token) {
 
-                                //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
-                                if ($.isEmptyObject(token_actual)) {
-                                    location.href = '../../index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                if ($("#area_" + id).prop('checked')) {
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        data: {"token": token, area: id, usuario: $("#id").attr('value'), modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosareas/new/'
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario area:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
+                                            {
+                                                notify("danger", "ok", "Usuario area:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            } else
+                                            {
+                                                if (data == 'acceso_denegado')
+                                                {
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                                                } else
+                                                {
+                                                    notify("success", "ok", "Usuario area:", "Se creó el area para el usuario actual con éxito.");
+                                                }
+                                            }
+                                        }
+                                    });
                                 } else
                                 {
-                                    if ($("#area_" + id).prop('checked')) {
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            data: {"token": token_actual.token, area: id, usuario: $("#id").attr('value'), modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosareas/new/'
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
+                                    $.ajax({
+                                        type: 'DELETE',
+                                        data: {"token": token, modulo: "SICON-SEGURIDAD-USUARIOS"},
+                                        url: url_pv + 'Usuariosareas/delete/' + $("#id").attr('value') + '/' + id
+                                    }).done(function (data) {
+                                        if (data == 'error_metodo')
+                                        {
+                                            notify("danger", "ok", "Usuario area:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                        } else
+                                        {
+                                            if (data == 'error')
                                             {
-                                                notify("danger", "ok", "Usuario area:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                notify("danger", "ok", "Usuario area:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                             } else
                                             {
-                                                if (data == 'error')
+                                                if (data == 'acceso_denegado')
                                                 {
-                                                    notify("danger", "ok", "Usuario area:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                                                 } else
                                                 {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario area:", "Se creó el area para el usuario actual con éxito.");
-                                                    }
+                                                    notify("success", "ok", "Usuario área:", "Se eliminó el área para el usuario actual con éxito.");
                                                 }
                                             }
-                                        });
-                                    } else
-                                    {
-                                        $.ajax({
-                                            type: 'DELETE',
-                                            data: {"token": token_actual.token, modulo: "Usuarios"},
-                                            url: url_pv + 'Usuariosareas/delete/' + $("#id").attr('value') + '/' + id
-                                        }).done(function (data) {
-                                            if (data == 'error_metodo')
-                                            {
-                                                notify("danger", "ok", "Usuario area:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                            } else
-                                            {
-                                                if (data == 'error')
-                                                {
-                                                    notify("danger", "ok", "Usuario area:", "Se registro un error en el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                                } else
-                                                {
-                                                    if (data == 'acceso_denegado')
-                                                    {
-                                                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                                                    } else
-                                                    {
-                                                        notify("success", "ok", "Usuario área:", "Se eliminó el área para el usuario actual con éxito.");
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
+
                             }
 
                             //Cargar los perfiles del usuario actual
                             function cargar_perfiles(token_actual) {
                                 $.ajax({
-                                    type: 'GET',
-                                    data: {"token": token_actual.token, "modulo": 'Usuarios'},
+                                    type: 'POST',
+                                    data: {"token": token_actual, "modulo": 'SICON-SEGURIDAD-USUARIOS'},
                                     url: url_pv + 'Perfiles/select_user/' + $("#id").attr('value')
                                 }).done(function (data) {
                                     if (data == 'error_metodo')
@@ -625,7 +572,7 @@
                                                         {
                                                             checked = 'checked="checked"';
                                                         }
-                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="perfil_' + array['id'] + '" onclick="guardar_perfil(' + array['id'] + ')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
+                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="perfil_' + array['id'] + '" onclick="guardar_perfil(' + array['id'] + ',\'' + token_actual + '\')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
                                                     });
                                                 }
 
@@ -639,8 +586,8 @@
                             //Cargar las entidades del usuario actual
                             function cargar_entidades(token_actual) {
                                 $.ajax({
-                                    type: 'GET',
-                                    data: {"token": token_actual.token, "modulo": 'Usuarios'},
+                                    type: 'POST',
+                                    data: {"token": token_actual, "modulo": 'SICON-SEGURIDAD-USUARIOS'},
                                     url: url_pv + 'Entidades/select_user/' + $("#id").attr('value')
                                 }).done(function (data) {
                                     if (data == 'error_metodo')
@@ -669,7 +616,7 @@
                                                         {
                                                             checked = 'checked="checked"';
                                                         }
-                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="entidad_' + array['id'] + '" onclick="guardar_entidad(' + array['id'] + ')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
+                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="entidad_' + array['id'] + '" onclick="guardar_entidad(' + array['id'] + ',\'' + token_actual + '\')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
                                                     });
                                                 }
 
@@ -683,8 +630,8 @@
                             //Cargar las areas del usuario actual
                             function cargar_areas(token_actual) {
                                 $.ajax({
-                                    type: 'GET',
-                                    data: {"token": token_actual.token, "modulo": 'Usuarios'},
+                                    type: 'POST',
+                                    data: {"token": token_actual, "modulo": 'SICON-SEGURIDAD-USUARIOS'},
                                     url: url_pv + 'Areas/select_user/' + $("#id").attr('value')
                                 }).done(function (data) {
                                     if (data == 'error_metodo')
@@ -713,7 +660,7 @@
                                                         {
                                                             checked = 'checked="checked"';
                                                         }
-                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="area_' + array['id'] + '" onclick="guardar_area(' + array['id'] + ')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
+                                                        html = html + '<div class="col-md-4"><div class="checkbox"><label><input id="area_' + array['id'] + '" onclick="guardar_area(' + array['id'] + ',\'' + token_actual + '\')" type="checkbox" ' + checked + ' value="' + array['id'] + '">' + array['nombre'] + '</label></div></div>';
                                                     });
                                                 }
 
@@ -799,7 +746,7 @@
                                         $.ajax({
                                             type: 'POST',
                                             url: $form.attr('action'),
-                                            data: $form.serialize() + "&modulo=Usuarios&token=" + token_actual.token
+                                            data: $form.serialize() + "&modulo=SICON-SEGURIDAD-USUARIOS&token=" + token_actual
                                         }).done(function (result) {
                                             if (result == 'error_registro')
                                             {
@@ -835,8 +782,8 @@
                                                                 $("#perfiles").css("display", "block");
                                                                 $("#entidades").css("display", "block");
                                                                 $("#areas").css("display", "block");
-                                                                
-                                                                
+
+
                                                                 notify("success", "ok", "Usuarios:", "Se creó el usuario con éxito.");
                                                             }
                                                         }
@@ -849,7 +796,7 @@
                                         $.ajax({
                                             type: 'PUT',
                                             url: url_pv + 'Usuarios/edit/' + $("#id").attr('value'),
-                                            data: $form.serialize() + "&modulo=Usuarios&token=" + token_actual.token
+                                            data: $form.serialize() + "&modulo=SICON-SEGURIDAD-USUARIOS&token=" + token_actual
                                         }).done(function (result) {
                                             if (result == 'error_registro')
                                             {

@@ -455,7 +455,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad},
-                                                        url: url_pv + 'Upzs/select'
+                                                        url: url_pv + 'Upzs/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -484,7 +484,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad},
-                                                        url: url_pv + 'Barrios/select'
+                                                        url: url_pv + 'Barrios/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {
@@ -519,7 +519,7 @@ $(document).ready(function () {
                                                     $.ajax({
                                                         type: 'GET',
                                                         data: {"token": token_actual.token, "localidad": localidad, "upz": upz},
-                                                        url: url_pv + 'Barrios/select'
+                                                        url: url_pv + 'Barrios/select_participantes'
                                                     }).done(function (data) {
                                                         if (data == 'error_metodo')
                                                         {

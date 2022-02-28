@@ -509,6 +509,14 @@
                                         </div>                                        
                                     </div>
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Correo electrónico institucional del funcionario misional. <span class="icono_requerido">*</span></label>
+                                                <input type="text" name="correo_misional" class="form-control">                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                        
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="id" name="id" />
                                             <button type="submit" class="btn btn-default">Guardar</button>                                            
@@ -922,7 +930,8 @@
         <script src="../../dist/libraries/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" type="text/javascript"></script>
         
         <!-- funcionalidades principales -->
-        <script src='../../dist/js/main.js'></script>
+        <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>
+        <script src='../../dist/js/main_funcionairo.js'></script>
         <script src='update.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>        
         <script src="../../dist/libraries/ckeditor/ckeditor.js"></script>
