@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -41,7 +41,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if (data == 'error')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (data == 'acceso_denegado')
@@ -96,7 +96,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     if ($("#busqueda").val() == "0")
                     {
                         //Cargar datos en la tabla actual
-                        cargar_tabla(token_actual);
+                        cargar_tabla();
 
                         $("#busqueda").attr("value", "1");
                     } else
@@ -125,6 +125,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                             notify("danger", "ok", "Convocatorias:", "Debe seleccionar la " + mensaje + ".");
                         } else
                         {
+
+                            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                             //Realizo la peticion para validar acceso a la convocatoria
                             $.ajax({
                                 type: 'POST',
@@ -138,7 +141,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 {
                                     if (data == 'error_token')
                                     {
-                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                     } else
                                     {
                                         if (data == 'error_fecha_cierre')
@@ -151,7 +154,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                 if ($("#busqueda").val() == "0")
                                                 {
                                                     //Cargar datos en la tabla actual
-                                                    cargar_tabla(token_actual);
+                                                    cargar_tabla();
 
                                                     $("#busqueda").attr("value", "1");
                                                 } else
@@ -166,6 +169,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                     }
                                 }
                             });
+
                         }
 
                     } else
@@ -189,10 +193,13 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if ($("#entidad").val() != "")
                     {
+
+                        var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                         $.ajax({
                             type: 'POST',
                             data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
-                            url: url_pv + 'PropuestasGanadoras/select_convocatorias'
+                            url: url_pv + 'PropuestasVerificacion/select_convocatorias'
                         }).done(function (data) {
                             if (data == 'error_metodo')
                             {
@@ -201,7 +208,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                             {
                                 if (data == 'error_token')
                                 {
-                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                 } else
                                 {
                                     if (data == 'acceso_denegado')
@@ -225,7 +232,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                         });
                     }
                 }
-
             });
 
             $('#convocatoria').change(function () {
@@ -240,6 +246,9 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 if ($("#convocatoria").val() != "")
                 {
+
+                    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                     $.ajax({
                         type: 'POST',
                         data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "conv": $("#convocatoria").val()},
@@ -252,7 +261,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (data == 'acceso_denegado')
@@ -297,12 +306,14 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             $("#generar_presupuesto").click(function () {
 
+                var token_actual = JSON.parse(JSON.stringify(keycloak));
+                
                 $.AjaxDownloader({
                     data: {
                         propuesta: $("#propuesta").val(),
                         token: token_actual.token
                     },
-                    url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_xls/'
+                    url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_funcionario_xls/'
                 });
             });
 
@@ -331,7 +342,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -394,6 +405,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                     var propuesta = $("#propuesta").val();
                     var verificacion = 2;
                     $("#numero_verificacion").val(verificacion);
+
+
+
+                    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                     $.ajax({
                         type: 'POST',
                         url: url_pv + 'PropuestasVerificacion/valida_verificacion',
@@ -407,7 +423,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -452,6 +468,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
 
                     });
+
+
                 } else
                 {
                     notify("info", "ok", "Verificación de propuestas:", "Para poder continuar debe verificar todos los documentos administrativos.");
@@ -471,6 +489,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                     var propuesta = $("#propuesta").val();
                     var verificacion = 1;
                     $("#numero_verificacion").val(verificacion);
+
+
+
+                    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                     $.ajax({
                         type: 'POST',
                         url: url_pv + 'PropuestasVerificacion/valida_verificacion',
@@ -484,7 +507,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -530,6 +553,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
 
                     });
+
                 } else
                 {
                     notify("info", "ok", "Verificación de propuestas:", "Para poder continuar debe verificar todos los documentos técnicos.");
@@ -572,6 +596,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                         } else
                         {
 
+                            var token_actual = JSON.parse(JSON.stringify(keycloak));
+
                             $.post(url_pv + 'PropuestasVerificacion/guardar_archivo_rechazo', {pd_verificacion: pd_verificacion, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "SICON-PROPUESTAS-VERIFICACION"}).done(function (data) {
                                 if (data == 'error_metodo')
                                 {
@@ -580,7 +606,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 {
                                     if (data == 'error_token')
                                     {
-                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                     } else
                                     {
 
@@ -608,6 +634,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 }
 
                             });
+
                         }
                     } else
                     {
@@ -627,6 +654,9 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
 
     var propuesta = $("#propuesta").val();
 
+
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
     $.ajax({
         type: 'POST',
         url: url_pv + 'PropuestasVerificacion/guardar_confirmacion',
@@ -640,7 +670,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
         {
             if (result == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (result == 'acceso_denegado')
@@ -671,9 +701,15 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
         }
 
     });
+
+
 }
 
-function cargar_tabla(token_actual) {
+function cargar_tabla() {
+
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
+
+
     $('#table_list').DataTable({
         "language": {
             "url": "../../dist/libraries/datatables/js/spanish.json"
@@ -734,10 +770,10 @@ function cargar_tabla(token_actual) {
         "drawCallback": function (settings) {
             $('.btn_tooltip').tooltip();
             $('.cargar_verificacion_1').click(function () {
-                cargar_verificacion_1(token_actual, $(this).attr("lang"));
+                cargar_verificacion_1($(this).attr("lang"));
             });
             $('.cargar_verificacion_2').click(function () {
-                cargar_verificacion_2(token_actual, $(this).attr("lang"));
+                cargar_verificacion_2($(this).attr("lang"));
             });
         },
         "columns": [
@@ -758,13 +794,16 @@ function cargar_tabla(token_actual) {
     });
 }
 
-function cargar_verificacion_1(token_actual, propuesta) {
+function cargar_verificacion_1(propuesta) {
     //Asigno la propuesta actual
     $("#propuesta").val(propuesta);
 
     $('#doc_administrativos_verificacion_2 tr').remove();
     $('#doc_administrativos_verificacion_1 tr').remove();
     $('#doc_tecnicos_verificacion_1 tr').remove();
+
+
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
     //Realizo la peticion para cargar el formulario
     $.ajax({
@@ -779,7 +818,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'error_propuesta')
@@ -1133,15 +1172,19 @@ function cargar_verificacion_1(token_actual, propuesta) {
             }
         }
     });
+
 }
 
-function cargar_verificacion_2(token_actual, propuesta) {
+function cargar_verificacion_2(propuesta) {
     //Asigno la propuesta actual
     $("#propuesta").val(propuesta);
 
     $('#doc_administrativos_verificacion_2 tr').remove();
     $('#doc_administrativos_verificacion_1 tr').remove();
     $('#doc_tecnicos_verificacion_1 tr').remove();
+
+
+    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
     //Realizo la peticion para cargar el formulario
     $.ajax({
@@ -1156,7 +1199,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'error_propuesta')
@@ -1341,6 +1384,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
             }
         }
     });
+
 }
 
 //Funcion para descargar archivo
@@ -1389,11 +1433,15 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
 
     if (realizar_peticion)
     {
+
+
+        var token_actual = JSON.parse(JSON.stringify(keycloak));
+
         //Se realiza la peticion con el fin de guardar el registro actual
         $.ajax({
             type: 'POST',
             url: url_pv + 'PropuestasVerificacion/guardar_verificacion_1',
-            data: {"token": token_actual, "modulo": modulo, "propuesta": propuesta, "convocatoriadocumento": convocatoriadocumento, "estado": estado, "observacion": observacion, "verificacion": verificacion, "id": id},
+            data: {"token": token_actual.token, "modulo": modulo, "propuesta": propuesta, "convocatoriadocumento": convocatoriadocumento, "estado": estado, "observacion": observacion, "verificacion": verificacion, "id": id},
         }).done(function (result) {
 
             if (result == 'error_metodo')
@@ -1403,7 +1451,7 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
             {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     if (result == 'acceso_denegado')
@@ -1439,6 +1487,7 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
             }
 
         });
+
     } else
     {
         notify("danger", "ok", "Verificación de propuestas:", mensaje_observaciones);
@@ -1453,6 +1502,7 @@ function certificado(id, programa) {
         url = "reporte_propuesta_inscrita_pdac_back.php";
     }
 
+
     var token_actual = JSON.parse(JSON.stringify(keycloak));
 
     $.AjaxDownloader({
@@ -1464,24 +1514,25 @@ function certificado(id, programa) {
         }
     });
 
+
+
 }
 
 function guardar_rechazo() {
-    
+
     if ($("#tipo_rechazo").val() == "")
     {
         notify("danger", "ok", "Convocatorias:", "El tipo de rechazo es requerido");
-    }
-    else
+    } else
     {
         if ($("#observacion_rechazo").val() == "")
         {
             notify("danger", "ok", "Convocatorias:", "Las observaciones del rechazo son requeridas");
-        }
-        else
+        } else
         {
+
             var token_actual = JSON.parse(JSON.stringify(keycloak));
-            
+
             $.post(url_pv + 'PropuestasVerificacion/guardar_rechazo', {tipo_rechazo: $("#tipo_rechazo").val(), observacion_rechazo: $("#observacion_rechazo").val(), "token": token_actual.token, propuesta: $("#propuesta").attr('value'), "modulo": "SICON-PROPUESTAS-VERIFICACION"}).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -1490,7 +1541,7 @@ function guardar_rechazo() {
                 {
                     if (data == 'error_token')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
 
@@ -1524,6 +1575,7 @@ function guardar_rechazo() {
                     }
                 }
             });
+
         }
     }
 }

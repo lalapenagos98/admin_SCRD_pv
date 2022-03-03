@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -41,7 +41,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if (data == 'error')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (data == 'acceso_denegado')
@@ -104,7 +104,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                             {
                                 if (data == 'error_token')
                                 {
-                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                 } else
                                 {
                                     if (data == 'acceso_denegado')
@@ -155,7 +155,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (data == 'acceso_denegado')
@@ -187,7 +187,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (data == 'acceso_denegado')
@@ -488,7 +488,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     {
                         if (data == 'error_token')
                         {
-                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         } else
                         {
                             var json = JSON.parse(data);
@@ -519,7 +519,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if (data == 'error_token')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (data == 'acceso_denegado')
@@ -634,7 +634,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = '../index/index_funcionario.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -812,7 +812,7 @@ function cargar_formulario(token_actual)
             {
                 if (data == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     var json = JSON.parse(data);
@@ -944,28 +944,28 @@ function cargar_formulario(token_actual)
             {
                 if (data == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     if (data == 'crear_perfil_pn')
                     {
-                        location.href = url_pv_admin + 'pages/perfilesparticipantes/persona_natural.html?msg=Para poder inscribir la propuesta debe crear el perfil de persona natural.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "La propuesta no cuenta con el perfil como persona natural");                        
                     } else
                     {
                         if (data == 'crear_perfil_pj')
                         {
-                            location.href = url_pv_admin + 'pages/perfilesparticipantes/persona_juridica.html?msg=Para poder inscribir la propuesta debe crear el perfil de persona juridica.&msg_tipo=danger';
+                            notify("danger", "ok", "Convocatorias:", "La propuesta no cuenta con el perfil como persona jurídica");                        
                         } else
                         {
                             if (data == 'crear_perfil_agr')
                             {
-                                location.href = url_pv_admin + 'pages/perfilesparticipantes/agrupacion.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "La propuesta no cuenta con el perfil como agrupación");
                             } else
                             {
 
                                 if (data == 'crear_propuesta')
-                                {
-                                    location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                                {                                    
+                                    notify("danger", "ok", "Convocatorias:", "No existe la propuesta");
                                 } else
                                 {
                                     if (data == 'acceso_denegado')
@@ -1043,12 +1043,12 @@ function cargar_tabla_archivos(token_actual, documento) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'crear_propuesta')
                 {
-                    location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "No existe la propuesta");                    
                 } else
                 {
                     if (data == 'acceso_denegado')
@@ -1087,12 +1087,12 @@ function cargar_tabla_link(token_actual, documento) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'crear_propuesta')
                 {
-                    location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "No existe la propuesta");
                 } else
                 {
                     if (data == 'acceso_denegado')

@@ -21,7 +21,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             }).done(function (result) {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     $("#menu_principal").html(result);
@@ -41,7 +41,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if (data == 'error')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (data == 'acceso_denegado')
@@ -145,7 +145,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 {
                                     if (data == 'error_token')
                                     {
-                                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                     } else
                                     {
                                         if (data == 'error_fecha_cierre')
@@ -208,7 +208,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                             {
                                 if (data == 'error_token')
                                 {
-                                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                                 } else
                                 {
                                     if (data == 'acceso_denegado')
@@ -259,7 +259,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (data == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (data == 'acceso_denegado')
@@ -328,7 +328,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -404,7 +404,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -481,7 +481,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         {
                             if (result == 'error_token')
                             {
-                                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                             } else
                             {
                                 if (result == 'acceso_denegado')
@@ -555,7 +555,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
         {
             if (result == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (result == 'acceso_denegado')
@@ -712,7 +712,7 @@ function cargar_tabla(token_actual) {
                 {
                     if (result == 'error_token')
                     {
-                        //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (result == 'acceso_denegado')
@@ -776,7 +776,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'error_propuesta')
@@ -1074,7 +1074,7 @@ function cargar_verificacion_2(token_actual, propuesta) {
         {
             if (data == 'error_token')
             {
-                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
             } else
             {
                 if (data == 'error_propuesta')
@@ -1316,7 +1316,7 @@ function guardar_verificacion_1(token_actual, id, modulo, verificacion)
             {
                 if (result == 'error_token')
                 {
-                    location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
                     if (result == 'acceso_denegado')
@@ -1380,7 +1380,7 @@ function guardar_por_que_habilita()
                 {
                     if (result == 'error_token')
                     {
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                     } else
                     {
                         if (result == 'acceso_denegado')
