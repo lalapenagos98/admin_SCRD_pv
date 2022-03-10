@@ -92,19 +92,49 @@ $(document).ready(function () {
     });
 
 
+    /*
+     * 2022-03-08
+     * Wilmer Gustavo Mogollón Duque
+     * Se agrega change function para el tipo de pago
+     */
+
+    $('#tipo_pago').change(function () {
+        if ($('#tipo_pago').val() === "") {
+            $("#documentos_ganador").hide();
+            $("#tabla_convocatoriaadministrativos").hide();
+            $("#asignar_est_form").hide();
+        }
+        if ($('#tipo_pago').val() === "Único pago") {
+            $("#documentos_ganador").show();
+            $("#tabla_convocatoriaadministrativos").show();
+            $("#asignar_est_form").show();
+        }
+        if ($('#tipo_pago').val() === "Primer pago") {
+            $("#documentos_ganador").show();
+            $("#tabla_convocatoriaadministrativos").hide();
+            $("#asignar_est_form").show();
+        }
+        if ($('#tipo_pago').val() === "Pago parcial") {
+            $("#documentos_ganador").show();
+            $("#tabla_convocatoriaadministrativos").show();
+            $("#asignar_est_form").show();
+        }
+    });
+
+
 
 
     var href_regresar = "";
     //Creando link de navegación
     if (getURLParameter('m') == "agr")
     {
-        href_regresar = "integrantes.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_regresar = "/admin_SCRD_pv/pages/propuestas/mis_propuestas.html";
         $("#link_regresar").attr("onclick", "location.href = '" + href_regresar + "'");
     }
 
     if (getURLParameter('m') == "pn")
     {
-        href_regresar = "propuestas.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_regresar = "/admin_SCRD_pv/pages/propuestas/mis_propuestas.html";
         $("#link_regresar").attr("onclick", "location.href = '" + href_regresar + "'");
     }
 
@@ -1337,22 +1367,22 @@ function agregar_observacion_documentacion(token_actual, id_propuesta, info_gene
                 break;
             default:
                 notify("success", "ok", "Usuario:", "Se envió la documentación con éxito.");
-                $("#fieldset_top_general").attr("disabled", "");
-                $("#fieldset_documentacion").attr("disabled", "");
-                $("#fieldset_cuenta").attr("disabled", "");
-                $("#fieldset_rut").attr("disabled", "");
-                $("#fieldset_otros").attr("disabled", "");
-                $("#fieldset_documentacion_convocatoria").attr("disabled", "");
-                $("#fieldset_convocatoriadocumento").attr("disabled", "");
-                $("#guardar_parametro_cuenta").attr("disabled", "");
-                $("#actualizar_parametro_cuenta").attr("disabled", "");
-                $("#guardar_parametro_rut").attr("disabled", "");
-                $("#actualizar_parametro_rut").attr("disabled", "");
-                $("#guardar_parametro_otros").attr("disabled", "");
-                $("#actualizar_parametro_otros").attr("disabled", "");
-                $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
-                $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
-                $(".eliminar_archivo").attr("disabled", "");
+//                $("#fieldset_top_general").attr("disabled", "");
+//                $("#fieldset_documentacion").attr("disabled", "");
+//                $("#fieldset_cuenta").attr("disabled", "");
+//                $("#fieldset_rut").attr("disabled", "");
+//                $("#fieldset_otros").attr("disabled", "");
+//                $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+//                $("#fieldset_convocatoriadocumento").attr("disabled", "");
+//                $("#guardar_parametro_cuenta").attr("disabled", "");
+//                $("#actualizar_parametro_cuenta").attr("disabled", "");
+//                $("#guardar_parametro_rut").attr("disabled", "");
+//                $("#actualizar_parametro_rut").attr("disabled", "");
+//                $("#guardar_parametro_otros").attr("disabled", "");
+//                $("#actualizar_parametro_otros").attr("disabled", "");
+//                $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+//                $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+//                $(".eliminar_archivo").attr("disabled", "");
                 //cargar_tabla_ganadores(token_actual);
                 break;
         }
@@ -1839,22 +1869,22 @@ function validar_estado_envio_documentacion(token_actual, id_propuesta) {
 
                     $("#info_general").attr("value", json.observaciones_documentos_ganadores);
                     if (json.envio_documentos_ganadores === true) {
-                        $("#fieldset_top_general").attr("disabled", "");
-                        $("#fieldset_documentacion").attr("disabled", "");
-                        $("#fieldset_cuenta").attr("disabled", "");
-                        $("#fieldset_rut").attr("disabled", "");
-                        $("#fieldset_otros").attr("disabled", "");
-                        $("#fieldset_documentacion_convocatoria").attr("disabled", "");
-                        $("#fieldset_convocatoriadocumento").attr("disabled", "");
-                        $("#guardar_parametro_cuenta").attr("disabled", "");
-                        $("#actualizar_parametro_cuenta").attr("disabled", "");
-                        $("#guardar_parametro_rut").attr("disabled", "");
-                        $("#actualizar_parametro_rut").attr("disabled", "");
-                        $("#guardar_parametro_otros").attr("disabled", "");
-                        $("#actualizar_parametro_otros").attr("disabled", "");
-                        $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
-                        $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
-                        $(".eliminar_archivo").attr("disabled", "");
+//                        $("#fieldset_top_general").attr("disabled", "");
+//                        $("#fieldset_documentacion").attr("disabled", "");
+//                        $("#fieldset_cuenta").attr("disabled", "");
+//                        $("#fieldset_rut").attr("disabled", "");
+//                        $("#fieldset_otros").attr("disabled", "");
+//                        $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+//                        $("#fieldset_convocatoriadocumento").attr("disabled", "");
+//                        $("#guardar_parametro_cuenta").attr("disabled", "");
+//                        $("#actualizar_parametro_cuenta").attr("disabled", "");
+//                        $("#guardar_parametro_rut").attr("disabled", "");
+//                        $("#actualizar_parametro_rut").attr("disabled", "");
+//                        $("#guardar_parametro_otros").attr("disabled", "");
+//                        $("#actualizar_parametro_otros").attr("disabled", "");
+//                        $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+//                        $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+//                        $(".eliminar_archivo").attr("disabled", "");
                     }
                 }
         }

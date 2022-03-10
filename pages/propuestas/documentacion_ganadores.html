@@ -70,18 +70,53 @@
                             </button>                            
                         </div>
                     </div>
-                    <div class="row mensaje_pdac" style="display: none">
+                    <div class="row mensaje_pagos">
                         <div class="col-lg-12">                        
                             <div class="panel panel-info">
                                 <div class="panel-heading">
                                     Antes de diligenciar el formulario, por favor lea la siguiente información:
                                 </div>
                                 <div class="panel-body">
-                                    <p>En esta sección la entidad sin ánimo de lucro, podrá aportar la documentación administrativa y técnica requerida por el <span class="programa_actual"></span> 2020.</p>
+                                    <p>Por favor seleccione el tipo de pago que desea gestionar:</p>
+                                    <ul>
+                                        <li>Único pago: aplica cuando el estímulo corresponde a un primer y único pago</li>
+                                        <li>
+                                            Primer pago: aplica cuando es el primero de dos o mas pagos, 
+                                            por favor tener en cuenta que para el primer pago <strong>NO</strong> es necesario cargar el documento de informe de actividades
+                                        </li>
+                                        <li>
+                                            Pago parcial: aplica cuando el estímulo se distribuye en dos o más pagos, 
+                                            por favor tener en cuenta que desde el segundo pago en adelante es es necesario cargar el documento de informe de actividades
+                                        </li>
+                                    </ul>
                                 </div>                        
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Tipo de pago
+                                </div>                             
+                                <div class="panel-body" id="cuerpo_tipo_pagos">
+                                    <div class="form-group">
+                                        <label>Seleccione el tipo de pago</label>
+                                        <select   class="form-control" id="tipo_pago" name="tipo_pago">
+                                            <option   selected="" value="">::Seleccionar::</option>
+                                            <option   value="Único pago"> Único pago </option>
+                                            <option   value="Primer pago"> Primer pago </option>
+                                            <option   value="Pago parcial"> Pago parcial </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div class="panel-body" style="text-align: right">                                            
 
                     </div>                    
@@ -92,7 +127,7 @@
                     <input type="hidden" id="programa" name="programa" />                     
                     <!-- /.col-lg-12 -->
                 </div>
-                <div class="row">
+                <div class="row" id="documentos_ganador" style="display: none;">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -128,7 +163,7 @@
                     <!-- /.col-lg-12 -->
                 </div>                                    
 
-                <form id="asignar_est_form" role="form">
+                <form id="asignar_est_form" role="form" style="display: none;">
                     <fieldset id="fieldset_top_general">
 
                         <div class="panel panel-info">
@@ -209,8 +244,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="modal fade" id="cargar_documento_convocatoria">
                     <div class="modal-dialog">
                         <div class="modal-content">                                                        
@@ -336,52 +371,52 @@
 
                                                         <select   class="form-control" id="entidad_bancaria" name="entidad_bancaria">
                                                             <option   selected="" value="">::Seleccionar::</option>
-                                                            <option   value="1"> BANCO DE BOGOTA </option>
-                                                            <option   value="2"> BANCO POPULAR </option>
-                                                            <option   value="6"> ITAU CORPBANCA COLOMBIA S.A. </option>
-                                                            <option   value="7"> BANCOLOMBIA </option>
-                                                            <option   value="9"> Citibank </option>
-                                                            <option   value="12"> BANCO GNB SUDAMERIS </option>
-                                                            <option   value="13"> BBVA </option>
-                                                            <option   value="14"> ITAU </option>
-                                                            <option   value="23"> BANCO DE OCCIDENTE </option>
-                                                            <option   value="31"> BANCOLDEX S.A </option>
-                                                            <option   value="32"> BANCO CAJA SOCIAL BCSC </option>
-                                                            <option   value="40"> BANCO AGRARIO </option>
-                                                            <option   value="42"> BNP PARIBAS COLOMBIA CORPORACION FINANCIERA S.A. </option>
-                                                            <option   value="47"> BANCO MUNDO MUJER </option>
-                                                            <option   value="51"> DAVIVIENDA </option>
-                                                            <option   value="52"> AV VILLAS </option>
-                                                            <option   value="53"> BANCO W S.A. </option>
-                                                            <option   value="59"> BANCO DE LAS MICROFINANZAS BANCAMIA S.A. </option>
-                                                            <option   value="60"> BANCO PICHINCHA S.A. </option>
-                                                            <option   value="61"> BANCOOMEVA </option>
-                                                            <option   value="62"> BANCO FALABELLA </option>
-                                                            <option   value="63"> FINANDINA </option>
-                                                            <option   value="65"> BANCO SANTANDER DE NEGOCIOS COLOMBIA SA </option>
-                                                            <option   value="66"> BANCO COOPERATIVO COOPCENTRAL </option>
-                                                            <option   value="67"> MIBANCO S.A. </option>
-                                                            <option   value="69"> BANCO SERFINANZA S.A. </option>
-                                                            <option   value="70"> LULO BANK S.A. </option>
-                                                            <option   value="71"> BANCO J.P. MORGAN COLOMBIA S.A. </option>
-                                                            <option   value="101"> BANCO ACH </option>
-                                                            <option   value="121"> FINANCIERA JURISCOOP S.A. </option>
-                                                            <option   value="151"> RAPPIPAY </option>
-                                                            <option   value="283"> COOPERATIVA FINANCIERA DE ANTIOQUIA </option>
-                                                            <option   value="289"> COOPERATIVA FINANCIERA COTRAFA </option>
-                                                            <option   value="291"> COOFINEP COOPERATIVA FINANCIERA </option>
-                                                            <option   value="292"> CONFIAR </option>
-                                                            <option   value="303"> GIROS Y FINANZAS COMPANIA DE FINANCIAMIENTO S.A. </option>
-                                                            <option   value="370"> COLTEFINANCIERA S.A. </option>
-                                                            <option   value="507"> NEQUI - BANCOLOMBIA </option>
-                                                            <option   value="550"> DECEVAL S.A </option>
-                                                            <option   value="551"> DAVIPLATA </option>
-                                                            <option   value="558"> BANCO CREDIFINANCIERA SA </option>
-                                                            <option   value="637"> IRIS </option>
-                                                            <option   value="683"> DTN </option>
-                                                            <option   value="684"> FONDO DE GARANTÍAS DE FINANCIE </option>
-                                                            <option   value="685"> DGCPTN SISTEMA GENERAL DE REGALIAS </option>
-                                                            <option   value="801"> MOVII </option>
+                                                            <option   value="BANCO DE BOGOTA"> BANCO DE BOGOTA </option>
+                                                            <option   value="BANCO POPULAR"> BANCO POPULAR </option>
+                                                            <option   value="ITAU CORPBANCA COLOMBIA S.A."> ITAU CORPBANCA COLOMBIA S.A. </option>
+                                                            <option   value="BANCOLOMBIA"> BANCOLOMBIA </option>
+                                                            <option   value="Citibank"> Citibank </option>
+                                                            <option   value="BANCO GNB SUDAMERIS"> BANCO GNB SUDAMERIS </option>
+                                                            <option   value="BBVA"> BBVA </option>
+                                                            <option   value="ITAU"> ITAU </option>
+                                                            <option   value="BANCO DE OCCIDENTE"> BANCO DE OCCIDENTE </option>
+                                                            <option   value="BANCOLDEX S.A"> BANCOLDEX S.A </option>
+                                                            <option   value="BANCO CAJA SOCIAL BCSC"> BANCO CAJA SOCIAL BCSC </option>
+                                                            <option   value="BANCO AGRARIO"> BANCO AGRARIO </option>
+                                                            <option   value="BNP PARIBAS COLOMBIA CORPORACION FINANCIERA S.A."> BNP PARIBAS COLOMBIA CORPORACION FINANCIERA S.A. </option>
+                                                            <option   value="BANCO MUNDO MUJER"> BANCO MUNDO MUJER </option>
+                                                            <option   value="DAVIVIENDA"> DAVIVIENDA </option>
+                                                            <option   value="AV VILLAS"> AV VILLAS </option>
+                                                            <option   value="BANCO W S.A."> BANCO W S.A. </option>
+                                                            <option   value="BANCO DE LAS MICROFINANZAS BANCAMIA S.A."> BANCO DE LAS MICROFINANZAS BANCAMIA S.A. </option>
+                                                            <option   value="BANCO PICHINCHA S.A."> BANCO PICHINCHA S.A. </option>
+                                                            <option   value="BANCOOMEVA"> BANCOOMEVA </option>
+                                                            <option   value="BANCO FALABELLA"> BANCO FALABELLA </option>
+                                                            <option   value="FINANDINA"> FINANDINA </option>
+                                                            <option   value="BANCO SANTANDER DE NEGOCIOS COLOMBIA S"> BANCO SANTANDER DE NEGOCIOS COLOMBIA SA </option>
+                                                            <option   value="BANCO COOPERATIVO COOPCENTRA"> BANCO COOPERATIVO COOPCENTRAL </option>
+                                                            <option   value="MIBANCO S.A."> MIBANCO S.A. </option>
+                                                            <option   value="BANCO SERFINANZA S.A."> BANCO SERFINANZA S.A. </option>
+                                                            <option   value="LULO BANK S.A."> LULO BANK S.A. </option>
+                                                            <option   value="BANCO J.P. MORGAN COLOMBIA S.A."> BANCO J.P. MORGAN COLOMBIA S.A. </option>
+                                                            <option   value="BANCO ACH"> BANCO ACH </option>
+                                                            <option   value="FINANCIERA JURISCOOP S.A"> FINANCIERA JURISCOOP S.A. </option>
+                                                            <option   value="RAPPIPAY"> RAPPIPAY </option>
+                                                            <option   value="COOPERATIVA FINANCIERA DE ANTIOQUIA"> COOPERATIVA FINANCIERA DE ANTIOQUIA </option>
+                                                            <option   value="COOPERATIVA FINANCIERA COTRAFA"> COOPERATIVA FINANCIERA COTRAFA </option>
+                                                            <option   value="COOFINEP COOPERATIVA FINANCIERA"> COOFINEP COOPERATIVA FINANCIERA </option>
+                                                            <option   value="CONFIAR"> CONFIAR </option>
+                                                            <option   value="GIROS Y FINANZAS COMPANIA DE FINANCIAMIENTO S.A."> GIROS Y FINANZAS COMPANIA DE FINANCIAMIENTO S.A. </option>
+                                                            <option   value="COLTEFINANCIERA S.A."> COLTEFINANCIERA S.A. </option>
+                                                            <option   value="NEQUI - BANCOLOMBIA"> NEQUI - BANCOLOMBIA </option>
+                                                            <option   value="DECEVAL S.A"> DECEVAL S.A </option>
+                                                            <option   value="DAVIPLATA"> DAVIPLATA </option>
+                                                            <option   value="BANCO CREDIFINANCIERA SA"> BANCO CREDIFINANCIERA SA </option>
+                                                            <option   value="IRIS"> IRIS </option>
+                                                            <option   value="DTN"> DTN </option>
+                                                            <option   value="FONDO DE GARANTÍAS DE FINANCIE"> FONDO DE GARANTÍAS DE FINANCIE </option>
+                                                            <option   value="DGCPTN SISTEMA GENERAL DE REGALIAS"> DGCPTN SISTEMA GENERAL DE REGALIAS </option>
+                                                            <option   value="MOVII"> MOVII </option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -478,8 +513,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
                 <!--
                 28-09-2021
                 Wilmer Gustavo Mogollón Duque

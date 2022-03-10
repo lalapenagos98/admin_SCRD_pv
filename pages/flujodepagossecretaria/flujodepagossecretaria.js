@@ -169,9 +169,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $("#categorias").attr('disabled', '');
                 $('#categorias').val(null);
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
+                cargar_tabla(token_actual);
             });
             //carga el select rondas
             $('#categorias').change(function () {
+                cargar_tabla(token_actual);
             });
             /*
              * 22-04-2021
@@ -2571,6 +2573,7 @@ function aprobar_pago_ganador_subsecretaria(token_actual, id_propuesta, observac
             default:
                 notify("success", "ok", "Usuario:", "Se aprobó el pago con éxito.");
                 $('#evaluarModal').modal('hide');
+                cargar_tabla(token_actual);
                 break;
         }
 
@@ -2625,7 +2628,7 @@ function devolver_al_misional(token_actual, id_propuesta, observacion_verificaci
             default:
                 notify("success", "ok", "Usuario:", "Se notificó la subsanación de la documentación al misional con éxito.");
                 $('#evaluarModal').modal('hide');
-//                cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
                 break;
         }
 
