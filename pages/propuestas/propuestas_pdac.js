@@ -410,6 +410,10 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".caracter_mecanismos_cualitativa").html(1000 - json.propuesta.mecanismos_cualitativa.length);
                                                                         }
+                                                                        if(json.propuesta.aportes_dinamizacion!=null)
+                                                                        {
+                                                                            $(".caracter_aportes_dinamizacion").html(1000 - json.propuesta.aportes_dinamizacion.length);
+                                                                        }
                                                                         if(json.propuesta.mecanismos_cuantitativa!=null)
                                                                         {
                                                                             $(".caracter_mecanismos_cuantitativa").html(2000 - json.propuesta.mecanismos_cuantitativa.length);
