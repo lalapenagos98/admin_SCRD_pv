@@ -1611,7 +1611,7 @@ function evaluar_perfil(token_actual, postulacion, participante) {
                 $(".guardar_aplica_perfil").addClass("disabled");
                 $("#fieldset_aplica_perfil").attr("disabled", "");
                 cargar_tabla(token_actual);
-                if ($("#optionsRadiosInline1").val()) {
+                if (document.getElementById('optionsRadiosInline1').checked) {
 
                     $("#form_criterios").show();
                 } else {
