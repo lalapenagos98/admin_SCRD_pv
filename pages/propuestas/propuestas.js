@@ -246,9 +246,15 @@ $(document).ready(function () {
                                                                         });
 
 
+                                                                        //Valido si la propuesta no es Guardada no inscrita y anulada                                                                        
+                                                                        if(json.estado>7 && json.estado!==20)
+                                                                        {
+                                                                            json.propuesta.estado='Inscrita';                                                                            
+                                                                        }
+                                                                        
                                                                         //Cargo el formulario con los datos
                                                                         $('#formulario_principal').loadJSON(json.propuesta);
-
+                                                                        
                                                                         $("#bogota option[value='" + json.propuesta.bogota + "']").prop('selected', true);
 
                                                                         $("#ejecucion_menores_edad option[value='" + json.propuesta.ejecucion_menores_edad + "']").prop('selected', true);
