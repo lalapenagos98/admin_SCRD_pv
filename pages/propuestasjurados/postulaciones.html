@@ -94,16 +94,50 @@
                                     <div class="panel-body" id="panel_tabs">
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#ver_inhabilidades" data-toggle="tab" aria-expanded="true">Ver inhabilidades</a>
+                                            
+                                            <li class="active"><a href="#perfil_convocatoria" data-toggle="tab" aria-expanded="true">Perfiles</a>
                                             </li>
-                                            <li class=""><a href="#perfil_convocatoria" data-toggle="tab" aria-expanded="false">Perfiles</a>
+                                            <li class=""><a href="#ver_inhabilidades" data-toggle="tab" aria-expanded="false">Ver inhabilidades</a>
                                             </li>
                                         </ul>
 
                                         <!-- Tab panes -->
                                         <div class="tab-content">
 
-                                            <div class="tab-pane fade active in" id="ver_inhabilidades">
+                                            <div class="tab-pane fade active in" id="perfil_convocatoria">
+
+                                                <form id="form_nuevo_criterio" class="form_nuevo_criterio"  >
+
+
+
+                                                    <div class="modal-body">
+
+                                                        <div id="lista_perfiles"  class="form-group">
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12" style="text-align: right">
+                                                                <!--button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Aceptar</button>
+                                                                <button type="button" id="postular" class="btn btn-primary"  style="display:none;">Postular</button-->
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="modal-footer" class="form-group">
+                                                        <!--button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button--->
+                                                        <button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Cerrar</button>
+
+                                                        <button type="button" id="cancelar" class="btn btn-secondary" data-dismiss="modal"  style="display:none;">Cancelar</button>
+                                                        <button type="submit" id="postular" class="btn btn-primary"  style="display:none;">Postular</button>
+
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                             <div class="tab-pane fade" id="ver_inhabilidades">
                                                 <!--Información básica-->
                                                 <div class="panel panel-info">
                                                     <div class="panel-heading">
@@ -117,7 +151,7 @@
                                                                 <!-- 09-02-2021 Wilmer Gustavo Mogollón Duque --- Se agrega el comentario del número de estímulos que puede recibir un aspirante -->
 
                                                                 <p>
-                                                                    Por favor tenga en cuenta el número de estímulos que el aspirante puede recibir como jurado o participante, 
+                                                                    Por favor tenga en cuenta el número de estímulos al año que el aspirante puede recibir como jurado o participante, 
                                                                     de acuerdo con las siguientes combinaciones.
                                                                 </p>
                                                                 <ul>
@@ -281,40 +315,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="tab-pane fade" id="perfil_convocatoria">
-
-                                                <form id="form_nuevo_criterio" class="form_nuevo_criterio"  >
-
-
-
-                                                    <div class="modal-body">
-
-                                                        <div id="lista_perfiles"  class="form-group">
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-lg-12" style="text-align: right">
-                                                                <!--button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Aceptar</button>
-                                                                <button type="button" id="postular" class="btn btn-primary"  style="display:none;">Postular</button-->
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="modal-footer" class="form-group">
-                                                        <!--button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button--->
-                                                        <button type="button" id="aceptar" class="btn btn-primary"  style="display:none;">Cerrar</button>
-
-                                                        <button type="button" id="cancelar" class="btn btn-secondary" data-dismiss="modal"  style="display:none;">Cancelar</button>
-                                                        <button type="submit" id="postular" class="btn btn-primary"  style="display:none;">Postular</button>
-
-                                                    </div>
-
-                                                </form>
-                                            </div>
-
-
                                         </div>
 
                                     </div> 
@@ -353,11 +353,11 @@
                                 <!--form id="formulario_principal" action="" class="formulario_principal" role="form" method="post" style="display:none;"-->
                                 <!--form id="formulario_principal"  class="formulario_principal" style="display:none;" onsubmit=" return false;"-->
                                 <div class="row">
-
+                                    
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Enfoque </label>
-                                            <select class="form-control" name="enfoque" id="enfoque">
+                                            <label>Área </label>
+                                            <select class="form-control" name="area" id="area">
                                                 <option>:: Seleccionar ::</option>
                                             </select>
                                         </div>
@@ -374,8 +374,8 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Área </label>
-                                            <select class="form-control" name="area" id="area">
+                                            <label>Enfoque </label>
+                                            <select class="form-control" name="enfoque" id="enfoque">
                                                 <option>:: Seleccionar ::</option>
                                             </select>
                                         </div>
