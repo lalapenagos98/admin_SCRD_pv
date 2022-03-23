@@ -755,13 +755,16 @@ function validator_form(token_actual) {
         
         if(enviar)
         {
+            
             // Prevent form submission
             e.preventDefault();
+
             // Get the form instance
             var $form = $(e.target);
 
             // Get the BootstrapValidator instance
             var bv = $form.data('bootstrapValidator');
+        
 
             // Valido si el id existe, con el fin de eviarlo al metodo correcto
             $('#formulario_principal').attr('action', url_pv + 'Personasnaturales/crear_integrante');
@@ -834,6 +837,12 @@ function validator_form(token_actual) {
             
             $(".formulario_principal").data('bootstrapValidator').resetForm();
             
+        }
+        else
+        {                        
+            $(".formulario_principal").data('bootstrapValidator').resetForm();
+            
+            return false;
         }
 
     });

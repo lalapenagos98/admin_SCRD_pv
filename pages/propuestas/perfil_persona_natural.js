@@ -863,6 +863,8 @@ function validator_form(token_actual) {
         else
         {
             $form.bootstrapValidator('disableSubmitButtons', false);
+            
+        return false;
         }
     });
 

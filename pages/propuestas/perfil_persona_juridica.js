@@ -690,6 +690,12 @@ function validator_form(token_actual) {
                 }
             });
         }
+        else
+        {
+            $(".formulario_principal").data('bootstrapValidator').resetForm();
+            
+            return false;
+        }
     });
 
 }
