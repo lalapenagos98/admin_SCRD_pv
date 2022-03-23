@@ -765,7 +765,13 @@ function validator_form(token_actual) {
             });
 
             //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
-        }                
+        }
+        else
+        {
+            $(".formulario_principal").data('bootstrapValidator').resetForm();
+            
+            return false;
+        }
     });
 
 }
