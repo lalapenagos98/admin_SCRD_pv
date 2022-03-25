@@ -92,36 +92,6 @@ $(document).ready(function () {
     });
 
 
-    /*
-     * 2022-03-08
-     * Wilmer Gustavo Mogollón Duque
-     * Se agrega change function para el tipo de pago
-     */
-
-    $('#tipo_pago').change(function () {
-        if ($('#tipo_pago').val() === "") {
-            $("#documentos_ganador").hide();
-            $("#tabla_convocatoriaadministrativos").hide();
-            $("#asignar_est_form").hide();
-        }
-        if ($('#tipo_pago').val() === "Único pago") {
-            $("#documentos_ganador").show();
-            $("#tabla_convocatoriaadministrativos").show();
-            $("#asignar_est_form").show();
-        }
-        if ($('#tipo_pago').val() === "Primer pago") {
-            $("#documentos_ganador").show();
-            $("#tabla_convocatoriaadministrativos").hide();
-            $("#asignar_est_form").show();
-        }
-        if ($('#tipo_pago').val() === "Pago parcial") {
-            $("#documentos_ganador").show();
-            $("#tabla_convocatoriaadministrativos").show();
-            $("#asignar_est_form").show();
-        }
-    });
-
-
 
 
     var href_regresar = "";
@@ -204,7 +174,7 @@ $(document).ready(function () {
                                                 //Realizo la peticion para cargar el formulario
                                                 $.ajax({
                                                     type: 'GET',
-                                                    data: {"token": token_actual.token, "conv": $("#conv").attr('value'), "modulo": "Menu Participante", "m": getURLParameter('m'), "p": getURLParameter('p')},
+                                                    data: {"token": token_actual.token, "conv": $("#conv").attr('value'), "modulo": "Menu Participante", "m": getURLParameter('m'), "p": getURLParameter('p'), "tipo_pago": $("#tipo_pago").attr('value'), },
                                                     url: url_pv + 'PropuestasDocumentacionganadores/buscar_documentacion'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')

@@ -712,6 +712,11 @@ function cargar_info_pago(token_actual, id_propuesta) {
                         $("#estado_pago").html("Se ha presentado una excepción");
                         $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
                         $("#btn_habilitar_flujo").show();
+                        if (json.ordenpagosicon.estado === null) {
+                            $("#estado_pago").html("No se ha tramitado la creación de la orden de pago");
+                            $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").hide();
+                        }
                     } else {
                         $("#estado_pago").html(json.ordenpagos.estado);
                         $("#descripcion_estado").html(json.descripcion_mensaje);
@@ -784,7 +789,7 @@ function habilitar_flujo(token_actual, id_propuesta, secuencial_registro) {
         type: 'PUT',
         url: url_pv + 'Flujodepagos/habilitar_flujo/propuesta/' + id_propuesta,
         data: "&token=" + token_actual.token
-         + "&secuencial_registro=" + secuencial_registro
+                + "&secuencial_registro=" + secuencial_registro
 
     }).done(function (data) {
 
