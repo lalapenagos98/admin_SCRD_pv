@@ -290,7 +290,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "perfil": getURLParameter('perfil')},
-            url: url_pv + 'Administrador/menu'
+            url: url_pv + 'Administrador/menu_participante'
         }).done(function (result) {
             if (result == 'error_token')
             {
