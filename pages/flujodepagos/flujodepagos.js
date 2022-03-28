@@ -709,18 +709,24 @@ function cargar_info_pago(token_actual, id_propuesta) {
 
                     $('#propuesta_pago').val(json.propuesta.id);
                     if (json.ordenpagos === null) {
-                        $("#estado_pago").html("Se ha presentado una excepción");
-                        $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
-                        $("#btn_habilitar_flujo").show();
                         if (json.ordenpagosicon.estado === null) {
                             $("#estado_pago").html("No se ha tramitado la creación de la orden de pago");
                             $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
                             $("#btn_habilitar_flujo").hide();
                         }
+                        $("#estado_pago").html("Se ha presentado una excepción");
+                        $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
+                        $("#btn_habilitar_flujo").show();
                     } else {
-                        $("#estado_pago").html(json.ordenpagos.estado);
-                        $("#descripcion_estado").html(json.descripcion_mensaje);
-                        $("#btn_habilitar_flujo").hide();
+                        if (json.descripcion_mensaje === "DEVUELTA" || json.descripcion_mensaje === "PAGO RECHAZADO") {
+                            $("#estado_pago").html(json.ordenpagos.estado);
+                            $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").show();
+                        } else {
+                            $("#estado_pago").html(json.ordenpagos.estado);
+                            $("#descripcion_estado").html(json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").hide();
+                        }
                     }
 
                 }
