@@ -727,6 +727,7 @@ function validar_convocatoria_jurados(token_actual) {
                 var json = JSON.parse(data);
                 if (json.disponible === true) {
                     $("#convocatoria").attr("value", json.convocatoria.id);
+                    $("#modalidad_participa_jurado").html(json.propuesta_jurado.modalidad_participa);
                 }
         }
 
