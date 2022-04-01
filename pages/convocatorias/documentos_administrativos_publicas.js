@@ -187,6 +187,93 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
                     });
                 });
+                
+                //Cargo el formulario, para crear o editar
+                $("#cargar_formulario_pagos").click(function () {
+                    
+                    var tipo_requisito = "Administrativos";
+                    
+                    //Valido si la modalidad es de jurados
+                    if ($("#modalidad").val() == 2)
+                    {
+                        tipo_requisito = "JuradosAdministrativos";
+                    }
+                    //Realizo la peticion para cargar el formulario                                
+                    $.ajax({
+                        type: 'POST',
+                        data: {"token": token_actual.token, "convocatoria": $("#id").attr('value'), "id": $("#id_registro").attr('value'), "tipo_requisito": tipo_requisito},
+                        url: url_pv + 'Convocatoriasdocumentos/search/'
+                    }).done(function (data) {
+                        if (data == 'error_metodo')
+                        {
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        } else
+                        {
+                            if (data == 'error')
+                            {
+                                location.href = 'list.html?msg=Debe seleccionar una convocatoria, para poder continuar.&msg_tipo=danger';
+                            } else
+                            {
+                                if (data == 'error_token')
+                                {
+                                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                                } else
+                                {
+                                    var json = JSON.parse(data);
+                                    //Cargo el select de los requisitos
+                                    $('#requisito_pago').find('option').remove();
+                                    $("#requisito_pago").append('<option value="">:: Seleccionar ::</option>');
+                                    if (json.requisitos.length > 0) {
+                                        $.each(json.requisitos, function (key, requisito) {
+                                            if(requisito.id===1107)
+                                            {
+                                                $("#requisito_pago").append('<option value="' + requisito.id + '" selected="selected">' + requisito.nombre + '</option>');
+                                            }
+                                        });
+                                    }
+
+                                    //Cargo el select de los etapas                                
+                                    $('#etapa_pago').find('option').remove();
+                                    $("#etapa_pago").append('<option value="">:: Seleccionar ::</option>');
+                                    if (json.etapas.length > 0) {
+                                        $.each(json.etapas, function (key, etapa) {
+                                            if(etapa==='Ganador')
+                                            {
+                                                $("#etapa_pago").append('<option value="' + etapa + '" selected="selected">' + etapa + '</option>');
+                                            }
+                                        });
+                                    }
+
+                                    //Cargo el select de archivos permitidos                                            
+                                    $('#archivos_permitidos_pago').find('option').remove();
+                                    if (json.tipos_archivos_tecnicos.length > 0) {
+                                        $.each(json.tipos_archivos_tecnicos, function (key, archivo_permitido) {
+                                            //Solo aplica cuando se carga para crear un nuevo registro
+                                            if (archivo_permitido === 'pdf')
+                                            {
+                                                $("#archivos_permitidos_pago").append('<option value="' + archivo_permitido + '" selected="selected">' + archivo_permitido + '</option>');
+                                            }
+                                        });
+                                    }
+
+                                    //Cargo el select de tamaños permitidos                                            
+                                    $('#tamano_permitido_pago').find('option').remove();
+                                    $("#tamano_permitido_pago").append('<option value="">:: Seleccionar ::</option>');
+                                    if (json.tamanos_permitidos.length > 0) {
+                                        $.each(json.tamanos_permitidos, function (key, tamano_permitido) {
+                                            $("#tamano_permitido_pago").append('<option value="' + tamano_permitido + '" >' + tamano_permitido + '</option>');
+                                        });
+                                    }
+
+                                    //Cargo el formulario con los datos
+                                    $('#form_nuevo_documento_pago').loadJSON(json.convocatoriadocumento);
+
+
+                                }
+                            }
+                        }
+                    });
+                });
 
 
             } else
@@ -222,6 +309,133 @@ function validator_form(token_actual) {
             orden: {
                 validators: {
                     notEmpty: {message: 'El orden es requerido'},
+                    numeric: {message: 'Debe ingresar solo numeros'}
+                }
+            },
+            tamano_permitido: {
+                validators: {
+                    notEmpty: {message: 'El tamaño máximo permitido es requerido'}
+                }
+            }
+        }
+    }).on('success.form.bv', function (e) {
+        // Prevent form submission
+        e.preventDefault();
+        // Get the form instance
+        var $form = $(e.target);
+
+        // Get the BootstrapValidator instance
+        var bv = $form.data('bootstrapValidator');
+
+        var values = $form.serializeArray();
+
+        values.find(input => input.name == 'descripcion').value = CKEDITOR.instances.descripcion.getData();
+
+        if ($("#id_registro").val().length < 1) {
+            //Se realiza la peticion con el fin de guardar el registro actual
+            $.ajax({
+                type: 'POST',
+                url: url_pv + 'Convocatoriasdocumentos/new',
+                data: $.param(values) + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria_padre_categoria=" + $("#id").attr('value')
+            }).done(function (result) {
+
+                if (result == 'error')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (result == 'error_token')
+                    {
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                    } else
+                    {
+                        if (result == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        } else
+                        {
+                            if (isNaN(result)) {
+                                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            } else
+                            {
+                                notify("success", "ok", "Convocatorias:", "Se creó el documento administrativo con éxito.");
+                                //Cargar datos de la tabla de categorias
+                                cargar_tabla(token_actual);
+                            }
+                        }
+                    }
+                }
+
+            });
+        } else
+        {
+            //Realizo la peticion con el fin de editar el registro actual
+            $.ajax({
+                type: 'PUT',
+                url: url_pv + 'Convocatoriasdocumentos/edit_publico/' + $("#id_registro").attr('value'),
+                data: $.param(values) + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria_padre_categoria=" + $("#id").attr('value')
+            }).done(function (result) {
+                if (result == 'error')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                } else
+                {
+                    if (result == 'error_token')
+                    {
+                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                    } else
+                    {
+                        if (result == 'acceso_denegado')
+                        {
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        } else
+                        {
+                            if (isNaN(result))
+                            {
+                                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            } else
+                            {
+                                notify("info", "ok", "Convocatorias:", "Se edita el documento con éxito.");
+                                cargar_tabla(token_actual);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+        bv.resetForm();
+        CKEDITOR.instances.descripcion.setData('');
+        $("#orden").val("");
+        $("#requisto option[value='']").prop("selected", true);
+        $("#subsanable option[value='true']").prop("selected", true);
+        $("#obligatorio option[value='true']").prop("selected", true);
+        $("#id_registro").val("");
+        $('#nuevo_evento').modal('toggle');
+    });
+    
+    //Validar el formulario
+    $('.form_nuevo_documento_pago').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            requisito: {
+                validators: {
+                    notEmpty: {message: 'El requisito es requerido'}
+                }
+            },
+            etapa: {
+                validators: {
+                    notEmpty: {message: 'La etapa es requerida'}
+                }
+            },
+            orden: {
+                validators: {
+                    notEmpty: {message: 'El número del pago es requerido'},
                     numeric: {message: 'Debe ingresar solo numeros'}
                 }
             },

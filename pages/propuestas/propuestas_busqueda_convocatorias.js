@@ -70,7 +70,11 @@ $(document).ready(function () {
                     $("#modalidad").append('<option value="">:: Seleccionar ::</option>');
                     if (json.modalidades.length > 0) {
                         $.each(json.modalidades, function (key, modalidad) {
-                            $("#modalidad").append('<option value="' + modalidad.id + '"  >' + modalidad.nombre + '</option>');
+                            //Quitamos la modalidad jurado
+                            if(modalidad.id!==2)
+                            {
+                                $("#modalidad").append('<option value="' + modalidad.id + '"  >' + modalidad.nombre + '</option>');
+                            }
                         });
                     }
 
