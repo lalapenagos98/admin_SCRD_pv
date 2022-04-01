@@ -289,7 +289,7 @@ $(document).ready(function () {
         //Cargamos el menu principal
         $.ajax({
             type: 'POST',
-            data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "perfil": getURLParameter('perfil')},
+            data: {"token": token_actual.token, "id": getURLParameter('id'), "m": getURLParameter('m'), "p": getURLParameter('p'), "sub": getURLParameter('sub'), "perfil": getURLParameter('perfil'), "opcion_menu":$("#opcion_menu").val()},
             url: url_pv + 'Administrador/menu_participante'
         }).done(function (result) {
             if (result == 'error_token')

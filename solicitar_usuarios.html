@@ -40,144 +40,157 @@
 
     </head>
 
-    <body>
+    <body style="padding-top: 5em; background: rgb(128,5,173);background: linear-gradient(90deg, rgba(128,5,173,1) 0%, rgba(167,34,236,1) 9%, rgba(184,36,231,0.7245098723082983) 22%, rgba(0,212,255,0) 100%); ">
         <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
         <div class="modal fade" id="my_loader" role="dialog">
             <div class="modal-dialog">    
                 <div class="loader" style="margin: 0 auto;"></div>             
             </div>
         </div>
-        <div class="container">                        
+        <div class="container">
             <div class="row">
-                <div class="col-md-12" style="text-align: center">
-                    <a href="index.html"><img src="dist/img/logo-secretaria-cultura.png" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" /></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Solicitar usuario</h3>
-                        </div>
-                        <div class="panel-body" style="min-height: 420px">
-                            <form id="form_validator" action="" class="form_validator" role="form" method="post">
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <input class="form-control" placeholder="Correo electrónico" name="correo_electronico" type="email" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <input class="form-control" placeholder="Ingresar de nuevo su correo electrónico" name="correo_electronico_confirmar" type="email" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <input class="form-control" placeholder="Ingresar de nuevo su contraseña" name="password_confirmar" type="password" value="">
-                                            </div>
-                                        </div>                                        
-                                        <div class="col-lg-12">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="terminos_condiciones" name="terminos_condiciones">
-                                                <label class="form-check-label" for="exampleCheck1">Estoy de acuerdo con los términos y condiciones.</label>
-                                                <a href="javascript:void(0)" id="activar_modal" data-toggle="modal" data-target="#modal_terminos">Ver términos y condiciones</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <div class="g-recaptcha" data-sitekey="6LdwFnkUAAAAAEKbvc35qEa5K6Vv6jX6rbjO0YzM"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <!-- Change this to a button or input when using this as a form -->                                    
-                                                <button type="submit" class="btn btn-default">Crear usuario</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <a href="index.html">Regresar al login</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <a href="recordar_contrasena.html">¿Olvidó su contraseña?</a>
-                                            </div>
-                                        </div>                                    
-                                    </div>
-                                </fieldset>
-                            </form>
+                <div class="col-md-12 div-login" style="background-color:#ffffff; opacity: 0.9; border-radius: 10px 10px 10px 10px;-webkit-box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);-moz-box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);">
+                    <div class="row">
+                        <div style="text-align: center; opacity: 1; padding: 1.5em; padding-left: 15em;padding-right: 15em;">
+                            <img src="dist/img/Logo-secretaria-cultura-recreacion-deporte-morado.svg" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" />
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Pasos para registrar y activar una cuenta</h3>
-                        </div>
-                        <div class="panel-body" style="min-height: 420px">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <ol>
-                                            <li>Diligencie los datos del formulario de registro: correo electrónico y contraseña. El correo electrónico será su nombre de usuario para acceder a la aplicación.</li>
-                                            <li>Una vez diligencie el formulario de registro se enviará un mensaje al correo electrónico indicado. Por favor revise también la carpeta de SPAM si no encuentra el mensaje en el buzón de entrada.</li>
-                                            <li>Abra el correo e ingrese al link de verificación de cuenta enviado, si el link no funciona entonces copie y pegue la URL en un nuevo tab o ventana del navegador.</li>
-                                            <li>Si la verificación es exitosa entonces puede ingresar a la aplicación para presentar sus propuestas al Programa Distrital de Estímulos y/o al Programa Distrital de Apoyos Concertados.</li>
-                                            <li>Si tiene algún problema en la inscripción del usuario, por favor escriba un correo a: convocatorias@scrd.gov.co indicando el inconveniente.</li>                                            
-                                        </ol>
-                                    </div>
+                    <div style="text-align: center;">
+                        <p>
+                            Sistema de Convocatorias
+                            <br/>
+                            <strong>SICON</strong>
+                        </p>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Solicitar usuario</h3>
                                 </div>
-                            </div>                                    
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="modal_terminos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold">POLÍTICA DE PRIVACIDAD Y TÉRMINOS DE USO DEL SISTEMA DE INSCRIPCIÓN DE PROPUESTAS AL PROGRAMA DISTRITAL DE ESTÍMULOS Y AL PROGRAMA DISTRITAL DE APOYOS CONCERTADOS DEL SECTOR CULTURA, RECREACIÓN Y DEPORTE</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <div class="panel-body" style="min-height: 420px">
+                                    <form id="form_validator" action="" class="form_validator" role="form" method="post">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Correo electrónico" name="correo_electronico" type="email" autofocus>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Ingresar de nuevo su correo electrónico" name="correo_electronico_confirmar" type="email" autofocus>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <input class="form-control" placeholder="Ingresar de nuevo su contraseña" name="password_confirmar" type="password" value="">
+                                                    </div>
+                                                </div>                                        
+                                                <div class="col-lg-12">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="terminos_condiciones" name="terminos_condiciones">
+                                                        <label class="form-check-label" for="exampleCheck1">Estoy de acuerdo con los términos y condiciones.</label>
+                                                        <a href="javascript:void(0)" id="activar_modal" data-toggle="modal" data-target="#modal_terminos">Ver términos y condiciones</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="g-recaptcha" data-sitekey="6LdwFnkUAAAAAEKbvc35qEa5K6Vv6jX6rbjO0YzM"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <!-- Change this to a button or input when using this as a form -->                                    
+                                                        <button type="submit" class="btn btn-default">Crear usuario</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <a href="index.html">Regresar al login</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <a href="recordar_contrasena.html">¿Olvidó su contraseña?</a>
+                                                    </div>
+                                                </div>                                    
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="modal-body" style="height: 300px;overflow-y: auto">
-                                <p>El Sitio Web www.culturarecreacionydeporte.gov.co/convocatorias tiene como objetivo permitir la inscripción de propuestas por Internet y la subsanación de las mismas en el marco del Programa Distrital de Estímulos y del Programa Distrital de Apoyos Concertados del sector cultura, recreación y deporte de la ciudad de Bogotá D.C.</p>
-                                <p>Se solicita al visitante y al usuario de este Sitio Web, que lea detallada y juiciosamente estas condiciones y la política de privacidad, antes de iniciar su exploración o utilización, y en caso de no estar de acuerdo con estas condiciones o con cualquier disposición de la política de privacidad, que se abstenga de acceder o navegar por el Sitio Web.</p>
-                                <p><b>1. Aceptación de términos</b></p>
-                                <p>Cuando un usuario accede al presente Sitio Web lo hace bajo su total responsabilidad y, por tanto, acepta plenamente y sin reservas el contenido de los términos y condiciones de uso del mismo. La SCRD se reserva, en todos los sentidos, el derecho de actualizar y modificar en cualquier momento y de cualquier forma, de manera unilateral y sin previo aviso, las presentes condiciones de uso y los contenidos del Sitio Web.</p>
-                                <p>El Sitio se actualizará a fin de reflejar dichas modificaciones o incorporaciones, por lo que el usuario deberá leer atentamente las mismas cada vez que ingrese, para comprobar si se han efectuado agregados o modificaciones. El uso de este Sitio significa que el usuario acepta las nuevas condiciones vigentes.</p>
-                                <p><b>2. Privacidad</b></p>
-                                <p>La SCRD y sus entidades adscritas se comprometen a salvaguardar la privacidad de la información personal del usuario obtenida a través del Sitio Web, para lo cual adopta la siguiente política de privacidad.</p>
-                                <p>Se entiende por información personal aquella suministrada por el usuario para el registro, la cual incluye datos como nombre, identificación, edad, género, dirección, correo electrónico y teléfono. El usuario reconoce que el ingreso de información personal lo realiza de manera voluntaria y ante la solicitud de requerimientos específicos por parte de la entidad pública en el marco de las convocatorias del Programa Distrital de Estímulos o del Programa Distrital de Apoyos Concertados.</p>
-                                <p>Cualquier solicitud de información a los usuarios del Sitio Web será tratada con todas las garantías legales y de seguridad que impone la Constitución Política, las normas aplicables a la protección de datos de carácter personal y demás normas concordantes. La solicitud de información se hace siempre para que el usuario la suministre de manera voluntaria.</p>
-                                <p>La SCRD y sus entidades adscritas se comprometen a no ceder, vender, ni a compartir los datos recibidos en el Sitio Web con terceros sin su aprobación expresa. Así mismo, cancelarán o rectificarán los datos cuando resulten inexactos, incompletos o hayan dejado de ser necesarios o pertinentes para su finalidad.</p>
-                                <p><b>3. Información y sitios Web de terceros</b></p>
-                                <p>El usuario acepta que la entidad no es responsable de ningún contenido, enlace asociado, recurso o servicio relacionado con el Sitio de un tercero. Asimismo, el usuario acepta que la entidad no será responsable de ninguna pérdida o daño de cualquier tipo que se derive del uso que se realice de los contenidos de un tercero.</p>
-                                <p>La SCRD y sus entidades adscritas no se responsabilizan por cualquier consecuencia derivada del ingreso indebido de terceros a la base de datos y/o por alguna falla técnica en el funcionamiento y/o conservación de datos en el sistema en cualquiera de los menús de su Sitio Web.</p>
-                                <p>Igualmente no podrán garantizar la disponibilidad de los servicios en línea y de la información que los usuarios requieran en determinado momento. Tampoco incurrirá en responsabilidad con el usuario o terceros, cuando su Sitio Web no se encuentre disponible.</p>
-                                <p>La SCRD y sus entidades adscritas no responderán en ningún caso y bajo ninguna circunstancia, por los ataques o incidentes contra la seguridad de su Sitio Web o contra sus sistemas de información; o por cualquier exposición o acceso no autorizado, fraudulento o ilícito a su Sitio Web y que puedan afectar la confidencialidad, integridad o autenticidad de la información publicada o asociada con los contenidos y servicios que se ofrecen en ella.</p>
-                                <p><b>4. Responsabilidades de los usuarios</b></p>
-                                <p>Los usuarios del Sitio tienen las siguientes responsabilidades:</p>
-                                <p>* Son responsables de que la información que incorporen al Sitio no tenga contenidos de persecución, abuso, difamatorios o con palabras soeces, o contenidos que estimulen la comisión de actividades ilícitas. El Sitio removerá material potencialmente ilegal, contrario a la normatividad vigente, que emplee lenguaje obsceno, ofensivo, difamatorio, pornográfico, discriminatorio, publicitario, que haga apología del delito, etc. Si el usuario adelanta cualquiera de estas conductas, está sujeto a las acciones civiles o penales a que haya lugar.</p>
-                                <p>* Son responsables del respeto de los derechos de autor, por el contenido en la información que registren o carguen en el Sitio, en los términos de la ley colombiana.</p>
-                                <p>* Son responsables de no utilizar información o software del Sitio para invadir la privacidad de terceros, así como de no intentar romper los códigos de seguridad del Sitio, interferir con los servicios del mismo o alterar su información y materiales. Los usuarios son responsables en los casos en que intenten penetrar medidas de seguridad del Sitio o de sus páginas asociadas.</p>
-                                <p>* Son responsables, en los términos de la ley colombiana, cuando suministren información a través del Sitio que contenga virus o componentes dañinos.</p>
-                            </div>                            
                         </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Pasos para registrar y activar una cuenta</h3>
+                                </div>
+                                <div class="panel-body" style="min-height: 420px">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <ol>
+                                                    <li>Diligencie los datos del formulario de registro: correo electrónico y contraseña. El correo electrónico será su nombre de usuario para acceder a la aplicación.</li>
+                                                    <li>Una vez diligencie el formulario de registro se enviará un mensaje al correo electrónico indicado. Por favor revise también la carpeta de SPAM si no encuentra el mensaje en el buzón de entrada.</li>
+                                                    <li>Abra el correo e ingrese al link de verificación de cuenta enviado, si el link no funciona entonces copie y pegue la URL en un nuevo tab o ventana del navegador.</li>
+                                                    <li>Si la verificación es exitosa entonces puede ingresar a la aplicación para presentar sus propuestas al Programa Distrital de Estímulos y/o al Programa Distrital de Apoyos Concertados.</li>
+                                                    <li>Si tiene algún problema en la inscripción del usuario, por favor escriba un correo a: convocatorias@scrd.gov.co indicando el inconveniente.</li>                                            
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modal_terminos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold">POLÍTICA DE PRIVACIDAD Y TÉRMINOS DE USO DEL SISTEMA DE INSCRIPCIÓN DE PROPUESTAS AL PROGRAMA DISTRITAL DE ESTÍMULOS Y AL PROGRAMA DISTRITAL DE APOYOS CONCERTADOS DEL SECTOR CULTURA, RECREACIÓN Y DEPORTE</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="height: 300px;overflow-y: auto">
+                                        <p>El Sitio Web www.culturarecreacionydeporte.gov.co/convocatorias tiene como objetivo permitir la inscripción de propuestas por Internet y la subsanación de las mismas en el marco del Programa Distrital de Estímulos y del Programa Distrital de Apoyos Concertados del sector cultura, recreación y deporte de la ciudad de Bogotá D.C.</p>
+                                        <p>Se solicita al visitante y al usuario de este Sitio Web, que lea detallada y juiciosamente estas condiciones y la política de privacidad, antes de iniciar su exploración o utilización, y en caso de no estar de acuerdo con estas condiciones o con cualquier disposición de la política de privacidad, que se abstenga de acceder o navegar por el Sitio Web.</p>
+                                        <p><b>1. Aceptación de términos</b></p>
+                                        <p>Cuando un usuario accede al presente Sitio Web lo hace bajo su total responsabilidad y, por tanto, acepta plenamente y sin reservas el contenido de los términos y condiciones de uso del mismo. La SCRD se reserva, en todos los sentidos, el derecho de actualizar y modificar en cualquier momento y de cualquier forma, de manera unilateral y sin previo aviso, las presentes condiciones de uso y los contenidos del Sitio Web.</p>
+                                        <p>El Sitio se actualizará a fin de reflejar dichas modificaciones o incorporaciones, por lo que el usuario deberá leer atentamente las mismas cada vez que ingrese, para comprobar si se han efectuado agregados o modificaciones. El uso de este Sitio significa que el usuario acepta las nuevas condiciones vigentes.</p>
+                                        <p><b>2. Privacidad</b></p>
+                                        <p>La SCRD y sus entidades adscritas se comprometen a salvaguardar la privacidad de la información personal del usuario obtenida a través del Sitio Web, para lo cual adopta la siguiente política de privacidad.</p>
+                                        <p>Se entiende por información personal aquella suministrada por el usuario para el registro, la cual incluye datos como nombre, identificación, edad, género, dirección, correo electrónico y teléfono. El usuario reconoce que el ingreso de información personal lo realiza de manera voluntaria y ante la solicitud de requerimientos específicos por parte de la entidad pública en el marco de las convocatorias del Programa Distrital de Estímulos o del Programa Distrital de Apoyos Concertados.</p>
+                                        <p>Cualquier solicitud de información a los usuarios del Sitio Web será tratada con todas las garantías legales y de seguridad que impone la Constitución Política, las normas aplicables a la protección de datos de carácter personal y demás normas concordantes. La solicitud de información se hace siempre para que el usuario la suministre de manera voluntaria.</p>
+                                        <p>La SCRD y sus entidades adscritas se comprometen a no ceder, vender, ni a compartir los datos recibidos en el Sitio Web con terceros sin su aprobación expresa. Así mismo, cancelarán o rectificarán los datos cuando resulten inexactos, incompletos o hayan dejado de ser necesarios o pertinentes para su finalidad.</p>
+                                        <p><b>3. Información y sitios Web de terceros</b></p>
+                                        <p>El usuario acepta que la entidad no es responsable de ningún contenido, enlace asociado, recurso o servicio relacionado con el Sitio de un tercero. Asimismo, el usuario acepta que la entidad no será responsable de ninguna pérdida o daño de cualquier tipo que se derive del uso que se realice de los contenidos de un tercero.</p>
+                                        <p>La SCRD y sus entidades adscritas no se responsabilizan por cualquier consecuencia derivada del ingreso indebido de terceros a la base de datos y/o por alguna falla técnica en el funcionamiento y/o conservación de datos en el sistema en cualquiera de los menús de su Sitio Web.</p>
+                                        <p>Igualmente no podrán garantizar la disponibilidad de los servicios en línea y de la información que los usuarios requieran en determinado momento. Tampoco incurrirá en responsabilidad con el usuario o terceros, cuando su Sitio Web no se encuentre disponible.</p>
+                                        <p>La SCRD y sus entidades adscritas no responderán en ningún caso y bajo ninguna circunstancia, por los ataques o incidentes contra la seguridad de su Sitio Web o contra sus sistemas de información; o por cualquier exposición o acceso no autorizado, fraudulento o ilícito a su Sitio Web y que puedan afectar la confidencialidad, integridad o autenticidad de la información publicada o asociada con los contenidos y servicios que se ofrecen en ella.</p>
+                                        <p><b>4. Responsabilidades de los usuarios</b></p>
+                                        <p>Los usuarios del Sitio tienen las siguientes responsabilidades:</p>
+                                        <p>* Son responsables de que la información que incorporen al Sitio no tenga contenidos de persecución, abuso, difamatorios o con palabras soeces, o contenidos que estimulen la comisión de actividades ilícitas. El Sitio removerá material potencialmente ilegal, contrario a la normatividad vigente, que emplee lenguaje obsceno, ofensivo, difamatorio, pornográfico, discriminatorio, publicitario, que haga apología del delito, etc. Si el usuario adelanta cualquiera de estas conductas, está sujeto a las acciones civiles o penales a que haya lugar.</p>
+                                        <p>* Son responsables del respeto de los derechos de autor, por el contenido en la información que registren o carguen en el Sitio, en los términos de la ley colombiana.</p>
+                                        <p>* Son responsables de no utilizar información o software del Sitio para invadir la privacidad de terceros, así como de no intentar romper los códigos de seguridad del Sitio, interferir con los servicios del mismo o alterar su información y materiales. Los usuarios son responsables en los casos en que intenten penetrar medidas de seguridad del Sitio o de sus páginas asociadas.</p>
+                                        <p>* Son responsables, en los términos de la ley colombiana, cuando suministren información a través del Sitio que contenga virus o componentes dañinos.</p>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
             </div>
+
         </div>
 
         <!-- jQuery -->
