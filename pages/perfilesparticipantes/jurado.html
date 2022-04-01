@@ -54,7 +54,9 @@
     </head>
 
     <body>
-
+        
+        <input type="hidden" id="opcion_menu" value="1">
+        <input type="hidden" id="convocatoria" value="">
 
         <div id="wrapper">
 
@@ -64,79 +66,23 @@
 
             <div id="page-wrapper">
                 <div class="loading centrado-porcentual"></div>
-                
-                
+
+
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Perfil del jurado</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <!--
-                      11-05-2020
-                      Wilmer Gustavo Mogollón Duque
-                      Se agrega a la sección de inicio el paso a paso de la inscripción de la hoja de vida.
-                -->
-
-                <h4>Paso a paso de inscripción</h4>
-                <p>
-                    <strong>
-                        Antes de comenzar, lea por favor el siguiente paso a paso que le indicará en qué orden realizar su inscripción:<br/> 
-                        Si se va a presentar como jurado:</strong> (aplica para antiguos y nuevos participantes)
-                </p>
-
-                <div class="col-lg-6">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h5>¿Cómo se registra la hoja de vida?<br/> </h5>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
 
 
-                                    <p><strong>¿Cómo se registra la hoja de vida?</strong></p>
-                                    <ul>
-                                        <li><strong>En sección Perfiles del participante:</strong> primero, en el menú principal ubicado en la izquierda, ingrese a la sección Perfiles del participante. Allí elija la opción para jurados.</li>
-                                        <li><strong>En jurados:</strong> en esta página diligencie y guarde los datos personales solicitados.</li>
-                                        <li><strong>En sección Convocatorias:</strong> cuando finalice, ubíquese en esta segunda sección del menú e ingrese a la opción Búsqueda de Convocatorias.  </li>
-                                        <li><strong>En Búsqueda de Convocatorias:</strong> como el Banco de Jurados es la convocatoria a la que usted se desea postular, ingrese al filtro “Modalidad” y seleccione: Jurados.  </li>
-                                        <li><strong>Resultado en Búsqueda de Convocatorias:</strong> cuando usted selecciona la opción “Banco de Jurados”, debajo de los filtros de búsqueda saldrá el resultado de la convocatoria específica. En el extremo derecho, haga click en el botón naranja llamador “Ver”. </li>
-                                        <li><strong>Página - Información básica:</strong> una vez usted ingresa a la convocatoria del Banco de Jurados, continuará diligenciando su hoja de vida. Cada módulo le solicitará una información nueva. Al finalizar, siempre haga click en guardar. Para continuar con el siguiente módulo, haga click en el extremo superior derecho en la flecha con orientación hacia la derecha. Así, hasta finalizar su inscripción de hoja de vida. </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h5>Si ya registró su hoja de vida, ¿de qué manera selecciona las convocatorias del Programa Distrital de Estímulos a las que se quiere postular como evaluador?</h5>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <ul>
-                                        <li><strong>En página - Mis postulaciones:</strong> una vez usted termine de registrar su hoja de vida, en el menú izquierdo, al final de la lista, encontrará una opción llamada “Mis postulaciones”. Ingrese allí.</li>
-                                        <li><strong>En página - Mis postulaciones:</strong> en esta página busque el tipo de convocatoria del Programa Distrital de Estímulos que se ajuste más a su perfil. Ya sea por área, los enfoques o las líneas estratégicas que fundamentan al sector artístico, cultural y patrimonial.</li>
-                                        <li><strong>Resultados en Mis postulaciones:</strong> los resultados de su búsqueda saldrán listados debajo de las opciones de filtros.</li>
-                                        <li><strong>Resultados en Mis Postulaciones:</strong> seleccione en la columna de Acciones de la convocatoria de su interés, la opción “Enlace de la convocatoria”. Es esencial que usted conozca a fondo la convocatoria que le llama la atención evaluar, para que comprenda si cuenta o no con el perfil general para postularse.</li>
-                                        <li><strong>Resultados en Mis Postulaciones:</strong> finalmente, seleccione en la columna de Acciones la opción “Postularse”. En la ventana emergente, elija el perfil específico que más se adecúa a su hoja de vida y proceda a hacer la postulación.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <!--10-05-2020 --- Wilmer Gustavo Mogollón Duque --- se modifica el título del formulario-->
-                                Formulario para registrar la información del perfil de jurado. <strong>Nota:</strong> aplica para antiguos y nuevos participantes.
+                                Formulario para registrar la información del perfil de jurado.
                             </div>
                             <div class="panel-body">
                                 <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
@@ -367,6 +313,31 @@
 
         </div>
         <!-- /#wrapper -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="juradoModal" tabindex="-1" role="dialog" aria-labelledby="juradoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mensaje">
+                            <strong>¡Bien hecho!</strong> Información actualizada con éxito.<br/>
+                            ¿Desea continuar con el registro de su hoja de vida?<br/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptar">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
 
         <!-- jQuery -->
         <script src="../../vendor/jquery/jquery.min.js"></script>
