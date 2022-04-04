@@ -161,8 +161,8 @@ $(document).ready(function () {
             }
         });
 
-        $(".baceptar").click(function () {
-            location.href = "../propuestasjurados/perfil.html?m=2&id=" + $('#convocatoria').val() + "&p=0";
+        $("#baceptar").click(function () {
+            location.href = "../propuestasjurados/perfil.html?m=2&id=1288&p=0";
         });
 
         cargar_datos_formulario(token_actual);
