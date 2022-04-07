@@ -47,7 +47,7 @@ $(document).ready(function () {
         });
         
         $(".aceptar_terminos").click(function () {
-            location.href = "../propuestasjurados/postular_hoja_vida.html?m=2&id=" + $("#convocatoria").val() + "&p=0";
+            location.href = "../propuestasjurados/postular_hoja_vida.html?m=2&id=" + $("#convocatoria").val();
         });
 
     }
