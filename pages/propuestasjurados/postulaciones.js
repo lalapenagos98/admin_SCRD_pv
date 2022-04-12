@@ -113,8 +113,10 @@ function verificar_estado_propuesta(token_actual) {
     }).done(function (data) {
 
         var json = JSON.parse(data);
+        
+        $("#modalidad_participa_jurado").html(json.propuesta.modalidad_participa);
 
-        if (json.propuesta.estado == 7) {
+        if (json.propuesta.estado === 7) {
 
             $("#busqueda_convocatorias").hide();
             $("#listado_postulaciones").hide();
@@ -122,7 +124,7 @@ function verificar_estado_propuesta(token_actual) {
 
         }
 
-        if (json.propuesta.estado == 8) {
+        if (json.propuesta.estado === 8) {
             $("#busqueda_convocatorias").show();
             $("#listado_postulaciones").show();
             $("#estado").hide();

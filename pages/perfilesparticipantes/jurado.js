@@ -418,7 +418,7 @@ function cargar_datos_formulario(token_actual) {
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     }
-                })
+                });
 
 
 

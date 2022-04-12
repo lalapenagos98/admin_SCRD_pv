@@ -98,6 +98,8 @@ function cargar_datos_formulario(token_actual) {
     }).done(function (data) {
 
         var json = JSON.parse(data);
+        
+        $("#modalidad_participa_jurado").html(json.propuesta.modalidad_participa);
 
         //9	jurados	Registrado
         if (json.propuesta.estado === 9) {
