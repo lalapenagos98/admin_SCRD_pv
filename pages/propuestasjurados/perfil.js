@@ -10,6 +10,7 @@ $(document).ready(function () {
     $("#idc").val($("#id").val());
     $("#id").val(null);
 
+
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
 
@@ -688,6 +689,19 @@ function validator_form(token_actual) {
 
         }
     }).on('success.form.bv', function (e) {
+
+
+        var enviar = true;
+
+        if ($("#tiene_rut").val() === "Sí")
+        {
+            if ($("#ciiu").val() === "")
+            {
+                notify("danger", "ok", "Estimado usuario:", "Código CIIU de su actividad principal, es requerido");
+                enviar = false;
+            }
+        }
+
         // Prevent form submission
         e.preventDefault();
         // Get the form instance
@@ -696,46 +710,54 @@ function validator_form(token_actual) {
         // Get the BootstrapValidator instance
         var bv = $form.data('bootstrapValidator');
 
-        if (typeof $("#idp").attr('value') !== 'undefined') {
-            //  console.log("Actualizar registro");
-            $("#id").val($("#idp").attr('value'));
-            //Se realiza la peticion con el fin de guardar el registro actual
-            $.ajax({
-                type: 'POST',
-                url: url_pv + 'PropuestasJurados/edit_participante',
-                data: $form.serialize() + "&modulo=Menu Participante&token=" + token_actual.token
-            }).done(function (result) {
+        if (enviar) {
+
+            if (typeof $("#idp").attr('value') !== 'undefined') {
+                //  console.log("Actualizar registro");
+                $("#id").val($("#idp").attr('value'));
+                //Se realiza la peticion con el fin de guardar el registro actual
+                $.ajax({
+                    type: 'POST',
+                    url: url_pv + 'PropuestasJurados/edit_participante',
+                    data: $form.serialize() + "&modulo=Menu Participante&token=" + token_actual.token
+                }).done(function (result) {
 
 
-                switch (result) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    case 'deshabilitado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        cargar_datos_formulario(token_actual);
-                        break;
-                    case 'error_creo_alfresco':
-                        notify("danger", "remove", "Usuario:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        cargar_datos_formulario(token_actual);
-                        break;
-                    default:
-                        notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
-                        cargar_datos_formulario(token_actual);
-                        break;
-                }
+                    switch (result) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        case 'deshabilitado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            cargar_datos_formulario(token_actual);
+                            break;
+                        case 'error_creo_alfresco':
+                            notify("danger", "remove", "Usuario:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            cargar_datos_formulario(token_actual);
+                            break;
+                        default:
+                            notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
+                            cargar_datos_formulario(token_actual);
+                            break;
+                    }
 
-            });
+                });
+
+            } else {
+
+            }
 
         } else {
 
         }
+
+
 
 
         // $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
