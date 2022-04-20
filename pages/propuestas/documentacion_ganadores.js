@@ -174,7 +174,7 @@ $(document).ready(function () {
                                                 //Realizo la peticion para cargar el formulario
                                                 $.ajax({
                                                     type: 'GET',
-                                                    data: {"token": token_actual.token, "conv": $("#conv").attr('value'), "modulo": "Menu Participante", "m": getURLParameter('m'), "p": getURLParameter('p'), "tipo_pago": $("#tipo_pago").attr('value'), },
+                                                    data: {"token": token_actual.token, "conv": $("#conv").attr('value'), "modulo": "Menu Participante", "m": getURLParameter('m'), "p": getURLParameter('p') },
                                                     url: url_pv + 'PropuestasDocumentacionganadores/buscar_documentacion'
                                                 }).done(function (data) {
                                                     if (data == 'error_metodo')
