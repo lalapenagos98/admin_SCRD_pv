@@ -524,6 +524,12 @@ $(document).ready(function () {
                                                 $("#formulario_principal").bootstrapValidator('resetForm', true);
                                                 $('#ciudad_residencia').find('option').remove();
                                                 $("#ciudad_residencia").append('<option value="">:: Seleccionar ::</option>');
+                                                
+                                                $('#barrio_residencia').find('option').remove();
+                                                $("#barrio_residencia").append('<option value="">:: Seleccionar ::</option>');                                                
+                                                $("#area option[value='']").prop('selected', true);                                                
+                                                $('input[name=afirmacion_no_contratista]').prop('checked', false);
+                                                
                                                 $("#experiencia").val("");
                                                 $("#actividades_cargo").val("");
                                                 $("#ciiu").val("");
