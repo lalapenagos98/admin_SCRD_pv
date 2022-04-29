@@ -27,11 +27,53 @@ $(document).ready(function () {
         cargar_select_enfoques(token_actual);
         cargar_select_lineas(token_actual);
         cargar_select_area(token_actual);
+        
+        //Carga el select de entidad
+        $.ajax({
+            type: 'GET',
+            data: {"token": token_actual.token},
+            url: url_pv + 'Entidades/all_select/',
+            success: function (data) {
+
+                switch (data) {
+                    case 'error':
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_metodo':
+                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                        break;
+                    case 'error_token':
+                        //location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                        notify("danger", "error_token", "URL:", "PropuestasEvaluacion/select_estado/");
+                        break;
+                    case 'acceso_denegado':
+                        notify("danger", "remove", "Usuario:", "No tiene permisos acceder a la información.");
+                        break;
+                    default:
+                        json_entidades = JSON.parse(data);
+
+                        $('#entidad').find('option').remove();
+                        $("#entidad").append('<option value="">:: Seleccionar ::</option>');
+                        if (json_entidades.length > 0) {
+                            $.each(json_entidades, function (key, entidad) {
+                                $("#entidad").append('<option value="' + entidad.id + '" >' + entidad.nombre + '</option>');
+                            });
+                        }
+
+                        break;
+                }
+
+
+            }
+        });
 
         // validator_form(token_actual);
 
         //Listado de las postulaicones
         cargar_tabla_p(token_actual);
+
+        /*Validar si existe una convocatoria de jurados vigente*/
+        validar_convocatoria_jurados(token_actual);
 
         $('#perfil_info').on('shown.bs.modal', function () {
             //alert("Cargando");
@@ -48,6 +90,10 @@ $(document).ready(function () {
 
         $("#buscar").on('click', function () {
             cargar_tabla_b(token_actual);
+        });
+
+        $(".aceptar_terminos").click(function () {
+            location.href = "../propuestasjurados/postular_hoja_vida.html?m=2&id=" + $("#convocatoria").val() + "&p=0";
         });
 
 
@@ -67,8 +113,10 @@ function verificar_estado_propuesta(token_actual) {
     }).done(function (data) {
 
         var json = JSON.parse(data);
+        
+        $("#modalidad_participa_jurado").html(json.propuesta.modalidad_participa);
 
-        if (json.propuesta.estado == 7) {
+        if (json.propuesta.estado === 7) {
 
             $("#busqueda_convocatorias").hide();
             $("#listado_postulaciones").hide();
@@ -76,7 +124,7 @@ function verificar_estado_propuesta(token_actual) {
 
         }
 
-        if (json.propuesta.estado == 8) {
+        if (json.propuesta.estado === 8) {
             $("#busqueda_convocatorias").show();
             $("#listado_postulaciones").show();
             $("#estado").hide();
@@ -285,6 +333,7 @@ function cargar_tabla_b(token_actual) {
             url: url_pv + "PropuestasJurados/postulacion_search_convocatorias",
             data: {
                 "token": token_actual.token,
+                "entidad": $("#entidad").val(),
                 "enfoque": $("#enfoque").val(),
                 "linea": $("#linea").val(),
                 "area": $("#area").val(),
@@ -336,7 +385,7 @@ function cargar_tabla_b(token_actual) {
                             + '<span class=" 	glyphicon glyphicon-check"></span></button>'
 //                                                 +'<button name="'+row.id+'" onclick="http://sicon.scrd.gov.co/site_SCRD_pv/publicar.html?id='+row.id+'"  title="Enlace de la convocatoria" type="button" class="btn btn-info btn_link">'
 //                                                 +'<span class="glyphicon glyphicon-link"></span></button>'
-                            + '<a href="http://sicon.scrd.gov.co/site_SCRD_pv/publicar.html?id=' + row.id + '" title="Enlace de la convocatoria" target="_blank" class="btn btn-info" role="button">Ver convocatoria</a>';
+                            + '<a href="http://sicon.scrd.gov.co/convocatorias/' + row.id + '" title="Enlace de la convocatoria" target="_blank" class="btn btn-info" role="button">Ver convocatoria</a>';
                 },
             }
 
@@ -840,4 +889,69 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
 
     );
 
+}
+
+/*
+ * 29-09-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función validar_estado_envio_documentacion
+ */
+function validar_convocatoria_jurados(token_actual) {
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Jurados/validar_convocatoria_jurados',
+        data: {"token": token_actual.token}
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            default:
+                var json = JSON.parse(data);
+                if (json.disponible === true) {
+                    $("#convocatoria").attr("value", json.convocatoria.id);
+                    $("#modalidad_participa_jurado").html(json.propuesta_jurado.modalidad_participa);
+                    if (json.tiene_hoja_de_vida === false) {
+                        $("#botones_acciones_jurado_sin_hoja").show();
+                    } else {
+                        if (json.hoja_de_vida_banco_actual === true) {
+
+                            if (json.propuesta_jurado.estado === 10) {
+                                $("#estado").hide();
+                                $("#listado_postulaciones").show();
+                                $("#busqueda_convocatorias").show();
+                            } else {
+                                $("#estado").show();
+                                $("#listado_postulaciones").hide();
+                                $("#busqueda_convocatorias").hide();
+                            }
+
+                        }
+                    }
+//                    $("#info_general").attr("value", json.observaciones_documentos_ganadores);
+                } else {
+                    $("#convocatoria_no_disponible").show();
+                    $("#mensaje_jurados").hide();
+                }
+        }
+
+    });
 }
