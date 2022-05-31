@@ -41,30 +41,29 @@
         <link  rel="icon"   href="dist/img/scrd_logo.png" type="image/png" />
     </head>
 
-    <body style="background-image: url('dist/img/fondo-login.jpg'); padding-top: 10em; max-width: 100%;height: auto;" >
-    <!--<body style="padding-top: 5em; background: rgb(128,5,173);background: linear-gradient(90deg, rgba(128,5,173,1) 0%, rgba(167,34,236,1) 9%, rgba(184,36,231,0.7245098723082983) 22%, rgba(0,212,255,0) 100%); ">-->
+    <body>
+        <!--<body style="padding-top: 5em; background: rgb(128,5,173);background: linear-gradient(90deg, rgba(128,5,173,1) 0%, rgba(167,34,236,1) 9%, rgba(184,36,231,0.7245098723082983) 22%, rgba(0,212,255,0) 100%); ">-->
         <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
         <div class="modal fade" id="my_loader" role="dialog">
             <div class="modal-dialog">    
                 <div class="loader" style="margin: 0 auto;"></div>             
             </div>
         </div>
-        <div class="container">                        
+        <div class="container">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4 div-login" style="background-color:#ffffff; opacity: 0.9; border-radius: 10px 10px 10px 10px;-webkit-box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);-moz-box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);">
-                    <div style="text-align: center; opacity: 1; padding: 1em;">
-                        <img src="dist/img/scrd_logo.png" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" width="70px" />
-                    </div>
-                    <div style="text-align: center;">
-                        <p>
+                <div class="col-md-4 col-md-offset-4" style="opacity: 0.9;">
+                    
+                    <div class="login-panel panel panel-default">                        
+                        <div style="text-align: center;padding: 1em;">
+                            <img src="dist/img/scrd_logo.png" alt="Sistemas de Convocatorias" title="Sistemas de Convocatorias" width="70px">
+                        </div>
+                        <div style="text-align: center;">
                             Sistema de Convocatorias
-                            <br/>
-                            <strong>SICON</strong>
-                        </p>
-                        <hr>
-                    </div>
-                    <div class="panel panel-default" style="opacity: 1 !important;">
-                        <div class="panel-heading">
+                            <br>
+                            <strong>SICON</strong>                       
+                        </div>
+                        <br>
+                        <div class="panel-heading" style="border-top: 1px solid #ddd !important;">
                             <h3 class="panel-title">Iniciar sesión</h3>
                         </div>
                         <div class="panel-body">
@@ -112,6 +111,7 @@
                                 </div>                                        
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -137,153 +137,174 @@
         <script src="dist/libraries/bootstrap-notify-3.1.3/bootstrap-notify.min.js" type="text/javascript"></script>
 
         <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>
-        
+
         <script src='index.js'></script>
 
         <script src='dist/js/jquery.loadJSON.js'></script>
 
+        <script src='dist/libraries/login/jquery.backstretch.js'></script>
+
         <script>
-            //echo "WMX2 13 abril 2020";
-            $(document).ready(function () {
+        //echo "WMX2 13 abril 2020";
+        $(document).ready(function () {
+            
+            function desordenar(unArray){
+                var t = unArray.sort(function(a,b) {return (Math.random()-0.5)});
+                return [...t];
+              }
 
-                //Validar si el navegador soporta localStorage, si no lo soporta lo envia directamente a la pagina de error
-                issetLocalStorage();
+            var images = [
+                    "dist/img/fondo-login.jpg",                                        
+                ];
+            
 
-                //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
-                //Si el token no esta activo o se presenta un error se elimina la variable del session storage
-                var token = getLocalStorage(name_local_storage);
+            
+            images = desordenar(images);
+            
 
-                if ((token != null) || (token != "") || (token != "undefined"))
-                {
-                    $.ajax({
-                        data: {"token": token},
-                        type: 'POST',
-                        url: url_pv + 'Session/verificar_token/'
-                    }).done(function (data) {
-                        if (data == 'error_metodo')
-                        {
-                            notify("danger", "ok", "Login:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        } else
-                        {
-                            if (data == 'false')
-                            {
-                                removeLocalStorage(name_local_storage);
-                            }
-                        }
-                    });
-                }
-
-                //Llamo la function para que valide el formulario de login
-                validator_form();
-
-
+            $.backstretch(images, {
+                fade: 750,
+                duration: 4000
             });
 
-            //Funcion que permite validar el formulario y realizar las peticiones
-            function validator_form() {
-                //Validar el formulario
-                $('.form_validator').bootstrapValidator({
-                    feedbackIcons: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    fields: {
-                        username: {
-                            validators: {
-                                notEmpty: {message: 'El correo electrónico es requerido'},
-                                emailAddress: {
-                                    message: 'El correo electrónico no es válido'
-                                }
-                            }
-                        },
-                        password: {
-                            validators: {
-                                notEmpty: {message: 'La contraeña es requerida'}
+            //Validar si el navegador soporta localStorage, si no lo soporta lo envia directamente a la pagina de error
+            issetLocalStorage();
+
+            //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
+            //Si el token no esta activo o se presenta un error se elimina la variable del session storage
+            var token = getLocalStorage(name_local_storage);
+
+            if ((token != null) || (token != "") || (token != "undefined"))
+            {
+                $.ajax({
+                    data: {"token": token},
+                    type: 'POST',
+                    url: url_pv + 'Session/verificar_token/'
+                }).done(function (data) {
+                    if (data == 'error_metodo')
+                    {
+                        notify("danger", "ok", "Login:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    } else
+                    {
+                        if (data == 'false')
+                        {
+                            removeLocalStorage(name_local_storage);
+                        }
+                    }
+                });
+            }
+
+            //Llamo la function para que valide el formulario de login
+            validator_form();
+
+
+        });
+
+        //Funcion que permite validar el formulario y realizar las peticiones
+        function validator_form() {
+            //Validar el formulario
+            $('.form_validator').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    username: {
+                        validators: {
+                            notEmpty: {message: 'El correo electrónico es requerido'},
+                            emailAddress: {
+                                message: 'El correo electrónico no es válido'
                             }
                         }
-
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {message: 'La contraeña es requerida'}
+                        }
                     }
-                }).on('success.form.bv', function (e) {
-                    // Prevent form submission
-                    e.preventDefault();
-                    // Get the form instance
-                    var $form = $(e.target);
 
-                    // Get the BootstrapValidator instance
-                    var bv = $form.data('bootstrapValidator');
+                }
+            }).on('success.form.bv', function (e) {
+                // Prevent form submission
+                e.preventDefault();
+                // Get the form instance
+                var $form = $(e.target);
 
-                    $.ajax({
-                        type: 'POST',
-                        data: {"username": $("#username").val(), "password": $("#password").val()},
-                        url: url_pv + 'Session/iniciar_session/'
-                    }).done(function (data) {
-                        if (data == 'error_metodo')
+                // Get the BootstrapValidator instance
+                var bv = $form.data('bootstrapValidator');
+
+                $.ajax({
+                    type: 'POST',
+                    data: {"username": $("#username").val(), "password": $("#password").val()},
+                    url: url_pv + 'Session/iniciar_session/'
+                }).done(function (data) {
+                    if (data == 'error_metodo')
+                    {
+                        notify("danger", "ok", "Login:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    } else
+                    {
+                        if (data == 'error_usuario')
                         {
-                            notify("danger", "ok", "Login:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            notify("danger", "ok", "Login:", "El usuario no se encuentra registrado, por favor ingresar a Solicite su usuario.");
                         } else
                         {
-                            if (data == 'error_usuario')
+                            if (data == 'error_clave')
                             {
-                                notify("danger", "ok", "Login:", "El usuario no se encuentra registrado, por favor ingresar a Solicite su usuario.");
+                                notify("danger", "ok", "Login:", "La contraseña no es la correcta, si no la recuerda por favor ingresar a ¿Olvidó su contraseña?.");
                             } else
                             {
-                                if (data == 'error_clave')
+                                if (data == 'error_activo')
                                 {
-                                    notify("danger", "ok", "Login:", "La contraseña no es la correcta, si no la recuerda por favor ingresar a ¿Olvidó su contraseña?.");
+                                    notify("danger", "ok", "Login:", "El usuario no se encuentra activo, por favor activarlo en la bandeja de entrada de su cuenta de correo electrónico " + $("#username").val());
                                 } else
                                 {
-                                    if (data == 'error_activo')
-                                    {
-                                        notify("danger", "ok", "Login:", "El usuario no se encuentra activo, por favor activarlo en la bandeja de entrada de su cuenta de correo electrónico " + $("#username").val());
+                                    var json = JSON.parse(data);
+                                    if (typeof json.usuario !== 'undefined') {
+                                        setLocalStorage(name_local_storage, data);
+                                        location.href = 'pages/index/index.html?msg=Bienvenido(a) ' + json.usuario + ' al Sistema de Convocatorias&msg_tipo=success';
                                     } else
                                     {
-                                        var json = JSON.parse(data);
-                                        if (typeof json.usuario !== 'undefined') {
-                                            setLocalStorage(name_local_storage, data);
-                                            location.href = 'pages/index/index.html?msg=Bienvenido(a) ' + json.usuario + ' al Sistema de Convocatorias&msg_tipo=success';
-                                        } else
-                                        {
-                                            notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                        }
+                                        notify("danger", "ok", "Login:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                     }
                                 }
                             }
                         }
-                    });
-
-                    //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
-                    bv.resetForm();
-                });
-            }
-
-            function keycloak_login() {
-                //Conexión al keycloak
-                var keycloak = Keycloak({
-                    url: 'https://sso.scrd.gov.co/auth',
-                    realm: 'SCRD',
-                    clientId: 'sicon-ui'    
-                });
-                
-                //Configuración de respuesta del keycloak
-                var initOptions = {
-                    onLoad: 'check-sso',
-                    silentCheckSsoRedirectUri: url_pv_admin + 'silent-check-sso.html',    
-                    redirectUri: url_pv_admin+'pages/index/index_funcionario.html'
-                };
-
-                //Array del consumo con el back
-                keycloak.init(initOptions).then(function (authenticated) {
-                    //Si no esta autenticado lo obliga a ingresar al keycloak
-                    if (authenticated === false)
-                    {
-                        keycloak.login();
-                    } else
-                    {
-                        location.href = url_pv_admin+'pages/index/index_funcionario.html'
                     }
-                });            
-            }        
+                });
+
+                //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+                bv.resetForm();
+            });
+        }
+
+        function keycloak_login() {
+            //Conexión al keycloak
+            var keycloak = Keycloak({
+                url: 'https://sso.scrd.gov.co/auth',
+                realm: 'SCRD',
+                clientId: 'sicon-ui'
+            });
+
+            //Configuración de respuesta del keycloak
+            var initOptions = {
+                onLoad: 'check-sso',
+                silentCheckSsoRedirectUri: url_pv_admin + 'silent-check-sso.html',
+                redirectUri: url_pv_admin + 'pages/index/index_funcionario.html'
+            };
+
+            //Array del consumo con el back
+            keycloak.init(initOptions).then(function (authenticated) {
+                //Si no esta autenticado lo obliga a ingresar al keycloak
+                if (authenticated === false)
+                {
+                    keycloak.login();
+                } else
+                {
+                    location.href = url_pv_admin + 'pages/index/index_funcionario.html'
+                }
+            });
+        }
         </script>
 
     </body>
