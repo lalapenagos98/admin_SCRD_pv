@@ -1504,6 +1504,9 @@ function confirmar_top_general(token_actual, id_ronda) {
             case 'error_validacion':
                 notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
                 break;
+            case 'error_comentarios':
+                notify("danger", "remove", "Usuario:", "Debe registar comentarios generales sobre la convocatoria y las propuestas participantes ");
+                break;
             default:
                 alert("Usuario:", "Recuerde liberar las postulaciones de los jurados relacionados con ésta convocatoria. Para hacerlo, por favor dirijase al componente de preselección");
                 notify("success", "ok", "Usuario:", "Se confirmó con éxito.");
