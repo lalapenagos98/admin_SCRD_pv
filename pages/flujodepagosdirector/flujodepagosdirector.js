@@ -123,12 +123,12 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
             $('.convocatorias-search').select2();
-            
+
             //Verifica si el token actual tiene acceso de lectura
             init(token_actual);
             //cargar_datos_formulario(token_actual);
             validator_form(token_actual);
-            
+
             //Carga el select de años
             $('#anio').find('option').remove();
             $("#anio").append('<option value="">:: Seleccionar ::</option>');
@@ -163,7 +163,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             });
             //carga el select rondas
             $('#categorias').change(function () {
-                 cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             /*
              * 22-04-2021
@@ -1192,6 +1192,10 @@ function cargar_info_basica(token_actual, id_propuesta) {
                     });
                 }
 
+
+
+
+
                 if (json.convocatoriasdocumentos) {
                     var items = '';
                     var i = 0;
@@ -1311,6 +1315,117 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                     });
                 }
+                var html_table = '';
+                if (json.certificaciones_cumplimientos) {
+
+                    $.each(json.certificaciones_cumplimientos, function (key2, documento) {
+                        html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_administrativo_informacion_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria" id="complementaria_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></td></tr>';
+                        $("#tipo_pago").append('<option value="' + documento.id + '" >' + documento.descripcion + '</option>');
+                    });
+
+                    $("#tabla_convocatoriaadministrativos").append(html_table);
+
+                }
+
+                $(".btn_convocatoria_documento").click(function () {
+                    var documento = $(this).attr("title");
+                    var permitidos = $(this).attr("lang");
+                    var tamano = $(this).attr("dir");
+                    $("#archivos_permitidos").html(permitidos);
+                    $("#documento").val(documento);
+                    $("#permitidos").val(permitidos);
+                    $("#tamano").val(tamano);
+
+                    cargar_tabla_archivos_convocatoria(token_actual, documento, json.estado);
+                });
+
+                $("#archivo_convocatoria").change(function (evt) {
+//                                                $(".btn_tecnico_documento").click(function (evt) {
+
+                    var f = evt.target.files[0];
+                    var reader = new FileReader();
+
+                    // Cierre para capturar la información del archivo.
+                    reader.onload = function (fileLoadedEvent) {
+//                                                        alert ($("#info_comp").attr('value'));
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        var srcName = f.name;
+                        var info_comp = f.info_comp;
+                        var srcSize = f.size;
+                        var srcType = f.type;
+                        var ext = srcName.split('.');
+                        // ahora obtenemos el ultimo valor despues el punto
+                        // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
+                        srcExt = ext[ext.length - 1];
+
+                        var permitidos = $("#permitidos").val();
+                        var permitidos_mayuscula = $("#permitidos").val().toUpperCase();
+                        var documento = $("#documento").val();
+                        var tamano = $("#tamano").val();
+
+                        var extensiones = permitidos.split(',');
+                        var extensiones_mayuscula = permitidos_mayuscula.split(',');
+
+                        if (extensiones.includes(srcExt) || extensiones_mayuscula.includes(srcExt))
+                        {
+                            //mb -> bytes
+                            permitidotamano = tamano * 1000 * 1000;
+                            if (srcSize > permitidotamano)
+                            {
+                                notify("danger", "ok", "Documentación:", "El tamaño del archivo excede el permitido (" + tamano + " MB)");
+                            } else
+                            {
+                                $.post(url_pv + 'PropuestasDocumentacionganadores/guardar_archivo_convocatoria', {documento: documento, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "Menu Participante", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value'), info_comp: $("#info_comp").attr('value')}).done(function (data) {
+                                    if (data == 'error_metodo')
+                                    {
+                                        notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                    } else
+                                    {
+                                        if (data == 'error_token')
+                                        {
+                                            location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                                        } else
+                                        {
+
+                                            if (data == 'acceso_denegado')
+                                            {
+                                                notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                                            } else
+                                            {
+                                                if (data == 'error_carpeta')
+                                                {
+                                                    notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo en la carpeta, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                } else
+                                                {
+                                                    if (data == 'error_archivo')
+                                                    {
+                                                        notify("danger", "ok", "Convocatorias:", "Se registro un error al subir el archivo, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                                    } else
+                                                    {
+                                                        if (data == 'error_ya_tiene_documentos') {
+                                                            notify("danger", "ok", "Usuario:", "Ya tiene un documento asociado a este requisito");
+                                                        } else {
+                                                            notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
+                                                            cargar_tabla_archivos_convocatoria(token_actual, documento);
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                });
+                            }
+                        } else
+                        {
+                            notify("danger", "ok", "Documentación:", "Archivo no permitido");
+                        }
+
+                    };
+                    // Leer en el archivo como una URL de datos.                
+                    reader.readAsDataURL(f);
+                });
 
                 if (json.links) {
                     var items = '';
