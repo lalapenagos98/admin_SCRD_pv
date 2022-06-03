@@ -189,11 +189,11 @@ keycloak.init(initOptions).then(function (authenticated) {
             $('#buscar').click(function () {
 
                 if ($('#rondas').val() === "") {
-                    alert("Debe seleccionar la ronda de evaluación");
+                    ("Debe seleccionar la ronda de evaluación");
                 } else {
 
                     if ($('#grupos_evaluacion').val() === "" && $('#anio').val() >= 2021) {
-                        alert("Debe seleccionar un grupo de evaluación");
+                        ("Debe seleccionar un grupo de evaluación");
                     } else {
                         $('#resultado').focus();
                         validator_form(token_actual);
@@ -1209,12 +1209,19 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '<td>' + a.valor_pago + '</td>'
                                 + '<td>' + a.estado + '</td>'
                                 + '<td>'
-                                + '<button id = "' + a.id_alfresco + '" title="' + (a.id_alfresco == null ? "No se ha cargado archivo" : "Descargar archivo") + '" type="button" class="btn btn-primary download_file">'
+                                + '<center><button id = "' + a.id_alfresco + '" title="' + (a.id_alfresco == null ? "No se ha cargado archivo" : "Descargar archivo") + '" type="button" class="btn btn-primary download_file">'
                                 + (a.id_alfresco == null ? '<span class="glyphicon glyphicon-ban-circle" title="No se ha cargado archivo"></span>' : '<span class="glyphicon glyphicon-download-alt"></span>')
-                                + '</button>'
+                                + '</button></center>'
                                 + '</td>'
                                 + '<td>'
-                                + '<button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" type="button" class="btn btn-success btn_info_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button>'
+                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" type="button" class="btn btn-success btn_info_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></center>'
+                                + '</td>'
+                                + '<td>'
+                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta +'" lang="' + a.archivos_permitidos + '" dir="' + a.tamano_permitido + '" type="button" class="btn btn-info btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-upload"></span></button></center>'
+                                + '</td>'
+                                + '<td>'
+//                        +'<button title="' + a.id + '" lang="' + a.archivos_permitidos + '" dir="' + a.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td>'
+                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" type="button" class="btn btn-warning btn_info_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria"><span class="glyphicon glyphicon-inbox"></span></button></center>'
                                 + '</td>'
                                 + '</tr>';
                     });
@@ -1315,28 +1322,16 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
                     });
                 }
-                var html_table = '';
-                if (json.certificaciones_cumplimientos) {
-
-                    $.each(json.certificaciones_cumplimientos, function (key2, documento) {
-                        html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_administrativo_informacion_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria" id="complementaria_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></td></tr>';
-                        $("#tipo_pago").append('<option value="' + documento.id + '" >' + documento.descripcion + '</option>');
-                    });
-
-                    $("#tabla_convocatoriaadministrativos").append(html_table);
-
-                }
 
                 $(".btn_convocatoria_documento").click(function () {
                     var documento = $(this).attr("title");
-                    var permitidos = $(this).attr("lang");
-                    var tamano = $(this).attr("dir");
-                    $("#archivos_permitidos").html(permitidos);
+//                    var permitidos = $(this).attr("lang");
+//                    var tamano = $(this).attr("dir");
+//                    $("#archivos_permitidos").html(permitidos);
                     $("#documento").val(documento);
-                    $("#permitidos").val(permitidos);
-                    $("#tamano").val(tamano);
-
-                    cargar_tabla_archivos_convocatoria(token_actual, documento, json.estado);
+//                    $("#permitidos").val(permitidos);
+//                    $("#tamano").val(tamano);
+//                    cargar_tabla_archivos_convocatoria(token_actual, documento, json.estado);
                 });
 
                 $("#archivo_convocatoria").change(function (evt) {
@@ -1358,10 +1353,11 @@ function cargar_info_basica(token_actual, id_propuesta) {
                         // obtenemos el length por si el archivo lleva nombre con mas de 2 puntos
                         srcExt = ext[ext.length - 1];
 
-                        var permitidos = $("#permitidos").val();
-                        var permitidos_mayuscula = $("#permitidos").val().toUpperCase();
+                        var permitidos = "pdf";
+                        var permitidos_mayuscula = "PDF";
                         var documento = $("#documento").val();
-                        var tamano = $("#tamano").val();
+                        var tamano = 5;
+                        
 
                         var extensiones = permitidos.split(',');
                         var extensiones_mayuscula = permitidos_mayuscula.split(',');
@@ -1375,7 +1371,16 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 notify("danger", "ok", "Documentación:", "El tamaño del archivo excede el permitido (" + tamano + " MB)");
                             } else
                             {
-                                $.post(url_pv + 'PropuestasDocumentacionganadores/guardar_archivo_convocatoria', {documento: documento, srcExt: srcExt, srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "Menu Participante", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value'), info_comp: $("#info_comp").attr('value')}).done(function (data) {
+                                $.post(url_pv + 'Flujodepagosdirector/guardar_archivo_convocatoria', {
+                                    documento: documento, 
+                                    srcExt: srcExt, 
+                                    srcData: srcData, 
+                                    srcName: srcName, 
+                                    srcSize: srcSize, 
+                                    srcType: srcType, 
+                                    "token": token_actual.token, 
+                                    modulo: "SICON-PAGOS-DIRECTOR", 
+                                    propuesta: $("#propuesta").attr('value')}).done(function (data) {
                                     if (data == 'error_metodo')
                                     {
                                         notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
@@ -3018,5 +3023,64 @@ function devolver_al_misional(token_actual, id_propuesta, observacion_verificaci
                 break;
         }
 
+    });
+}
+
+
+/*
+ * 12-10-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función garcar tabla archivos para convocatoriadocumento
+ */
+
+function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
+    //Realizo la peticion para cargar el formulario
+    $.ajax({
+        type: 'POST',
+        data: {documento: documento, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "SICON-PAGOS-DIRECTOR", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value')},
+        url: url_pv + 'Flujodepagosdirector/buscar_archivos_convocatoria'
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+            } else
+            {
+                if (data == 'crear_propuesta')
+                {
+                    location.href = url_pv_admin + 'pages/propuestas/propuestas_busqueda_convocatorias.html?msg=Para poder inscribir la propuesta debe crear el perfil de agrupacion.&msg_tipo=danger';
+                } else
+                {
+                    if (data == 'acceso_denegado')
+                    {
+                        notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                    } else
+                    {
+                        var json = JSON.parse(data);
+
+                        var html_table = '';
+                        $("#tabla_archivos_convocatoria").html("");
+
+                        var disabled = 'disabled="disabled"';
+                        if (estado == 7)
+                        {
+                            disabled = '';
+                        }
+
+
+                        $.each(json, function (key2, documento) {
+                            html_table = html_table + '<tr class="tr_' + documento.id + '"><td>' + documento.nombre + '</td><td><button type="button" onclick="download_file(\'' + documento.id_alfresco + '\')" class="btn btn-success"><span class="glyphicon glyphicon-save"></span></button></td><td><button onclick="eliminar(\'' + documento.id + '\')" type="button" id="eliminar_archivo" class="btn btn-danger eliminar_archivo" ><span class="glyphicon glyphicon-remove"></span></button></td></tr>';
+                        });
+                        $("#tabla_archivos_convocatoria").append(html_table);
+
+                    }
+                }
+
+            }
+        }
     });
 }

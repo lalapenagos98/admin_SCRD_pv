@@ -1348,6 +1348,9 @@ function agregar_observacion_documentacion(token_actual, id_propuesta, info_gene
             case 'error_ya_fueron_aprobados_documentos':
                 notify("danger", "remove", "Usuario:", "Los documentos ya fueron aprobados por el misional, por favor espere a que se habilite nuevamente el flujo.");
                 break;
+            case 'error_falta_documento_primer_pago':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar el documento correspondiente al primer pago antes de iniciar el trámite de segundo pago.");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se envió la documentación con éxito.");
 //                $("#fieldset_top_general").attr("disabled", "");
