@@ -90,6 +90,13 @@ keycloak.init(initOptions).then(function (authenticated) {
         $('#complementar_informacion').modal('hide');
 //        limpiarFormulario();
     });
+    
+    //Para radicar documentación en orfeo
+
+
+    $("#baceptar_radicar").click(function () {
+        radicar_documentacion(token_actual, $('#id_propuesta_misional').val(), $('#tipo_pago').val(), );
+    });
 
 
 
@@ -1217,15 +1224,24 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" type="button" class="btn btn-success btn_info_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></center>'
                                 + '</td>'
                                 + '<td>'
-                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta +'" lang="' + a.archivos_permitidos + '" dir="' + a.tamano_permitido + '" type="button" class="btn btn-info btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-upload"></span></button></center>'
+                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" lang="' + a.archivos_permitidos + '" dir="' + a.tamano_permitido + '" type="button" class="btn btn-info btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-upload"></span></button></center>'
                                 + '</td>'
                                 + '<td>'
-//                        +'<button title="' + a.id + '" lang="' + a.archivos_permitidos + '" dir="' + a.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td>'
-                                + '<center><button title="' + a.id + '" convocatoriadocumento="' + a.id_convocatoriadocumento + '" propuesta="' + a.id_propuesta + '" type="button" class="btn btn-warning btn_info_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria"><span class="glyphicon glyphicon-inbox"></span></button></center>'
+                                + '<center><button title="' + a.id + '" convocatoriadocumento_radicar="' + a.id_convocatoriadocumento + '" propuesta_radicar="' + a.id_propuesta + '" numero_pago="' + i + '" type="button" class="btn btn-info btn_confirmar_radicar" data-toggle="modal" data-target="#confirmar_radicar"><span class="glyphicon glyphicon-share"></span></button></center>'
                                 + '</td>'
                                 + '</tr>';
                     });
                     $("#pagos_table").html(items);
+                    
+                    $(".btn_confirmar_radicar").click(function () {
+
+                        var documento = $(this).attr("title");
+                        var numero_pago = $(this).attr("numero_pago");
+                        var id_propuesta = $(this).attr("propuesta_radicar");
+                        $('#id_propuesta_misional').val(id_propuesta);
+                        $('#tipo_pago').val(numero_pago);
+                        $('#documento_padre').val(documento);
+                    });
 
                     $(".btn_info_convocatoria").click(function () {
 
@@ -1357,7 +1373,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                         var permitidos_mayuscula = "PDF";
                         var documento = $("#documento").val();
                         var tamano = 5;
-                        
+
 
                         var extensiones = permitidos.split(',');
                         var extensiones_mayuscula = permitidos_mayuscula.split(',');
@@ -1372,14 +1388,14 @@ function cargar_info_basica(token_actual, id_propuesta) {
                             } else
                             {
                                 $.post(url_pv + 'Flujodepagosdirector/guardar_archivo_convocatoria', {
-                                    documento: documento, 
-                                    srcExt: srcExt, 
-                                    srcData: srcData, 
-                                    srcName: srcName, 
-                                    srcSize: srcSize, 
-                                    srcType: srcType, 
-                                    "token": token_actual.token, 
-                                    modulo: "SICON-PAGOS-DIRECTOR", 
+                                    documento: documento,
+                                    srcExt: srcExt,
+                                    srcData: srcData,
+                                    srcName: srcName,
+                                    srcSize: srcSize,
+                                    srcType: srcType,
+                                    "token": token_actual.token,
+                                    modulo: "SICON-PAGOS-DIRECTOR",
                                     propuesta: $("#propuesta").attr('value')}).done(function (data) {
                                     if (data == 'error_metodo')
                                     {
@@ -1411,7 +1427,8 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                                             notify("danger", "ok", "Usuario:", "Ya tiene un documento asociado a este requisito");
                                                         } else {
                                                             notify("success", "ok", "Convocatorias:", "Se Guardó con el éxito el archivo.");
-                                                            cargar_tabla_archivos_convocatoria(token_actual, documento);
+                                                            var json = JSON.parse(data);
+                                                            cargar_tabla_archivos_convocatoria(token_actual, json.propuestasdocumentosganadores, json.convocatoria_asociada, json.propuesta_asociada);
                                                         }
 
                                                     }
@@ -3032,12 +3049,11 @@ function devolver_al_misional(token_actual, id_propuesta, observacion_verificaci
  * Wilmer Gustavo Mogollón Duque
  * Se agrega función garcar tabla archivos para convocatoriadocumento
  */
-
-function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
+function cargar_tabla_archivos_convocatoria(token_actual, documento, convocatoria, propuesta) {
     //Realizo la peticion para cargar el formulario
     $.ajax({
         type: 'POST',
-        data: {documento: documento, "token": token_actual.token, conv: $("#conv").attr('value'), modulo: "SICON-PAGOS-DIRECTOR", m: getURLParameter('m'), propuesta: $("#propuesta").attr('value')},
+        data: {documento: documento, "token": token_actual.token, conv: convocatoria, modulo: "SICON-PAGOS-DIRECTOR", propuesta: propuesta},
         url: url_pv + 'Flujodepagosdirector/buscar_archivos_convocatoria'
     }).done(function (data) {
         if (data == 'error_metodo')
@@ -3061,6 +3077,8 @@ function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
                     } else
                     {
                         var json = JSON.parse(data);
+                        
+                        
 
                         var html_table = '';
                         $("#tabla_archivos_convocatoria").html("");
@@ -3082,5 +3100,66 @@ function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
 
             }
         }
+    });
+}
+
+
+/*
+ * 23-05-2022
+ * Wilmer Mogollón
+ * Se agrega función para radicar en orfeo
+ */
+
+function radicar_documentacion(token_actual, id_propuesta, tipo_pago, documento) {
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'Flujodepagosdirector/radicar_documentacion/propuesta/' + id_propuesta,
+        data: "&modulo=SICON-PAGOS-MISIONAL&token=" + token_actual.token
+                + "&tipo_pago=" + tipo_pago
+                + "&documento=" + documento
+
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_token_postman':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para ejecutar esta accion. Token invalido");
+                break;
+            case 'error_tipo_pago':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de pago correspondiente");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'error_faltan_documentos':
+                notify("danger", "remove", "Usuario:", "No se ha relacionado el documento principal del radicado");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'ya_tiene_radicado':
+                notify("danger", "remove", "Usuario:", "El documento principal ya se encuentra asociado a un radicado generado previamente");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se ha radicado la documentación con éxito.");
+                cargar_tabla(token_actual);
+                cargar_info_basica(token_actual, id_propuesta);
+                $('#confirmar_radicar').modal('hide');
+                break;
+        }
+
     });
 }

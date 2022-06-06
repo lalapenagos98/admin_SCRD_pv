@@ -349,6 +349,7 @@
                                                     <label>Monto Asignado:<span class="icono_requerido">*</span></label>
                                                     <input type="hidden" id="id_propuesta_misional" name="id_propuesta_misional"/>
                                                     <input id="monto_asignado" name="monto_asignado" class="form-control" title="Monto Asignado" disabled>
+                                                    <input id="documento_padre" name="documento_padre" class="form-control" title="Documento padre" disabled>
                                                     <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
                                                 </div>
                                             </div>
@@ -696,6 +697,37 @@
                 </div>
             </div>
         </div>
+        
+        
+        
+        <!--
+                25-05-2022
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal para confirmar la radicación del documento
+        -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmar_radicar" tabindex="-1" role="dialog" aria-labelledby="confirmar_radicarLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mensaje" >¿Esta seguro de generar el radicado?</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar_radicar" >Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptar_radicar" >Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
 
 
 
