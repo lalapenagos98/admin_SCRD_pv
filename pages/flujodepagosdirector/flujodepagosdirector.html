@@ -217,6 +217,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Información básica
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5><b>Código de la propuesta:</b></h5>
+                                        <span id="codigo_propuesta"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5><b>Nombre de la propuesta:</b></h5>
+                                        <span id="nombre_propuesta"></span>
+                                    </div>
+                                    <div id="parametros_propuesta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -349,7 +369,7 @@
                                                     <label>Monto Asignado:<span class="icono_requerido">*</span></label>
                                                     <input type="hidden" id="id_propuesta_misional" name="id_propuesta_misional"/>
                                                     <input id="monto_asignado" name="monto_asignado" class="form-control" title="Monto Asignado" disabled>
-                                                    <input id="documento_padre" name="documento_padre" class="form-control" title="Documento padre" disabled>
+                                                    <input type="hidden" id="documento_padre" name="documento_padre" class="form-control" title="Documento padre" disabled>
                                                     <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
                                                 </div>
                                             </div>

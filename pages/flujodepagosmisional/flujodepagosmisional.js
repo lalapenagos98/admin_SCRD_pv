@@ -1177,6 +1177,7 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '<button title="' + a.id_convocatoriadocumento + '" convocatoriadocumento_radicar="' + a.id_convocatoriadocumento + '" propuesta_radicar="' + a.id_propuesta + '" numero_pago="' + i + '" type="button" class="btn btn-info btn_confirmar_radicar" data-toggle="modal" data-target="#confirmar_radicar"><span class="glyphicon glyphicon-share"></span></button>'
                                 + '</td>'
                                 + '</tr>';
+                        i=i+1;
                     });
                     $("#pagos_table").html(items);
 

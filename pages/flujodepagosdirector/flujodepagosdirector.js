@@ -95,7 +95,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
     $("#baceptar_radicar").click(function () {
-        radicar_documentacion(token_actual, $('#id_propuesta_misional').val(), $('#tipo_pago').val(), );
+        radicar_documentacion(token_actual, $('#id_propuesta_misional').val(), $('#tipo_pago').val(), $('#documento_padre').val());
     });
 
 
