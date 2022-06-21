@@ -1511,7 +1511,7 @@ function confirmar_top_general(token_actual, id_ronda) {
                 notify("danger", "remove", "Usuario:", "Tiene grupos evaluadores sin confirmar ");
                 break;
             default:
-                alert("Usuario:", "Recuerde liberar las postulaciones de los jurados relacionados con ésta convocatoria. Para hacerlo, por favor dirijase al componente de preselección");
+                alert("Usuario: Recuerde liberar las postulaciones de los jurados relacionados con ésta convocatoria. Para hacerlo, por favor dirijase al componente de preselección");
                 notify("success", "ok", "Usuario:", "Se confirmó con éxito.");
                 //$(".criterios").attr('disabled','');
                 cargar_tabla_ganadores(token_actual);
