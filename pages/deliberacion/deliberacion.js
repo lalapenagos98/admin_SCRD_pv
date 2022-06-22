@@ -1052,9 +1052,19 @@ function cargar_info_top_general(token_actual, id_ronda) {
 
                             var json = JSON.parse(data);
                             if (json.id) {
+                                
+                                
+                                $("#total_ronda").html("");
 
-                                if (json.estado == 'Evaluada') {
+                                if (json.estado === 'Evaluada') {
                                     $("#fieldset_top_general").attr("disabled", "");
+                                }
+                                if (json.tipo_acta === 'Preselección') {
+                                    $("#total_suplentes").attr("disabled", "");
+//                                    $("#total_ronda").val("Total preseleccionados:");
+                                    $("#total_ronda").html("Total preseleccionados:");
+                                }else{
+                                    $("#total_ronda").html("Total ganadores:");
                                 }
 
                                 $("#nombre_ronda").html(json.nombre_ronda);
