@@ -429,6 +429,21 @@ function cargar_tabla(token_actual) {
                         "filtros": data
                     },
             //async: false
+            error: function (xhr, error, code) {
+                if(xhr.responseText=='error_token'){
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                }
+                else
+                {
+                    if(xhr.responseText=='seleccionar_convocatoria'){
+                        notify("danger", "ok", "Convocatorias:", "Debe seleccionar la convocatoria");
+                    }
+                    else
+                    {
+                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    }                                                            
+                }
+            },
         },
         "drawCallback": function (settings) {
             //$(".check_activar_t").attr("checked", "true");
@@ -591,24 +606,24 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
                 var json = JSON.parse(data);
                 if (json.participante) {
 
-                    $('#modalidad_participa_jurado').html(json.modalidad_participa_jurado);
-                    $('#tipo_documento').html(json.participante.tipo_documento);
-                    $('#numero_documento').html(json.participante.numero_documento);
-                    $('#nombres').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
-                    $('#apellidos').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
-                    $('#fecha_nacimiento').html(json.participante.fecha_nacimiento);
-                    $('#sexo').html(json.participante.sexo);
-                    $('#orientacion_sexual').html(json.participante.orientacion_sexual);
-                    $('#identidad_genero').html(json.participante.identidad_genero);
-                    $('#ciudad').html(json.participante.ciudad_residencia);
-                    $('#barrio').html(json.participante.barrio_residencia);
-                    $('#direccion_residencia').html(json.participante.direccion_residencia);
-                    $('#correo_electronico').html(json.participante.correo_electronico);
-                    $('#perfil').html(json.perfil);
-                    $('#nombres2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
-                    $('#apellidos2').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
-                    $('#propuesta_resumen').html(json.propuesta_resumen);
-                    $('#propuesta_resumen_perfil').html(json.propuesta_resumen);
+                    $('#modalidad_participa_jurado,#modalidad_participa_jurado_2').html(json.modalidad_participa_jurado);
+                    $('#tipo_documento,#tipo_documento_2').html(json.participante.tipo_documento);
+                    $('#numero_documento,#numero_documento_2').html(json.participante.numero_documento);
+                    $('#nombres,#nombres_2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
+                    $('#apellidos,#apellidos_2').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
+                    $('#fecha_nacimiento,#fecha_nacimiento_2').html(json.participante.fecha_nacimiento);
+                    $('#sexo,#sexo_2').html(json.participante.sexo);
+                    $('#orientacion_sexual,#orientacion_sexual_2').html(json.participante.orientacion_sexual);
+                    $('#identidad_genero,identidad_genero_2').html(json.participante.identidad_genero);
+                    $('#ciudad,#ciudad_2').html(json.participante.ciudad_residencia);
+                    $('#barrio,#barrio_2').html(json.participante.barrio_residencia);
+                    $('#direccion_residencia,#direccion_residencia_2').html(json.participante.direccion_residencia);
+                    $('#correo_electronico,#correo_electronico_2').html(json.participante.correo_electronico);
+                    $('#perfil,#perfil_2').html(json.perfil);
+                    $('#nombres2,#nombres2_2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
+                    $('#apellidos2,#apellidos2_2').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
+                    $('#propuesta_resumen,#propuesta_resumen_2').html(json.propuesta_resumen);
+                    $('#propuesta_resumen_perfil,#propuesta_resumen_perfil_2').html(json.propuesta_resumen);
                     if (json.postulacion_perfil) {
 
                         $("#perfiles_jurados").append('<div class="row">'
