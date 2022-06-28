@@ -2216,18 +2216,26 @@ function radicar_documentacion(token_actual, id_propuesta, tipo_pago) {
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                 break;
             case 'error_token_postman':
-                notify("danger", "remove", "Usuario:", "No tiene permisos para ejecutar esta accion. Token invalido");
+                notify("danger", "remove", "Usuario:", "No tiene permisos para ejecutar esta accion. Token invalido.");
                 break;
             case 'error_tipo_pago':
-                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de pago correspondiente");
+                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de pago correspondiente.");
                 $('#confirmar_radicar').modal('hide');
                 break;
             case 'error_faltan_documentos':
-                notify("danger", "remove", "Usuario:", "No se ha relacionado el documento principal del radicado");
+                notify("danger", "remove", "Usuario:", "No se ha relacionado el documento principal del radicado.");
                 $('#confirmar_radicar').modal('hide');
                 break;
             case 'ya_tiene_radicado':
-                notify("danger", "remove", "Usuario:", "El documento principal ya se encuentra asociado a un radicado generado previamente");
+                notify("danger", "remove", "Usuario:", "El documento principal ya se encuentra asociado a un radicado generado previamente.");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'error_crear_usuario_keycloak':
+                notify("danger", "remove", "Usuario:", "Ha ocurrido un error al crear el usuario en Keycloak.");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'error_datos_ciudadano':
+                notify("danger", "remove", "Usuario:", "Debe especificar los datos del ciudadano.");
                 $('#confirmar_radicar').modal('hide');
                 break;
             default:
