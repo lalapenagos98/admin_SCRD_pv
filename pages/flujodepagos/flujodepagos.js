@@ -714,9 +714,15 @@ function cargar_info_pago(token_actual, id_propuesta) {
                             $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
                             $("#btn_habilitar_flujo").hide();
                         }
-                        $("#estado_pago").html("Se ha presentado una excepción");
-                        $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
-                        $("#btn_habilitar_flujo").show();
+                        if (json.descripcion_mensaje === null) {
+                            $("#estado_pago").html("Aún no se ha creado la orden de pago.");
+                            $("#descripcion_estado").html("--");
+                        } else {
+                            $("#estado_pago").html("Se ha presentado una excepción");
+                            $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").show();
+                        }
+
                     } else {
                         if (json.descripcion_mensaje === "DEVUELTA" || json.descripcion_mensaje === "PAGO RECHAZADO") {
                             $("#estado_pago").html(json.ordenpagos.estado);

@@ -2238,6 +2238,14 @@ function radicar_documentacion(token_actual, id_propuesta, tipo_pago) {
                 notify("danger", "remove", "Usuario:", "Debe especificar los datos del ciudadano.");
                 $('#confirmar_radicar').modal('hide');
                 break;
+            case 'No tiene representante asignado':
+                notify("danger", "remove", "Usuario:", "No tiene representante asignado");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'error_suplente':
+                notify("danger", "remove", "Usuario:", "No tiene representante suplente asignado");
+                $('#confirmar_radicar').modal('hide');
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se ha radicado la documentación con éxito.");
                 cargar_tabla(token_actual);
