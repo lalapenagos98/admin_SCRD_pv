@@ -17,6 +17,11 @@ $(document).ready(function () {
         cargar_select_grupos(token_actual);
         cargar_select_estratos(token_actual);
         //Peticion para buscar ciudades
+        
+        /*Validar si existe una convocatoria de jurados vigente*/
+        validar_convocatoria_jurados(token_actual);
+        
+        
         var json_ciudades = function (request, response) {
             $.ajax({
                 type: 'GET',
@@ -156,37 +161,9 @@ $(document).ready(function () {
             }
         });
 
-//        //Peticion para buscar barrios
-//        var json_barrio = function (request, response) {
-//            $.ajax({
-//                type: 'GET',
-//                data: {"token": token_actual.token, "id": $("#id").attr('value'), q: request.term},
-//                url: url_pv + 'Barrios/autocompletar/',
-//                dataType: "jsonp",
-//                success: function (data) {
-//                    response(data);
-//                }
-//            });
-//        };
-//        //Cargos el autocomplete de barrios
-//        $("#barrio_residencia_name").autocomplete({
-//            source: json_barrio,
-//            minLength: 2,
-//            select: function (event, ui) {
-//                $(this).val(ui.item ? ui.item : " ");
-//                $("#barrio_residencia").val(ui.item.id);
-//            },
-//            change: function (event, ui) {
-//                if (!ui.item) {
-//                    this.value = '';
-//                    $("#barrio_residencia").val("");
-//                }
-//            }
-//        });
-
-
-
-
+        $("#baceptar").click(function () {
+            location.href = "../propuestasjurados/perfil.html?m=2&id=1288&p=0";
+        });
 
         cargar_datos_formulario(token_actual);
         validator_form(token_actual);
@@ -441,7 +418,7 @@ function cargar_datos_formulario(token_actual) {
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     }
-                })
+                });
 
 
 
@@ -611,17 +588,9 @@ function validator_form(token_actual) {
                             cargar_datos_formulario(token_actual);
                             break;
                         default:
-                            notify("success", "ok", "Convocatorias:", "Se creó el registro con éxito. Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
-                            //Cargar datos de la tabla de rondas
-                            //cargar_tabla_criterio($("#convocatoria_ronda").attr('value'),token_actual);
                             $("#idd").val(data);
                             cargar_datos_formulario(token_actual);
-                            /*
-                             * 11-05-2020
-                             * Wilmer Gustavo Mogollón Duque
-                             * Se agrega alert con información pertinente a los pasos que debe seguir
-                             */
-//                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
+                            $('#juradoModal').modal('show');
                             break;
                     }
 
@@ -629,7 +598,6 @@ function validator_form(token_actual) {
             } else {
 
 
-//  alert("editado!!!");
 //Realizo la peticion con el fin de editar el registro actual
                 $.ajax({
                     type: 'PUT',
@@ -659,17 +627,9 @@ function validator_form(token_actual) {
                             cargar_datos_formulario(token_actual);
                             break;
                         default:
-                            notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito. Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
-                            //Cargar datos de la tabla de rondas
-                            //cargar_tabla_criterio($("#convocatoria_ronda").attr('value'),token_actual);
                             $("#idd").val(data);
                             cargar_datos_formulario(token_actual);
-                            /*
-                             * 11-05-2020
-                             * Wilmer Gustavo Mogollón Duque
-                             * Se agrega alert con información pertinente a los pasos que debe seguir
-                             */
-//                            alert("Continúe la inscripción en la sección “Convocatorias - Búsqueda de convocatorias”. Allí seleccione el tipo de programa y/o el tipo de convocatoria en el que desea participar.");
+                            $('#juradoModal').modal('show');
                             break;
                     }
 
@@ -682,6 +642,62 @@ function validator_form(token_actual) {
 
 
 
+
+    });
+}
+
+/*
+ * 29-09-2021
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función validar_estado_envio_documentacion
+ */
+function validar_convocatoria_jurados(token_actual) {
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Jurados/validar_convocatoria_jurados',
+        data: {"token": token_actual.token}
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            default:
+                var json = JSON.parse(data);
+                if (json.disponible === true) {
+                    $("#convocatoria").attr("value", json.convocatoria.id);
+                    if (json.tiene_hoja_de_vida === false) {
+                        $("#botones_acciones_jurado_sin_hoja").show();
+                    } else {
+                        if (json.hoja_de_vida_banco_actual === true) {
+                            $("#botones_acciones_jurado_confirmado").show();
+                        } else {
+                            $("#botones_acciones_jurado_hoja_antigua").show();
+                        }
+                    }
+//                    $("#info_general").attr("value", json.observaciones_documentos_ganadores);
+                } else {
+                    $("#convocatoria_no_disponible").show();
+                    $("#mensaje_jurados").hide();
+                }
+        }
 
     });
 }
