@@ -603,7 +603,7 @@ function cargar_tabla(token_actual) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
         data: {"token": token_actual.token},
     }).done(function (data) {
