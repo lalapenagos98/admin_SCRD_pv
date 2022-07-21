@@ -356,7 +356,45 @@ function cargar_select_convocatorias(token_actual, anio, entidad) {
 
 function cargar_select_categorias(token_actual, convocatoria) {
 
+    //Consulto la convocatoria
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token},
+        url: url_pv + 'Convocatorias/convocatoria/'+convocatoria
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
 
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+            } else
+            {
+                var json = JSON.parse(data);
+
+                $("#mensaje_convocatoria").html("");
+                
+                if(json.tiene_categorias){
+                    
+                    $("#mensaje_convocatoria").css("display","block");
+                    
+                    if(json.mismos_jurados_categorias){
+                        $("#mensaje_convocatoria").html("Esta convocatoria esta configurada para que los <b>jurados sean los mismos en sus diferentes categorías</b>, si no es así, antes de iniciar con la preselección, comunicarse con la persona encargada de la configuración de las convocatorias de su Entidad, para ser ajustada y poder continuar con su <b>preselección de jurados.</b>");
+                    }
+                    else
+                    {
+                        $("#mensaje_convocatoria").html("Esta convocatoria esta configurada para que los <b>jurados NO sean los mismos en sus diferentes categorías</b>, si no es así, antes de iniciar con la preselección, comunicarse con la persona encargada de la configuración de las convocatorias de su Entidad, para ser ajustada y poder continuar con su <b>preselección de jurados.</b>");
+                    }
+                }
+                
+            }
+        }
+    });
+
+    
     $.ajax({
         type: 'POST',
         url: url_pv + 'Juradospreseleccion/select_categorias',
