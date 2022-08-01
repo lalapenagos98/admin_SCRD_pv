@@ -56,6 +56,7 @@
     </head>
 
     <body>
+        <input type="hidden" id="ver_hoja_vida">
         <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
         <!--div class="modal fade centrado-porcentual" id="my_loader" role="dialog" z_index=-10>
           <div class="modal-dialog">
@@ -250,12 +251,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <br/>
 
 
-
-                            <div class="form-group row col-lg-12">
-                                <div class="col-sm-12"><label>Participa en la categoria de</label></div>
+                            <div class="row">
                                 <!--div class="col-sm-6">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="experto_con" name="experto_con" class="form-control">
@@ -279,7 +277,55 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info">
+                                        <small>Si requiere jurados que tenga titulo universitario o superior, por favor seleccione esta casilla.</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="titulo_postgrado"  name="titulo_postgrado" class="form-control">
+                                        <label class="form-check-label" for="gridCheck1">
+                                            Cuenta con títulos de postgrado 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info">
+                                        <small>Si requiere jurados que residan en Bogotá, por favor seleccione esta casilla.</small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="reside_bogota"  name="reside_bogota" class="form-control">
+                                        <label class="form-check-label" for="gridCheck1">
+                                            Reside en Bogotá
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info">
+                                        <small>Si requiere jurados que tenga experiencia disciplinar, por favor seleccione una linea.</small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Linea</label>
+                                        <select class="form-control" name="linea_experiencia" id="linea_experiencia">
+                                            <option value="">:: Seleccionar ::</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
                             <div class="row" id="niveleseducativosextra">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -1122,6 +1168,353 @@
                       <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar" style="display:none;">Cancelar</button>
                       <button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button>
                     </div-->
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="ver_hoja_de_vida" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                                        <!-- Accordion -->
+                                        <div class="panel-group" id="accordion">
+
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse1" aria-expanded="true" class="">Información personal</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse1" class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <h5 style="color: red;"><b>Modalidad en la que participa el aspirante: </b><div id="modalidad_participa_jurado_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Tipo de documento de identificación: </b><div id="tipo_documento_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Número de documento de identificación: </b><div id="numero_documento_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Nombres: </b><div id="nombres_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Apellidos: </b><div id="apellidos_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Fecha de nacimiento: </b><div id="fecha_nacimiento_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Sexo: </b><div id="sexo_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Orientación sexual: </b><div id="orientacion_sexual_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Identidad de género: </b><div id="identidad_genero_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Ciudad: </b><div id="ciudad_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Barrio: </b><div id="barrio_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Dirección de residencia: </b><div id="direccion_residencia_2"> </div></h5>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Correo electrónico: </b><div id="correo_electronico_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <h5><b>Perfil: </b><div id="propuesta_resumen_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse2" class="collapsed" aria-expanded="false">Documentos administrativos</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse2" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla experiencia laboral-->
+                                                        <div class="row" id="table_docs">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_documentos_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Documento</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse3" class="collapsed" aria-expanded="false">Educación Formal</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse3" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla educacion_formal-->
+                                                        <div class="row" id="table_eformal_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_educacion_formal_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nivel educativo</th>
+                                                                            <th>Titulo</th>
+                                                                            <th>Institución educativa</th>
+                                                                            <th>Graduado</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                        <div id="vermas_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenidox_2" >
+
+                                                                </div>
+                                                                <button type="button" id="vermas_back_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- tabla educacion_formal-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse4" class="collapsed" aria-expanded="false">Educación no Formal</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse4" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla educacion no formal-->
+                                                        <div class="row" id="table_enformal_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_educacion_no_formal_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Tipo</th>
+                                                                            <th>Modalidad</th>
+                                                                            <th>Nombre</th>
+                                                                            <th>Institución</th>
+                                                                            <th>Fecha de Inicio</th>
+                                                                            <th>Fecha de Terminación</th>
+                                                                            <th>Número de Horas</th>
+                                                                            <th>Ciudad</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="vermas_enf_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenido_enf_2" >
+
+                                                                </div>
+                                                                <button type="button" id="vermas_back_enf_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse5" class="collapsed" aria-expanded="false">Experiencia disciplinar</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse5" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla experiencia laboral-->
+                                                        <div class="row" id="row_experiencia_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_experiencia_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Ciudad</th>
+                                                                            <th>Tipo Entidad</th>
+                                                                            <th>Entidad</th>
+                                                                            <th>Línea</th>
+                                                                            <th>Fecha de Inicio</th>
+                                                                            <th>Fecha de Terminación</th>
+                                                                            <th>Meses de Experiencia</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <!-- tabla experiencia laboral-->
+
+                                                        <div id="vermas_experiencia_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenido_experiencia_2" ></div>
+                                                                <button type="button" id="vermas_back_experiencia_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse6" class="collapsed" aria-expanded="false">Experiencia como jurado</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse6" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla experiencia jurado-->
+                                                        <div class="row" id="row_experiencia_jurado_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_experiencia_jurado_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nombre convocatoria</th>
+                                                                            <th>Entidad</th>
+                                                                            <th>Año</th>
+                                                                            <th>Ambito</th>
+                                                                            <th>Ciudad</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div id="vermas_experiencia_jurado_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenido_experiencia_jurado_2" ></div>
+                                                                <button type="button" id="vermas_back_experiencia_jurado_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse7" class="collapsed" aria-expanded="false">Reconocimientos (Distinciones y Premios)</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse7" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla experiencia laboral-->
+                                                        <div class="row" id="row_reconocimiento_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_reconocimiento_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nombre</th>
+                                                                            <th>Institución</th>
+                                                                            <th>Tipo</th>
+                                                                            <th>Año</th>
+                                                                            <th>Ciudad</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div id="vermas_reconocimiento_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenido_reconocimiento_2" ></div>
+                                                                <button type="button" id="vermas_back_reconocimiento_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse8" class="collapsed" aria-expanded="false">Publicaciones</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="ver_collapse8" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        <!-- tabla publicaciones-->
+                                                        <div class="row" id="row_publicaciones_2">
+                                                            <div class="col-lg-12">
+                                                                <table id="table_publicaciones_2" class="table" style="width: 100%;">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Titulo</th>
+                                                                            <th>Tema</th>
+                                                                            <th>Tipo</th>
+                                                                            <th>Ciudad</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="vermas_publicaciones_2" class="row" style="display: none;">
+                                                            <div class="col-lg-12">
+                                                                <div id="contenido_publicaciones_2" ></div>
+                                                                <button type="button" id="vermas_back_publicaciones_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- Accordion -->
+                                    
+                                </div>
+                            </div>                            
                 </div>
             </div>
         </div>

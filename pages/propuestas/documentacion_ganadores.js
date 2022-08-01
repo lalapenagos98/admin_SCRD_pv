@@ -98,13 +98,13 @@ $(document).ready(function () {
     //Creando link de navegación
     if (getURLParameter('m') == "agr")
     {
-        href_regresar = "integrantes.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_regresar = "/admin_SCRD_pv/pages/propuestas/mis_propuestas.html";
         $("#link_regresar").attr("onclick", "location.href = '" + href_regresar + "'");
     }
 
     if (getURLParameter('m') == "pn")
     {
-        href_regresar = "propuestas.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_regresar = "/admin_SCRD_pv/pages/propuestas/mis_propuestas.html";
         $("#link_regresar").attr("onclick", "location.href = '" + href_regresar + "'");
     }
 
@@ -257,9 +257,15 @@ $(document).ready(function () {
                                                                                 $("#tabla_administrativos").append(html_table);
 
                                                                                 var html_table = '';
+                                                                                $('#tipo_pago').find('option').remove();
+                                                                                $("#tipo_pago").append('<option value="">:: Seleccionar ::</option>');
+                                                                                
                                                                                 $.each(json.convocatoriaadministrativos, function (key2, documento) {
                                                                                     html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_convocatoria_documento" data-toggle="modal" data-target="#cargar_documento_convocatoria"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_administrativo_informacion_convocatoria" data-toggle="modal" data-target="#complementar_informacion_convocatoria" id="complementaria_convocatoria"><span class="glyphicon glyphicon-pencil"></span></button></td></tr>';
+                                                                                    $("#tipo_pago").append('<option value="' + documento.id + '" >' + documento.descripcion + '</option>');
                                                                                 });
+
+
 
                                                                                 $("#tabla_convocatoriaadministrativos").append(html_table);
 
@@ -1306,6 +1312,7 @@ function agregar_observacion_documentacion(token_actual, id_propuesta, info_gene
         url: url_pv + 'PropuestasDocumentacionganadores/agregar_observacion/propuesta/' + getURLParameter('p'),
         data: "&modulo=Menu Participante&token=" + token_actual.token
                 + "&info_general=" + $('#info_general').val()
+                + "&tipo_pago=" + $('#tipo_pago').val()
 
     }).done(function (data) {
 
@@ -1332,27 +1339,36 @@ function agregar_observacion_documentacion(token_actual, id_propuesta, info_gene
             case 'error_descripcion':
                 notify("danger", "remove", "Usuario:", "Debe agregar una descripción de la documentación");
                 break;
+            case 'error_tipo_pago':
+                notify("danger", "remove", "Usuario:", "Debe seleccionar el tipo de pago correspondiente");
+                break;
             case 'error_faltan_documentos':
                 notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
                 break;
+            case 'error_ya_fueron_aprobados_documentos':
+                notify("danger", "remove", "Usuario:", "Los documentos ya fueron aprobados por el misional, por favor espere a que se habilite nuevamente el flujo.");
+                break;
+            case 'error_falta_documento_primer_pago':
+                notify("danger", "remove", "Usuario:", "Debe adjuntar el documento correspondiente al primer pago antes de iniciar el trámite de segundo pago.");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se envió la documentación con éxito.");
-                $("#fieldset_top_general").attr("disabled", "");
-                $("#fieldset_documentacion").attr("disabled", "");
-                $("#fieldset_cuenta").attr("disabled", "");
-                $("#fieldset_rut").attr("disabled", "");
-                $("#fieldset_otros").attr("disabled", "");
-                $("#fieldset_documentacion_convocatoria").attr("disabled", "");
-                $("#fieldset_convocatoriadocumento").attr("disabled", "");
-                $("#guardar_parametro_cuenta").attr("disabled", "");
-                $("#actualizar_parametro_cuenta").attr("disabled", "");
-                $("#guardar_parametro_rut").attr("disabled", "");
-                $("#actualizar_parametro_rut").attr("disabled", "");
-                $("#guardar_parametro_otros").attr("disabled", "");
-                $("#actualizar_parametro_otros").attr("disabled", "");
-                $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
-                $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
-                $(".eliminar_archivo").attr("disabled", "");
+//                $("#fieldset_top_general").attr("disabled", "");
+//                $("#fieldset_documentacion").attr("disabled", "");
+//                $("#fieldset_cuenta").attr("disabled", "");
+//                $("#fieldset_rut").attr("disabled", "");
+//                $("#fieldset_otros").attr("disabled", "");
+//                $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+//                $("#fieldset_convocatoriadocumento").attr("disabled", "");
+//                $("#guardar_parametro_cuenta").attr("disabled", "");
+//                $("#actualizar_parametro_cuenta").attr("disabled", "");
+//                $("#guardar_parametro_rut").attr("disabled", "");
+//                $("#actualizar_parametro_rut").attr("disabled", "");
+//                $("#guardar_parametro_otros").attr("disabled", "");
+//                $("#actualizar_parametro_otros").attr("disabled", "");
+//                $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+//                $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+//                $(".eliminar_archivo").attr("disabled", "");
                 //cargar_tabla_ganadores(token_actual);
                 break;
         }
@@ -1839,27 +1855,28 @@ function validar_estado_envio_documentacion(token_actual, id_propuesta) {
 
                     $("#info_general").attr("value", json.observaciones_documentos_ganadores);
                     if (json.envio_documentos_ganadores === true) {
-                        $("#fieldset_top_general").attr("disabled", "");
-                        $("#fieldset_documentacion").attr("disabled", "");
-                        $("#fieldset_cuenta").attr("disabled", "");
-                        $("#fieldset_rut").attr("disabled", "");
-                        $("#fieldset_otros").attr("disabled", "");
-                        $("#fieldset_documentacion_convocatoria").attr("disabled", "");
-                        $("#fieldset_convocatoriadocumento").attr("disabled", "");
-                        $("#guardar_parametro_cuenta").attr("disabled", "");
-                        $("#actualizar_parametro_cuenta").attr("disabled", "");
-                        $("#guardar_parametro_rut").attr("disabled", "");
-                        $("#actualizar_parametro_rut").attr("disabled", "");
-                        $("#guardar_parametro_otros").attr("disabled", "");
-                        $("#actualizar_parametro_otros").attr("disabled", "");
-                        $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
-                        $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
-                        $(".eliminar_archivo").attr("disabled", "");
+//                        $("#fieldset_top_general").attr("disabled", "");
+//                        $("#fieldset_documentacion").attr("disabled", "");
+//                        $("#fieldset_cuenta").attr("disabled", "");
+//                        $("#fieldset_rut").attr("disabled", "");
+//                        $("#fieldset_otros").attr("disabled", "");
+//                        $("#fieldset_documentacion_convocatoria").attr("disabled", "");
+//                        $("#fieldset_convocatoriadocumento").attr("disabled", "");
+//                        $("#guardar_parametro_cuenta").attr("disabled", "");
+//                        $("#actualizar_parametro_cuenta").attr("disabled", "");
+//                        $("#guardar_parametro_rut").attr("disabled", "");
+//                        $("#actualizar_parametro_rut").attr("disabled", "");
+//                        $("#guardar_parametro_otros").attr("disabled", "");
+//                        $("#actualizar_parametro_otros").attr("disabled", "");
+//                        $("#guardar_parametro_convocatoriadocumento").attr("disabled", "");
+//                        $("#actualizar_parametro_convocatoriadocumento").attr("disabled", "");
+//                        $(".eliminar_archivo").attr("disabled", "");
                     }
                 }
         }
 
     });
 }
+
 
 

@@ -603,7 +603,7 @@ function cargar_tabla(token_actual) {
 
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url_pv + 'Rondas/search_periodo/' + $('#rondas').val(),
         data: {"token": token_actual.token},
     }).done(function (data) {
@@ -1052,9 +1052,19 @@ function cargar_info_top_general(token_actual, id_ronda) {
 
                             var json = JSON.parse(data);
                             if (json.id) {
+                                
+                                
+                                $("#total_ronda").html("");
 
-                                if (json.estado == 'Evaluada') {
+                                if (json.estado === 'Evaluada') {
                                     $("#fieldset_top_general").attr("disabled", "");
+                                }
+                                if (json.tipo_acta === 'Preselección') {
+                                    $("#total_suplentes").attr("disabled", "");
+//                                    $("#total_ronda").val("Total preseleccionados:");
+                                    $("#total_ronda").html("Total preseleccionados:");
+                                }else{
+                                    $("#total_ronda").html("Total ganadores:");
                                 }
 
                                 $("#nombre_ronda").html(json.nombre_ronda);
@@ -1504,8 +1514,14 @@ function confirmar_top_general(token_actual, id_ronda) {
             case 'error_validacion':
                 notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
                 break;
+            case 'error_comentarios':
+                notify("danger", "remove", "Usuario:", "Debe registar comentarios generales sobre la convocatoria y las propuestas participantes ");
+                break;
+            case 'error_grupos_confirmados':
+                notify("danger", "remove", "Usuario:", "Tiene grupos evaluadores sin confirmar ");
+                break;
             default:
-                alert("Usuario:", "Recuerde liberar las postulaciones de los jurados relacionados con ésta convocatoria. Para hacerlo, por favor dirijase al componente de preselección");
+                alert("Usuario: Recuerde liberar las postulaciones de los jurados relacionados con ésta convocatoria. Para hacerlo, por favor dirijase al componente de preselección");
                 notify("success", "ok", "Usuario:", "Se confirmó con éxito.");
                 //$(".criterios").attr('disabled','');
                 cargar_tabla_ganadores(token_actual);

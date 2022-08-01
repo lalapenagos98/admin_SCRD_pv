@@ -85,30 +85,6 @@
                     <!-- /.col-lg-12 -->
                 </div>
 
-                <!--                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="panel panel-success">
-                                            <div class="panel-heading">
-                                                <h5>Para tener en cuenta</h5>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                
-                
-                                                        <p><strong>Antes de comenzar, lea por favor el siguiente contenido que le indicará algunos aspectos importantes para tener en cuenta:</strong></p>
-                                                        <ul>
-                                                            <li><strong>Rondas de evaluación:</strong> Es necesario verificar que las rondas que se crearon para ésta convocatoria cuenten con la información correspondiente.</li>
-                                                            <li><strong>Criterios de evaluación:</strong> Los criterios de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.</li>
-                                                            <li><strong>Grupos de evaluación:</strong> Los grupos de evaluación deben estar registrados en la aplicación en su totalidad para cada una de las rondas de evaluación.  </li>
-                                                            <li><strong>Evaluación de las propuestas:</strong> Es necesario que todos los jurados hayan confirmado top individual.  </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
 
                 <!-- /.row -->
                 <div class="row">
@@ -157,25 +133,6 @@
                                         </div>
                                     </div>
 
-                                    <!--                                    <div class="row">
-                                                                            <div class="col-lg-6">
-                                                                                <div class="form-group">
-                                                                                    <label>Ronda de evaluación</label>
-                                                                                    <select id='rondas' name="rondas" class="form-control" >
-                                                                                        <option value="">:: Seleccionar ::</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6" id="select_grupos" >
-                                                                                <div class="form-group">
-                                                                                    <label>Grupos de evaluación</label>
-                                                                                    <select id='grupos_evaluacion' name="grupos_evaluacion" class="form-control" disabled="" >
-                                                                                        <option value="">:: Seleccionar ::</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                    
-                                                                        </div>-->
 
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
@@ -260,6 +217,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Información básica
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5><b>Código de la propuesta:</b></h5>
+                                        <span id="codigo_propuesta"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5><b>Nombre de la propuesta:</b></h5>
+                                        <span id="nombre_propuesta"></span>
+                                    </div>
+                                    <div id="parametros_propuesta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -298,7 +275,7 @@
                             <div class="panel-body">
                                 <form id="asignar_est_form" role="form">
                                     <fieldset id="fieldset_top_general">
-                                        
+
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -335,7 +312,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -371,7 +348,7 @@
                                             </div>
 
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -392,14 +369,15 @@
                                                     <label>Monto Asignado:<span class="icono_requerido">*</span></label>
                                                     <input type="hidden" id="id_propuesta_misional" name="id_propuesta_misional"/>
                                                     <input id="monto_asignado" name="monto_asignado" class="form-control" title="Monto Asignado" disabled>
+                                                    <input type="hidden" id="documento_padre" name="documento_padre" class="form-control" title="Documento padre" disabled>
                                                     <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
                                                 </div>
                                             </div>
 
                                         </div>
+
+                                        <br/>
                                         
-                                        <br/>
-                                        <br/>
                                         <hr/>
 
                                         <div class="table-responsive">
@@ -413,6 +391,8 @@
                                                         <th>Estado</th>
                                                         <th>Descargar archivo</th>
                                                         <th>Ver información</th>
+                                                        <th>Adjuntar certificación de cumplimiento</th>
+                                                        <th>Radicar certificación de cumplimiento</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="pagos_table">
@@ -422,8 +402,8 @@
                                         </div>
 
                                         <br/>
-                                        <br/>
                                         <hr/>
+
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -478,14 +458,14 @@
                                             </div>
 
                                         </div>
-                                        
+
                                         <br/>
                                         <br/>
                                         <hr/>
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label>Observación de la Verificación:<span class="icono_requerido">*</span></label>
+                                                    <label>Observación de la Verificación<span class="icono_requerido">*</span></label>
                                                     <input type="hidden" id="id_propuesta_director" name="id_propuesta_director"/>
                                                     <input id="observacion_verificacion_director" name="observacion_verificacion_director" class="form-control" title="Observación de la Verificación" required>
                                                     <!--p class="help-block">Digite el total de ganadores para la ronda.</p-->
@@ -493,7 +473,7 @@
                                             </div>
 
                                         </div>
-                                        
+
                                         <br/>
                                         <br/>
                                         <hr/>
@@ -506,8 +486,8 @@
                                                 <button type="button" id="aprobar_pago" class="btn btn-info">Aprobar Pago</button>
                                             </div>                    
                                         </div>
-                                        
-                                        
+
+
                                     </fieldset>
                                 </form>
 
@@ -586,17 +566,17 @@
                                             <p><strong>2 - Fotocopia del certificado de Registro Único Tributario (RUT)</strong></p>
                                             <div class="form-group">
                                                 <label>Dirección del beneficiario</label>
-                                                
+
                                                 <input type="text" id="info_comp_rut" name="info_comp" class="form-control" disabled>
                                             </div>
-<!--                                            <div class="form-group">
-                                                <label>Observación de la verificación</label>
-                                                <input type="hidden" id="propuesta_rut" name="propuesta_rut"/>
-                                                <input type="hidden" id="programadocumento_rut" name="programadocumento_rut" value="2"/>
-                                                <input type="hidden" id="label" name="label" value="Dirección del beneficiario"/>
-                                                <input type="hidden" id="id_html" name="id_html" value="info_comp_rut"/>
-                                                <input type="text" id="observacion_verificacion_rut" name="observacion_verificacion_rut" class="form-control">
-                                            </div>-->
+                                            <!--                                            <div class="form-group">
+                                                                                            <label>Observación de la verificación</label>
+                                                                                            <input type="hidden" id="propuesta_rut" name="propuesta_rut"/>
+                                                                                            <input type="hidden" id="programadocumento_rut" name="programadocumento_rut" value="2"/>
+                                                                                            <input type="hidden" id="label" name="label" value="Dirección del beneficiario"/>
+                                                                                            <input type="hidden" id="id_html" name="id_html" value="info_comp_rut"/>
+                                                                                            <input type="text" id="observacion_verificacion_rut" name="observacion_verificacion_rut" class="form-control">
+                                                                                        </div>-->
                                         </div>                                                                                                                                                                                                                                                                                                     
                                     </div>
                                 </fieldset>
@@ -604,8 +584,8 @@
                                     <div class="col-lg-12" style="text-align: right">
 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
-<!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_rut">Enviar a subsabar documento</button>
-                                        <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_rut">Aprobar documento</button>-->
+                                        <!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_rut">Enviar a subsabar documento</button>
+                                                                                <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_rut">Aprobar documento</button>-->
                                     </div>
                                 </div>
 
@@ -620,7 +600,7 @@
                                             <p><strong>Información adicional del documento</strong></p>
                                             <div class="form-group">
                                                 <label>Descripción</label>
-                                                
+
                                                 <input type="text" id="info_comp_otros" name="info_comp_otros" class="form-control" disabled>
                                             </div>
                                         </div>                                                                                                                                                                                                                                                                                                     
@@ -630,8 +610,8 @@
                                     <div class="col-lg-12" style="text-align: right">
 
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar">Cancelar</button>
-<!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_otros">Enviar a subsabar documento</button>
-                                        <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_otros">Aprobar documento</button>-->
+                                        <!--                                        <button type="button" class="btn btn-danger" id="subsanar_observacion_verificacion_otros">Enviar a subsabar documento</button>
+                                                                                <button type="button" class="btn btn-success" id="actualizar_observacion_verificacion_otros">Aprobar documento</button>-->
                                     </div>
                                 </div>
 
@@ -688,6 +668,86 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="cargar_documento_convocatoria">
+            <div class="modal-dialog">
+                <div class="modal-content">                                                        
+                    <!-- cabecera del diálogo -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Formulario de la documentación convocatoria</h4>                                                    
+                    </div>
+                    <div class="loading centrado-porcentual"></div>             
+                    <!-- cuerpo del diálogo -->
+                    <div class="modal-body">
+                        <form id="formulario_documento_convocatoria" action="" class="formulario_documento_convocatoria" role="form" method="post" enctype="multipart/form-data">                                    
+                            <fieldset id="fieldset_documentacion_convocatoria">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Archivo (<span id="archivos_permitidos_convocatoria"></span>)<span class="icono_requerido">*</span></label>
+                                            <!--<input type="file" id="archivo" name="archivo" class="validar inactivar_estado_propuesta">-->                                                
+                                            <input type="file" id="archivo_convocatoria" name="archivo" class="validar">                                                
+                                            <input type="hidden" id="documento" name="documento" /> 
+                                            <input type="hidden" id="permitidos" name="permitidos" /> 
+                                            <input type="hidden" id="tamano" name="tamano" />
+                                        </div>                                                                                                                                                                                                                                                                                                        
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                        </form>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Archivo</th>
+                                            <th>Ver Archivo</th>
+                                            <th>Eliminar</th>                                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla_archivos_convocatoria">                                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!--
+                25-05-2022
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal para confirmar la radicación del documento
+        -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmar_radicar" tabindex="-1" role="dialog" aria-labelledby="confirmar_radicarLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mensaje" >¿Esta seguro de generar el radicado?</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar_radicar" >Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptar_radicar" >Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
 
 
 

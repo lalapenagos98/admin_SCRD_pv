@@ -41,13 +41,13 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
             $('.convocatorias-search').select2();
-            
+
             //Verifica si el token actual tiene acceso de lectura
             init(token_actual);
             //cargar_datos_formulario(token_actual);
             validator_form(token_actual);
-            
-            
+
+
             //Carga el select de años
             $('#anio').find('option').remove();
             $("#anio").append('<option value="">:: Seleccionar ::</option>');
@@ -78,15 +78,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $("#categorias").attr('disabled', '');
                 $('#categorias').val(null);
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
-//                $('#rondas').val(null);
-//                cargar_select_rondas(token_actual, $('#convocatorias').val());
-                //cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             //carga el select rondas
             $('#categorias').change(function () {
-//                $('#rondas').val(null);
-//                cargar_select_rondas(token_actual, $('#categorias').val());
-                // cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             /*
              * 22-04-2021
@@ -125,6 +121,13 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
 
 
+            });
+
+            $("#baceptartop").click(function () {
+//                alert ($('#propuesta_pago').val());
+                habilitar_flujo(token_actual, $('#propuesta_pago').val(), $('#secuencial_registro').val());
+                $('#exampleModaltop').modal('hide');
+                $('#top_generalModal').modal('hide');
             });
 
 
@@ -464,7 +467,7 @@ function cargar_tabla(token_actual) {
             },
             {"data": "aciones",
                 render: function (data, type, row) {
-                    return '<button id="' + row.id + '" title="Ver evaluación" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#estadopagoModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
+                    return '<button id="' + row.id + '" title="Ver estado pago" type="button" class="btn btn-warning btn_ver" data-toggle="modal" data-target="#estadopagoModal" id_propuesta="' + row.id + '" top_general="' + row.promedio + '">'
                             + '<span class="glyphicon glyphicon-eye-open"></span></button>';
                 },
             }
@@ -699,13 +702,42 @@ function cargar_info_pago(token_actual, id_propuesta) {
             default:
 
                 var json = JSON.parse(data);
+                $('#propuesta_pago').val("");
+                $('#secuencial_registro').val("");
                 //informacion básica de la propuesta
                 if (json.propuesta) {
-                    $("#estado_pago").html(json.ordenpagos.estado);
-                    $("#descripcion_estado").html(json.descripcion_mensaje);
-//                    $("#resumen_propuesta_pago").html(json.propuesta.resumen);
-//                    $("#objetivo_propuesta_pago").html(json.propuesta.objetivo);
-//                    $("#bogota_propuesta_pago").html((json.propuesta.objetivo) ? "Si" : "No");
+
+                    $('#propuesta_pago').val(json.propuesta.id);
+                    if (json.ordenpagos === null) {
+                        if (json.ordenpagosicon.estado === null) {
+                            $("#estado_pago").html("No se ha tramitado la creación de la orden de pago");
+                            $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").hide();
+                        }
+                        if (json.descripcion_mensaje === null) {
+                            $("#estado_pago").html("Aún no se ha creado la orden de pago.");
+                            $("#descripcion_estado").html("--");
+                        } else {
+                            $("#estado_pago").html("Se ha presentado una excepción");
+                            $("#descripcion_estado").html("Descripción" + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").show();
+                        }
+
+                    } else {
+                        if (json.descripcion_mensaje === "DEVUELTA" || json.descripcion_mensaje === "PAGO RECHAZADO") {
+                            $("#estado_pago").html(json.ordenpagos.estado);
+                            $("#descripcion_estado").html("Descripción: " + json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").show();
+                        } else {
+                            $("#estado_pago").html(json.ordenpagos.estado);
+                            $("#descripcion_estado").html(json.descripcion_mensaje);
+                            $("#btn_habilitar_flujo").hide();
+                        }
+                    }
+
+                }
+                if (json.ordenpagosicon) {
+                    $('#secuencial_registro').val(json.ordenpagosicon.secuencial);
                 }
                 break;
         }
@@ -752,5 +784,56 @@ function validator_form(token_actual) {
                 }
             }
         }
+    });
+}
+
+
+/*
+ * 08-02-2022
+ * Wilmer Gustavo Mogollón Duque
+ * Se agrega función habilitar flujo de pagos
+ */
+
+
+function habilitar_flujo(token_actual, id_propuesta, secuencial_registro) {
+
+    $.ajax({
+        type: 'PUT',
+        url: url_pv + 'Flujodepagos/habilitar_flujo/propuesta/' + id_propuesta,
+        data: "&token=" + token_actual.token
+                + "&secuencial_registro=" + secuencial_registro
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            case 'ya_fue_habilitado':
+                notify("danger", "remove", "Usuario:", "El flujo para esta propuesta ya fue habilitado");
+                break;
+            default:
+                notify("success", "ok", "Usuario:", "Se habilitó el flujo de pagos con éxito.");
+                //$(".criterios").attr('disabled','');
+                cargar_tabla(token_actual);
+                break;
+        }
+
     });
 }

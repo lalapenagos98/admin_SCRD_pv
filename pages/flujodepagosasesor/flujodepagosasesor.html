@@ -260,6 +260,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                Información básica
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5><b>Código de la propuesta:</b></h5>
+                                        <span id="codigo_propuesta"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5><b>Nombre de la propuesta:</b></h5>
+                                        <span id="nombre_propuesta"></span>
+                                    </div>
+                                    <div id="parametros_propuesta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -415,6 +435,27 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="pagos_table">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <hr/>
+                                        <div class="table-responsive">
+                                            <h4>Listado de certificados de cumplimiento</h4>
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th># Pago</th>
+                                                        <th>Requisito</th>
+                                                        <th>Descripción requisito</th>
+                                                        <th>Estado</th>
+                                                        <th>Descargar archivo</th>
+                                                        <!--<th>Ver información</th>-->
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="certificados_table">
 
                                                 </tbody>
                                             </table>

@@ -1580,4 +1580,33 @@ function guardar_rechazo() {
     }
 }
 
+/*
+function showExpires() {
+if (!keycloak.tokenParsed) {
+    $("#datos_token").html("Not authenticated");    
+}
 
+var o = 'Token Expires:\t\t' + new Date((keycloak.tokenParsed.exp + keycloak.timeSkew) * 1000).toLocaleString() + '<br/>';
+o += 'Token Expires in:\t' + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds<br/>';
+
+if (keycloak.refreshTokenParsed) {
+    o += 'Refresh Token Expires:\t' + new Date((keycloak.refreshTokenParsed.exp + keycloak.timeSkew) * 1000).toLocaleString() + '<br/>';
+    o += 'Refresh Expires in:\t' + Math.round(keycloak.refreshTokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds';
+}
+
+$("#datos_token").html(o);
+
+}
+
+function refreshToken(minValidity) {
+    keycloak.updateToken(minValidity).then(function(refreshed) {
+        if (refreshed) {
+            $("#datos_token").html(keycloak.tokenParsed);
+        } else {
+            $("#datos_token").html('Token not refreshed, valid for ' + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');            
+        }
+    }).catch(function() {        
+        $("#datos_token").html('Failed to refresh token');
+    });
+}
+*/

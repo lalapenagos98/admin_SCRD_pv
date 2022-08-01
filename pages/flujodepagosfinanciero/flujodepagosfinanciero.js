@@ -161,11 +161,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $("#categorias").attr('disabled', '');
                 $('#categorias').val(null);
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
-                //cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             //carga el select rondas
             $('#categorias').change(function () {
-                // cargar_tabla(token_actual);
+                 cargar_tabla(token_actual);
             });
             /*
              * 22-04-2021
@@ -2610,6 +2610,7 @@ function actualizar_observacion_verificacion_convocatoriadocumento(token_actual,
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion_convocatoria').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2659,6 +2660,7 @@ function subsanar_observacion_verificacion_convocatoriadocumento(token_actual, c
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion_convocatoria').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2708,6 +2710,7 @@ function actualizar_observacion_verificacion_rut(token_actual, programadocumento
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2757,6 +2760,7 @@ function subsanar_observacion_verificacion_rut(token_actual, programadocumento_r
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2806,6 +2810,7 @@ function actualizar_observacion_verificacion_otros(token_actual, programadocumen
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2855,6 +2860,7 @@ function subsanar_observacion_verificacion_otros(token_actual, programadocumento
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
+                cargar_info_basica(token_actual, id_propuesta);
                 break;
         }
 
@@ -2948,6 +2954,7 @@ function aprobar_variables_ganador_financiero(token_actual, id_propuesta, codigo
                 notify("success", "ok", "Usuario:", "Se aprobó la documentación con éxito.");
                 $('#evaluarModal').modal('hide');
                 document.getElementById("asignar_est_form").reset();
+                cargar_tabla(token_actual);
                 break;
         }
 
@@ -3010,7 +3017,7 @@ function devolver_al_misional(token_actual, id_propuesta, codigo_interno_registr
             default:
                 notify("success", "ok", "Usuario:", "Se notificó la subsanación de la documentación al ganador con éxito.");
                 $('#evaluarModal').modal('hide');
-//                cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
                 break;
         }
 
