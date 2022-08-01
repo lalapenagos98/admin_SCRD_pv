@@ -121,13 +121,13 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
             $('.convocatorias-search').select2();
-            
+
             //Verifica si el token actual tiene acceso de lectura
             init(token_actual);
             //cargar_datos_formulario(token_actual);
             validator_form(token_actual);
-            
-            
+
+
             //Carga el select de años
             $('#anio').find('option').remove();
             $("#anio").append('<option value="">:: Seleccionar ::</option>');
@@ -158,11 +158,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $("#categorias").attr('disabled', '');
                 $('#categorias').val(null);
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
-                //cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             //carga el select rondas
             $('#categorias').change(function () {
-                // cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
             });
             /*
              * 22-04-2021
@@ -1189,6 +1189,28 @@ function cargar_info_basica(token_actual, id_propuesta) {
                         }
 
                     });
+                }
+
+                if (json.certificacionescumplimiento) {
+                    var items = '';
+                    var i = 0;
+                    $.each(json.certificacionescumplimiento, function (k, a) {
+
+                        i = i + 1;
+
+                        items = items + '<tr>'
+                                + '<td>' + i + '</td>'
+                                + '<td>' + a.requisito + '</td>'
+                                + '<td>' + a.descripcion_requisito + '</td>'
+                                + '<td>' + a.estado + '</td>'
+                                + '<td>'
+                                + '<button id = "' + a.id_alfresco + '" title="' + (a.id_alfresco == null ? "No se ha cargado archivo" : "Descargar archivo") + '" type="button" class="btn btn-primary download_file">'
+                                + (a.id_alfresco == null ? '<span class="glyphicon glyphicon-ban-circle" title="No se ha cargado archivo"></span>' : '<span class="glyphicon glyphicon-download-alt"></span>')
+                                + '</button>'
+                                + '</td>'
+                                + '</tr>';
+                    });
+                    $("#certificados_table").html(items);
                 }
 
                 if (json.convocatoriasdocumentos) {
@@ -2903,6 +2925,7 @@ function aprobar_pago_ganador_asesor(token_actual, id_propuesta, observacion_ver
             default:
                 notify("success", "ok", "Usuario:", "Se aprobó el pago con éxito.");
                 $('#evaluarModal').modal('hide');
+                cargar_tabla(token_actual);
                 break;
         }
 
@@ -2957,7 +2980,7 @@ function devolver_al_misional(token_actual, id_propuesta, observacion_verificaci
             default:
                 notify("success", "ok", "Usuario:", "Se notificó la subsanación de la documentación al misional con éxito.");
                 $('#evaluarModal').modal('hide');
-//                cargar_tabla(token_actual);
+                cargar_tabla(token_actual);
                 break;
         }
 

@@ -363,7 +363,7 @@
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Información básica d la propuesta
+                                Información básica de la propuesta
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -400,13 +400,17 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <h5><b>Estado del pago</b></h5>
                                             <span id="estado_pago"></span>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <h5><b>Descripción</b></h5>
                                             <span id="descripcion_estado"></span>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <h5><b>Acciones</b></h5>
+                                            <button type="button" class="btn btn-success" id="btn_habilitar_flujo" data-toggle="modal" data-target="#exampleModaltop">Habilitar flujo de pagos</button>
                                         </div>
                                     </div>
                                 </div>
@@ -721,10 +725,12 @@
 
                     <div class="modal-body">
                         <div id="mensajetop">
-                            ¿Está seguro de aceptar el top general?<br/>
+                            ¿Está seguro de habilitar nuevamente el flujo de pagos para esta propuesta?<br/>
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" id="propuesta_pago" name="propuesta_pago" />
+                        <input type="hidden" id="secuencial_registro" name="secuencial_registro" />
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelartop" >Cancelar</button>
                         <button type="button" class="btn btn-primary" id="baceptartop" >Aceptar</button>
                     </div>

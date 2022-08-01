@@ -338,6 +338,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" id="id_propuesta_misional" name="id_propuesta_misional"/>
+                                            <input type="hidden" id="tipo_pago" name="tipo_pago"/>
                                         </div>
 
                                         <div class="table-responsive">
@@ -349,8 +350,10 @@
                                                         <th>Valor pago total</th>
                                                         <th>Valor pago parcial</th>
                                                         <th>Estado documento</th>
+                                                        <th>Radicado ORFEO</th>
                                                         <th>Descargar archivo</th>
                                                         <th>Ver información</th>
+                                                        <th>Radicar pago</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="pagos_table">
@@ -643,149 +646,6 @@
         </div>
         <!-- Modal -->
 
-        <!--
-            06-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al enviar a deliberar y para acpetar top general.
-        -->
-
-        <!-- Modal enviar a deliberar -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensaje" style="display:none;">
-                            ¿Está seguro de enviar a deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-
-        <!-- Modal enviar a aceptar top general -->
-        <div class="modal fade" id="exampleModaltop" tabindex="-1" role="dialog" aria-labelledby="exampleModaltopLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModaltopLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajetop">
-                            ¿Está seguro de aceptar el top general?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelartop" >Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptartop" >Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-        <!--
-            12-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al generar acta.
-        -->
-
-        <!-- Modal generar acta -->
-        <div class="modal fade" id="genera_acta_modal" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajegn" style="display:none;">
-                            ¿Está seguro de generar el acta de deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelargn" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptargn" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-        <!--
-            15-06-2020
-            Wilmer Gustavo Mogollón Duque
-            Se agrega modal para notificación al generar acta de convocatoria desierta.
-        -->
-
-        <!-- Modal declarar convocatoria desierta -->
-        <div class="modal fade" id="genera_acta_modal_desierta" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modal_desiertaLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensajeds" style="display:none;">
-                            ¿Está seguro de declarar la convocatoria desierta?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelards" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptards" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
-
-
-        <!-- Modal anular deliberación -->
-        <div class="modal fade" id="anular_deliberacionModal" tabindex="-1" role="dialog" aria-labelledby="anular_deliberacionModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="mensaje_anular" style="display:none;">
-                            ¿Está seguro de anular la deliberación?<br/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar_anular" style="display:none;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptar_anular" style="display:none;">Aceptar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Modal -->
 
 
@@ -1096,14 +956,14 @@
                                 <fieldset id="fieldset_convocatoriadocumento">
                                     <div class="col-lg-12">
                                         <div class="row">
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-12">
                                                 <label>Porcentaje a pagar</label>
                                                 <input type="number" id="porcentaje_pagar" name="porcentaje_pagar" class="form-control" min="1" max="100">
                                             </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Radicado de cuenta en Orfeo:<span class="icono_requerido">*</span></label>
-                                                <input id="radicado_cuenta_orfeo" name="radicado_cuenta_orfeo" class="form-control" title="Radicado de cuenta en ORFEO" required>
-                                            </div>
+                                            <!--                                            <div class="form-group col-lg-6">
+                                                                                            <label>Radicado de cuenta en Orfeo</label>
+                                                                                            <input id="radicado_cuenta_orfeo" name="radicado_cuenta_orfeo" class="form-control" title="Radicado de cuenta en ORFEO" readonly="">
+                                                                                        </div>-->
                                             <hr/>
                                             <div class="form-group col-lg-12">
                                                 <label>Observación de la verificación</label>
@@ -1131,6 +991,36 @@
                 </div>
             </div>
         </div>
+        
+        
+        <!--
+                25-05-2022
+                Wilmer Gustavo Mogollón Duque
+                Se agrega modal para confirmar la radicación del documento
+        -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="confirmar_radicar" tabindex="-1" role="dialog" aria-labelledby="confirmar_radicarLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mensaje" >¿Esta seguro de generar el radicado?</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar_radicar" >Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptar_radicar" >Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
 
 
 
