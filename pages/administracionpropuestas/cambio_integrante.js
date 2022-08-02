@@ -212,6 +212,47 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
+            $('#categoria').change(function () {
+
+                if ($("#categoria").val() != "")
+                {
+                    $.ajax({
+                        type: 'POST',
+                        data: {"modulo": "SICON-PROPUESTAS-CAMBIO-INTEGRANTE", "token": token_actual.token, "conv": $("#categoria").val()},
+                        url: url_pv + 'PropuestasCambioIntegrante/select_propuestas'
+                    }).done(function (data) {
+                        if (data == 'error_metodo')
+                        {
+                            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                        } else
+                        {
+                            if (data == 'error_token')
+                            {
+                                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                            } else
+                            {
+                                if (data == 'acceso_denegado')
+                                {
+                                    notify("danger", "remove", "Convocatorias:", "No tiene permisos para ver la información.");
+                                } else
+                                {
+                                    var json = JSON.parse(data);
+
+                                    $('#propuestas').find('option').remove();
+                                    $("#propuestas").append('<option value="">:: Seleccionar ::</option>');
+                                    $.each(json, function (key, value) {
+                                        $("#propuestas").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                    });
+
+                                    $("#propuestas").selectpicker('refresh');
+                                }
+                            }
+                        }
+                    });
+                }
+
+            });
+
             $('#buscar').click(function () {
 
                 if ($("#convocatoria").val() != "")
