@@ -79,6 +79,8 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                                     //Limpio select de categorias
                                     $('#convocatoria').find('option').remove();
+                                    
+                                    $('#convocatoria_pago').find('option').remove();
 
                                     //Valido si la convocatoria tiene categorias                                            
                                     if (json.convocatoria.diferentes_categorias == true)
@@ -88,6 +90,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                         if (json.categorias.length > 0) {
                                             $.each(json.categorias, function (key, categoria) {
                                                 $("#convocatoria").append('<option value="' + categoria.id + '" >' + categoria.nombre + '</option>');
+                                                $("#convocatoria_pago").append('<option value="' + categoria.id + '" >' + categoria.nombre + '</option>');
                                             });
                                         }
                                     } else
@@ -225,7 +228,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                                     $("#requisito_pago").append('<option value="">:: Seleccionar ::</option>');
                                     if (json.requisitos.length > 0) {
                                         $.each(json.requisitos, function (key, requisito) {
-                                            if(requisito.id===1107)
+                                            if(requisito.nombre==='Carta de radicación pagos ganadores')
                                             {
                                                 $("#requisito_pago").append('<option value="' + requisito.id + '" selected="selected">' + requisito.nombre + '</option>');
                                             }
@@ -435,7 +438,7 @@ function validator_form(token_actual) {
             },
             orden: {
                 validators: {
-                    notEmpty: {message: 'El número del pago es requerido'},
+                    notEmpty: {message: 'El número del pago es requerido kjhkjh'},
                     numeric: {message: 'Debe ingresar solo numeros'}
                 }
             },
@@ -454,92 +457,60 @@ function validator_form(token_actual) {
         // Get the BootstrapValidator instance
         var bv = $form.data('bootstrapValidator');
 
+        var disabled = $form.find(':input:disabled').removeAttr('disabled');
+        
         var values = $form.serializeArray();
 
-        values.find(input => input.name == 'descripcion').value = CKEDITOR.instances.descripcion.getData();
+        disabled.attr('disabled','disabled');
+        
+        console.log(values);
+        
+        //Se realiza la peticion con el fin de guardar el registro actual
+        $.ajax({
+            type: 'POST',
+            url: url_pv + 'Convocatoriasdocumentos/new',
+            data: $.param(values) + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria_padre_categoria=" + $("#id").attr('value')
+        }).done(function (result) {
 
-        if ($("#id_registro").val().length < 1) {
-            //Se realiza la peticion con el fin de guardar el registro actual
-            $.ajax({
-                type: 'POST',
-                url: url_pv + 'Convocatoriasdocumentos/new',
-                data: $.param(values) + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria_padre_categoria=" + $("#id").attr('value')
-            }).done(function (result) {
-
-                if (result == 'error')
+            if (result == 'error')
+            {
+                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+            } else
+            {
+                if (result == 'error_token')
                 {
-                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                 } else
                 {
-                    if (result == 'error_token')
+                    if (result == 'acceso_denegado')
                     {
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                     } else
                     {
-                        if (result == 'acceso_denegado')
-                        {
-                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                        if (isNaN(result)) {
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                         } else
                         {
-                            if (isNaN(result)) {
-                                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                            } else
-                            {
-                                notify("success", "ok", "Convocatorias:", "Se creó el documento administrativo con éxito.");
-                                //Cargar datos de la tabla de categorias
-                                cargar_tabla(token_actual);
-                            }
+                            notify("success", "ok", "Convocatorias:", "Se creó el documento administrativo con éxito.");
+                            //Cargar datos de la tabla de categorias
+                            cargar_tabla(token_actual);
                         }
                     }
                 }
+            }
 
-            });
-        } else
-        {
-            //Realizo la peticion con el fin de editar el registro actual
-            $.ajax({
-                type: 'PUT',
-                url: url_pv + 'Convocatoriasdocumentos/edit_publico/' + $("#id_registro").attr('value'),
-                data: $.param(values) + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria_padre_categoria=" + $("#id").attr('value')
-            }).done(function (result) {
-                if (result == 'error')
-                {
-                    notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                } else
-                {
-                    if (result == 'error_token')
-                    {
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                    } else
-                    {
-                        if (result == 'acceso_denegado')
-                        {
-                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        } else
-                        {
-                            if (isNaN(result))
-                            {
-                                notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                            } else
-                            {
-                                notify("info", "ok", "Convocatorias:", "Se edita el documento con éxito.");
-                                cargar_tabla(token_actual);
-                            }
-                        }
-                    }
-                }
-            });
-        }
+        });
+        
 
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
-        CKEDITOR.instances.descripcion.setData('');
-        $("#orden").val("");
-        $("#requisto option[value='']").prop("selected", true);
-        $("#subsanable option[value='true']").prop("selected", true);
-        $("#obligatorio option[value='true']").prop("selected", true);
+        $("textarea#descripcion_pago").val("");
+        $("#orden_pago").val("");
+        $("#requisito_pago option[value='']").prop("selected", true);
+        $("#subsanable_pago option[value='true']").prop("selected", true);
+        $("#obligatorio_pago option[value='true']").prop("selected", true);
         $("#id_registro").val("");
-        $('#nuevo_evento').modal('toggle');
+        $('#nuevo_informe_pago').modal('toggle');
     });
 
 }
