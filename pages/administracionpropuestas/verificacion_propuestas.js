@@ -68,8 +68,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                             if (json.entidades.length > 0) {
                                 //var selected;
                                 $.each(json.estados_propuestas, function (key, estado_propuesta) {
-                                    if (estado_propuesta.id != 7)
-                                    {
+                                    if( estado_propuesta.id===8 || estado_propuesta.id===20 || estado_propuesta.id===21 || estado_propuesta.id===22 || estado_propuesta.id===23 || estado_propuesta.id===24 || estado_propuesta.id===31 || estado_propuesta.id===33 || estado_propuesta.id===34 || estado_propuesta.id===44|| estado_propuesta.id===53)                                
+                                    {                                    
                                         $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
                                     }
                                 });

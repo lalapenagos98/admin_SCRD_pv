@@ -52,11 +52,7 @@ $(document).ready(function () {
                         if (json.entidades.length > 0) {
                             //var selected;
                             $.each(json.estados_propuestas, function (key, estado_propuesta) {
-                                //21 por subsanar
-                                //23 rechazada
-                                //24 habilitada
-                                //33 Recomendada como Ganadora  
-                                if( estado_propuesta.id!=21 && estado_propuesta.id!=23 && estado_propuesta.id!=24 && estado_propuesta.id!=33)                                
+                                if( estado_propuesta.id===7 || estado_propuesta.id===8 || estado_propuesta.id===20 || estado_propuesta.id===22 || estado_propuesta.id===31 || estado_propuesta.id===34)                                
                                 {                                                                    
                                     $("#estado_propuesta").append('<option value="' + estado_propuesta.id + '" >' + estado_propuesta.nombre + '</option>');
                                 }
@@ -145,12 +141,15 @@ $(document).ready(function () {
                                     row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-info btn_tooltip" title="Realizar cambio de integrante"><span class="fa fa-users"></span></button></a>';
                                 }
                                 
-                                /*Wilmer Mogollón -- 26-09-2021 -- Agrego botón para documentación ganadores*/
-                                href_propuesta = "documentacion_ganadores.html?m=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
-                                row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-success btn_tooltip" title="Documentación ganadores"><span class="fa fa-folder-o"></span></button></a>';
+                                //solo para la SCRD
+                                if(row.entidad === 'SCRD')
+                                {
+                                    /*Wilmer Mogollón -- 26-09-2021 -- Agrego botón para documentación ganadores*/
+                                    href_propuesta = "documentacion_ganadores.html?m=" + m + "&id=" + row.id_convocatoria + "&p=" + row.id_propuesta;                              
+                                    row.ver_propuesta = row.ver_propuesta+'<br/><a href="'+href_propuesta+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-success btn_tooltip" title="Documentación ganadores"><span class="fa fa-folder-o"></span></button></a>';
+                                }
                                 
-                            }
-                            
+                            }                            
                            
                             //Valido el programa PDAC
                             if(row.programa==2)
@@ -182,7 +181,17 @@ $(document).ready(function () {
                             //24 habilitada
                             //33 Recomendada como Ganadora                              
                             //44 Recomendada como No Ganadora                              
-                            if( row.id_estado===21 || row.id_estado===23 || row.id_estado===24 || row.id_estado===33 || row.id_estado===44)
+                            //53 Preseleccionada
+                            //54 verificacion_misional
+                            //55 verificacion_financiero
+                            //56 verificacion_director_fomento
+                            //57 verificacion_asesor
+                            //58 verificacion_subsecretaria
+                            //59 sin_verificacion
+                            //60 subsanacion_notificada_ganadores
+                            //61 devuelto_a_verificacion_misional
+
+                            if( row.id_estado===21 || row.id_estado===23 || row.id_estado===24 || row.id_estado===33 || row.id_estado===44 || row.id_estado===53 || row.id_estado===54 || row.id_estado===55 || row.id_estado===56 || row.id_estado===57 || row.id_estado===58 || row.id_estado===59 || row.id_estado===60 || row.id_estado===61)
                             {
                                 row.estado="<b>Inscrita</b>";
                             }
