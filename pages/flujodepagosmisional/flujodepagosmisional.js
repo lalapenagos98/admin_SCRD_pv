@@ -1,3 +1,13 @@
+var formatterMoneda = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+  
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
+  
+
 //Array del consumo con el back
 keycloak.init(initOptions).then(function (authenticated) {
 
@@ -1161,10 +1171,10 @@ function cargar_info_basica(token_actual, id_propuesta) {
                     $.each(json.convocatoriasdocumentos, function (k, a) {
                         items = items + '<tr>'
                                 + '<td>' + i + '</td>'
-                                + '<td>' + a.monto_asignado + '</td>'
-                                + '<td>' + a.valor_pago + '</td>'
+                                + '<td>' + formatterMoneda.format(a.monto_asignado) + '</td>'
+                                + '<td>' + formatterMoneda.format(a.valor_pago) + '</td>'
                                 + '<td>' + a.estado + '</td>'
-                                + '<td>' + a.radicado_cuenta_orfeo + '</td>'
+                                + '<td>' + (a.radicado_cuenta_orfeo ?? '-') + '</td>'
                                 + '<td>'
                                 + '<button id = "' + a.id_alfresco + '" title="' + (a.id_alfresco == null ? "No se ha cargado archivo" : "Descargar archivo") + '" type="button" class="btn btn-primary download_file">'
                                 + (a.id_alfresco == null ? '<span class="glyphicon glyphicon-ban-circle" title="No se ha cargado archivo"></span>' : '<span class="glyphicon glyphicon-download-alt"></span>')

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    console.log('ready');
 
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
@@ -16,12 +17,13 @@ $(document).ready(function () {
     $("#actualizar_parametro_convocatoriadocumento").hide();
     $("#guardar_parametro_convocatoriadocumento").hide();
 
-//    /*para permitir movilidad al cerrar el modal*/
-//    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
-//        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
-//            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
-//        }
-//    });
+    /*para permitir movilidad al cerrar el modal*/
+    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+        }
+        $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
+    });
 
 
     /*Validar si se puede editar información*/
@@ -941,10 +943,14 @@ $(document).ready(function () {
 
 //Agrego para limpiar el formulario
 function limpiarFormulario() {
+    console.log('limpiarFormulario');
+    
     document.getElementById("formulario_complementar_informacion_otros").reset();
 }
 
 function cargar_tabla_archivos(token_actual, documento, estado) {
+    console.log('cargar_tabla_archivos');
+    
     //Realizo la peticion para cargar el formulario
     $.ajax({
         type: 'GET',
@@ -1004,6 +1010,8 @@ function cargar_tabla_archivos(token_actual, documento, estado) {
  */
 
 function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
+    console.log('cargar_tabla_archivos_convocatoria');
+
     //Realizo la peticion para cargar el formulario
     $.ajax({
         type: 'GET',
@@ -1059,6 +1067,8 @@ function cargar_tabla_archivos_convocatoria(token_actual, documento, estado) {
 
 
 function cargar_tabla_link(token_actual, documento, estado) {
+    console.log('cargar_tabla_link');
+
     //Realizo la peticion para cargar el formulario
     $.ajax({
         type: 'GET',
@@ -1111,6 +1121,8 @@ function cargar_tabla_link(token_actual, documento, estado) {
 //Funcion para descargar archivo
 function download_file(cod)
 {
+    console.log('download_file');
+
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
 
@@ -1134,6 +1146,8 @@ function download_file(cod)
 //Funcion para descargar archivo
 function eliminar(id)
 {
+    console.log('eliminar');
+
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
 
@@ -1182,6 +1196,8 @@ function eliminar(id)
 //Funcion para descargar archivo
 function eliminar_link(id)
 {
+    console.log('eliminar_link');
+
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
 
@@ -1228,6 +1244,7 @@ function eliminar_link(id)
 }
 
 function validator_form(token_actual) {
+    console.log('validator_form');
 
     //Validar el formulario
     $('.formulario_link').bootstrapValidator({
@@ -1306,6 +1323,7 @@ function validator_form(token_actual) {
 
 
 function agregar_observacion_documentacion(token_actual, id_propuesta, info_general) {
+    console.log('agregar_observacion_documentacion');
 
     $.ajax({
         type: 'PUT',
@@ -1378,6 +1396,8 @@ function agregar_observacion_documentacion(token_actual, id_propuesta, info_gene
 
 
 function agregar_informacion_complementaria_documentacion(token_actual, programadocumento, label, id_html, info_comp) {
+    console.log('agregar_informacion_complementaria_documentacion');
+    // $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
 
     $.ajax({
         type: 'PUT',
@@ -1420,7 +1440,7 @@ function agregar_informacion_complementaria_documentacion(token_actual, programa
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
                 document.getElementById("formulario_complementar_informacion_rut").reset();
-                $('.modal-backdrop').remove();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1435,6 +1455,7 @@ function agregar_informacion_complementaria_documentacion(token_actual, programa
  */
 
 function actualizar_informacion_complementaria_documentacion(token_actual, programadocumento, label, id_html, info_comp) {
+    console.log('actualizar_informacion_complementaria_documentacion');
 
     $.ajax({
         type: 'PUT',
@@ -1477,7 +1498,7 @@ function actualizar_informacion_complementaria_documentacion(token_actual, progr
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
                 document.getElementById("formulario_complementar_informacion_rut").reset();
-                $('.modal-backdrop').remove();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1486,6 +1507,7 @@ function actualizar_informacion_complementaria_documentacion(token_actual, progr
 
 
 function agregar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, convocatoriadocumento, label_convocatoriadocumento, id_html_convocatoriadocumento, info_comp_convocatoriadocumento) {
+    console.log('agregar_informacion_complementaria_documentacion_convocatoriadocumento');
 
     $.ajax({
         type: 'PUT',
@@ -1527,6 +1549,7 @@ function agregar_informacion_complementaria_documentacion_convocatoriadocumento(
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion_convocatoria').modal('hide');
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1535,6 +1558,7 @@ function agregar_informacion_complementaria_documentacion_convocatoriadocumento(
 
 
 function actualizar_informacion_complementaria_documentacion_convocatoriadocumento(token_actual, convocatoriadocumento, label_convocatoriadocumento, id_html_convocatoriadocumento, info_comp_convocatoriadocumento) {
+    console.log('actualizar_informacion_complementaria_documentacion_convocatoriadocumento');
 
     $.ajax({
         type: 'PUT',
@@ -1576,6 +1600,7 @@ function actualizar_informacion_complementaria_documentacion_convocatoriadocumen
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion_convocatoria').modal('hide');
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1584,6 +1609,7 @@ function actualizar_informacion_complementaria_documentacion_convocatoriadocumen
 
 
 function agregar_informacion_complementaria_documentacion_otros(token_actual, programadocumento, label_otros, id_html_otros, info_comp_otros) {
+    console.log('agregar_informacion_complementaria_documentacion_otros');
 
     $.ajax({
         type: 'PUT',
@@ -1626,6 +1652,7 @@ function agregar_informacion_complementaria_documentacion_otros(token_actual, pr
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
                 document.getElementById("formulario_complementar_informacion_otros").reset();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1634,6 +1661,7 @@ function agregar_informacion_complementaria_documentacion_otros(token_actual, pr
 
 
 function actualizar_informacion_complementaria_documentacion_otros(token_actual, programadocumento, label_otros, id_html_otros, info_comp_otros) {
+    console.log('actualizar_informacion_complementaria_documentacion_otros');
 
     $.ajax({
         type: 'PUT',
@@ -1676,6 +1704,7 @@ function actualizar_informacion_complementaria_documentacion_otros(token_actual,
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
                 document.getElementById("formulario_complementar_informacion_otros").reset();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1688,6 +1717,8 @@ function actualizar_informacion_complementaria_documentacion_otros(token_actual,
  * Se agregan funciones para agregar y editar parametros cuenta bancaria
  */
 function agregar_informacion_complementaria_documentacion_cuenta(token_actual, programadocumento, label_banco_cuenta, id_html_banco_cuenta, label_tipo_cuenta, id_html_tipo_cuenta, label_numero_cuenta, id_html_numero_cuenta, info_comp_numero_cuenta, entidad_bancaria, tipo_cuenta) {
+    console.log('agregar_informacion_complementaria_documentacion_cuenta');
+    
     $.ajax({
         type: 'PUT',
         url: url_pv + 'PropuestasDocumentacionganadores/agregar_informacion_complementaria_cuenta/propuesta/' + getURLParameter('p'),
@@ -1740,7 +1771,7 @@ function agregar_informacion_complementaria_documentacion_cuenta(token_actual, p
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
-                $('.modal-backdrop').remove();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1749,6 +1780,7 @@ function agregar_informacion_complementaria_documentacion_cuenta(token_actual, p
 
 
 function actualizar_informacion_complementaria_documentacion_cuenta(token_actual, programadocumento, label_banco_cuenta, id_html_banco_cuenta, label_tipo_cuenta, id_html_tipo_cuenta, label_numero_cuenta, id_html_numero_cuenta, info_comp_numero_cuenta, entidad_bancaria, tipo_cuenta) {
+    console.log('actualizar_informacion_complementaria_documentacion_cuenta');
 
     $.ajax({
         type: 'PUT',
@@ -1806,7 +1838,7 @@ function actualizar_informacion_complementaria_documentacion_cuenta(token_actual
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
-                $('.modal-backdrop').remove();
+                $('.modal-backdrop').remove(); console.log('modal-backdrop eliminado.')
                 break;
         }
 
@@ -1821,6 +1853,8 @@ function actualizar_informacion_complementaria_documentacion_cuenta(token_actual
  * Se agrega función validar_estado_envio_documentacion
  */
 function validar_estado_envio_documentacion(token_actual, id_propuesta) {
+    console.log('validar_estado_envio_documentacion');
+
     $.ajax({
         type: 'GET',
         url: url_pv + 'PropuestasDocumentacionganadores/verificar_envio/propuesta/' + id_propuesta,
