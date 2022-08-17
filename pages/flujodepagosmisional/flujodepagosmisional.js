@@ -2022,6 +2022,9 @@ function subsanar_observacion_verificacion_cuenta(token_actual, programadocument
             case 'error_faltan_documentos':
                 notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
                 break;
+            case 'info_comp_convocatoriadocumento':
+                notify("danger", "remove", "Usuario:", "Debe colocar la observación de la subsanación del documento");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
