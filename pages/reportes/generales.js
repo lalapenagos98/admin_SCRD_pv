@@ -154,6 +154,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                         url: url_pv_report + 'reporte_inhabilidades_propuestas_back.php',
                                                         data: {
                                                             codigos: codigos,
+                                                            anio: $("#anio").val(),
+                                                            cv1: $("#cv1").val(),
                                                             token: token_actual.token,
                                                             modulo: "SICON-PROPUESTAS-VERIFICACION"
                                                         }
