@@ -150,11 +150,6 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                                                 $('#btn_inhabilidades').click(function () {
                                                     var codigos = $("#inhabilidades_codigos").val();
-                                                    
-                                                    
-                                                    window.open(url_pv_report+'reporte_inhabilidades_propuestas.php?codigos='+codigos+'&anio='+$("#anio").val()+'&cv1='+$("#cv1").val(), '_blank');                                                                                                
-                                                    
-                                                    /*
                                                     $.AjaxDownloader({
                                                         url: url_pv_report + 'reporte_inhabilidades_propuestas_back.php',
                                                         data: {
@@ -165,7 +160,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                                                             modulo: "SICON-PROPUESTAS-VERIFICACION"
                                                         }
                                                     });                                                    
-                                                    */
                                                 });
                                             }
                                         }
