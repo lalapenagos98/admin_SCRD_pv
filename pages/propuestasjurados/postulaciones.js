@@ -381,11 +381,26 @@ function cargar_tabla_b(token_actual) {
             },
             {"data": "aciones",
                 render: function (data, type, row) {
+                    
+                    var url_ver_convocatoria="http://sicon.scrd.gov.co/convocatorias/" + row.id;
+                    if(row.programa==='Es Cultura Local')
+                    {
+                        var fecha_limite_ecl = row.convenio_instituciones.split(',');
+                        var fecha_limite_inicio_ecl = new Date(fecha_limite_ecl[0]);
+                        var fecha_limite_fin_ecl = new Date(fecha_limite_ecl[1]);
+                        var fecha_creada_convocatoria = new Date(row.fecha_creacion);
+                        
+                        if( (fecha_creada_convocatoria > fecha_limite_inicio_ecl ) && (fecha_creada_convocatoria < fecha_limite_fin_ecl )){
+                            url_ver_convocatoria=row.link_condiciones;
+                        }                        
+                    }
+                    
+                    
                     return '<button id="' + row.id + '"  title="Postularse" type="button" class="btn btn-warning btn_cargar_b" data-toggle="modal" data-target="#perfil_info\">'
                             + '<span class=" 	glyphicon glyphicon-check"></span></button>'
 //                                                 +'<button name="'+row.id+'" onclick="http://sicon.scrd.gov.co/site_SCRD_pv/publicar.html?id='+row.id+'"  title="Enlace de la convocatoria" type="button" class="btn btn-info btn_link">'
 //                                                 +'<span class="glyphicon glyphicon-link"></span></button>'
-                            + '<a href="http://sicon.scrd.gov.co/convocatorias/' + row.id + '" title="Enlace de la convocatoria" target="_blank" class="btn btn-info" role="button">Ver convocatoria</a>';
+                            + '<a href="' + url_ver_convocatoria + '" title="Enlace de la convocatoria" target="_blank" class="btn btn-info" role="button">Ver convocatoria</a>';
                 },
             }
 
