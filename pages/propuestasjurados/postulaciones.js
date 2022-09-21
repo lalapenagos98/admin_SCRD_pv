@@ -330,7 +330,7 @@ function cargar_tabla_b(token_actual) {
         "responsive": true,
         "searching": false,
         "ajax": {
-            url: url_pv + "PropuestasJurados/postulacion_search_convocatorias",
+            url: url_pv + "PropuestasJurados/postulacion_search_convocatorias_paginado",
             data: {
                 "token": token_actual.token,
                 "entidad": $("#entidad").val(),
@@ -382,7 +382,7 @@ function cargar_tabla_b(token_actual) {
             {"data": "aciones",
                 render: function (data, type, row) {
                     
-                    var url_ver_convocatoria="http://sicon.scrd.gov.co/convocatorias/" + row.id;
+                    var url_ver_convocatoria="http://sicon.scrd.gov.co/convocatorias/" + row.id;                    
                     if(row.programa==='Es Cultura Local')
                     {
                         var fecha_limite_ecl = row.convenio_instituciones.split(',');

@@ -617,6 +617,7 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
                     $('#identidad_genero,identidad_genero_2').html(json.participante.identidad_genero);
                     $('#ciudad,#ciudad_2').html(json.participante.ciudad_residencia);
                     $('#barrio,#barrio_2').html(json.participante.barrio_residencia);
+                    $('#localidad,#localidad_2').html(json.participante.localidad_residencia);
                     $('#direccion_residencia,#direccion_residencia_2').html(json.participante.direccion_residencia);
                     $('#correo_electronico,#correo_electronico_2').html(json.participante.correo_electronico);
                     $('#perfil,#perfil_2').html(json.perfil);
