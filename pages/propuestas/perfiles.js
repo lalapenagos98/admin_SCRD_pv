@@ -135,7 +135,7 @@ $(document).ready(function () {
                     $("#condiciones_participacion_pdf").attr("src", $("#tipo_participante option:selected").attr("lang"));
                     
                     if($("#programa").val()=="2"){
-                        if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186")
+                        if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186"||$("#convocatoria_padre").val()=="1719")
                         {
                             $(".alianza_pdac").css("display", "block");
                         }
@@ -254,7 +254,7 @@ $(document).ready(function () {
 
                 var enviar=true;
                 
-                if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186"){
+                if($("#convocatoria_padre").val()=="608"||$("#convocatoria_padre").val()=="1186" ||$("#convocatoria_padre").val()=="1719"){
                     if($("#alianza_sectorial").val()=="")
                     {
                         enviar=false;
@@ -302,7 +302,7 @@ $(document).ready(function () {
                                             {
                                                 if (data == 'error_otra_propuesta_pdac')
                                                 {
-                                                    notify("danger", "ok", "Convocatorias:", "No puede iniciar el procedo de inscripción de la propuesta, debido a que ya cuenta con una propuesta en la convocatoria ("+$("#nombre_convocatoria_par").val()+") , para visualizar sus propuestas por favor ingrese al menú Mis propuestas.");
+                                                    notify("danger", "ok", "Convocatorias:", "No puede iniciar el proceso de inscripción de la propuesta, debido a que ya cuenta con una propuesta en la convocatoria ("+$("#nombre_convocatoria_par").val()+"), para visualizar sus propuestas por favor ingrese al menú Mis propuestas.");
                                                 } else
                                                 {
                                                     if (data == 'error_participacion')

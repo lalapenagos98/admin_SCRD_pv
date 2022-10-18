@@ -9,7 +9,7 @@ $(document).ready(function () {
     if (getURLParameter('m') == "pj")
     {
         href_regresar = "grupos_trabajos.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
-        href_siguiente = "territorios_poblaciones.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_siguiente = "presupuesto.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
     }
 
     $("#link_equipo").attr("onclick", "location.href = '" + href_regresar + "'");
@@ -29,8 +29,8 @@ $(document).ready(function () {
 
             $('.semana').datetimepicker({
                 language: 'es',
-                daysOfWeekDisabled: [0, 2, 3, 4, 5, 6],
-                weekStart: 1,
+                //daysOfWeekDisabled: [0, 2, 3, 4, 5, 6],
+                //weekStart: 1,
                 todayBtn: 0,
                 autoclose: 1,
                 todayHighlight: 1,
@@ -42,6 +42,17 @@ $(document).ready(function () {
                 //Capturo la fecha del calendario
                 var fecha = new Date(ev.date).toISOString().substring(0, 10);
 
+                var id_calendario = $(this).attr("id");
+                
+                if(id_calendario==='fecha_inicio')
+                {
+                    id_calendario="fecha";
+                }
+                else
+                {
+                    id_calendario="input_fecha_fin";
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: url_pv + 'PropuestasPdac/validar_periodo_ejecucion',
@@ -66,9 +77,9 @@ $(document).ready(function () {
                                 if (!Boolean(result))
                                 {
                                     notify("danger", "remove", "Usuario:", "La semana de ejecución, esta fuera del periodo permitido para la ejecución de su propuesta.");
-                                    $("#fecha").val('');
-                                    $("#form_nuevo_cronograma").data('bootstrapValidator').resetForm();
-                                    $("#form_nuevo_cronograma").bootstrapValidator('resetForm', true);
+                                    $("#"+id_calendario).val('');                                    
+                                    $('#form_nuevo_cronograma').bootstrapValidator('revalidateField', 'fecha');
+                                    $('#form_nuevo_cronograma').bootstrapValidator('revalidateField', 'input_fecha_fin');
                                 }
                             }
                         }
@@ -277,7 +288,7 @@ $(document).ready(function () {
                         propuesta   : getURLParameter('p'),
                         token   : token_actual.token                        
                     },
-                    url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_xls/'
+                    url: url_pv + 'PropuestasFormatos/propuesta_cronograma_xls/'
                 });
             });
 
@@ -426,7 +437,7 @@ function validator_form(token_actual) {
                                     {
                                         notify("success", "ok", "Propuesta:", "Se actualizó con el éxito la propuesta.");
 
-                                        var redirect = "territorios_poblaciones.html";
+                                        var redirect = "presupuesto.html";
 
                                         setTimeout(function () {
                                             location.href = url_pv_admin + 'pages/propuestas/' + redirect + '?m=' + getURLParameter('m') + '&id=' + $("#conv").attr('value') + '&p=' + getURLParameter('p');
@@ -611,6 +622,7 @@ function validator_form(token_actual) {
     //Se debe colocar debido a que el calendario es un componente diferente
     $('.semana').on('changeDate show', function (e) {
         $('#form_nuevo_cronograma').bootstrapValidator('revalidateField', 'fecha');
+        $('#form_nuevo_cronograma').bootstrapValidator('revalidateField', 'input_fecha_fin');
     });
 
     //Validar el formulario    
@@ -624,9 +636,14 @@ function validator_form(token_actual) {
         fields: {
             fecha: {
                 validators: {
-                    notEmpty: {message: 'La semana de ejecución, es requerido'}
+                    notEmpty: {message: 'La fecha inicio de ejecución, es requerido'}
                 }
-            }
+            },
+            input_fecha_fin: {
+                validators: {
+                    notEmpty: {message: 'La fecha fin de ejecución, es requerido'}
+                }
+            },
         }
     }).on('success.form.bv', function (e) {
 
@@ -665,7 +682,7 @@ function validator_form(token_actual) {
                     {
                         if (result == 'error_fecha')
                         {
-                            notify("danger", "remove", "Cronograma:", "La semama de ejecución, ya esta registrada.");
+                            notify("danger", "remove", "Cronograma:", "La fecha inicio y fin de ejecución, ya esta registrada.");
                         } else
                         {
                             if (isNaN(result)) {
@@ -674,6 +691,7 @@ function validator_form(token_actual) {
                             {
                                 notify("success", "ok", "Cronograma:", "Se guardo con el éxito la semana de ejecución.");
                                 $("#fecha").val("");
+                                $("#input_fecha_fin").val("");
                                 $("#form_nuevo_cronograma").data('bootstrapValidator').resetForm();
                                 $("#form_nuevo_cronograma").bootstrapValidator('resetForm', true);
                                 cargar_tabla_cronograma(token_actual);
@@ -928,11 +946,12 @@ function cargar_tabla(token_actual)
         },
         "columns": [
             {"data": null},
+            {"data": "meta"},
             {"data": "objetivo"},
             {"data": "actividad"},
             {"data": "activar_registro"},
             {"data": "cronograma"},
-            {"data": "presupuesto"},
+            //{"data": "presupuesto"},
             {"data": "editar"}
         ]
     });
@@ -969,6 +988,7 @@ function cargar_tabla_cronograma(token_actual)
         },
         "columns": [
             {"data": "fecha"},
+            {"data": "fecha_fin"},
             {"data": "activar_registro"},
             {"data": "editar"}
         ]
@@ -1269,7 +1289,9 @@ function cargar_formulario_cronograma(token_actual)
                 {
                     var json = JSON.parse(data);
 
-                    //Cargo el formulario con los datos
+                    json.input_fecha_fin=json.fecha_fin;
+                    delete json.fecha_fin;
+                    
                     $('.form_nuevo_cronograma').loadJSON(json);
 
                 }

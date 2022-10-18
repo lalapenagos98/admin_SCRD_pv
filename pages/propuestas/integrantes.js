@@ -724,7 +724,7 @@ function validator_form(token_actual) {
             },
             rol: {
                 validators: {
-                    notEmpty: {message: 'El rol que desempeña o ejecuta en la propuesta es requerido'}
+                    notEmpty: {message: 'Cargo que desempeña dentro de la junta es requerido'}
                 }
             },
             experiencia: {
