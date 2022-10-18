@@ -399,6 +399,10 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".caracter_atencedente").html(2000 - json.propuesta.atencedente.length);
                                                                         }
+                                                                        if(json.propuesta.aportes_proyecto!=null)
+                                                                        {
+                                                                            $(".caracter_aportes_proyecto").html(2000 - json.propuesta.aportes_proyecto.length);
+                                                                        }
                                                                         if(json.propuesta.metodologia!=null)
                                                                         {
                                                                             $(".caracter_metodologia").html(2000 - json.propuesta.metodologia.length);
