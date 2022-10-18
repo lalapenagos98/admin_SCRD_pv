@@ -8,7 +8,7 @@ $(document).ready(function () {
     //Creando link de navegación
     if (getURLParameter('m') == "pj")
     {
-        href_regresar = "objetivos_metas_actividades.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
+        href_regresar = "presupuesto.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
         href_siguiente = "documentacion.html?m=" + getURLParameter('m') + "&id=" + getURLParameter('id') + "&p=" + getURLParameter('p');
     }
 
@@ -112,7 +112,7 @@ $(document).ready(function () {
                                                                         var json = JSON.parse(data);
                                                                         
                                                                         //Si la convocatoria es interlocales
-                                                                        if(json.convocatoria_padre_categoria=="608" || json.convocatoria_padre_categoria=="1186")
+                                                                        if(json.convocatoria_padre_categoria=="608" || json.convocatoria_padre_categoria=="1186" || json.convocatoria_padre_categoria=="1719" )
                                                                         {
                                                                             $(".campos_locales").css("display","block");
                                                                         }
@@ -248,7 +248,7 @@ function validator_form(token_actual) {
             },
             comunidad_objetivo: {
                 validators: {
-                    notEmpty: {message: 'Dentro de la población beneficiaria del proyecto se incluirá algunos de los grupos poblacionales, es requerido'},
+                    notEmpty: {message: '¿Dentro de la población beneficiaria del proyecto se incluirá algún grupo poblacional en específico? ¿Cuál?, es requerido'},
                     stringLength: {
                         message: 'Ya cuenta con el máximo de caracteres permitidos, los cuales son 1000.',
                         max: '1000'

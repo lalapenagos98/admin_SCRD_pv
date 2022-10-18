@@ -122,18 +122,20 @@ $(document).ready(function () {
                                                                     {
 
                                                                         var json = JSON.parse(data);
-                                                                        if(json.convocatoria_padre_categoria=="621" || json.convocatoria_padre_categoria=="1187")
+                                                                        
+                                                                        if(json.convocatoria_padre_categoria=="621" || json.convocatoria_padre_categoria=="1187"  || json.convocatoria_padre_categoria=="1720" )
                                                                         {
                                                                             $(".campos_metropolitano").css("display","block");
                                                                             $(".campos_locales").css("display","none");
-                                                                            $("#nombre_justificacion").html('Antecedentes y justificación del proyecto');
+                                                                            $("#nombre_justificacion").html('Justificación');
                                                                         }
                                                                         else
                                                                         {
                                                                             $(".div_alianza").css("display","block");                                                                            
                                                                             $(".localidad_principal").css("display","block");                                                                            
                                                                             $("#nombre_justificacion").html('Justificación');
-                                                                            $(".campos_locales").css("display","block");
+                                                                            $(".campos_metropolitano").css("display","none");
+                                                                            $(".campos_locales").css("display","block");                                                                            
                                                                         }
                                                                         //eliminó disabled todos los componentes
                                                                         if (json.estado == 7)
@@ -272,11 +274,14 @@ $(document).ready(function () {
                                                                         if (json.linea_estrategica.length > 0) {
                                                                             $.each(json.linea_estrategica, function (key, medio) {
                                                                                 var selected = '';
-                                                                                if (medio.nombre == json.propuesta.linea_estrategica)
+                                                                                if(medio.nombre!=='Acceso, innovación, creación y producción artística y cultural' && medio.nombre!=='Economía Cultural y Creativa')
                                                                                 {
-                                                                                    selected = 'selected="selected"';
+                                                                                    if (medio.nombre == json.propuesta.linea_estrategica)
+                                                                                    {
+                                                                                        selected = 'selected="selected"';
+                                                                                    }
+                                                                                    $("#linea_estrategica").append('<option value="' + medio.nombre + '" >' + medio.nombre + '</option>');
                                                                                 }
-                                                                                $("#linea_estrategica").append('<option value="' + medio.nombre + '" >' + medio.nombre + '</option>');
                                                                             });
                                                                         }
 

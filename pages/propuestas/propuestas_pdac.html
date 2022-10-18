@@ -90,11 +90,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Formulario para el registro de la propuesta
-                            </div>
                             <div class="panel-body">
-                                
                                 <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -123,7 +119,15 @@
                                                 <input type="text" name="tipo_participante" class="form-control" readonly="readonly">
                                             </div>
                                         </div>                                                                                
-                                    </div>                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Trayectoria de la entidad participante <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_trayectoria_entidad">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa la trayectoria y experiencia de la entidad."><i class="fa fa-question"></i></button>
+                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
@@ -166,17 +170,7 @@
                                     
                                     
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>¿Es la primera vez que el proyecto se presenta al PDAC? <span class="icono_requerido">*</span></label>
-                                                <select id="primera_vez_pdac" name="primera_vez_pdac" class="form-control" >                                                                                                        
-                                                    <option value="">::Seleccionar::</option>
-                                                    <option value="true">Sí</option>
-                                                    <option value="false">No</option>
-                                                </select>                                                
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Línea estratégica del proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione las líneas estratégicas del PDAC en la que se enmarca su proyecto."><i class="fa fa-question"></i></button>
                                                 <select id="linea_estrategica" name="linea_estrategica[]" class="form-control" multiple="multiple">
@@ -184,18 +178,31 @@
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                                
                                     </div>
+                                    
+                                    <div class="row campos_locales">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>¿Es la primera vez que el proyecto se presenta al Programa Distrital de Apoyos Concertados? <span class="icono_requerido">*</span></label>
+                                                <select id="primera_vez_pdac" name="primera_vez_pdac" class="form-control" >                                                                                                        
+                                                    <option value="">::Seleccionar::</option>
+                                                    <option value="true">Sí</option>
+                                                    <option value="false">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                        
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Relación del proyecto con el Plan de Desarrollo de Bogotá <span class="icono_requerido">*</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el propósito del PDD “Un nuevo Contrato Social y Ambiental para la Bogotá del Siglo XXI” a la que su propuesta/proyecto se articula."><i class="fa fa-question"></i></button>
+                                                <label>Relación del proyecto con el Plan de Desarrollo de Bogotá <span class="icono_requerido">*</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el propósito del Plan de Desarrollo Distrital “Un nuevo Contrato Social y Ambiental para la Bogotá del Siglo XXI” al que su propuesta/proyecto se articula"><i class="fa fa-question"></i></button>
                                                 <select id="relacion_plan" name="relacion_plan[]" class="form-control" multiple="multiple">
                                                 </select>                                               
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Explique la selección de la relación del proyecto con el Plan de Desarrollo de Bogotá <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_seleccion_area">500</span></label>
-                                                <textarea id="seleccion_area" name="seleccion_area" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
+                                                <label>Explique la selección de la relación del proyecto con el Plan de Desarrollo de Bogotá <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_seleccion_area">1000</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique de qué forma se relaciona su proyecto con el propósito seleccionado del Plan de Desarrollo de Bogotá"><i class="fa fa-question"></i></button>
+                                                <textarea id="seleccion_area" name="seleccion_area" class="form-control contar_caracteres" title="1000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
                                     </div>                                    
@@ -203,31 +210,25 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Área del proyecto <span class="icono_requerido">*</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione las áreas del PDAC en la que se enmarca su proyecto."><i class="fa fa-question"></i></button>
+                                                <label>Área del proyecto <span class="icono_requerido">*</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el área disciplinar o artística en la que se desarrollará su proyecto"><i class="fa fa-question"></i></button>
                                                 <select id="area" name="area[]" class="form-control" multiple="multiple">
                                                 </select>                                               
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                                
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Trayectoria de la entidad participante <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_trayectoria_entidad">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa la trayectoria, experiencia e idoneidad de la entidad privada sin ánimo de lucro que presenta el proyecto."><i class="fa fa-question"></i></button>
-                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label>Problema o necesidad <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_problema_necesidad">2000</span></label>&nbsp;&nbsp;
+                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa el problema o necesidad a abordar y explique cómo su proyecto aportará en su resolución."><i class="fa fa-question"></i></button>
+                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
+                                        </div>                                        
                                     </div>
                                     
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Problema o necesidad <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_problema_necesidad">2000</span></label>&nbsp;&nbsp;
-                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa las acciones con las que se ha dado respuesta al problema y explique la manera en que su proyecto contribuirá a la superación de esta problemática o necesidad."><i class="fa fa-question"></i></button>
-                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>¿Cómo se diagnosticó el problema o necesidad? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_diagnostico_problema">2000</span></label> &nbsp;&nbsp;
-                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Relacione las fuentes de la información primarias y secundarias que les permite identificar la problemática referida y sus características contextuales. Si aplica, mencione las cifras y las conclusiones o recomendaciones surgidas de estas fuentes."><i class="fa fa-question"></i></button>
+                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Relacione las fuentes de la información primarias y secundarias que permitieron identificar el problema o necesidad referida y su contexto."><i class="fa fa-question"></i></button>
                                                 <button style="display: none" type="button" class="btn btn-primary btn-circle campos_metropolitano" data-toggle="tooltip" data-placement="top" title="Describa los trabajos acciones o estudios previos realizados con el propósito de contextualizar el problema o necesidad identificada"><i class="fa fa-question"></i></button>                                                                                                
                                                 <textarea id="diagnostico_problema" name="diagnostico_problema" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
@@ -237,15 +238,15 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label id="nombre_justificacion"></label><span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_justificacion">2000</span>&nbsp;&nbsp;<button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Argumente de manera precisa, ¿por qué es importante resolver el problema o necesidad identificada?, ¿de qué manera la propuesta y la experiencia de la entidad resultan pertinentes para aportar en su transformación/superación? Aquí se busca explicitar la relación entre lo propuesto y la realidad en la que se busca incidir."><i class="fa fa-question"></i></button><button style="display: none" type="button" class="btn btn-primary btn-circle campos_metropolitano" data-toggle="tooltip" data-placement="top" title="Aquí se busca dejar clara la relación entre lo propuesto y la realidad en la que se busca incidir."><i class="fa fa-question"></i></button>                                                
+                                                <label id="nombre_justificacion"></label><span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_justificacion">2000</span>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique de manera concreta, ¿por qué es importante resolver el problema o necesidad identificada?, ¿de qué forma la propuesta y la experiencia de la entidad resultan pertinentes para aportar en la transformación o superación del problema?"><i class="fa fa-question"></i></button>
                                                 <textarea id="justificacion" name="justificacion" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
                                     </div>
-                                    <div class="row campos_locales" style="display: none">                                        
+                                    <div class="row">                                        
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Antecedentes generales del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_atencedente">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Aquí se busca dejar clara la relación entre lo propuesto y la realidad en la que se busca incidir"><i class="fa fa-question"></i></button>
+                                                <label>Antecedentes generales del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_atencedente">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa las acciones o circunstancias que permiten comprender la relación entre la propuesta y el contexto a intervenir."><i class="fa fa-question"></i></button>
                                                 <textarea id="atencedente" name="atencedente" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
@@ -258,19 +259,19 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Reconocimiento nacional y/o internacional del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_proyeccion_reconocimiento">500</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Relacione cómo ha destacado el proyecto en su ámbito de incidencia teniendo en cuenta el número de actores participantes, las reseñas en medios de comunicación, premios, reconocimientos y certificaciones."><i class="fa fa-question"></i></button>
+                                                <label>Reconocimiento nacional y/o internacional del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_proyeccion_reconocimiento">500</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa de qué manera su proyecto ha adquirido reconocimiento a nivel nacional e internacional. (Reseñas en medios de comunicación y prensa, premios, circulación de contenidos, artistas o invitados especiales etc)"><i class="fa fa-question"></i></button>
                                                 <textarea id="proyeccion_reconocimiento" name="proyeccion_reconocimiento" class="form-control contar_caracteres" title="500" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Acciones de impacto y/o incidencia a nivel nacional o internacional<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_construccion_reconocimiento">500</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="bottom" title="Describa los aportes del proyecto a la dinamización económica y social del sector cultural, artístico, patrimonial y creativo."><i class="fa fa-question"></i></button>
+                                                <label>Acciones de impacto y/o incidencia a nivel nacional o internacional<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_construccion_reconocimiento">500</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="bottom" title="Describa los aportes del proyecto a la dinamización económica y social del sector cultural, artístico, patrimonial y creativo a nivel nacional o internacional."><i class="fa fa-question"></i></button>
                                                 <textarea id="construccion_reconocimiento" name="construccion_reconocimiento" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Contribuciones a la construcción y reconocimiento de Bogotá D.C y Bogotá Región como una ciudad que promueve, protege y fomenta los derechos culturales de sus habitantes.<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto_proyecto">500</span></label>
+                                                <label>Contribuciones a la construcción y reconocimiento de Bogotá D.C como ciudad que promueve, protege y fomenta los derechos culturales de sus habitantes<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto_proyecto">500</span></label>
                                                 <textarea id="impacto_proyecto" name="impacto_proyecto" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
@@ -292,31 +293,36 @@
                                     </div>
                                     -->
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Metodología <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_metodologia">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Aquí se explicita la perspectiva conceptual desde la que se aborda el proyecto, así como la organización procesual y concreta de los componentes del proyecto:  sus fases, temáticas, la comunicación, los contenidos, los procedimientos, las herramientas que permitirán el logro de los objetivos de forma flexible, propositiva, creativa, participativa y dinámica, expresando su alcance, viabilidad y sostenibilidad.  "><i class="fa fa-question"></i></button>
+                                                <label>Metodología <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_metodologia">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la perspectiva conceptual desde la que se aborda el proyecto y la estructura de los componentes del proyecto: fases, temáticas, contenidos, estrategias  y herramientas que permitirán el logro de los objetivos, expresando su alcance, viabilidad y sostenibilidad."><i class="fa fa-question"></i></button>
                                                 <textarea id="metodologia" name="metodologia" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                        <div class="col-lg-6">
+                                        </div>                                                                                                                                                            
+                                    </div>
+
+                                    <div class="row campos_locales">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Seleccione el o los enfoques del proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el o los enfoques del proyecto, para seleccionar varias opciones mantenga oprimido la tecla control y seleccione las opciones considere aplique para su proyecto."><i class="fa fa-question"></i></button>
+                                                <label>Seleccione el o los enfoques del proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el o los enfoques del proyecto. Para seleccionar varias opciones mantenga oprimido la tecla control y seleccione las opciones considere necesarias."><i class="fa fa-question"></i></button>
                                                 <select id="enfoque_proyecto" name="enfoque_proyecto[]" class="form-control" multiple="multiple">
                                                 </select>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
-                                                                                                                    
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
+                                    <div class="row campos_locales"> 
+                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Especifique como se incorporará al proyecto el o los enfoques seleccionados<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_enfoques_seleccionados">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Especifique como se incorporará al proyecto el o los enfoques seleccionados (recuerde que se valoraran propuestas con perspectiva interseccional de estos enfoques)"><i class="fa fa-question"></i></button>
+                                                <label>Especifique como se incorporará al proyecto el o los enfoques seleccionados<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_enfoques_seleccionados">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la forma como se integrará al proyecto el enfoque o enfoques seleccionados (recuerde que se valorarán propuestas con perspectiva interseccional de estos enfoques)"><i class="fa fa-question"></i></button>
                                                 <textarea id="enfoques_seleccionados" name="enfoques_seleccionados" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
-                                        <div class="col-lg-6">
+                                    </div>
+
+                                    <div class="row">                                        
+                                        <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Impacto esperado <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Definan con claridad el alcance del proyecto en relación con la línea de participación elegida y el aporte que, en clave de saldo pedagógico, se entregará al campo cultural, artístico y patrimonial, al territorio, poblaciones y ámbitos intervenidos. Incluyan el alcance del proyecto en relación con sus aportes a la inclusión social, económica y productiva."><i class="fa fa-question"></i></button>
+                                                <label>Impacto esperado <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Defina el alcance esperado del proyecto con relación a la línea de participación elegida y el aporte que se espera entregar al campo cultural, artístico y patrimonial, al territorio, poblaciones y ámbitos intervenidos. Incluya el impacto esperado del proyecto en relación con sus aportes a la inclusión social, económica y productiva."><i class="fa fa-question"></i></button>
                                                 <textarea id="impacto" name="impacto" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                            
@@ -324,7 +330,7 @@
                                     <div class="row campos_metropolitano" style="display: none">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto en relación con los siguientes criterios:</label>                                                
+                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto de acuerdo con los siguientes criterios:</label>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                         <div class="col-lg-6">
@@ -386,14 +392,14 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group campos_locales">
-                                                <label>Cuál de estos criterios utilizara para medir el impacto de su proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selección este criterio en concordancia con la línea de participación"><i class="fa fa-question"></i></button>
+                                                <label>Cuál de estos criterios utilizara para medir el impacto de su proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione el criterio de acuerdo con la línea de participación"><i class="fa fa-question"></i></button>
                                                 <select id="medir_impacto" name="medir_impacto" class="form-control">
                                                 </select>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group campos_locales" style="display: none">
-                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto en relación con el criterio elegido"><i class="fa fa-question"></i></button>
+                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los mecanismos y estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto en relación con el criterio seleccionado."><i class="fa fa-question"></i></button>
                                                 <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
