@@ -150,17 +150,6 @@ $(document).ready(function () {
                                                                                     }                                                                                                                                                                                                                                                             
                                                                                 }
                                                                                 
-                                                                                if (json.programa === 2)
-                                                                                {
-                                                                                    $(".programa_actual").html("PDAC")
-                                                                                    $(".mensaje_pdac").css("display","block");
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    $(".programa_actual").html("PDE")                                                                                    
-                                                                                    $(".mensaje_pdac").css("display","none");
-                                                                                }
-
                                                                                 $("#propuesta").attr("value", json.propuesta);
                                                                                 $("#participante").attr("value", json.participante);
 
@@ -170,13 +159,26 @@ $(document).ready(function () {
                                                                                 });
 
                                                                                 $("#tabla_administrativos").append(html_table);
-
+                                                                                
                                                                                 html_table = '';
                                                                                 $.each(json.tecnicos, function (key2, documento) {
                                                                                     html_table = html_table + '<tr><td>' + documento.orden + '</td><td>' + documento.requisito + '</td><td>' + documento.descripcion + '</td><td>' + documento.archivos_permitidos + '</td><td>' + documento.tamano_permitido + ' MB</td><td><button title="' + documento.id + '" lang="' + documento.archivos_permitidos + '" dir="' + documento.tamano_permitido + '" type="button" class="btn btn-success btn_tecnico_documento" data-toggle="modal" data-target="#cargar_documento"><span class="glyphicon glyphicon-open"></span></button></td><td><button title="' + documento.id + '"  type="button" class="btn btn-primary btn_tecnico_link" data-toggle="modal" data-target="#cargar_link"><span class="glyphicon glyphicon-link"></span></button></td></tr>';
                                                                                 });
 
                                                                                 $("#tabla_tecnicos").append(html_table);
+                                                                                
+                                                                                if (json.programa === 2)
+                                                                                {
+                                                                                    $(".programa_actual").html("PDAC")
+                                                                                    $(".mensaje_pdac").css("display","block");
+                                                                                    $(".th_link").css("display","none");
+                                                                                    $(".btn_tecnico_link").css("display","none");                                                                                    
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    $(".programa_actual").html("PDE")                                                                                    
+                                                                                    $(".mensaje_pdac").css("display","none");
+                                                                                }
 
                                                                                 $(".btn_tecnico_documento").click(function () {
                                                                                     var documento = $(this).attr("title");
