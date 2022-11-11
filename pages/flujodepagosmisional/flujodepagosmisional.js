@@ -7,6 +7,10 @@ var formatterMoneda = new Intl.NumberFormat("es-CO", {
     maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
   
+var sepMensaje = '-=-';
+
+var todos_aprobados = true;
+var documentos_no_aprobados = new Array();
 
 //Array del consumo con el back
 keycloak.init(initOptions).then(function (authenticated) {
@@ -112,6 +116,11 @@ keycloak.init(initOptions).then(function (authenticated) {
 
 
     $("#baceptar_radicar").click(function () {
+        if (!todos_aprobados) {
+            notify("danger", "ok", "No se puede radicar aún:", "No todos los documentos están aprobados! Documentos no aprobados: " + documentos_no_aprobados.toString());
+            return;
+        }
+
         radicar_documentacion(token_actual, $('#id_propuesta_misional').val(), $('#tipo_pago').val());
     });
 
@@ -821,6 +830,8 @@ function cargar_info_basica(token_actual, id_propuesta) {
                 }
 
                 //Documentos técnicos
+                todos_aprobados = true;
+                documentos_no_aprobados = new Array();
 
                 if (json.documentos) {
                     var items = '';
@@ -843,6 +854,11 @@ function cargar_info_basica(token_actual, id_propuesta) {
                                 + '<button title="' + a.id + '" programadocumento="' + a.id_programadocumento + '" propuesta="' + a.id_propuesta + '"  type="button" class="btn btn-success btn_tecnico_link" data-toggle="modal" data-target="#complementar_informacion"><span class="glyphicon glyphicon-pencil"></span></button>'
                                 + '</td>'
                                 + '</tr>';
+    
+                        if (a.estado != 'Aprobado') {
+                            todos_aprobados &= false;
+                            documentos_no_aprobados.push(a.requisito);
+                        }
                     });
                     $("#archivos_table").html(items);
 
@@ -1193,7 +1209,6 @@ function cargar_info_basica(token_actual, id_propuesta) {
 
 
                     $(".btn_confirmar_radicar").click(function () {
-
                         var numero_pago = $(this).attr("numero_pago");
                         var id_propuesta = $(this).attr("propuesta_radicar");
                         $('#id_propuesta_misional').val(id_propuesta);
@@ -2022,6 +2037,9 @@ function subsanar_observacion_verificacion_cuenta(token_actual, programadocument
             case 'error_faltan_documentos':
                 notify("danger", "remove", "Usuario:", "Debe adjuntar un soporte por cada uno de los requisitos");
                 break;
+            case 'info_comp_convocatoriadocumento':
+                notify("danger", "remove", "Usuario:", "Debe colocar la observación de la subsanación del documento");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se registró la información con éxito.");
                 $('#complementar_informacion').modal('hide');
@@ -2208,7 +2226,16 @@ function radicar_documentacion(token_actual, id_propuesta, tipo_pago) {
 
     }).done(function (data) {
 
-        switch (data) {
+        var aData = new Array();
+        aData = data.split(sepMensaje);
+        var codigo = aData[0];
+        var mensaje = '';
+        if (aData.length > 1) {
+            mensaje = aData[1];
+            console.log(codigo+':'+mensaje);
+        }
+
+        switch (codigo) {
             case 'error':
                 notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
                 break;
@@ -2254,6 +2281,14 @@ function radicar_documentacion(token_actual, id_propuesta, tipo_pago) {
                 break;
             case 'error_suplente':
                 notify("danger", "remove", "Usuario:", "No tiene representante suplente asignado");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'no_se_encontro_bandeja_entrada':
+                notify("danger", "remove", "Usuario:", "El usuario no tiene bandeja de entrada");
+                $('#confirmar_radicar').modal('hide');
+                break;
+            case 'no_se_encontro_usuario_radicador':
+                notify("danger", "remove", "Usuario:", "No se encontró el usuario radicador");
                 $('#confirmar_radicar').modal('hide');
                 break;
             default:

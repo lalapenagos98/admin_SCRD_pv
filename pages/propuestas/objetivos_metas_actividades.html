@@ -53,6 +53,7 @@
     </head>
 
     <body>
+        <input type="hidden" id="opcion_menu" value="7">
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -81,7 +82,7 @@
                                 Antes de diligenciar el formulario, por favor lea la siguiente información:                                
                             </div>
                             <div class="panel-body">
-                                <p>En esta sección la entidad sin ánimo de lucro podrá relacionar los objetivos, metas y actividades que se desarrollarán en la ejecución la propuesta/proyecto.</p>
+                                <p>En esta sección se deben definir el objetivo general y  relacionar cada uno de los  objetivos específicos, metas y actividades que se desarrollarán en la ejecución del proyecto.</p>
                             </div>                        
                         </div>
                     </div>
@@ -97,7 +98,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Objetivo general <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_objetivo_general">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Define lo que se pretende alcanzar con el proyecto (inician con un verbo en infinitivo)"><i class="fa fa-question"></i></button>                                                
+                                                <label>Objetivo general <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_objetivo_general">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Debe definir lo que se pretende alcanzar con el proyecto. El objetivo general debe ser conciso y preciso. (inicia con un verbo en infinitivo)"><i class="fa fa-question"></i></button>                                                
                                                 <textarea id="objetivo_general" name="objetivo_general" class="form-control contar_caracteres" title="1000" rows="3"></textarea>                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
@@ -137,11 +138,12 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Orden</th>
-                                                                <th>Objetivo específico</th>
+                                                                <th>Meta</th>
+                                                                <th>Objetivo específico</th>                                                                
                                                                 <th>Actividad</th>
                                                                 <th>¿Activo?</th>
                                                                 <th>Cronograma</th>                                                                
-                                                                <th>Presupuesto</th>                                                                
+                                                                <!--<th>Presupuesto</th>-->
                                                                 <th>Editar</th>                                                                
                                                             </tr>
                                                         </thead>
@@ -154,7 +156,7 @@
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="id" name="id" />
                                             <input type="hidden" id="conv" name="conv" /> 
-                                            <button id="generar_presupuesto" type="button" class="btn btn-danger">Ver presupuesto cargado</button>
+                                            <button id="generar_presupuesto" type="button" class="btn btn-danger">Ver cronograma cargado</button>
                                             <button type="submit" class="btn btn-default">Guardar</button>
                                         </div>
                                     </div>
@@ -180,19 +182,7 @@
                                                                     Antes de diligenciar el formulario, por favor lea la siguiente información:
                                                                 </div>
                                                                 <div class="panel-body">
-                                                                    <ul>
-                                                                        <li>Agregue los objetivos específicos los cuales hacen referencia a los propósitos puntuales para lograr el objetivo general.</li>
-                                                                        <li>Se permite un máximo de 3 objetivos específicos.</li>
-                                                                    </ul>
-                                                                    <br/>
-                                                                    Son las líneas de acción mediante las cuales se pretende alcanzar el objetivo general y que tienen las siguientes características:
-                                                                    <br/>
-                                                                    <br/>
-                                                                    <ul>
-                                                                        <li>Son más concretos que el objetivo general.</li>
-                                                                        <li>Su realización debe ser evaluable y/o cuantificable. </li>
-                                                                        <li>A partir de ellos se definen las actividades.</li>
-                                                                    </ul>
+                                                                    <p>Incluya 3 objetivos específicos que en conjunto permitirán dar cumplimiento al objetivo general del proyecto y asigne una meta para cada uno.</p>
                                                                 </div>                        
                                                             </div>
                                                         </div>
@@ -200,13 +190,13 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                <label>Objetivo específico <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_objetivo">500</span></label>
+                                                                <label>Objetivo específico <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_objetivo">500</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Los objetivos específicos deben cumplir con la siguientes características: - Deben ser más concretos que el objetivo general - Definen las etapas o fases del proyecto - Su redacción inicia con un verbo en infinitivo."><i class="fa fa-question"></i></button>
                                                                 <textarea id="objetivo" name="objetivo" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
                                                             </div>                                                                                                                                                                                                                                                                                                        
                                                         </div>                                                                                                
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                <label>Meta <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_meta">500</span></label>
+                                                                <label>Meta <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_meta">500</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Las metas son las líneas de acción mediante las cuales se busca dar cumplimiento al objetivo general. Se caracterizan por ser medibles y cuantificables (ej. Publicar 3 revistas, realizar 12 talleres, invitar 3 artistas etc)"><i class="fa fa-question"></i></button>
                                                                 <textarea id="meta" name="meta" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
                                                             </div>                                                                                                                                                                                                                                                                                                        
                                                         </div>                                                                                                
@@ -246,7 +236,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                <label>Actividad <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_actividad">500</span></label>
+                                                                <label>Actividad <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_actividad">500</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Incluya las actividades que se realizarán para dar cumplimiento al objetivo específico y alcanzar las meta fijada."><i class="fa fa-question"></i></button>
                                                                 <textarea id="actividad" name="actividad" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
                                                             </div>                                                                                                                                                                                                                                                                                                        
                                                         </div>                                                                                                                                                                                                                                                      
@@ -283,7 +273,7 @@
                                                                     Antes de diligenciar el formulario, por favor lea la siguiente información:
                                                                 </div>
                                                                 <div class="panel-body">
-                                                                    <p>Ordene las actividades en un tiempo determinado.</p>
+                                                                    <p>Registre fecha de inicio y finalización de las actividades propuestas</p>
                                                                 </div>                        
                                                             </div>
                                                         </div>
@@ -291,9 +281,20 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                <label>Semana de ejecución <span class="icono_requerido">*</span></label>                                                                
-                                                                <div class="input-group date semana" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                                                    <input class="form-control" id="fecha" name="fecha" size="16" type="text" value="" readonly>                    
+                                                                <label>Fecha inicio de ejecución<span class="icono_requerido">*</span></label>                                                                
+                                                                <div id="fecha_inicio" class="input-group date semana" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                                    <input id="fecha" class="form-control" name="fecha" size="16" type="text" value="" readonly>                    
+                                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>                                                
+                                                            </div>
+                                                        </div>                                                                                                                                                                                                                                                      
+                                                    </div>                                    
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Fecha fin de ejecución<span class="icono_requerido">*</span></label>                                                                
+                                                                <div id="fecha_fin" class="input-group date semana" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                                    <input id="input_fecha_fin" class="form-control" name="input_fecha_fin" size="16" type="text" value="" readonly>                    
                                                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                                 </div>                                                
                                                             </div>
@@ -311,13 +312,14 @@
                                                             <br/>
                                                             <div class="panel panel-primary">
                                                                 <div class="panel-heading">
-                                                                     Semanas de ejecución                                                                    
+                                                                     Fechas de ejecución                                                                    
                                                                 </div>
                                                                 <div class="panel-body">                                                                                        
                                                                     <table id="tabla_cronogramas" class="table" style="width: 100%">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Semana de ejecución</th>
+                                                                                <th>Fecha inicio de ejecución</th>
+                                                                                <th>Fecha fin de ejecución</th>
                                                                                 <th>¿Activo?</th>
                                                                                 <th>Editar</th>                                                                
                                                                             </tr>
