@@ -389,7 +389,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.resumen!=null)
                                                                         {
-                                                                            $(".caracter_resumen").html(2000 - json.propuesta.resumen.length);
+                                                                            $(".caracter_resumen").html(500 - json.propuesta.resumen.length);
                                                                         }
                                                                         if(json.propuesta.seleccion_area!=null)
                                                                         {
@@ -425,7 +425,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.mecanismos_cuantitativa!=null)
                                                                         {
-                                                                            $(".caracter_mecanismos_cuantitativa").html(2000 - json.propuesta.mecanismos_cuantitativa.length);
+                                                                            $(".caracter_mecanismos_cuantitativa").html(1000 - json.propuesta.mecanismos_cuantitativa.length);
                                                                         }
                                                                         
                                                                         if(json.propuesta.proyeccion_reconocimiento!=null)
