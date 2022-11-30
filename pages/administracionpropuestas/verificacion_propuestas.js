@@ -79,107 +79,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
-            $('.close').click(function () {
-                $("#contratistas").css("display", "none");
-                $("#boton_confirma_administrativa_1").removeAttr("disabled");
-            });
-
-            $('#modal_verificacion_1').on('hidden.bs.modal', function () {
-                $("#contratistas").css("display", "none");
-                $("#boton_confirma_administrativa_1").removeAttr("disabled");
-            });
-
-            $('#buscar').click(function () {
-
-                if ($("#codigo").val() != "")
-                {
-                    if ($("#busqueda").val() == "0")
-                    {
-                        //Cargar datos en la tabla actual
-                        cargar_tabla();
-
-                        $("#busqueda").attr("value", "1");
-                    } else
-                    {
-                        $('#table_list').DataTable().ajax.reload(null, false);
-                    }
-                } else
-                {
-                    if ($("#convocatoria").val() != "")
-                    {
-
-                        var mensaje;
-                        if ($("#convocatoria option:selected").attr("dir") == "true")
-                        {
-                            $("#id_convocatoria").val($("#categoria").val());
-                            mensaje = "categoría";
-
-                        } else
-                        {
-                            $("#id_convocatoria").val($("#convocatoria").val());
-                            mensaje = "convocatoria";
-                        }
-
-                        if ($("#id_convocatoria").val() == "")
-                        {
-                            notify("danger", "ok", "Convocatorias:", "Debe seleccionar la " + mensaje + ".");
-                        } else
-                        {
-
-                            var token_actual = JSON.parse(JSON.stringify(keycloak));
-
-                            //Realizo la peticion para validar acceso a la convocatoria
-                            $.ajax({
-                                type: 'POST',
-                                data: {"token": token_actual.token},
-                                url: url_pv + 'PropuestasVerificacion/validar_acceso/' + $("#id_convocatoria").val()
-                            }).done(function (data) {
-                                if (data == 'error_metodo')
-                                {
-                                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                } else
-                                {
-                                    if (data == 'error_token')
-                                    {
-                                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                                    } else
-                                    {
-                                        if (data == 'error_fecha_cierre')
-                                        {
-                                            notify("danger", "ok", "Convocatorias:", "La convocatoria no se encuentra disponible para ver las propuestas inscritas.");
-                                        } else
-                                        {
-                                            if (data == 'ingresar')
-                                            {
-                                                if ($("#busqueda").val() == "0")
-                                                {
-                                                    //Cargar datos en la tabla actual
-                                                    cargar_tabla();
-
-                                                    $("#busqueda").attr("value", "1");
-                                                } else
-                                                {
-                                                    $('#table_list').DataTable().ajax.reload(null, false);
-                                                }
-                                            } else
-                                            {
-                                                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-
-                        }
-
-                    } else
-                    {
-                        notify("danger", "ok", "Propuestas:", "Debe seleccionar la convocatoria");
-                    }
-                }
-
-            });
-
             $('#entidad, #anio').change(function () {
 
                 $("#categoria option[value='']").prop('selected', true);
@@ -193,13 +92,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if ($("#entidad").val() != "")
                     {
-
-                        var token_actual = JSON.parse(JSON.stringify(keycloak));
-
                         $.ajax({
                             type: 'POST',
-                            data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
-                            url: url_pv + 'PropuestasVerificacion/select_convocatorias'
+                            data: {"modulo": "SICON-PROPUESTAS-SUBSANACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
+                            url: url_pv + 'PropuestasSubsanacion/select_convocatorias'
                         }).done(function (data) {
                             if (data == 'error_metodo')
                             {
@@ -232,6 +128,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         });
                     }
                 }
+
             });
 
             $('#convocatoria').change(function () {
@@ -246,13 +143,10 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 if ($("#convocatoria").val() != "")
                 {
-
-                    var token_actual = JSON.parse(JSON.stringify(keycloak));
-
                     $.ajax({
                         type: 'POST',
-                        data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "conv": $("#convocatoria").val()},
-                        url: url_pv + 'PropuestasVerificacion/select_categorias'
+                        data: {"modulo": "SICON-PROPUESTAS-SUBSANACION", "token": token_actual.token, "conv": $("#convocatoria").val()},
+                        url: url_pv + 'PropuestasSubsanacion/select_categorias'
                     }).done(function (data) {
                         if (data == 'error_metodo')
                         {
@@ -284,6 +178,108 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
+            $('#buscar').click(function () {
+
+                if ($("#codigo").val() != "")
+                {
+                    if ($("#busqueda").val() == "0")
+                    {
+                        //Cargar datos en la tabla actual
+                        cargar_tabla(token_actual);
+
+                        $("#busqueda").attr("value", "1");
+                    } else
+                    {
+                        $('#table_list').DataTable().ajax.reload(null, false);
+                    }
+                } else
+                {
+                    if ($("#convocatoria").val() != "")
+                    {
+
+                        var mensaje;
+                        if ($("#convocatoria option:selected").attr("dir") == "true")
+                        {
+                            $("#id_convocatoria").val($("#categoria").val());
+                            mensaje = "categoría";
+
+                        } else
+                        {
+                            $("#id_convocatoria").val($("#convocatoria").val());
+                            mensaje = "convocatoria";
+                        }
+
+                        if ($("#id_convocatoria").val() == "")
+                        {
+                            notify("danger", "ok", "Convocatorias:", "Debe seleccionar la " + mensaje + ".");
+                        } else
+                        {
+
+                            //Realizo la peticion para validar acceso a la convocatoria
+                            $.ajax({
+                                type: 'POST',
+                                data: {"token": token_actual.token},
+                                url: url_pv + 'PropuestasVerificacion/validar_acceso/' + $("#id_convocatoria").val()
+                            }).done(function (data) {
+                                if (data == 'error_metodo')
+                                {
+                                    notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                } else
+                                {
+                                    if (data == 'error_token')
+                                    {
+                                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                                    } else
+                                    {
+                                        if (data == 'error_fecha_cierre')
+                                        {
+                                            notify("danger", "ok", "Convocatorias:", "La convocatoria no se encuentra disponible para ver las propuestas inscritas.");
+                                        } else
+                                        {
+                                            if (data == 'ingresar')
+                                            {
+                                                if ($("#busqueda").val() == "0")
+                                                {
+                                                    //Cargar datos en la tabla actual
+                                                    cargar_tabla(token_actual);
+
+                                                    $("#busqueda").attr("value", "1");
+                                                } else
+                                                {
+                                                    $('#table_list').DataTable().ajax.reload(null, false);
+                                                }
+                                            } else
+                                            {
+                                                notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                        }
+
+                    } else
+                    {
+                        notify("danger", "ok", "Propuestas:", "Debe seleccionar la convocatoria");
+                    }
+                }
+
+            });
+
+            
+            $('.close').click(function () {
+                $("#contratistas").css("display", "none");
+                $("#boton_confirma_administrativa_1").removeAttr("disabled");
+            });
+
+            $('#modal_verificacion_1').on('hidden.bs.modal', function () {
+                $("#contratistas").css("display", "none");
+                $("#boton_confirma_administrativa_1").removeAttr("disabled");
+            });
+
+            
+
             $("#boton_rechazo_verificacion_1_administrativa").click(function () {
                 $('#modal_rechazo_verificacion_1_administrativa').modal('hide');
                 $('#modal_confirmar_administrativa_1').modal('show');
@@ -304,9 +300,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 guardar_confirmacion(token_actual, $("#estado_actual_propuesta").val(), $("#tipo_verificacion").val());
             });
 
-            $("#generar_presupuesto").click(function () {
-
-                var token_actual = JSON.parse(JSON.stringify(keycloak));
+            $("#generar_presupuesto").click(function () {                
                 
                 $.AjaxDownloader({
                     data: {
@@ -316,6 +310,18 @@ keycloak.init(initOptions).then(function (authenticated) {
                     url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_funcionario_xls/'
                 });
             });
+
+            $("#generar_cronograma").click(function () {
+                
+                $.AjaxDownloader({
+                    data : {
+                        propuesta   : $("#propuesta").val(),
+                        token   : token_actual.token                        
+                    },
+                    url: url_pv + 'PropuestasFormatos/propuesta_cronograma_funcionario_xls/'
+                });
+            });
+
 
             $("#boton_confirma_administrativa_1").click(function () {
                 $("#numero_verificacion").val('');
@@ -705,11 +711,9 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
 
 }
 
-function cargar_tabla() {
+function cargar_tabla(token_actual) {
 
-    var token_actual = JSON.parse(JSON.stringify(keycloak));
-
-
+    
     $('#table_list').DataTable({
         "language": {
             "url": "../../dist/libraries/datatables/js/spanish.json"
@@ -770,10 +774,10 @@ function cargar_tabla() {
         "drawCallback": function (settings) {
             $('.btn_tooltip').tooltip();
             $('.cargar_verificacion_1').click(function () {
-                cargar_verificacion_1($(this).attr("lang"));
+                cargar_verificacion_1($(this).attr("lang"),token_actual);
             });
             $('.cargar_verificacion_2').click(function () {
-                cargar_verificacion_2($(this).attr("lang"));
+                cargar_verificacion_2($(this).attr("lang"),token_actual);
             });
         },
         "columns": [
@@ -794,7 +798,7 @@ function cargar_tabla() {
     });
 }
 
-function cargar_verificacion_1(propuesta) {
+function cargar_verificacion_1(propuesta,token_actual) {
     //Asigno la propuesta actual
     $("#propuesta").val(propuesta);
 
@@ -802,8 +806,6 @@ function cargar_verificacion_1(propuesta) {
     $('#doc_administrativos_verificacion_1 tr').remove();
     $('#doc_tecnicos_verificacion_1 tr').remove();
 
-
-    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
     //Realizo la peticion para cargar el formulario
     $.ajax({
@@ -1175,7 +1177,7 @@ function cargar_verificacion_1(propuesta) {
 
 }
 
-function cargar_verificacion_2(propuesta) {
+function cargar_verificacion_2(propuesta,token_actual) {
     //Asigno la propuesta actual
     $("#propuesta").val(propuesta);
 
@@ -1183,8 +1185,6 @@ function cargar_verificacion_2(propuesta) {
     $('#doc_administrativos_verificacion_1 tr').remove();
     $('#doc_tecnicos_verificacion_1 tr').remove();
 
-
-    var token_actual = JSON.parse(JSON.stringify(keycloak));
 
     //Realizo la peticion para cargar el formulario
     $.ajax({
