@@ -94,7 +94,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                     {
                         $.ajax({
                             type: 'POST',
-                            data: {"modulo": "SICON-PROPUESTAS-SUBSANACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
+                            data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
                             url: url_pv + 'PropuestasSubsanacion/select_convocatorias'
                         }).done(function (data) {
                             if (data == 'error_metodo')
@@ -145,7 +145,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     $.ajax({
                         type: 'POST',
-                        data: {"modulo": "SICON-PROPUESTAS-SUBSANACION", "token": token_actual.token, "conv": $("#convocatoria").val()},
+                        data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "conv": $("#convocatoria").val()},
                         url: url_pv + 'PropuestasSubsanacion/select_categorias'
                     }).done(function (data) {
                         if (data == 'error_metodo')
