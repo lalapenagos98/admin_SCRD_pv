@@ -93,11 +93,18 @@ keycloak.init(initOptions).then(function (authenticated) {
                             });
 
                             $('#no_ganador').click(function () {
+                                
+                                //Si cuenta con seleccion multiple de propuestas
+                                let valoresCheck = [];
+                                $("input:checkbox[name=propuestas]:checked").each(function(){
+                                    valoresCheck.push(this.value);                    
+                                });
+                        
                                 //Se realiza la peticion con el fin de guardar el registro actual
                                 $.ajax({
                                     type: 'POST',
                                     url: url_pv + 'PropuestasGanadoras/editar_propuesta',
-                                    data: "id=" + $("#id").val() + "&estado=44&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
+                                    data: "id=" + $("#id").val() + "&estado=44&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token+"&multiple="+$("#multiple").val()+"&propuestas="+valoresCheck
                                 }).done(function (result) {
                                     var result = result.trim();
 
@@ -142,6 +149,24 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             $('#buscar').click(function () {
                 cargar_tabla(token_actual);
+                $("#registro_ganadores").css("display","block");
+            });
+            
+            $('#registro_ganadores').click(function () {
+                let valoresCheck = [];
+
+                $("input:checkbox[name=propuestas]:checked").each(function(){
+                    valoresCheck.push(this.value);                    
+                });                
+                
+                $("#multiple").val("Si");
+                
+                if(valoresCheck.length<=0)
+                {
+                    $('#ver_propuesta').modal('toggle');
+                    alert("Debe seleccionar al menos un propuesta");
+                }
+                
             });
 
             $('#entidad, #anio').change(function () {
@@ -319,11 +344,17 @@ function validator_form(token_actual) {
         // Valido si el id existe, con el fin de eviarlo al metodo correcto
         $('#formulario_principal').attr('action', url_pv + 'PropuestasGanadoras/editar_propuesta');
 
+        //Si cuenta con seleccion multiple de propuestas
+        let valoresCheck = [];
+        $("input:checkbox[name=propuestas]:checked").each(function(){
+            valoresCheck.push(this.value);                    
+        });
+
         //Se realiza la peticion con el fin de guardar el registro actual
         $.ajax({
             type: 'POST',
             url: $form.attr('action'),
-            data: $form.serialize() + "&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token
+            data: $form.serialize() + "&modulo=SICON-PROPUESTAS-GANADORES&token=" + token_actual.token+"&multiple="+$("#multiple").val()+"&propuestas="+valoresCheck
         }).done(function (result) {
             var result = result.trim();
 
@@ -371,7 +402,7 @@ function validator_form(token_actual) {
 
 function cargar_tabla(token_actual)
 {
-
+    
     if ($("#codigo").val() != "")
     {
 
@@ -421,6 +452,7 @@ function cargar_tabla(token_actual)
                     }
                 ],
                 "columns": [
+                    {"data": "check"},
                     {"data": "estado"},
                     {"data": "anio"},
                     {"data": "entidad"},
@@ -524,11 +556,12 @@ function cargar_tabla(token_actual)
                                                             row.convocatoria = row.categoria;
                                                             row.categoria = categoria;
                                                         }
-                                                        return row.estado;
+                                                        return row.check;
                                                     }
                                                 }
                                             ],
                                             "columns": [
+                                                {"data": "check"},
                                                 {"data": "estado"},
                                                 {"data": "anio"},
                                                 {"data": "entidad"},
@@ -569,6 +602,7 @@ function cargar_formulario(token_actual)
     $(".cargar_formulario").click(function () {
         //Cargo el id actual        
         $("#id").attr('value', $(this).attr('title'))
+        $("#multiple").val("No");
         //Realizo la peticion para cargar el formulario
         $.ajax({
             type: 'POST',
