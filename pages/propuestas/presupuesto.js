@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
 
@@ -64,7 +65,7 @@ $(document).ready(function () {
                 }
                 
                 
-                if( this.value === 'Tipo de gasto'){
+                if( this.value === 'Transporte'){
                     $("#unidadmedida").append('<option value="Transporte aéreo " >Transporte aéreo</option>');
                     $("#unidadmedida").append('<option value="Transporte terrestre" >Transporte terrestre</option>');
                     $("#unidadmedida").append('<option value="Transporte de carga" >Transporte de carga</option>');
@@ -689,6 +690,79 @@ function cargar_formulario_presupuesto(token_actual)
                 {
                     var json = JSON.parse(data);
 
+                    $('#unidadmedida').find('option').remove();
+                    $("#unidadmedida").append('<option value="" >::Seleccionar::</option>');
+                    if( json.insumo === 'Honorarios equipo de trabajo'){
+                        $("#unidadmedida").append('<option value="Artistas" >Artistas</option>');
+                        $("#unidadmedida").append('<option value="Formadores" >Formadores</option>');
+                        $("#unidadmedida").append('<option value="Director" >Director</option>');
+                        $("#unidadmedida").append('<option value="Coordinador" >Coordinador</option>');
+                        $("#unidadmedida").append('<option value="Productor" >Productor</option>');
+                        $("#unidadmedida").append('<option value="Diseñador" >Diseñador</option>');
+                        $("#unidadmedida").append('<option value="Presentador" >Presentador</option>');
+                        $("#unidadmedida").append('<option value="Conferencista" >Conferencista</option>');
+                        $("#unidadmedida").append('<option value="Apoyo administrativo" >Apoyo administrativo</option>');
+                        $("#unidadmedida").append('<option value="Personal técnico" >Personal técnico</option>');
+                        $("#unidadmedida").append('<option value="Personal logístico" >Personal logístico</option>');
+                        $("#unidadmedida").append('<option value="Investigadores" >Investigadores</option>');
+                    }
+                    if( json.insumo === 'Premios y reconocimientos'){
+                        $("#unidadmedida").append('<option value="Premios y reconocimientos" >Premios y reconocimientos</option>');
+                    }
+                    if( json.insumo === 'Alquileres'){
+                        $("#unidadmedida").append('<option value="Sonido e iluminación" >Sonido e iluminación</option>');
+                        $("#unidadmedida").append('<option value="Tarimas y sillas" >Tarimas y sillas</option>');
+                        $("#unidadmedida").append('<option value="Carpas y pisos" >Carpas y pisos</option>');
+                        $("#unidadmedida").append('<option value="Escenarios o salones" >Escenarios o salones</option>');
+                        $("#unidadmedida").append('<option value="Equipos" >Equipos</option>');
+                        $("#unidadmedida").append('<option value="Instrumentos" >Instrumentos</option>');
+                    }
+                    
+                    if( json.insumo === 'Producción'){
+                        $("#unidadmedida").append('<option value="Montajes de exposiciones o eventos" >Montajes de exposiciones o eventos</option>');
+                        $("#unidadmedida").append('<option value="Escenografía" >Escenografía</option>');
+                        $("#unidadmedida").append('<option value="Utilería" >Utilería</option>');
+                        $("#unidadmedida").append('<option value="Diseño de vestuario " >Diseño de vestuario </option>');
+                        $("#unidadmedida").append('<option value="Materiales o insumos" >Materiales o insumos</option>');
+                        $("#unidadmedida").append('<option value="Logística" >Logística</option>');
+                        $("#unidadmedida").append('<option value="Seguridad" >Seguridad</option>');
+                    }
+                    
+                    
+                    if( json.insumo === 'Transporte'){
+                        $("#unidadmedida").append('<option value="Transporte aéreo " >Transporte aéreo</option>');
+                        $("#unidadmedida").append('<option value="Transporte terrestre" >Transporte terrestre</option>');
+                        $("#unidadmedida").append('<option value="Transporte de carga" >Transporte de carga</option>');
+                    }
+                    
+                    
+                    if( json.insumo === 'Alojamiento'){
+                        $("#unidadmedida").append('<option value="Alojamiento y hospedaje" >Alojamiento y hospedaje</option>');                    
+                    }
+                    
+                    
+                    if( json.insumo === 'Alimentación'){
+                        $("#unidadmedida").append('<option value="Refrigerios" >Refrigerios</option>');
+                        $("#unidadmedida").append('<option value="Hidratación" >Hidratación</option>');
+                        $("#unidadmedida").append('<option value="Alimentación" >Alimentación</option>');                    
+                    }
+                    
+                    
+                    if( json.insumo === 'Divulgación y publicidad'){
+                        $("#unidadmedida").append('<option value="Diseño de páginas web y redes sociales" >Diseño de páginas web y redes sociales</option>');
+                        $("#unidadmedida").append('<option value="Impresión" >Impresión</option>');
+                        $("#unidadmedida").append('<option value="Diseño de piezas publicitarias" >Diseño de piezas publicitarias</option>');
+                        $("#unidadmedida").append('<option value="Pauta en medios" >Pauta en medios</option>');
+                        $("#unidadmedida").append('<option value="Transmisión por radio, tv o redes sociales" >Transmisión por radio, tv o redes sociales</option>');
+                    }
+                                    
+                    if( json.insumo === 'Permisos y derechos de autor'){
+                        $("#unidadmedida").append('<option value="Derechos de autor" >Derechos de autor</option>');
+                        $("#unidadmedida").append('<option value="Otros permisos" >Otros permisos</option>');
+                    }
+
+
+                    console.log(json.insumo);
                     //Cargo el formulario con los datos
                     $('.formulario_principal').loadJSON(json);
                               
