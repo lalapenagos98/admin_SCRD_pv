@@ -289,7 +289,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 $('#modalidad').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Modalidades/select'
                 }).done(function (data) {
@@ -315,9 +315,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                     }
                 });
 
-                $('#enfoque').find('option').remove();
+                $('#enfoques').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Enfoques/selectconvocatorias'
                 }).done(function (data) {
@@ -332,11 +332,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                             notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
                         } else
                         {
-                            var json = JSON.parse(data);
-                            $("#enfoque").append('<option value="">:: Seleccionar ::</option>');
+                            var json = JSON.parse(data);                            
                             if (json.length > 0) {
                                 $.each(json, function (key, value) {
-                                    $("#enfoque").append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                                    $("#enfoques").append('<option value="' + value.id + '">' + value.nombre + '</option>');
                                 });
                             }
                         }
