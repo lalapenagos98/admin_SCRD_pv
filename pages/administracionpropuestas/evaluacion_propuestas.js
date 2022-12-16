@@ -1,5 +1,5 @@
 var minLength = 50;
-var maxLength = 255;
+var maxLength = 100000;
 
 $(document).ready(function () {
 
@@ -901,14 +901,14 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                                     + ' </div>'
                                     + ' <div class="col-lg-5">'
                                     + '  <div class="form-group">'
-                                    + '    <h5>Observaciones</h5>'
+                                    + '    <h5>Observaciones*</h5>'
                                     + '    <textarea minlength="' + minLength + '" class="form-control  ' + r + key + ' " rows="5" id="observacion_' + a.id + '" name="observacion_' + a.id + '" >' + (!a.evaluacion ? "" : a.evaluacion.observacion) + '</textarea>'
                                     + '    <br></bre><em class="small" id="aviso_observacion_' + a.id + '"></em>'
                                     + '  </div>'
                                     + ' </div>'
                                     + ' <div class="col-lg-3">'
                                     + '  <div class="form-group">'
-                                    + '    <h5>Puntuación</h5>'
+                                    + '    <h5>Puntuación*</h5>'
                                     + select
                                     + ' <br></bre><em class="small" id="aviso_puntuacion_' + a.id + '"></em>'
                                     + '  </div>'
@@ -918,11 +918,11 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                             $("#observacion_" + a.id).on("keydown keyup change focus", function(){
                                 var value = $(this).val();
                                 if (value.length < minLength)
-                                    $("#aviso_observacion_" + a.id).text("Observación demasiado corta. (Longitud " + value.length + " / " + minLength + ")");
+                                    $("#aviso_observacion_" + a.id).text("Recuerda retroalimentar de manera amplia y suficiente cada uno de los criterios a evaluar. (Has escrito " + value.length + " de mínimo " + minLength + " caracteres)");
                                 else if (value.length > maxLength)
-                                    $("#aviso_observacion_" + a.id).text("Lastimosamente este campo no puede recibir más caracteres.");
+                                    $("#aviso_observacion_" + a.id).text("");
                                 else {
-                                    $("#aviso_observacion_" + a.id).text("Gracias por su valiosa observación! (Longitud " + value.length + " / " + minLength + ")");
+                                    $("#aviso_observacion_" + a.id).text("¡Gracias por tu valiosa observación!");
                                     $("#aviso_observacion_" + a.id).css("border-bottom", "1px solid green");
                                 }
                             });
@@ -930,7 +930,7 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                             $("#puntuacion_" + a.id).on("change blur", function(){
                                 var value = $(this).val();
                                 if (value == 'null' || value == '')
-                                    $("#aviso_puntuacion_" + a.id).text("Por favor, elija un puntaje.");
+                                    $("#aviso_puntuacion_" + a.id).text("Por favor, elige un puntaje.");
                                 else {
                                     $("#aviso_puntuacion_" + a.id).text("");
                                     $("#aviso_puntuacion_" + a.id).css("border-bottom", "none");
@@ -999,12 +999,12 @@ function validarCriterios() {
             var longitud = textarea.value.length;
             if (longitud < minLength) {
                 ok_longitudes = false;
-                aviso.innerHTML = 'Observación demasiado corta.';
+                aviso.innerHTML = 'Observación demasiado corta. Recuerda retroalimentar de manera amplia y suficiente cada uno de los criterios a evaluar.';
                 aviso.style.borderBottom = '1px solid red';
             }
             else {
-                aviso.innerHTML = '';
-                aviso.style.borderBottom = 'none';
+                aviso.innerHTML = '¡Gracias por tu valiosa observación!';
+                aviso.style.borderBottom = '1px solid green';
             }
         }
     }
@@ -1018,7 +1018,7 @@ function validarCriterios() {
             var aviso = document.getElementById('aviso_puntuacion_' + a_id);
             if (select.value == '' || select.value == 'null') {
                 ok_puntajes = false;
-                aviso.innerHTML = 'Por favor, especifique un puntaje.';
+                aviso.innerHTML = 'Por favor, especifica un puntaje.';
                 aviso.style.borderBottom = '1px solid red';
             }
             else {
