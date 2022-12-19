@@ -30,6 +30,11 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             $('#form_validator').attr('action', url_pv + 'Convocatoriaspublicas/new');
 
+            $('.select_multiple_convocatoria').select2({
+                placeholder: '::Seleccionar::',
+                tags: true
+            });
+            
             //Establesco los text area html
             if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
                 CKEDITOR.tools.enableHtml5Elements(document);
@@ -234,7 +239,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 $('#modalidad').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Modalidades/select'
                 }).done(function (data) {
@@ -261,7 +266,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                 $('#enfoque').find('option').remove();
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     data: {"token": token_actual.token, "programa": programa},
                     url: url_pv + 'Enfoques/selectconvocatorias'
                 }).done(function (data) {
@@ -780,16 +785,21 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
 
                         //Cargo el select de enfoques
-                        $('#enfoque').find('option').remove();
-                        $("#enfoque").append('<option value="">:: Seleccionar ::</option>');
+                        //Agrego los valores de los valores maestros Linea, Area, Enfoque
+                        $("#enfoque").val(json.convocatoria.enfoque);                                           
+                        const enfoques = JSON.parse(json.convocatoria.enfoques);
+                        $('#enfoques').find('option').remove();                        
                         if (json.enfoques.length > 0) {
                             $.each(json.enfoques, function (key, enfoque) {
                                 var selected = '';
-                                if (enfoque.id == json.convocatoria.enfoque)
+                                if(enfoques!==null)
                                 {
-                                    selected = 'selected="selected"';
+                                    if(enfoques.some((enfoques) => enfoques === enfoque.id.toString()))
+                                    {
+                                        selected = 'selected="selected"';
+                                    }
                                 }
-                                $("#enfoque").append('<option value="' + enfoque.id + '" ' + selected + ' >' + enfoque.nombre + '</option>');
+                                $("#enfoques").append('<option value="' + enfoque.id + '" ' + selected + ' >' + enfoque.nombre + '</option>');
                             });
                         }
 
@@ -803,32 +813,43 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
 
                         //Cargo el select de lineas estrategicas
-                        $('#linea_estrategica').find('option').remove();
-                        $("#linea_estrategica").append('<option value="">:: Seleccionar ::</option>');
+                        //Agrego los valores de los valores maestros Linea, Area, Enfoque
+                        $("#linea_estrategica").val(json.convocatoria.linea_estrategica);                                           
+                        const lineas_estrategicas = JSON.parse(json.convocatoria.lineas_estrategicas);
+                        $('#lineas_estrategicas').find('option').remove();
                         if (json.lineas_estrategicas.length > 0) {
                             $.each(json.lineas_estrategicas, function (key, linea_estrategica) {
                                 var selected = '';
-                                if (linea_estrategica.id == json.convocatoria.linea_estrategica)
+                                if(lineas_estrategicas!==null)
                                 {
-                                    selected = 'selected="selected"';
+                                    if(lineas_estrategicas.some((lineas) => lineas === linea_estrategica.id.toString()))
+                                    {
+                                        selected = 'selected="selected"';
+                                    }
                                 }
-                                $("#linea_estrategica").append('<option value="' + linea_estrategica.id + '" ' + selected + ' >' + linea_estrategica.nombre + '</option>');
+                                $("#lineas_estrategicas").append('<option value="' + linea_estrategica.id + '" ' + selected + ' >' + linea_estrategica.nombre + '</option>');
                             });
                         }
                         //Cargo el select de areas
-                        $('#area').find('option').remove();
-                        $("#area").append('<option value="">:: Seleccionar ::</option>');
+                        //Agrego los valores de los valores maestros Linea, Area, Enfoque
+                        $("#area").val(json.convocatoria.area);                                           
+                        const areas = JSON.parse(json.convocatoria.areas);
+                        $('#area').find('option').remove();                        
                         if (json.areas.length > 0) {
                             $.each(json.areas, function (key, area) {
                                 var selected = '';
-                                if (area.id == json.convocatoria.area)
+                                if(areas!==null)
                                 {
+                                    if(areas.some((areas) => areas === area.id.toString()))
+                                    {
                                     selected = 'selected="selected"';
+                                    }
                                 }
-                                $("#area").append('<option value="' + area.id + '" ' + selected + ' >' + area.nombre + '</option>');
+                                $("#areas").append('<option value="' + area.id + '" ' + selected + ' >' + area.nombre + '</option>');
                                 $("#area_perfil").append('<option value="' + area.nombre + '" >' + area.nombre + '</option>');
                             });
                         }
+
                         //Cargo el select de cantidad de jurados
                         $('#cantidad_perfil_jurado').find('option').remove();
                         $("#cantidad_perfil_jurado").append('<option value="">:: Seleccionar ::</option>');
@@ -1316,17 +1337,17 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'La cobertura es requerida'}
                 }
             },
-            enfoque: {
+            'enfoques[]': {
                 validators: {
                     notEmpty: {message: 'El enfoque es requerido'}
                 }
             },
-            linea_estrategica: {
+            'lineas_estrategicas[]': {
                 validators: {
                     notEmpty: {message: 'La línea estratégica es requerida'}
                 }
             },
-            area: {
+            'areas[]': {
                 validators: {
                     notEmpty: {message: 'El área es requerida'}
                 }
@@ -1359,6 +1380,11 @@ function validator_form(token_actual) {
             }
         }
     }).on('success.form.bv', function (e) {
+        //Agrego los valores de los valores maestros Linea, Area, Enfoque
+        $("#linea_estrategica").val($("#lineas_estrategicas").val()[0]);
+        $("#enfoque").val($("#enfoques").val()[0]);
+        $("#area").val($("#areas").val()[0]);
+
         // Prevent form submission
         e.preventDefault();
         // Get the form instance
