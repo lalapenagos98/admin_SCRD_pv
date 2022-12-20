@@ -325,12 +325,12 @@ function validator_form(token_actual) {
                 validators: {
                     notEmpty: {message: 'El CDP es requerido'}
                 }
-            },
+            }/*,
             crp: {
                 validators: {
                     notEmpty: {message: 'El CRP es requerido'}
                 }
-            }
+            }*/
         }
     }).on('success.form.bv', function (e) {
         // Prevent form submission
