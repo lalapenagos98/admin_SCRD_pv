@@ -431,11 +431,6 @@ function validator_form(token_actual) {
                     numeric: {message: 'Debe ingresar solo numeros'}
                 }
             },
-            numero_telefono: {
-                validators: {
-                    notEmpty: {message: 'El número de teléfono es requerido'}
-                }
-            },
             numero_celular: {
                 validators: {
                     notEmpty: {message: 'El número de celular es requerido'},
