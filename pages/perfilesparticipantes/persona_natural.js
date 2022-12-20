@@ -663,11 +663,6 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El estrato es requerido'}
                 }
             },
-            numero_telefono: {
-                validators: {
-                    notEmpty: {message: 'El número de teléfono es requerido'}
-                }
-            },
             numero_celular: {
                 validators: {
                     notEmpty: {message: 'El número de celular personal es requerido'}

@@ -171,6 +171,7 @@
                                                     <input type="text" id="cargo" name="cargo" class="form-control">
                                                 </div>
                                             </div-->
+                                            <!--
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Línea<span class="icono_requerido">*</span></label>
@@ -180,23 +181,50 @@
                                                         <option value="Experto sin título">Privada</option>
                                                         <option value="Experto sin título">Mixta</option>
                                                     </select>
+                                                    <div id="div_multichulos" class="div_multichulos"></div>
                                                 </div>
                                             </div>
+                                            -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Líneas<span class="icono_requerido">*</span></label>
+                                                    <div id="div_lineas" class="div_multichulos"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Áreas o Prácticas de Experticia<span class="icono_requerido">*</span></label>
+                                                    <div>Seleccione una o varias áreas/prácticas en las que tenga experiencia. Esto nos permitirá saber a cuál proceso de mentoría lo podemos convocar, o enviarle información sobre las convocatorias de jurados que se ajustan a su perfil.</div>
+                                                    <div id="div_areas" class="div_multichulos"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Funciones principales<span class="icono_requerido">*</span></label>
                                                     <textarea  id="funcion" name="funcion" class="form-control" style="resize: none;"></textarea>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
                                             <!--div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Nombre de contacto de la Entidad <span class="icono_requerido">*</span></label>
                                                     <input type="text" id="nombre" name="nombre" class="form-control">
                                                 </div>
                                             </div-->
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Experiencia Relacionada con Procesos Pedagógicos y/o Docencia<span class="icono_requerido">*</span></label>
+                                                    <select id='docencia' name="docencia" class="form-control" >
+                                                        <option value="No" selected>No</option>
+                                                        <option value="Sí">Sí</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>Correo electrónico del Contacto<span class="icono_requerido">*</span></label>
@@ -235,6 +263,8 @@
                                                 <input type="hidden" id="modalidad_participa_educacion" name="modalidad_participa_educacion" />
                                                 <input type="hidden" id="id" name="id" />
                                                 <input type="hidden" id="idc" name="idc" />
+                                                <input type="hidden" id="lineas" name="lineas" />
+                                                <input type="hidden" id="areas" name="areas" />
                                                 <input type="hidden" id="idregistro" name="idregistro" />
                                                 <button type="submit" class="btn btn-default">Guardar</button>
                                             </div>
@@ -250,7 +280,9 @@
                                                         <th>Ciudad</th>
                                                         <th>Tipo Entidad</th>
                                                         <th>Entidad</th>
-                                                        <th>Línea</th>
+                                                        <th>Líneas</th>
+                                                        <th>Áreas/Prácticas de Experticia</th>
+                                                        <th>Experiencia Pedagógica/Docente</th>
                                                         <th>Fecha de Inicio</th>
                                                         <th>Fecha de Terminación</th>
                                                         <th>Meses de Experiencia</th>
@@ -315,7 +347,7 @@
 
         <!-- funcionalidades principales -->
         <script src='../../dist/js/main.js'></script>
-        <script src='experiencia_profesional.js'></script>      
+        <script src='experiencia_profesional.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>
 
     </body>

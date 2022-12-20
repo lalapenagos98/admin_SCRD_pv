@@ -160,6 +160,18 @@ $(document).ready(function () {
         });
 
         // cargo los datos
+        $('#mentor').on('change', function () {
+            if ($(this).val() === "true")
+            {
+                //$("#areaspracticas").removeAttr("disabled");
+            } else
+            {
+                //$("#areaspracticas").attr("disabled", "disabled");
+            }
+        });
+
+
+        // cargo los datos
         $.ajax({
             type: 'GET',
             url: url_pv + 'Tiposdocumentos/select_jurado',
@@ -416,7 +428,7 @@ $(document).ready(function () {
         /*
          *08-03-2021
          *Wilmer Gustavo Mogollón Duque
-         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
+         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
          */
 
         //cargar select tiene_rut
@@ -565,6 +577,8 @@ function cargar_datos_formulario(token_actual) {
 
                     $("#formulario_principal").show();
 
+                    $('#mentor').val(json.participante.mentor); //.change();
+
                 }
 
                 /**
@@ -581,12 +595,31 @@ function cargar_datos_formulario(token_actual) {
                         $('#estrato').show();
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', true);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
+                        $('#aviso_internacional').hide();
+                    } else {
+                        $('#estrato').hide();
+                        $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
+                        $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
+                        $('#aviso_internacional').show();
+                    }
+                });
+
+                /*
+                $("#ciudad_residencia").change(function () {
+                    console.log($("#ciudad_residencia_name").val());
+                    console.log($("#ciudad_residencia").attr("label").includes('Colombia'));
+
+                    if ($("#ciudad_residencia").attr("label").includes('Colombia')) {
+                        $('#estrato').show();
+                        $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', true);
+                        $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     } else {
                         $('#estrato').hide();
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     }
                 });
+                */
 
                 break;
         }
@@ -640,8 +673,13 @@ function validator_form(token_actual) {
             /*
              *08-03-2021
              *Wilmer Gustavo Mogollón Duque
-             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
+             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
              */
+            mentor: {
+                validators: {
+                    notEmpty: {message: 'Por favor, especifique si desea aparecer en las búsquedas de mentores'}
+                }
+            },
             tiene_rut: {
                 validators: {
                     notEmpty: {message: 'El RUT es requerido'}
@@ -675,6 +713,11 @@ function validator_form(token_actual) {
             estrato: {
                 validators: {
                     notEmpty: {message: 'El estrato es requerido'}
+                }
+            },
+            numero_celular: {
+                validators: {
+                    notEmpty: {message: 'El número de celular es requerido'}
                 }
             },
             correo_electronico: {

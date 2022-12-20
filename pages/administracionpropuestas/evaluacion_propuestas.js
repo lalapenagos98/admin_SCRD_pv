@@ -372,7 +372,22 @@ function cargar_select_rondas(token_actual, convocatoria) {
     );
 }
 
+
 function cargar_tabla(token_actual) {
+
+
+    //$('#table_list').DataTable().clear().draw();
+    $('#table_list').DataTable().destroy();
+    $('#table_list').DataTable({
+        "language": {
+            "url": "../../dist/libraries/datatables/js/spanish.json"
+        },
+        "lengthMenu": [10, 15, 20],
+        "responsive": true,
+        "searching": false,
+        "data": {}
+    });
+
 
     $("#notificacion_periodo").hide();
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
@@ -389,6 +404,9 @@ function cargar_tabla(token_actual) {
         switch (data) {
             case 'error':
                 notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_no_hay_jurados':
+                notify("warning", "ok", "Usuario:", "No se encontraron jurados activos para la ronda seleccionada.");
                 break;
             case 'error_metodo':
                 notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
@@ -530,7 +548,7 @@ function cargar_tabla(token_actual) {
                             "processing": true,
                             "destroy": true,
                             "serverSide": true,
-                            "lengthMenu": [200], //Para que se listen todos en una sola vista
+                            "lengthMenu": [10], //Para que se listen todos en una sola vista
                             "responsive": true,
                             "searching": false,
                             "ajax": {
@@ -1072,7 +1090,8 @@ function evaluar_criterios(token_actual, id_evaluacion) {
             default:
                 notify("success", "ok", "Usuario:", "Se actualizó el registro con éxito.");
                 //$(".criterios").attr('disabled','');
-                cargar_tabla(token_actual);
+                //cargar_tabla(token_actual);
+                $('#table_list').DataTable().ajax.reload(null, false);
                 break;
         }
 

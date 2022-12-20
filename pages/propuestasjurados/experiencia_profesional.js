@@ -10,7 +10,7 @@
 
     $("#idc").val($("#id").val());
     $("#id").val(null);
-    
+
     $("#back_step").attr("title", "");
     $("#back_step").attr("data-original-title", "");
 
@@ -24,26 +24,26 @@
      {
          //Verifica si el token actual tiene acceso de lectura
          permiso_lectura(token_actual, "Menu Participante");
-         
-         
+
+
          determinar_modalidad(token_actual);
 
         alert("Recuerde diligenciar toda la información requerida para este formulario");
-        
+
         if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
             $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id=" + $("#idc").val() + "' ");
             $("#back_step").attr("title", " Ingresar la información sobre educación formal. ");
             $("#back_step").attr("data-original-title", " Ingresar la información sobre educación formal. ");
-        } 
+        }
         if ($("#modalidad_participa_educacion").val() === "Experto sin título universitario"){
             $("#back_step").attr("onclick", " location.href = 'educacion_no_formal.html?m=2&id=" + $("#idc").val() + "' ");
             $("#back_step").attr("title", " Ingresar la información sobre educación no formal. ");
             $("#back_step").attr("data-original-title", " Ingresar la información sobre educación no formal. ");
         }
-        
+
         /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
-        
+
         $("#next_step").attr("onclick", " location.href = 'experiencia_jurado.html?m=2&id="+  $("#idc").val()+"' ");
 
         //Peticion para buscar ciudades
@@ -107,8 +107,8 @@
        }
 
  });
- 
- 
+
+
 /*
  * 28-01-2022
  * Wilmer Gustavo Mogollón Duque
@@ -197,6 +197,7 @@ function determinar_modalidad(token_actual) {
            }
 
            //Cargos el select de tipo_entidad
+           /*
            $('#linea').find('option').remove();
            $("#linea").append('<option value="">:: Seleccionar ::</option>');
            if (json.linea.length > 0) {
@@ -204,6 +205,26 @@ function determinar_modalidad(token_actual) {
                    $("#linea").append('<option value="' + array.id + '" >' + array.nombre + '</option>');
                });
            }
+           */
+
+           $("#div_lineas").html("");
+           var htmlLineas = "";
+           if (json.lineas.length > 0) {
+            $.each(json.lineas, function (key, array) {
+                htmlLineas += '<br><input type="checkbox" name="a_lineas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
+            });
+            $("#div_lineas").html(htmlLineas);
+          }
+
+          $("#div_areas").html("");
+          var htmlAreas = "";
+          if (json.areas.length > 0) {
+           $.each(json.areas, function (key, array) {
+               htmlAreas += '<br><input type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
+           });
+           $("#div_areas").html(htmlAreas);
+         }
+
 
            //Cargo el formulario con los datos
            if( json.experiencialaboral ){
@@ -213,6 +234,8 @@ function determinar_modalidad(token_actual) {
              $('#funcion').val(json.experiencialaboral.funcion);
 
              $('.formulario_principal').loadJSON(json.experiencialaboral);
+             $('#docencia').val(json.experiencialaboral.docencia);
+
            }
 
            $("#formulario_principal").show();
@@ -273,12 +296,21 @@ function determinar_modalidad(token_actual) {
                              return row.entidad;
                              },
                      },
-                     {"data": "Línea",
+                     {"data": "Lineas",
                        render: function ( data, type, row ) {
-                             return row.linea;
+                             return row.lineas;
                              },
                      },
-
+                     {"data": "Áreas/Prácticas de Experticia",
+                       render: function ( data, type, row ) {
+                             return row.areas;
+                             },
+                     },
+                     {"data": "Experiencia Pedagógica/Docente",
+                       render: function ( data, type, row ) {
+                             return row.docencia;
+                             },
+                     },
                      {"data": "Fecha de Inicio",
                        render: function ( data, type, row ) {
                              return row.fecha_inicio;
@@ -571,8 +603,8 @@ function determinar_modalidad(token_actual) {
      });
 
    }
-   
-   
+
+
  /*
  * 29-09-2021
  * Wilmer Gustavo Mogollón Duque
