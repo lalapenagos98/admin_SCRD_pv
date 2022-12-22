@@ -211,19 +211,21 @@ function determinar_modalidad(token_actual) {
            var htmlLineas = "";
            if (json.lineas.length > 0) {
             $.each(json.lineas, function (key, array) {
-                htmlLineas += '<br><input type="checkbox" name="a_lineas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
+                htmlLineas += '<br><input id="linea_' + array.id + '" type="checkbox" name="a_lineas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
             });
             $("#div_lineas").html(htmlLineas);
           }
 
+          /*
           $("#div_areas").html("");
           var htmlAreas = "";
           if (json.areas.length > 0) {
-           $.each(json.areas, function (key, array) {
-               htmlAreas += '<br><input type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
-           });
-           $("#div_areas").html(htmlAreas);
-         }
+            $.each(json.areas, function (key, array) {
+                htmlAreas += '<br><input type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' />' + array.nombre;
+            });
+            $("#div_areas").html(htmlAreas);
+          }
+          */
 
 
            //Cargo el formulario con los datos
@@ -301,11 +303,13 @@ function determinar_modalidad(token_actual) {
                              return row.lineas;
                              },
                      },
+                     /*
                      {"data": "Áreas/Prácticas de Experticia",
                        render: function ( data, type, row ) {
                              return row.areas;
                              },
                      },
+                     */
                      {"data": "Experiencia Pedagógica/Docente",
                        render: function ( data, type, row ) {
                              return row.docencia;
@@ -380,17 +384,19 @@ function determinar_modalidad(token_actual) {
                        notEmpty: {message: 'La fecha es requerida'}
                    }
                },
+               /*
                linea: {
                     validators: {
                         notEmpty: {message: 'La línea es requerida'}
                     }
                 },
+                */
                funcion: {
                    validators: {
                        notEmpty: {message: 'Las funciones son requeridas'},
                        stringLength: {
-                            max: 500,
-                            message: 'Este campo debe contener máximo 500 caracteres'
+                            max: 1000,
+                            message: 'Este campo debe contener máximo 1000 caracteres'
                         }
                    }
                },
@@ -415,6 +421,28 @@ function determinar_modalidad(token_actual) {
        }).on('success.form.bv', function (e) {
            // Prevent form submission
            e.preventDefault();
+
+           var especificoLinea = false;
+
+           var lineas = $('input[name="a_lineas[]"]:checked');
+
+           if (lineas.length > 0) {
+            especificoLinea = true;
+           }
+
+           /*
+           $('input[type=checkbox]').each(function() {
+             if ($(this).checked) {
+               especificoLinea = true;
+             }
+           });
+           */
+
+           if (!especificoLinea) {
+             notify("danger", "ok", "Usuario:", "Es necesario que especifique al menos una línea estratégica asociada a esta experiencia.");
+             return false;
+           }
+
            // Get the form instance
            var $form = $(e.target);
 
@@ -538,6 +566,7 @@ function determinar_modalidad(token_actual) {
          $("#idregistro").val( $(this).attr("id") );
          // cargo los datos
          cargar_datos_formulario(token_actual);
+         window.scrollTo(0, 0);
      });
 
      //Permite activar o eliminar una registro

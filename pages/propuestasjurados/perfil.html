@@ -140,13 +140,33 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>¿Además de jurado, estarías disponible si se te solicita ser mentor(a)?  <span class="icono_requerido">*</span></label>
+                                                <label title="Mentor: Es el experto con funciones pedagógicas que acompaña y asesora la formulación o ejecución de propuestas o proyectos, brindando herramientas a los agentes del sector en temáticas específicas que fortalezcan sus diferentes procesos.">¿Tienes interés en ser invitado por las entidades del sector cultura como mentor para acompañar la formulación o ejecución de propuestas o proyectos?<span class="icono_requerido">*</span></label>
                                                 <select id='mentor' name="mentor" class="form-control" >
                                                     <option value="No" selected>No</option>
                                                     <option value="Sí">Sí</option>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Áreas o Prácticas de Experticia<span class="icono_requerido">*</span></label>
+                                                <div>Seleccione una o varias áreas/prácticas en las que tenga experiencia. Esto nos permitirá saber a cuál proceso de mentoría lo podemos convocar, o enviarle información sobre las convocatorias de jurados que se ajustan a su perfil.</div>
+                                                <br><input id="filtro_area" type="text" placeholder="Búsqueda de área o práctica..." /><input id="filtrar_seleccionadas" type="button" value="Ver Selección" /><input id="quitar_filtro" type="button" value="X" title="Ver todas" />
+                                                <div id="div_areas" class="div_multichulos"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Especificar otra(s) área(s) (sólo si no están en el listado):</label>
+                                                <input type="text" id="otraarea" name="otraarea" class="form-control" maxlength="50">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Tipo de documento de identificación  <span class="icono_requerido">*</span></label>
