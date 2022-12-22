@@ -434,8 +434,12 @@ table.dataTable thead .sorting:after {
 }
 
 .div_multichulos {
-  height: 300px;
+  height: 200px;
   overflow-y: auto;
   border: 1px solid grey;
   border-radius: 5px;
+}
+
+textarea {
+  min-height: 100px;
 }

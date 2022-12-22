@@ -5,6 +5,15 @@
  */
 /*Cesar Britto*/
 
+var aAreas = new Array();
+
+function incluye(t1, t2) {
+    var t1normalizada = t1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    var t2normalizada = t2.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+    return (t1normalizada.includes(t2normalizada));
+}
+
 $(document).ready(function () {
 
     $("#idc").val($("#id").val());
@@ -170,6 +179,34 @@ $(document).ready(function () {
             }
         });
 
+        $('#filtro_area').on('change keyup', function () {
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                // if (area.nombre.includes($(this).val())) {
+                if (incluye(area.nombre,$(this).val())) {
+                    $("#div_area_" + area.id).show();
+                }
+                else {
+                    $("#div_area_" + area.id).hide();
+                }
+            }
+        });
+
+        $('#quitar_filtro').on('click', function () {
+            $('#filtro_area').val('').change();
+        });
+
+        $('#filtrar_seleccionadas').on('click', function () {
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                if (area.checked === "checked") {
+                    $("#div_area_" + area.id).show();
+                }
+                else {
+                    $("#div_area_" + area.id).hide();
+                }
+            }
+        });
 
         // cargo los datos
         $.ajax({
@@ -578,6 +615,20 @@ function cargar_datos_formulario(token_actual) {
                     $("#formulario_principal").show();
 
                     $('#mentor').val(json.participante.mentor); //.change();
+
+                    $("#div_areas").html("");
+                    var htmlAreas = "";
+                    aAreas = new Array();
+                    if (json.areas.length > 0) {
+                        $.each(json.areas, function (key, array) {
+                            htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                            aAreas.push(array);
+                        });
+                        $("#div_areas").html(htmlAreas);
+                    }
+
+                    $('#otraarea').val(json.participante.otraarea);
+
 
                 }
 
