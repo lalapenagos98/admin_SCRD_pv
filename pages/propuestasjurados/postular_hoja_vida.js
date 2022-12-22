@@ -14,6 +14,21 @@ $(document).ready(function () {
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
 
+    /*
+    function validarMentor() {
+        $.ajax({
+            type: 'GET',
+            data: {"token": token_actual.token, "modulo": "Menu Participante", "idc": $("#idc").val()},
+            url: url_pv + 'PropuestasJurados/validar_mentor'
+        }).done(function (data) {
+            var json = JSON.parse(data);
+            if (json.mentorvalido == 0) {
+                notify("danger", "ok", "Para postularse como mentor por favor completar la siguiente información: " + json.mensaje);
+            }
+        });
+    }
+    */
+
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
     if ($.isEmptyObject(token_actual)) {
         location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
@@ -30,13 +45,26 @@ $(document).ready(function () {
         validar_convocatoria_jurados(token_actual);
 
         $("#postular").click(function () {
+        //$("#h1_postular").click(function () {
 
-            $("#mensaje").show();
-            $("#bcancelar").show();
-            $("#baceptar").show();
+            $.ajax({
+                type: 'GET',
+                data: {"token": token_actual.token, "modulo": "Menu Participante", "idc": $("#idc").val()},
+                url: url_pv + 'PropuestasJurados/validar_mentor'
+            }).done(function (data) {
+                var json = JSON.parse(data);
+                if (json.mentorValido == 0) {
+                    notify("danger", "ok", "Atención:", "Si desea ser también mentor por favor complete la siguiente información: " + json.mensaje);
+                }
+                else {
+                    $("#mensaje").show();
+                    $("#bcancelar").show();
+                    $("#baceptar").show();
 
-            $("#mensaje2").hide();
-            $("#aceptar").hide();
+                    $("#mensaje2").hide();
+                    $("#aceptar").hide();
+                }
+            });
 
         });
 
@@ -85,7 +113,9 @@ $(document).ready(function () {
 
     }
 
+
 });
+
 
 function cargar_datos_formulario(token_actual) {
 
@@ -98,7 +128,7 @@ function cargar_datos_formulario(token_actual) {
     }).done(function (data) {
 
         var json = JSON.parse(data);
-        
+
         $("#modalidad_participa_jurado").html(json.propuesta.modalidad_participa);
 
         //9	jurados	Registrado
@@ -192,7 +222,7 @@ function cargar_tabla_educacion_formal(token_actual) {
                      return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
                      },
                      },
-                     
+
                      {"data": "aciones",
                      render: function ( data, type, row ) {
                      return '<button title="Editar" id="'+row.id+'" type="button" class="btn btn-warning btn_cargar">'
@@ -287,7 +317,7 @@ function cargar_tabla_educacion_no_formal(token_actual) {
                      +'<button title="'+( row.file == null ? "No se ha cargado archivo": "Descargar archivo")+'" id="'+( row.file == null ? "No se ha cargado archivo": row.file)+'"type="button" class="btn btn-primary download_file">'
                      + ( row.file == null ? '<span class="glyphicon glyphicon-ban-circle" title="No se ha cargado archivo"></span>':'<span class="glyphicon glyphicon-download-alt"></span>')
                      + '</button>';
-                     
+
                      },
                      }
                      */
