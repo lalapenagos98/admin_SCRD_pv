@@ -44,8 +44,8 @@ $(document).ready(function () {
         /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
 
-        $("#postular").click(function () {
-        //$("#h1_postular").click(function () {
+        //$("#postular").click(function () {
+        $("#h1_postular").click(function () {
 
             $.ajax({
                 type: 'GET',
@@ -54,7 +54,7 @@ $(document).ready(function () {
             }).done(function (data) {
                 var json = JSON.parse(data);
                 if (json.mentorValido == 0) {
-                    notify("danger", "ok", "Atención:", "Si desea ser también mentor por favor complete la siguiente información: " + json.mensaje);
+                    notify("danger", "ok", "Atención:", "Para aceptar términos y condiciones 2023, primero debes indicar en información básica si deseas ser invitado como mentor, actualizar la información de tu hoja de vida, incluyendo: " + json.mensaje);
                 }
                 else {
                     $("#mensaje").show();
@@ -701,8 +701,23 @@ function aceptar_terminos(token_actual) {
             case 'error_documento_administrativo':
                 notify("danger", "remove", "Usuario:", "Debe cargar los documentos administrativos para inscribir la hoja de vida");
                 break;
+            case 'error_faltan_soportes_experiencia':
+                notify("danger", "remove", "Usuario:", "Debe cargar los documentos que evidencian su experiencia (Experiencia del participante)");
+                break;
+            case 'error_sin_experiencia':
+                notify("danger", "remove", "Usuario:", "Debe relacionar su experiencia (Experiencia del participante)");
+                break;
+            case 'error_universitario_sin_educacion_formal':
+                notify("danger", "remove", "Usuario:", "Si participa en la modalidad 'Experto con título universitario' debe registrar una educación formal (Educacion formal)");
+                break;
+            case 'error_info_basica_desactualizada':
+                notify("danger", "remove", "Usuario:", "Información básica desactualizada. Por favor revísela, actualicela (si es necesario) dándo clic en el botón Guardar para confirmarla. (Información básica)");
+                break;
+            case 'error_experienciaslaborales_desactualizadas':
+                notify("danger", "remove", "Usuario:", "Experiencia desactualizada. Por favor revísela, actualicela (si es necesario) y de clic en Guardar para confirmarla. (Experiencia del participante)");
+                break;
             case 'error_modalidad':
-                notify("danger", "remove", "Usuario:", "Debe seleccionar la categoria en la cuál participará para inscribir la hoja de vida");
+                notify("danger", "remove", "Usuario:", "Debe seleccionar la categoria en la cuál participará para inscribir la hoja de vida (Información Básica)");
                 break;
             default:
                 notify("success", "ok", "Usuario:", "Se realizó la inscripción con éxito.");

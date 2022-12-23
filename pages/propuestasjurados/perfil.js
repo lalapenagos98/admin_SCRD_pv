@@ -182,7 +182,6 @@ $(document).ready(function () {
         $('#filtro_area').on('change keyup', function () {
             for (var i=0; i<aAreas.length; i++) {
                 var area = aAreas[i];
-                // if (area.nombre.includes($(this).val())) {
                 if (incluye(area.nombre,$(this).val())) {
                     $("#div_area_" + area.id).show();
                 }
@@ -199,7 +198,8 @@ $(document).ready(function () {
         $('#filtrar_seleccionadas').on('click', function () {
             for (var i=0; i<aAreas.length; i++) {
                 var area = aAreas[i];
-                if (area.checked === "checked") {
+                // if (area.checked === "checked" || $("#area_" + area.id).is(":checked")) {
+                if ($("#area_" + area.id).is(":checked")) {
                     $("#div_area_" + area.id).show();
                 }
                 else {
