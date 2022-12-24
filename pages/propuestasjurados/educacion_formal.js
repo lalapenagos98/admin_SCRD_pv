@@ -70,7 +70,7 @@ $(document).ready(function () {
 
         $("#back_step").attr("onclick", " location.href = 'perfil.html?m=2&id=" + $("#idc").val() + "' ");
 
-        alert("Recuerde diligenciar toda la información requerida para este formulario");
+       // alert("Recuerde diligenciar toda la información requerida para este formulario");
 
         if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
             $("#next_step").attr("onclick", " location.href = 'experiencia_profesional.html?m=2&id=" + $("#idc").val() + "' ");

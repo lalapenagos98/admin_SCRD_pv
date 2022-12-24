@@ -22,7 +22,7 @@ $(document).ready(function () {
         //Verifica si el token actual tiene acceso de lectura
         permiso_lectura(token_actual, "Menu Participante");
 
-        alert("Recuerde diligenciar toda la información requerida para este formulario");
+       // alert("Recuerde diligenciar toda la información requerida para este formulario");
         $("#back_step").attr("onclick", " location.href = 'reconocimiento.html?m=2&id=" + $("#idc").val() + "' ");
         $("#next_step").attr("onclick", " location.href = 'documentos_administrativos.html?m=2&id=" + $("#idc").val() + "' ");
 
