@@ -24,7 +24,7 @@
           permiso_lectura(token_actual, "Menu Participante");
 
 
-         alert("Recuerde diligenciar toda la información requerida para este formulario");
+        // alert("Recuerde diligenciar toda la información requerida para este formulario");
          $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id="+  $("#idc").val()+"' ");
          $("#next_step").attr("onclick", " location.href = 'experiencia_profesional.html?m=2&id="+  $("#idc").val()+"' ");
 

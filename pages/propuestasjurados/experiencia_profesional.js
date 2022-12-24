@@ -28,7 +28,7 @@
 
          determinar_modalidad(token_actual);
 
-        alert("Recuerde diligenciar toda la información requerida para este formulario");
+       // alert("Recuerde diligenciar toda la información requerida para este formulario");
 
         if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
             $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id=" + $("#idc").val() + "' ");
