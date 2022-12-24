@@ -62,21 +62,21 @@ $(document).ready(function () {
         validator_form(token_actual);
 
         determinar_modalidad(token_actual);
-        
+
         /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
 
 
 
         $("#back_step").attr("onclick", " location.href = 'perfil.html?m=2&id=" + $("#idc").val() + "' ");
-        
+
         alert("Recuerde diligenciar toda la información requerida para este formulario");
 
         if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
             $("#next_step").attr("onclick", " location.href = 'experiencia_profesional.html?m=2&id=" + $("#idc").val() + "' ");
             $("#next_step").attr("title", " Ingresar la información sobre experiencia disciplinar. ");
             $("#next_step").attr("data-original-title", " Ingresar la información sobre experiencia disciplinar. ");
-        } 
+        }
         if ($("#modalidad_participa_educacion").val() === "Experto sin título universitario"){
             $("#next_step").attr("onclick", " location.href = 'educacion_no_formal.html?m=2&id=" + $("#idc").val() + "' ");
             $("#next_step").attr("title", " Ingresar la información sobre educación no formal. ");
@@ -139,7 +139,7 @@ $(document).ready(function () {
         });
 
         /*  $("#archivo").on('change', function(){
-         
+
          $('#formulario_principal').bootstrapValidator('addField', 'archivo', {
          validators: {
          //notEmpty: {message: 'El archivo es requerido'},
@@ -150,15 +150,15 @@ $(document).ready(function () {
          }
          }
          });
-         
+
          //console.log( $('#archivo')[0].files[0].size );
-         
+
          //4974593 = 5mb
          if ( $('#archivo')[0].files.length > 0 && $('#archivo')[0].files[0].size > 4974593 ){
          notify("danger", "remove", "Usuario:", "El archivo sobrepasa el tamaño máximo permitido");
          $('#archivo').val('');
          }
-         
+
          });*/
 
     }
@@ -462,6 +462,17 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'La fecha es requerida'}
                 }
             },
+            archivo: {
+                validators: {
+                    file: {
+                        extension: 'pdf',
+                        type: 'application/pdf',
+                        maxSize: 5120 * 1024,
+                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                    },
+                    notEmpty: {message: 'El anexo en pdf es requerido'},
+                }
+            }
 
             /*archivo: {
              validators: {
@@ -522,7 +533,7 @@ function validator_form(token_actual) {
                 processData: false,
                 async: false,
                 /*beforeSend: function(xhr){
-                 
+
                  $.each($('#archivo')[0].files, function(index, file){
                  //console.log(file.type);
                  //console.log( file );
@@ -531,9 +542,9 @@ function validator_form(token_actual) {
                  $('#archivo').val('');
                  return false;
                  }
-                 
+
                  });
-                 
+
                  }*/
 
             }).done(function (result) {

@@ -416,6 +416,18 @@ function determinar_modalidad(token_actual) {
                        notEmpty: {message: 'La dirección es requerida'},
                    }
                },
+               archivo: {
+                  validators: {
+                      file: {
+                          extension: 'pdf',
+                          type: 'application/pdf',
+                          maxSize: 5120 * 1024,
+                          message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                      },
+                      notEmpty: {message: 'El anexo en pdf es requerido'},
+                  }
+              }
+
              }
 
        }).on('success.form.bv', function (e) {

@@ -44,8 +44,7 @@ $(document).ready(function () {
         /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
 
-        //$("#postular").click(function () {
-        $("#h1_postular").click(function () {
+        $("#postular").click(function () {
 
             $.ajax({
                 type: 'GET',

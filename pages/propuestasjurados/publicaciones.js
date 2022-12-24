@@ -272,7 +272,18 @@ function validator_form(token_actual) {
                     integer: {message: 'El año debe ser numérico'}
                 }
             },
-        }
+            archivo: {
+                validators: {
+                    file: {
+                        extension: 'pdf',
+                        type: 'application/pdf',
+                        maxSize: 5120 * 1024,
+                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                    },
+                    notEmpty: {message: 'El anexo en pdf es requerido'},
+                }
+            }
+      }
 
     }).on('success.form.bv', function (e) {
         // Prevent form submission

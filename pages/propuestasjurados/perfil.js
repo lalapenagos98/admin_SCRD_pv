@@ -728,7 +728,7 @@ function validator_form(token_actual) {
              */
             mentor: {
                 validators: {
-                    notEmpty: {message: 'Por favor, especifique si desea aparecer en las búsquedas de mentores'}
+                    notEmpty: {message: 'Por favor, especifica si deseas aparecer en las búsquedas de mentores'}
                 }
             },
             tiene_rut: {
@@ -738,7 +738,7 @@ function validator_form(token_actual) {
             },
             tiene_matricula: {
                 validators: {
-                    notEmpty: {message: 'El campo ¿Cuenta usted con matrícula mercantil?, es requerido'}
+                    notEmpty: {message: 'Es necesario que especifiques si tienes matrícula mercantil'}
                 }
             },
             fecha_nacimiento: {
@@ -771,6 +771,11 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El número de celular es requerido'}
                 }
             },
+            resumen: {
+                validators: {
+                    notEmpty: {message: 'Es necesario que especifiques tu perfil'}
+                }
+            },
             correo_electronico: {
                 validators: {
                     notEmpty: {message: 'El correo electrónico es requerido'},
@@ -784,6 +789,21 @@ function validator_form(token_actual) {
         }
     }).on('success.form.bv', function (e) {
 
+
+        var especificoArea = false;
+
+        var areas = $('input[name="a_areas[]"]:checked');
+
+        if (areas.length > 0 || $("#otraarea").val()) {
+            especificoArea = true;
+        }
+
+        var quiereSerMentor = ($("#mentor").val() == "Sí");
+
+        if (!especificoArea && quiereSerMentor) {
+            notify("danger", "ok", "Usuario:", "Para ser mentor, es necesario que especifique al menos un área o práctica de experticia.");
+            return false;
+        }
 
         var enviar = true;
 
