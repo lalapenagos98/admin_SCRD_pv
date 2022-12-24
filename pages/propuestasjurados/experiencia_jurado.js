@@ -261,7 +261,7 @@
                },
                ciudad_name: {
                    validators: {
-                       notEmpty: {message: 'La cidudad es requerida'}
+                       notEmpty: {message: 'La ciudad es requerida'}
                    }
                },
                archivo: {
