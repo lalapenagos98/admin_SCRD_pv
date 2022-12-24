@@ -384,13 +384,6 @@ function determinar_modalidad(token_actual) {
                        notEmpty: {message: 'La fecha es requerida'}
                    }
                },
-               /*
-               linea: {
-                    validators: {
-                        notEmpty: {message: 'La línea es requerida'}
-                    }
-                },
-                */
                funcion: {
                    validators: {
                        notEmpty: {message: 'Las funciones son requeridas'},
@@ -408,7 +401,7 @@ function determinar_modalidad(token_actual) {
                },
                ciudad_name: {
                    validators: {
-                       notEmpty: {message: 'La cidudad es requerida'}
+                       notEmpty: {message: 'La ciudad es requerida'}
                    }
                },
                direccion: {
@@ -431,32 +424,26 @@ function determinar_modalidad(token_actual) {
              }
 
        }).on('success.form.bv', function (e) {
-           // Prevent form submission
-           e.preventDefault();
 
-           var especificoLinea = false;
+        var especificoLinea = false;
 
-           var lineas = $('input[name="a_lineas[]"]:checked');
+        var lineas = $('input[name="a_lineas[]"]:checked');
 
-           if (lineas.length > 0) {
-            especificoLinea = true;
-           }
+        if (lineas.length > 0) {
+        especificoLinea = true;
+        }
 
-           /*
-           $('input[type=checkbox]').each(function() {
-             if ($(this).checked) {
-               especificoLinea = true;
-             }
-           });
-           */
+        // Prevent form submission
+        e.preventDefault();
 
-           if (!especificoLinea) {
-             notify("danger", "ok", "Usuario:", "Es necesario que especifique al menos una línea estratégica asociada a esta experiencia.");
-             return false;
-           }
+        // Get the form instance
+        var $form = $(e.target);
 
-           // Get the form instance
-           var $form = $(e.target);
+        if (!especificoLinea) {
+          notify("danger", "ok", "Usuario:", "Es necesario que especifique al menos una línea estratégica asociada a esta experiencia.");
+          $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', false);
+          return false;
+        }
 
            // Get the BootstrapValidator instance
            var bv = $form.data('bootstrapValidator');
