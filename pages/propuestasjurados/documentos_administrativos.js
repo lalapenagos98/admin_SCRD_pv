@@ -36,7 +36,8 @@ $(document).ready(function () {
                         extension: 'pdf',
                         type: 'application/pdf',
                         message: 'El archivo seleccionado no es válido',
-                    }
+                    },
+                    notEmpty: {message: 'El anexo en pdf es requerido'},
                 }
             });
 
@@ -189,6 +190,17 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El documento debe ser cargado'}
                 }
             },
+            archivo: {
+                validators: {
+                    file: {
+                        extension: 'pdf',
+                        type: 'application/pdf',
+                        maxSize: 5120 * 1024,
+                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                    },
+                    notEmpty: {message: 'El anexo en pdf es requerido'},
+                }
+            }
         }
 
     }).on('success.form.bv', function (e) {
