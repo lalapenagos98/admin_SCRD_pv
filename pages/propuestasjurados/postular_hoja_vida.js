@@ -718,6 +718,12 @@ function aceptar_terminos(token_actual) {
             case 'error_modalidad':
                 notify("danger", "remove", "Usuario:", "Debe seleccionar la categoria en la cuál participará para inscribir la hoja de vida (Información Básica)");
                 break;
+            case 'error_mentor':
+                notify("danger", "remove", "Usuario:", "Debe especificar si desea ser mentor o no (Información Básica)");
+                break;
+            case 'error_mentor_sin_areas':
+                notify("danger", "remove", "Usuario:", "Si desea ser mentor, debe especificar al menos un área o práctica de experticia (Información Básica)");
+                break;
             default:
                 notify("success", "ok", "Usuario:", "Se realizó la inscripción con éxito.");
                 setTimeout(function () {
