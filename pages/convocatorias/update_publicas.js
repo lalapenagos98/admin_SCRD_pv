@@ -35,6 +35,15 @@ keycloak.init(initOptions).then(function (authenticated) {
                 tags: true
             });
             
+            $(".select_multiple_convocatoria").on("select2:select", function (evt) {
+                var element = evt.params.data.element;
+                var $element = $(element);
+                
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+              });
+
             //Establesco los text area html
             if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
                 CKEDITOR.tools.enableHtml5Elements(document);
