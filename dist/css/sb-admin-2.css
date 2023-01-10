@@ -432,3 +432,14 @@ table.dataTable thead .sorting:after {
     border-left-width: 0;
   }
 }
+
+.div_multichulos {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+textarea {
+  min-height: 100px;
+}

@@ -14,6 +14,21 @@ $(document).ready(function () {
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
 
+    /*
+    function validarMentor() {
+        $.ajax({
+            type: 'GET',
+            data: {"token": token_actual.token, "modulo": "Menu Participante", "idc": $("#idc").val()},
+            url: url_pv + 'PropuestasJurados/validar_mentor'
+        }).done(function (data) {
+            var json = JSON.parse(data);
+            if (json.mentorvalido == 0) {
+                notify("danger", "ok", "Para postularse como mentor por favor completar la siguiente información: " + json.mensaje);
+            }
+        });
+    }
+    */
+
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
     if ($.isEmptyObject(token_actual)) {
         location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
@@ -31,12 +46,24 @@ $(document).ready(function () {
 
         $("#postular").click(function () {
 
-            $("#mensaje").show();
-            $("#bcancelar").show();
-            $("#baceptar").show();
+            $.ajax({
+                type: 'GET',
+                data: {"token": token_actual.token, "modulo": "Menu Participante", "idc": $("#idc").val()},
+                url: url_pv + 'PropuestasJurados/validar_mentor'
+            }).done(function (data) {
+                var json = JSON.parse(data);
+                if (json.mentorValido == 0) {
+                    notify("danger", "ok", "Atención:", "Para aceptar términos y condiciones 2023, primero debes indicar en información básica si deseas ser invitado como mentor, actualizar la información de tu hoja de vida, incluyendo: " + json.mensaje);
+                }
+                else {
+                    $("#mensaje").show();
+                    $("#bcancelar").show();
+                    $("#baceptar").show();
 
-            $("#mensaje2").hide();
-            $("#aceptar").hide();
+                    $("#mensaje2").hide();
+                    $("#aceptar").hide();
+                }
+            });
 
         });
 
@@ -85,7 +112,9 @@ $(document).ready(function () {
 
     }
 
+
 });
+
 
 function cargar_datos_formulario(token_actual) {
 
@@ -98,7 +127,7 @@ function cargar_datos_formulario(token_actual) {
     }).done(function (data) {
 
         var json = JSON.parse(data);
-        
+
         $("#modalidad_participa_jurado").html(json.propuesta.modalidad_participa);
 
         //9	jurados	Registrado
@@ -192,7 +221,7 @@ function cargar_tabla_educacion_formal(token_actual) {
                      return ' <input title=\"'+row.id+'\" type=\"checkbox\" class=\"check_activar_'+row.active+'  activar_registro" '+(row.active? 'checked ':'')+' />';
                      },
                      },
-                     
+
                      {"data": "aciones",
                      render: function ( data, type, row ) {
                      return '<button title="Editar" id="'+row.id+'" type="button" class="btn btn-warning btn_cargar">'
@@ -287,7 +316,7 @@ function cargar_tabla_educacion_no_formal(token_actual) {
                      +'<button title="'+( row.file == null ? "No se ha cargado archivo": "Descargar archivo")+'" id="'+( row.file == null ? "No se ha cargado archivo": row.file)+'"type="button" class="btn btn-primary download_file">'
                      + ( row.file == null ? '<span class="glyphicon glyphicon-ban-circle" title="No se ha cargado archivo"></span>':'<span class="glyphicon glyphicon-download-alt"></span>')
                      + '</button>';
-                     
+
                      },
                      }
                      */
@@ -671,8 +700,29 @@ function aceptar_terminos(token_actual) {
             case 'error_documento_administrativo':
                 notify("danger", "remove", "Usuario:", "Debe cargar los documentos administrativos para inscribir la hoja de vida");
                 break;
+            case 'error_faltan_soportes_experiencia':
+                notify("danger", "remove", "Usuario:", "Debe cargar los documentos que evidencian su experiencia (Experiencia del participante)");
+                break;
+            case 'error_sin_experiencia':
+                notify("danger", "remove", "Usuario:", "Debe relacionar su experiencia (Experiencia del participante)");
+                break;
+            case 'error_universitario_sin_educacion_formal':
+                notify("danger", "remove", "Usuario:", "Si participa en la modalidad 'Experto con título universitario' debe registrar una educación formal (Educacion formal)");
+                break;
+            case 'error_info_basica_desactualizada':
+                notify("danger", "remove", "Usuario:", "Información básica desactualizada. Por favor revísela, actualicela (si es necesario) dándo clic en el botón Guardar para confirmarla. (Información básica)");
+                break;
+            case 'error_experienciaslaborales_desactualizadas':
+                notify("danger", "remove", "Usuario:", "Experiencia desactualizada. Por favor revísela, actualicela (si es necesario) y de clic en Guardar para confirmarla. (Experiencia del participante)");
+                break;
             case 'error_modalidad':
-                notify("danger", "remove", "Usuario:", "Debe seleccionar la categoria en la cuál participará para inscribir la hoja de vida");
+                notify("danger", "remove", "Usuario:", "Debe seleccionar la categoria en la cuál participará para inscribir la hoja de vida (Información Básica)");
+                break;
+            case 'error_mentor':
+                notify("danger", "remove", "Usuario:", "Debe especificar si desea ser mentor o no (Información Básica)");
+                break;
+            case 'error_mentor_sin_areas':
+                notify("danger", "remove", "Usuario:", "Si desea ser mentor, debe especificar al menos un área o práctica de experticia (Información Básica)");
                 break;
             default:
                 notify("success", "ok", "Usuario:", "Se realizó la inscripción con éxito.");

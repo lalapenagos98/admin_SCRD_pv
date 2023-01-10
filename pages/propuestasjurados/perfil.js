@@ -5,6 +5,15 @@
  */
 /*Cesar Britto*/
 
+var aAreas = new Array();
+
+function incluye(t1, t2) {
+    var t1normalizada = t1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    var t2normalizada = t2.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+    return (t1normalizada.includes(t2normalizada));
+}
+
 $(document).ready(function () {
 
     $("#idc").val($("#id").val());
@@ -157,6 +166,46 @@ $(document).ready(function () {
                     break;
             }
 
+        });
+
+        // cargo los datos
+        $('#mentor').on('change', function () {
+            if ($(this).val() === "true")
+            {
+                //$("#areaspracticas").removeAttr("disabled");
+            } else
+            {
+                //$("#areaspracticas").attr("disabled", "disabled");
+            }
+        });
+
+        $('#filtro_area').on('change keyup', function () {
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                if (incluye(area.nombre,$(this).val())) {
+                    $("#div_area_" + area.id).show();
+                }
+                else {
+                    $("#div_area_" + area.id).hide();
+                }
+            }
+        });
+
+        $('#quitar_filtro').on('click', function () {
+            $('#filtro_area').val('').change();
+        });
+
+        $('#filtrar_seleccionadas').on('click', function () {
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                // if (area.checked === "checked" || $("#area_" + area.id).is(":checked")) {
+                if ($("#area_" + area.id).is(":checked")) {
+                    $("#div_area_" + area.id).show();
+                }
+                else {
+                    $("#div_area_" + area.id).hide();
+                }
+            }
         });
 
         // cargo los datos
@@ -416,7 +465,7 @@ $(document).ready(function () {
         /*
          *08-03-2021
          *Wilmer Gustavo Mogollón Duque
-         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
+         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
          */
 
         //cargar select tiene_rut
@@ -565,6 +614,22 @@ function cargar_datos_formulario(token_actual) {
 
                     $("#formulario_principal").show();
 
+                    $('#mentor').val(json.participante.mentor); //.change();
+
+                    $("#div_areas").html("");
+                    var htmlAreas = "";
+                    aAreas = new Array();
+                    if (json.areas.length > 0) {
+                        $.each(json.areas, function (key, array) {
+                            htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                            aAreas.push(array);
+                        });
+                        $("#div_areas").html(htmlAreas);
+                    }
+
+                    $('#otraarea').val(json.participante.otraarea);
+
+
                 }
 
                 /**
@@ -581,12 +646,31 @@ function cargar_datos_formulario(token_actual) {
                         $('#estrato').show();
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', true);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
+                        $('#aviso_internacional').hide();
+                    } else {
+                        $('#estrato').hide();
+                        $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
+                        $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
+                        $('#aviso_internacional').show();
+                    }
+                });
+
+                /*
+                $("#ciudad_residencia").change(function () {
+                    console.log($("#ciudad_residencia_name").val());
+                    console.log($("#ciudad_residencia").attr("label").includes('Colombia'));
+
+                    if ($("#ciudad_residencia").attr("label").includes('Colombia')) {
+                        $('#estrato').show();
+                        $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', true);
+                        $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     } else {
                         $('#estrato').hide();
                         $('#formulario_principal').bootstrapValidator('enableFieldValidators', 'estrato', false);
                         $('#formulario_principal').bootstrapValidator('validateField', 'estrato');
                     }
                 });
+                */
 
                 break;
         }
@@ -640,8 +724,13 @@ function validator_form(token_actual) {
             /*
              *08-03-2021
              *Wilmer Gustavo Mogollón Duque
-             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
+             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
              */
+            mentor: {
+                validators: {
+                    notEmpty: {message: 'Por favor, especifica si deseas aparecer en las búsquedas de mentores'}
+                }
+            },
             tiene_rut: {
                 validators: {
                     notEmpty: {message: 'El RUT es requerido'}
@@ -649,7 +738,7 @@ function validator_form(token_actual) {
             },
             tiene_matricula: {
                 validators: {
-                    notEmpty: {message: 'El campo ¿Cuenta usted con matrícula mercantil?, es requerido'}
+                    notEmpty: {message: 'Es necesario que especifiques si tienes matrícula mercantil'}
                 }
             },
             fecha_nacimiento: {
@@ -677,6 +766,16 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El estrato es requerido'}
                 }
             },
+            numero_celular: {
+                validators: {
+                    notEmpty: {message: 'El número de celular es requerido'}
+                }
+            },
+            resumen: {
+                validators: {
+                    notEmpty: {message: 'Es necesario que especifiques tu perfil'}
+                }
+            },
             correo_electronico: {
                 validators: {
                     notEmpty: {message: 'El correo electrónico es requerido'},
@@ -690,6 +789,21 @@ function validator_form(token_actual) {
         }
     }).on('success.form.bv', function (e) {
 
+
+        var especificoArea = false;
+
+        var areas = $('input[name="a_areas[]"]:checked');
+
+        if (areas.length > 0 || $("#otraarea").val()) {
+            especificoArea = true;
+        }
+
+        var quiereSerMentor = ($("#mentor").val() == "Sí");
+
+        if (!especificoArea && quiereSerMentor) {
+            notify("danger", "ok", "Usuario:", "Para ser mentor, es necesario que especifique al menos un área o práctica de experticia.");
+            return false;
+        }
 
         var enviar = true;
 
