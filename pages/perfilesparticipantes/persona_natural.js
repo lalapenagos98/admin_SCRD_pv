@@ -13,7 +13,7 @@ $(document).ready(function () {
 
         //Valido formulario
         validator_form(token_actual);
-
+        
         //Cargar el select de Pais
         $.ajax({
             type: 'GET',
@@ -35,19 +35,19 @@ $(document).ready(function () {
                     $("#pais_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                     if (json.length > 0) {
                         $("#pais").append('<option value="46">Colombia</option>');
-                        $("#pais_nacimiento").append('<option value="46">Colombia</option>');
-
+                        $("#pais_nacimiento").append('<option value="46">Colombia</option>');                        
+                                
                         $.each(json, function (key, pais) {
                             if( pais.id !== 46){
                                 $("#pais").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
                                 $("#pais_nacimiento").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
-                            }
+                            }   
                         });
                     }
                 }
             }
         });
-
+        
         //Cargar el select de Localidades
         $.ajax({
             type: 'GET',
@@ -65,14 +65,14 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);
-                    $("#localidad_residencia").append('<option value="">:: Seleccionar ::</option>');
+                    $("#localidad_residencia").append('<option value="">:: Seleccionar ::</option>');                    
                     if (json.length > 0) {
                         $.each(json, function (key, pais) {
                             if( pais.id !== 21){
-                                $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');                            
                             }
                         });
-                        $("#localidad_residencia").append('<option value="21">No aplica</option>');
+                        $("#localidad_residencia").append('<option value="21">No aplica</option>'); 
                     }
                 }
             }
@@ -110,9 +110,9 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         //cargar select tiene_rut
-        $('#tiene_rut').on('change', function () {
+        $('#tiene_rut').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $("#ciiu").removeAttr("disabled");
@@ -122,9 +122,9 @@ $(document).ready(function () {
                 $("#ciiu").attr("disabled","disabled");
             }
         });
-
+        
         //cargar select tiene_redes
-        $('#tiene_redes').on('change', function () {
+        $('#tiene_redes').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $(".si_tiene_redes").removeAttr("disabled");
@@ -134,9 +134,9 @@ $(document).ready(function () {
                 $(".si_tiene_redes").attr("disabled","disabled");
             }
         });
-
+        
         //cargar select tiene_paginas
-        $('#tiene_paginas').on('change', function () {
+        $('#tiene_paginas').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $(".si_tiene_espacios").removeAttr("disabled");
@@ -146,7 +146,7 @@ $(document).ready(function () {
                 $(".si_tiene_espacios").attr("disabled","disabled");
             }
         });
-
+        
         //cargar select departamento
         $('#pais_nacimiento').on('change', function () {
             var pais_nacimiento = $(this).val();
@@ -179,7 +179,7 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         // Cargar Ciudad
         $('#departamento').on('change', function () {
             var departamento = $(this).val();
@@ -210,7 +210,7 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         // Cargar Ciudad
         $('#departamento_nacimiento').on('change', function () {
             var departamento = $(this).val();
@@ -278,12 +278,12 @@ $(document).ready(function () {
 
         //Realizo la peticion para cargar el formulario
         $.ajax({
-            type: 'GET',
+            type: 'GET',            
             data: {"token": token_actual.token, "id": $("#id").attr('value')},
             url: url_pv + 'Personasnaturales/search/'
         }).done(function (data) {
             var json = JSON.parse(data);
-
+            
             //Error del metodo
             if (json.error === 1)
             {
@@ -294,14 +294,14 @@ $(document).ready(function () {
                 if (json.error === 2)
                 {
                     location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                }
+                } 
                 else
                 {
                     //valido que no hay errores
                     if (json.error === 0)
                     {
                         json=json.respuesta;
-
+                        
                         //Cargo los select de barrios
                         $('#barrio_residencia').find('option').remove();
                         $("#barrio_residencia").append('<option value="">:: Seleccionar ::</option>');
@@ -315,7 +315,7 @@ $(document).ready(function () {
                                 $("#barrio_residencia").append('<option value="' + barrio.id + '" ' + selected + ' >' + barrio.nombre + '</option>');
                             });
                         }
-
+                        
                         $('#departamento').find('option').remove();
                         $("#departamento").append('<option value="">:: Seleccionar ::</option>');
                         if (json.departamentos.length > 0) {
@@ -328,7 +328,7 @@ $(document).ready(function () {
                                 $("#departamento").append('<option value="' + departamento.id + '" '+selected+' >' + departamento.nombre + '</option>');
                             });
                         }
-
+                        
                         $('#departamento_nacimiento').find('option').remove();
                         $("#departamento_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                         if (json.departamentos_nacimiento.length > 0) {
@@ -354,7 +354,7 @@ $(document).ready(function () {
                                 $("#ciudad_residencia").append('<option value="' + ciudad.id + '" '+selected+' >' + ciudad.nombre + '</option>');
                             });
                         }
-
+                        
                         $('#ciudad_nacimiento').find('option').remove();
                         $("#ciudad_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                         if (json.ciudades_nacimiento.length > 0) {
@@ -367,8 +367,8 @@ $(document).ready(function () {
                                 $("#ciudad_nacimiento").append('<option value="' + ciudad.id + '" '+selected+' >' + ciudad.nombre + '</option>');
                             });
                         }
-
-
+                        
+                        
                         //Cargos el select de tipo de documento
                         $('#tipo_documento').find('option').remove();
                         $("#tipo_documento").append('<option value="">:: Seleccionar ::</option>');
@@ -395,7 +395,7 @@ $(document).ready(function () {
                                 $("#sexo").append('<option value="' + array.id + '" ' + selected + ' >' + array.nombre + '</option>');
                             });
                         }
-
+                        
                         //Cargos el select de ciius
                         $('#ciiu').find('option').remove();
                         $("#ciiu").append('<option value="">:: Seleccionar ::</option>');
@@ -408,8 +408,8 @@ $(document).ready(function () {
                                 }
                                 $("#ciiu").append('<option value="' + array.id + '" ' + selected + ' >' + array.nombre + '</option>');
                             });
-                        }
-
+                        }                        
+                        
                         //Cargos el select de orientacion sexual
                         $('#orientacion_sexual').find('option').remove();
                         $("#orientacion_sexual").append('<option value="">:: Seleccionar ::</option>');
@@ -478,8 +478,8 @@ $(document).ready(function () {
 
                         //Cargo el formulario con los datos
                         $('#formulario_principal').loadJSON(json.participante);
-
-                        //Valido el ciiu
+                        
+                        //Valido el ciiu                        
                         if(json.participante.tiene_rut==="Sí")
                         {
                             $("#ciiu").removeAttr("disabled");
@@ -488,8 +488,8 @@ $(document).ready(function () {
                         {
                             $("#ciiu").attr("disabled","disabled");
                         }
-
-                        //Valido el tiene_redes
+                        
+                        //Valido el tiene_redes                        
                         if(json.participante.tiene_redes==="Sí")
                         {
                             $(".si_tiene_redes").removeAttr("disabled");
@@ -498,8 +498,8 @@ $(document).ready(function () {
                         {
                             $(".si_tiene_redes").attr("disabled","disabled");
                         }
-
-                        //Valido el tiene_paginas
+                        
+                        //Valido el tiene_paginas                        
                         if(json.participante.tiene_paginas==="Sí")
                         {
                             $(".si_tiene_espacios").removeAttr("disabled");
@@ -507,16 +507,16 @@ $(document).ready(function () {
                         else
                         {
                             $(".si_tiene_espacios").attr("disabled","disabled");
-                        }
-
+                        }                       
+                        
                         $("#pais option[value='" + json.pais_residencia_id + "']").prop('selected', true);
-
+                        
                         $("#pais_nacimiento option[value='" + json.pais_nacimiento_id + "']").prop('selected', true);
                     }
                     else
                     {
                         notify("danger", "ok", "Persona natural:", "Se registro un error al cargar el registro, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                    }
+                    }                    
                 }
             }
         });
@@ -678,7 +678,7 @@ function validator_form(token_actual) {
             }
         }
     }).on('success.form.bv', function (e) {
-
+        
         var enviar = true;
 
         if ($("#tiene_rut").val() === "Sí")
@@ -689,7 +689,7 @@ function validator_form(token_actual) {
                 enviar = false;
             }
         }
-
+        
         // Prevent form submission
         e.preventDefault();
         // Get the form instance
@@ -700,7 +700,7 @@ function validator_form(token_actual) {
 
         // Valido si el id existe, con el fin de eviarlo al metodo correcto
         $('#formulario_principal').attr('action', url_pv + 'Personasnaturales/new');
-
+        
         if(enviar)
         {
             //Se realiza la peticion con el fin de guardar el registro actual
@@ -769,7 +769,7 @@ function validator_form(token_actual) {
         else
         {
             $(".formulario_principal").data('bootstrapValidator').resetForm();
-
+            
             return false;
         }
     });

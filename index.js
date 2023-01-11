@@ -1,6 +1,6 @@
 //Definimos las variables del sitio
-var url_pv = "https://sis.scrd.gov.co/crud_SCRD_pv/api/";
-var url_pv_admin = "https://sis.scrd.gov.co/admin_SCRD_pv/";
+var url_pv = "http://localhost/crud_SCRD_pv/api/";
+var url_pv_admin = "http://localhost/admin_SCRD_pv/";
 var name_local_storage = "token_pv";
 
 //funcion para extaer un parametro de la url

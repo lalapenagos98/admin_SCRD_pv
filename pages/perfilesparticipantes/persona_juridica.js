@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
+    //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor                
     var token_actual = getLocalStorage(name_local_storage);
 
     //Verifico si el token esta vacio, para enviarlo a que ingrese de nuevo
@@ -9,11 +9,11 @@ $(document).ready(function () {
     } else
     {
         //Verifica si el token actual tiene acceso de lectura
-        permiso_lectura(token_actual, "Menu Participante");
+        permiso_lectura(token_actual, "Menu Participante");        
 
         //Valido formulario
         validator_form(token_actual);
-
+        
         //Cargar el select de Pais
         $.ajax({
             type: 'GET',
@@ -35,19 +35,19 @@ $(document).ready(function () {
                     $("#pais_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                     if (json.length > 0) {
                         $("#pais").append('<option value="46">Colombia</option>');
-                        $("#pais_nacimiento").append('<option value="46">Colombia</option>');
-
+                        $("#pais_nacimiento").append('<option value="46">Colombia</option>');                        
+                                
                         $.each(json, function (key, pais) {
                             if( pais.id !== 46){
                                 $("#pais").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
                                 $("#pais_nacimiento").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
-                            }
+                            }   
                         });
                     }
                 }
             }
         });
-
+        
         //Cargar el select de Localidades
         $.ajax({
             type: 'GET',
@@ -65,21 +65,21 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);
-                    $("#localidad_residencia").append('<option value="">:: Seleccionar ::</option>');
+                    $("#localidad_residencia").append('<option value="">:: Seleccionar ::</option>');                    
                     if (json.length > 0) {
                         $.each(json, function (key, pais) {
                             if( pais.id !== 21){
-                                $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');
+                                $("#localidad_residencia").append('<option value="' + pais.id + '">' + pais.nombre + '</option>');                            
                             }
                         });
-                        $("#localidad_residencia").append('<option value="21">No aplica</option>');
+                        $("#localidad_residencia").append('<option value="21">No aplica</option>'); 
                     }
                 }
             }
         });
 
         //cargar select tiene_rut
-        $('#tiene_rut').on('change', function () {
+        $('#tiene_rut').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $("#ciiu").removeAttr("disabled");
@@ -89,9 +89,9 @@ $(document).ready(function () {
                 $("#ciiu").attr("disabled","disabled");
             }
         });
-
+        
         //cargar select tiene_redes
-        $('#tiene_redes').on('change', function () {
+        $('#tiene_redes').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $(".si_tiene_redes").removeAttr("disabled");
@@ -101,9 +101,9 @@ $(document).ready(function () {
                 $(".si_tiene_redes").attr("disabled","disabled");
             }
         });
-
+        
         //cargar select tiene_paginas
-        $('#tiene_paginas').on('change', function () {
+        $('#tiene_paginas').on('change', function () {            
             if($(this).val()==="Sí")
             {
                 $(".si_tiene_espacios").removeAttr("disabled");
@@ -146,7 +146,7 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         // Cargar Ciudad
         $('#departamento').on('change', function () {
             var departamento = $(this).val();
@@ -177,7 +177,7 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         //Cargar Upz y Barrios
         $('#localidad_residencia').on('change', function () {
             var localidad = $(this).val();
@@ -211,20 +211,20 @@ $(document).ready(function () {
                 }
             });
         });
-
+        
         $('#cuenta_sede').on('change', function () {
             var cuenta_sede = $(this).val();
 
-            if(cuenta_sede=="false"){
+            if(cuenta_sede=="false"){                                                        
                 $("#tipo_sede option[value='']").prop('selected', true);
-                $('#tipo_sede').attr("disabled", true);
+                $('#tipo_sede').attr("disabled", true); 
             }
             else
             {
-                $('#tipo_sede').attr("disabled", false);
+                $('#tipo_sede').attr("disabled", false); 
             }
         });
-
+        
         //Realizo la peticion para cargar el formulario
         $.ajax({
             type: 'GET',
@@ -242,7 +242,7 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);
-
+                    
                     //Cargo los select de barrios
                     $('#barrio_residencia').find('option').remove();
                     $("#barrio_residencia").append('<option value="">:: Seleccionar ::</option>');
@@ -269,7 +269,7 @@ $(document).ready(function () {
                             $("#departamento").append('<option value="' + departamento.id + '" '+selected+' >' + departamento.nombre + '</option>');
                         });
                     }
-
+                    
                     //Cargos el select de ciius
                     $('#ciiu').find('option').remove();
                     $("#ciiu").append('<option value="">:: Seleccionar ::</option>');
@@ -283,7 +283,7 @@ $(document).ready(function () {
                             $("#ciiu").append('<option value="' + array.id + '" ' + selected + ' >' + array.nombre + '</option>');
                         });
                     }
-
+                    
                     $('#ciudad_residencia').find('option').remove();
                     $("#ciudad_residencia").append('<option value="">:: Seleccionar ::</option>');
                     if (json.ciudades.length > 0) {
@@ -303,12 +303,12 @@ $(document).ready(function () {
                         $.each(json.tipo_documento, function (key, array) {
                             if(array.id==7)
                             {
-                                selected = 'selected="selected"';
+                                selected = 'selected="selected"';                                
                                 $("#tipo_documento").append('<option value="' + array.id + '" '+selected+' >' + array.descripcion + '</option>');
-                            }
+                            }                            
                         });
                     }
-
+                    
                     //Cargos el select de estrato
                     $('#estrato').find('option').remove();
                     $("#estrato").append('<option value="">:: Seleccionar ::</option>');
@@ -322,7 +322,7 @@ $(document).ready(function () {
                             $("#estrato").append('<option value="' + array + '" '+selected+' >' + array + '</option>');
                         });
                     }
-
+                    
                     //Cargos el select de estrato
                     $('#tipo_sede').find('option').remove();
                     $("#tipo_sede").append('<option value="">:: Seleccionar ::</option>');
@@ -335,12 +335,12 @@ $(document).ready(function () {
                             }
                             $("#tipo_sede").append('<option value="' + array + '" '+selected+' >' + array + '</option>');
                         });
-                    }
-
+                    }                                        
+                    
                     //Cargo el formulario con los datos
                     $('#formulario_principal').loadJSON(json.participante);
-
-                    //Valido el ciiu
+                    
+                    //Valido el ciiu                        
                     if(json.participante.tiene_rut==="Sí")
                     {
                         $("#ciiu").removeAttr("disabled");
@@ -350,7 +350,7 @@ $(document).ready(function () {
                         $("#ciiu").attr("disabled","disabled");
                     }
 
-                    //Valido el tiene_redes
+                    //Valido el tiene_redes                        
                     if(json.participante.tiene_redes==="Sí")
                     {
                         $(".si_tiene_redes").removeAttr("disabled");
@@ -360,7 +360,7 @@ $(document).ready(function () {
                         $(".si_tiene_redes").attr("disabled","disabled");
                     }
 
-                    //Valido el tiene_paginas
+                    //Valido el tiene_paginas                        
                     if(json.participante.tiene_paginas==="Sí")
                     {
                         $(".si_tiene_espacios").removeAttr("disabled");
@@ -369,20 +369,20 @@ $(document).ready(function () {
                     {
                         $(".si_tiene_espacios").attr("disabled","disabled");
                     }
-
+                    
                     $("#pais option[value='" + json.pais_residencia_id + "']").prop('selected', true);
-
+                    
                     $("#cuenta_sede option[value='" + json.participante.cuenta_sede + "']").prop('selected', true);
-
-                    if(json.participante.cuenta_sede){
-                        $('#tipo_sede').attr("disabled", false);
+                    
+                    if(json.participante.cuenta_sede){                                                        
+                        $('#tipo_sede').attr("disabled", false);                                                                             
                     }
                     else
                     {
                         $("#tipo_sede option[value='']").prop('selected', true);
-                        $('#tipo_sede').attr("disabled", true);
-                    }
-
+                        $('#tipo_sede').attr("disabled", true); 
+                    } 
+                    
                 }
 
             }
@@ -461,7 +461,7 @@ function validator_form(token_actual) {
                 validators: {
                     notEmpty: {message: 'La fecha de constitución es requerida'}
                 }
-            },
+            },            
             direccion_residencia: {
                 validators: {
                     notEmpty: {message: 'La dirección es requerida'}
@@ -487,7 +487,7 @@ function validator_form(token_actual) {
             }
         }
     }).on('success.form.bv', function (e) {
-
+        
         var enviar = true;
 
         if ($("#tiene_rut").val() === "Sí")
@@ -498,7 +498,7 @@ function validator_form(token_actual) {
                 enviar = false;
             }
         }
-
+        
         // Prevent form submission
         e.preventDefault();
         // Get the form instance
@@ -509,9 +509,9 @@ function validator_form(token_actual) {
 
         // Valido si el id existe, con el fin de eviarlo al metodo correcto
         $('#formulario_principal').attr('action', url_pv + 'Personasjuridicas/new');
-
+        
         if(enviar)
-        {
+        {                    
             //Se realiza la peticion con el fin de guardar el registro actual
             $.ajax({
                 type: 'POST',
@@ -522,54 +522,54 @@ function validator_form(token_actual) {
                 if (result == 'error')
                 {
                     notify("danger", "ok", "Persona jurídica:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                }
+                } 
                 else
                 {
                     if (result == 'error_token')
                     {
                         location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                    }
+                    } 
                     else
                     {
                         if (result == 'acceso_denegado')
                         {
                             notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        }
+                        } 
                         else
                         {
                             if (result == 'error_usuario_perfil')
                             {
                                 notify("danger", "ok", "Persona jurídica:", "Se registro un error al crear el perfil, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                            }
+                            } 
                             else
                             {
                                 if (result == 'participante_existente')
                                 {
                                     notify("danger", "ok", "Persona jurídica:", "El participante que intenta ingresar ya se encuentra registrado en la base de datos, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                }
+                                } 
                                 else
                                 {
                                     if (isNaN(result)) {
                                         notify("danger", "ok", "Persona jurídica:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                                    }
+                                    } 
                                     else
                                     {
-                                        notify("success", "ok", "Persona jurídica:", "Se actualizó con el éxito el participante como persona jurídica.");
+                                        notify("success", "ok", "Persona jurídica:", "Se actualizó con el éxito el participante como persona jurídica.");                                    
                                     }
                                 }
-                            }
+                            }                                                
                         }
-                    }
+                    }                                
                 }
 
             });
 
-            //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+            //$form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);        
         }
         else
         {
             $(".formulario_principal").data('bootstrapValidator').resetForm();
-
+            
             return false;
         }
     });
