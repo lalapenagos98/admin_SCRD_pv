@@ -1,14 +1,14 @@
 //Definimos las variables del sitio
-var url_pv = "https://sis.scrd.gov.co/crud_SCRD_pv/api/";
-var url_pv_admin = "https://sis.scrd.gov.co/admin_SCRD_pv/";
-var url_pv_site = "https://sis.scrd.gov.co/site_SCRD_pv/";
-var url_pv_report = "https://sis.scrd.gov.co/report_SCRD_pv/";
+var url_pv = "http://localhost/crud_SCRD_pv/api/";
+var url_pv_admin = "http://localhost/admin_SCRD_pv/";
+var url_pv_site = "http://localhost/site_SCRD_pv/";
+var url_pv_report = "http://localhost/report_SCRD_pv/";
 var name_local_storage = "token_pv";
 var name_local_storage_keycloak = "token_keycloak";
 
 //Conexión al keycloak
 var keycloak = Keycloak({
-    url: 'https://dev-sso.scrd.gov.co/auth',
+    url: 'https://sso.scrd.gov.co/auth',
     realm: 'SCRD',
     clientId: 'sicon-ui'    
 });
