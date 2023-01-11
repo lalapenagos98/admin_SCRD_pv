@@ -23,8 +23,8 @@
           //Verifica si el token actual tiene acceso de lectura
           permiso_lectura(token_actual, "Menu Participante");
 
-
-        // alert("Recuerde diligenciar toda la información requerida para este formulario");
+         
+         alert("Recuerde diligenciar toda la información requerida para este formulario");
          $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id="+  $("#idc").val()+"' ");
          $("#next_step").attr("onclick", " location.href = 'experiencia_profesional.html?m=2&id="+  $("#idc").val()+"' ");
 
@@ -310,20 +310,9 @@
               },
               ciudad_name: {
                   validators: {
-                      notEmpty: {message: 'La ciudad es requerida'}
+                      notEmpty: {message: 'La cidudad es requerida'}
                   }
               },
-              archivo: {
-                validators: {
-                    file: {
-                        extension: 'pdf',
-                        type: 'application/pdf',
-                        maxSize: 5120 * 1024,
-                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
-                    },
-                    notEmpty: {message: 'El anexo en pdf es requerido'},
-                }
-            }
             }
 
       }).on('success.form.bv', function (e) {

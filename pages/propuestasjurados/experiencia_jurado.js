@@ -21,8 +21,8 @@
      {
          //Verifica si el token actual tiene acceso de lectura
          permiso_lectura(token_actual, "Menu Participante");
-
-        // alert("Recuerde diligenciar toda la información requerida para este formulario");
+         
+         alert("Recuerde diligenciar toda la información requerida para este formulario");
          $("#back_step").attr("onclick", " location.href = 'experiencia_profesional.html?m=2&id="+  $("#idc").val()+"' ");
          $("#next_step").attr("onclick", " location.href = 'reconocimiento.html?m=2&id="+  $("#idc").val()+"' ");
 
@@ -56,7 +56,7 @@
              //else { Return your label here }
              }
          });
-
+         
          /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
 
@@ -261,21 +261,10 @@
                },
                ciudad_name: {
                    validators: {
-                       notEmpty: {message: 'La ciudad es requerida'}
+                       notEmpty: {message: 'La cidudad es requerida'}
                    }
                },
-               archivo: {
-                validators: {
-                    file: {
-                        extension: 'pdf',
-                        type: 'application/pdf',
-                        maxSize: 5120 * 1024,
-                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
-                    },
-                    notEmpty: {message: 'El anexo en pdf es requerido'},
-                }
-            }
-           }
+             }
 
        }).on('success.form.bv', function (e) {
            // Prevent form submission
@@ -468,8 +457,8 @@
      });
 
    }
-
-
+   
+   
    /*
  * 29-09-2021
  * Wilmer Gustavo Mogollón Duque

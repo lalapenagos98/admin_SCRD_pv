@@ -17,11 +17,11 @@ $(document).ready(function () {
         cargar_select_grupos(token_actual);
         cargar_select_estratos(token_actual);
         //Peticion para buscar ciudades
-
+        
         /*Validar si existe una convocatoria de jurados vigente*/
         validar_convocatoria_jurados(token_actual);
-
-
+        
+        
         var json_ciudades = function (request, response) {
             $.ajax({
                 type: 'GET',
@@ -147,7 +147,7 @@ $(document).ready(function () {
         /*
          *08-03-2021
          *Wilmer Gustavo Mogollón Duque
-         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
+         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
          */
 
         //cargar select tiene_rut
@@ -383,13 +383,13 @@ function cargar_datos_formulario(token_actual) {
                     /*
                      *08-03-2021
                      *Wilmer Gustavo Mogollón Duque
-                     *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
+                     *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
                      */
 
                     //Cargo el formulario con los datos
                     $('#formulario_principal').loadJSON(json.participante);
 
-                    //Valido el ciiu
+                    //Valido el ciiu                        
                     if (json.participante.tiene_rut === "Sí")
                     {
                         $("#ciiu").removeAttr("disabled");
@@ -479,7 +479,7 @@ function validator_form(token_actual) {
             /*
              *08-03-2021
              *Wilmer Gustavo Mogollón Duque
-             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
+             *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
              */
             tiene_rut: {
                 validators: {
@@ -524,17 +524,7 @@ function validator_form(token_actual) {
                         message: 'El Correo electrónico no es una dirección de correo electrónico válida'
                     }
                 }
-            },
-            numero_telefono: {
-                validators: {
-                    notEmpty: {message: 'El número de teléfono es requerido'}
-                }
-            },
-            numero_celular: {
-                validators: {
-                    notEmpty: {message: 'El número de celular es requerido'}
-                }
-            },
+            }
         }
     }).on('success.form.bv', function (e) {
 
@@ -543,7 +533,7 @@ function validator_form(token_actual) {
         /*
          *08-03-2021
          *Wilmer Gustavo Mogollón Duque
-         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL
+         *Se ajusta para incorporar los campos de RUT, CIIU Y MATRÍCULA MERCANTIL 
          */
 
         var enviar = true;

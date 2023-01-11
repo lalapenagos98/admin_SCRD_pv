@@ -1,6 +1,3 @@
-var minLength = 50;
-var maxLength = 100000;
-
 $(document).ready(function () {
 
 
@@ -372,22 +369,7 @@ function cargar_select_rondas(token_actual, convocatoria) {
     );
 }
 
-
 function cargar_tabla(token_actual) {
-
-
-    //$('#table_list').DataTable().clear().draw();
-    $('#table_list').DataTable().destroy();
-    $('#table_list').DataTable({
-        "language": {
-            "url": "../../dist/libraries/datatables/js/spanish.json"
-        },
-        "lengthMenu": [10, 15, 20],
-        "responsive": true,
-        "searching": false,
-        "data": {}
-    });
-
 
     $("#notificacion_periodo").hide();
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
@@ -404,9 +386,6 @@ function cargar_tabla(token_actual) {
         switch (data) {
             case 'error':
                 notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                break;
-            case 'error_no_hay_jurados':
-                notify("warning", "ok", "Usuario:", "No se encontraron jurados activos para la ronda seleccionada.");
                 break;
             case 'error_metodo':
                 notify("danger", "ok", "Usuario:", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
@@ -459,7 +438,7 @@ function cargar_tabla(token_actual) {
                                     if (json.estado === 'En deliberación') {
                                         $("#notificacion_periodo").html('Ronda en deliberación.');
                                         /*
-                                         * 10-06-2020
+                                         * 10-06-2020 
                                          * Wilmer Gustavo Mogollón Duque
                                          * Se agrega botón confirmar_top_deliberacion para confirmar top en deliberación
                                          */
@@ -498,7 +477,7 @@ function cargar_tabla(token_actual) {
                                                                 + Math.trunc(minutos) + ' minutos para evaluar.');
 
                                                         /*
-                                                         * 10-06-2020
+                                                         * 10-06-2020 
                                                          * Wilmer Gustavo Mogollón Duque
                                                          * Se agrega botón confirmar_top para confirmar top en evaluación
                                                          */
@@ -526,7 +505,7 @@ function cargar_tabla(token_actual) {
                                     /*
                                      * 10-06-2020
                                      * Wilmer Gustavo Mogollón Duque
-                                     * Acá solo se muestra el div de información de la ronda, el botón de confirmar
+                                     * Acá solo se muestra el div de información de la ronda, el botón de confirmar 
                                      * top solo aparecerá en los casos que la ronda esté habilitada
                                      * o en deliberación
                                      */
@@ -548,7 +527,7 @@ function cargar_tabla(token_actual) {
                             "processing": true,
                             "destroy": true,
                             "serverSide": true,
-                            "lengthMenu": [10], //Para que se listen todos en una sola vista
+                            "lengthMenu": [200], //Para que se listen todos en una sola vista
                             "responsive": true,
                             "searching": false,
                             "ajax": {
@@ -570,7 +549,7 @@ function cargar_tabla(token_actual) {
                             },
                             "rowCallback": function (row, data, index) {
                                 /*
-
+                                 
                                  if ( data["aplica_perfil"] ){
                                  $('td', row).css('background-color', '#dcf4dc');
                                  }
@@ -871,6 +850,7 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                 //cargar_datos_formulario(token_actual);
                 var json = JSON.parse(data);
 
+
                 //Por cada ronda
                 $.each(json, function (r, ronda) {
 
@@ -919,41 +899,18 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                                     + ' </div>'
                                     + ' <div class="col-lg-5">'
                                     + '  <div class="form-group">'
-                                    + '    <h5>Observaciones*</h5>'
-                                    + '    <textarea minlength="' + minLength + '" class="form-control  ' + r + key + ' " rows="5" id="observacion_' + a.id + '" name="observacion_' + a.id + '" >' + (!a.evaluacion ? "" : a.evaluacion.observacion) + '</textarea>'
-                                    + '    <br></bre><em class="small" id="aviso_observacion_' + a.id + '"></em>'
+                                    + '    <h5>Observaciones</h5>'
+                                    + '    <textarea class="form-control  ' + r + key + ' " rows="5" id="observacion_' + a.id + '" name="observacion_' + a.id + '" >' + (!a.evaluacion ? "" : a.evaluacion.observacion) + '</textarea>'
                                     + '  </div>'
                                     + ' </div>'
                                     + ' <div class="col-lg-3">'
                                     + '  <div class="form-group">'
-                                    + '    <h5>Puntuación*</h5>'
+                                    + '    <h5>Puntuación</h5>'
                                     + select
-                                    + ' <br></bre><em class="small" id="aviso_puntuacion_' + a.id + '"></em>'
                                     + '  </div>'
                                     + ' </div>'
                                     + '</div>');
 
-                            $("#observacion_" + a.id).on("keydown keyup change focus", function(){
-                                var value = $(this).val();
-                                if (value.length < minLength)
-                                    $("#aviso_observacion_" + a.id).text("Recuerda retroalimentar de manera amplia y suficiente cada uno de los criterios a evaluar. (Has escrito " + value.length + " de mínimo " + minLength + " caracteres)");
-                                else if (value.length > maxLength)
-                                    $("#aviso_observacion_" + a.id).text("");
-                                else {
-                                    $("#aviso_observacion_" + a.id).text("¡Gracias por tu valiosa observación!");
-                                    $("#aviso_observacion_" + a.id).css("border-bottom", "1px solid green");
-                                }
-                            });
-
-                            $("#puntuacion_" + a.id).on("change blur", function(){
-                                var value = $(this).val();
-                                if (value == 'null' || value == '')
-                                    $("#aviso_puntuacion_" + a.id).text("Por favor, elige un puntaje.");
-                                else {
-                                    $("#aviso_puntuacion_" + a.id).text("");
-                                    $("#aviso_puntuacion_" + a.id).css("border-bottom", "none");
-                                }
-                            });
                         });
 
 
@@ -1006,56 +963,8 @@ function limpiar(criterio, key) {
 
 }
 
-function validarCriterios() {
-    var ok_longitudes = true;
-    var textareas = document.getElementsByTagName('textarea');
-    for (var i=0; i<textareas.length; i++) {
-        var textarea = textareas[i];
-        if (textarea.id.includes('observacion_')) {
-            var a_id = textarea.id.replace('observacion_','');
-            var aviso = document.getElementById('aviso_observacion_' + a_id);
-            var longitud = textarea.value.length;
-            if (longitud < minLength) {
-                ok_longitudes = false;
-                aviso.innerHTML = 'Observación demasiado corta. Recuerda retroalimentar de manera amplia y suficiente cada uno de los criterios a evaluar.';
-                aviso.style.borderBottom = '1px solid red';
-            }
-            else {
-                aviso.innerHTML = '¡Gracias por tu valiosa observación!';
-                aviso.style.borderBottom = '1px solid green';
-            }
-        }
-    }
-
-    var ok_puntajes = true;
-    var selects = document.getElementsByTagName('select');
-    for (var i=0; i<selects.length; i++) {
-        var select = selects[i];
-        if (select.id.includes('puntuacion_')) {
-            var a_id = select.id.replace('puntuacion_','');
-            var aviso = document.getElementById('aviso_puntuacion_' + a_id);
-            if (select.value == '' || select.value == 'null') {
-                ok_puntajes = false;
-                aviso.innerHTML = 'Por favor, especifica un puntaje.';
-                aviso.style.borderBottom = '1px solid red';
-            }
-            else {
-                aviso.innerHTML = '';
-                aviso.style.borderBottom = 'none';
-            }
-        }
-    }
-
-    return (ok_longitudes && ok_puntajes);
-}
-
 //Guarda la evaluación de los criterios evaluados
 function evaluar_criterios(token_actual, id_evaluacion) {
-
-    if (!validarCriterios()) {
-        notify("warning", "ok", "Usuario:", "Por favor. registre las observaciones sobre los diferentes criterios así como sus puntajes.");
-        return;
-    }
 
     $.ajax({
         type: 'POST',
@@ -1090,8 +999,7 @@ function evaluar_criterios(token_actual, id_evaluacion) {
             default:
                 notify("success", "ok", "Usuario:", "Se actualizó el registro con éxito.");
                 //$(".criterios").attr('disabled','');
-                //cargar_tabla(token_actual);
-                $('#table_list').DataTable().ajax.reload(null, false);
+                cargar_tabla(token_actual);
                 break;
         }
 
