@@ -74,10 +74,12 @@ $(document).ready(function () {
                         {
                             row.ver_certificado = '<a><button style="margin: 0 0 5px 0" type="button" class="btn btn-success" data-toggle="modal" data-target="#certificaciones_jurados" title="Ver Postulaciones" onclick="certificaciones_jurados(\''+row.codigo+'\',\''+row.token+'\')"><span class="fa fa-download"></span></button></a>';
                         }
-                        else
+                            else
                         {
                             row.ver_certificado = '<a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a>';
                         }
+                        
+
                         
                         //Valido que sea los edtados en
                         //21 por subsanar
@@ -122,7 +124,7 @@ function certificaciones_jurados(codigo,token){
         url: url_pv + 'PropuestasParticipantes/cargar_certificaciones_jurados'
     }).done(function (data) {
         
-        var redirect = url_pv_report+"reporte_certificacion.php";
+        var redirect = url_pv_report+"reporte_certificacion_jurado.php";
         var m = "JUR";                                
         
         var json = JSON.parse(data);                
@@ -130,7 +132,7 @@ function certificaciones_jurados(codigo,token){
                 $("#tbody_certificados_jurados").find("tr").remove();
                 $.each(json, function (key, c) {
                     
-                    href = redirect + "?entidad=" + c.entidad + "&tp=" + m + "&id=" + c.id+ "&token=" + token;
+                    href = redirect + "?entidad=" + c.entidad + "&tp=" + m + "&convocatoria_id=" + c.convocatoria_id + "&propuesta=" + c.propuesta + "&token=" + token;
                     
                     if(c.categoria=="")
                     {
@@ -138,7 +140,7 @@ function certificaciones_jurados(codigo,token){
                     }
                     else
                     {
-                        $("#tbody_certificados_jurados").append('<tr><td>' + c.categoria + '</td><td>' + c.convocatoria + '</td><td><a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a></td></tr>');                        
+                        $("#tbody_certificados_jurados").append('<tr><td>' + c.convocatoria + '</td><td>' + c.categoria + '</td><td><a href="'+href+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-primary btn_tooltip" title="Generar Certificado"><span class="fa fa-download"></span></button></a></td></tr>');                        
                     }
                 });
             }
