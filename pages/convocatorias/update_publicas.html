@@ -141,6 +141,14 @@
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                                                                                                    
                                     </div>                                    
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Palabras claves de la convocatoria ( Separar cada palabra por una , ) <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Las palabras claves permite que los participantes encuentren las convocatorias fácilmente,"><i class="fa fa-question"></i></button></label>
+                                                <textarea name="palabras_claves" class="form-control" rows="3"></textarea>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                          
+                                    </div>
                                     <h3>Información general de la convocatoria</h3>                                    
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -189,10 +197,12 @@
                                         </div>                                                                                                                                                    
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Descripción de la ubicación de la ejecución (Territorios priorizados)</label>
-                                                <textarea disabled="disabled" id="descripcion_ejecucion" name="descripcion_ejecucion" class="form-control class_descripcion_ejecucion" rows="3"></textarea>
+                                                <label>Descripción de la ubicación de la ejecución (Territorios priorizados) <span class="icono_requerido">*</span> <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Lo recomendado es que no sea mayor a 420 caracteres."><i class="fa fa-question"></i></button></label>
+                                                <textarea id="descripcion_ejecucion_html" style="display: none" class="descripcion_ejecucion"></textarea>
+                                                <br/>
+                                                <button lang="descripcion_ejecucion" dir="Descripción de la ubicación de la ejecución (Territorios priorizados)" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Descripción de la ubicación de la ejecución (Territorios priorizados)"><i class="fa fa-plus"></i></button>
                                             </div>                                                                                                                                                                                                                                                                                                        
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -417,10 +427,12 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Descripción general de los recursos a otorgar <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Detalle cómo se realizará la distribución de los recursos para los ganadores de la convocatoria."><i class="fa fa-question"></i></button></label>
-                                                <textarea name="descripcion_bolsa" class="form-control" rows="3"></textarea>                                                
+                                                <label>Descripción general de los recursos a otorgar <span class="icono_requerido">*</span> <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Lo recomendado es que no sea mayor a 420 caracteres."><i class="fa fa-question"></i></button></label>
+                                                <textarea id="descripcion_bolsa_html" style="display: none" class="descripcion_bolsa"></textarea>
+                                                <br/>
+                                                <button lang="descripcion_bolsa" dir="Descripción general de los recursos a otorgar" type="button" class="btn btn-danger btn-circle btn_tooltip cargar_modal_descripcion" data-toggle="modal" data-target="#modal_html" data-placement="top" title="Descripción general de los recursos a otorgar."><i class="fa fa-plus"></i></button>
                                             </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>                                          
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -762,7 +774,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-12" style="text-align: right">                                                        
-                                                            <input type="hidden" name="tipo_participante" value="4" />
+                                                            <input type="hidden" id="tipo_participante_cpj" name="tipo_participante" value="4" />
                                                             <input type="hidden" id="id_cpj" name="id" />
                                                             <button type="submit" class="btn btn-default validar_jurado">Guardar</button>
                                                         </div>
