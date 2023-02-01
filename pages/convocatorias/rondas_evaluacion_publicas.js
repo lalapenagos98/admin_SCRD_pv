@@ -44,7 +44,17 @@ keycloak.init(initOptions).then(function (authenticated) {
             //William Barbosa 2019-07-18
             //Cuando se pasa a enriquecido no valida revisar
             //Establesco los text area html
-            $('.textarea_html').jqte();
+            //$('.textarea_html').jqte();
+
+            //Establesco los text area html
+            if (CKEDITOR.env.ie && CKEDITOR.env.version < 9)
+            CKEDITOR.tools.enableHtml5Elements(document);
+
+            CKEDITOR.config.height = 150;
+            CKEDITOR.config.width = 'auto';
+
+            CKEDITOR.replace('descripcion_ronda');            
+            CKEDITOR.replace('descripcion_criterio');     
 
             cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
 
@@ -52,8 +62,8 @@ keycloak.init(initOptions).then(function (authenticated) {
             $('#b_nueva_ronda').click(function () {
 
                 $('#form_nuevo_ronda').trigger("reset");
-                $("#descripcion_ronda").jqteVal('');
-                $("#descripcion_ronda").val(null);
+                CKEDITOR.instances.descripcion_ronda.setData('');
+
                 $("#id_registro").val(null);
                 $('.form_nuevo_ronda').bootstrapValidator('destroy', true);
 
@@ -379,10 +389,28 @@ function validator_form(token_actual) {
         if ($("#id_registro").attr('value') === null || $("#id_registro").attr('value') === '') {
             console.log("crear!!!");
             //Se realiza la peticion con el fin de guardar el registro actual
+
+            var values_ronda = {
+                convocatoria: $("#convocatoria").val(),
+                idConvocatoria: $("#idConvocatoria").val(),
+                numero_ronda: $("#numero_ronda").val(),
+                nombre_ronda: $("#nombre_ronda").val(),
+                total_ganadores: $("#total_ganadores").val(),
+                total_suplentes: $("#total_suplentes").val(),
+                fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
+                fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
+                fecha_deliberacion: $("#fecha_deliberacion").val(),
+                tipo_acta: $("#tipo_acta").val(),
+                tipo_evaluacion: $("#tipo_evaluacion").val(),                
+                descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
+                modulo: "SICON-AJUSTAR-CONVOCATORIAS",
+                token: token_actual.token
+            };
+
             $.ajax({
                 type: 'POST',
                 url: url_pv + 'Rondas/new',
-                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
+                data: $.param(values_ronda)
             }).done(function (result) {
 
                 switch (result) {
@@ -412,10 +440,25 @@ function validator_form(token_actual) {
             //  console.log("editar!!!");
 
             //Realizo la peticion con el fin de editar el registro actual
+            var values_ronda = {
+                numero_ronda: $("#numero_ronda").val(),
+                nombre_ronda: $("#nombre_ronda").val(),
+                total_ganadores: $("#total_ganadores").val(),
+                total_suplentes: $("#total_suplentes").val(),
+                fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
+                fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
+                fecha_deliberacion: $("#fecha_deliberacion").val(),
+                tipo_acta: $("#tipo_acta").val(),
+                tipo_evaluacion: $("#tipo_evaluacion").val(),                
+                descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
+                modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
+                token: token_actual.token
+            };
+
             $.ajax({
                 type: 'PUT',
                 url: url_pv + 'Rondas/edit_rondas/' + $("#id_registro").attr('value'),
-                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
+                data: $.param(values_ronda)
             }).done(function (result) {
                 switch (result) {
                     case 'error':
@@ -539,7 +582,7 @@ function acciones_ronda(token_actual) {
                     $("#fecha_deliberacion").val(json.fecha_deliberacion.split(" ")[0]);
                     $("#id_registro").val(json.id);
                     //$("#descripcion_ronda").jqteVal(json.descripcion_ronda);
-                    $("#descripcion_ronda").val(json.descripcion_ronda);
+                    CKEDITOR.instances.descripcion_ronda.setData(json.descripcion_ronda);                    
                 }
             }
         });
@@ -561,7 +604,8 @@ function acciones_ronda(token_actual) {
         $('#form_nuevo_criterio').trigger("reset");
         $("#id_registro_criterio").val(null);
         $("#grupo_criterio").val(null);
-        $("#descripcion_criterio").val(null);
+        //$("#descripcion_criterio").val(null);
+        CKEDITOR.instances.descripcion_criterio.setData('');                
         $('.form_nuevo_criterio').bootstrapValidator('destroy', true);
 
         //traer el valor puntaje_maximo
@@ -880,7 +924,8 @@ function validator_form_criterio(token_actual, idRonda) {
         bv.resetForm();
         $("#form_nuevo_criterio").trigger("reset");
         $("#grupo_criterio").val(null);
-        $("#descripcion_criterio").val(null);
+        //$("#descripcion_criterio").val(null);
+        CKEDITOR.instances.descripcion_criterio.setData('');                        
         $("#exclusivo").prop("checked", false);
     });
 
@@ -965,7 +1010,7 @@ function acciones_criterio(token_actual) {
                     //Cargo el formulario con los datos
                     $('#form_nuevo_criterio').loadJSON(json);
                     $("#grupo_criterio").val(json.grupo_criterio);
-                    $("#descripcion_criterio").val(json.descripcion_criterio);
+                    CKEDITOR.instances.descripcion_criterio.setData(json.descripcion_criterio);                
                     $("#id_registro_criterio").val(json.id);
                     if (json.exclusivo) {
                         $("#exclusivo").prop("checked", true);

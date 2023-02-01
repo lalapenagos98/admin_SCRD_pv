@@ -43,6 +43,8 @@ keycloak.init(initOptions).then(function (authenticated) {
             CKEDITOR.config.width = 'auto';
             CKEDITOR.replace('html_general');
             CKEDITOR.replace('descripcion_cp');
+            CKEDITOR.replace('descripcion_perfil');         
+            CKEDITOR.replace('campo_experiencia');
 
             //Limpio el formulario de los perfiles de los participantes
             $('#perfiles_participantes_modal').on('hidden.bs.modal', function () {
@@ -55,6 +57,8 @@ keycloak.init(initOptions).then(function (authenticated) {
             //Limpio el formulario de los perfiles de los jurados
             $('#perfiles_jurados_modal').on('hidden.bs.modal', function () {
                 $("#id_cpj").attr('value', '');
+                CKEDITOR.instances.descripcion_perfil.setData('');
+                CKEDITOR.instances.campo_experiencia.setData('');
                 $("#perfiles_jurados_modal select option:selected").removeAttr("selected");
                 $("#perfiles_jurados_modal select option:selected").prop("selected", false);
                 $("#perfiles_jurados_modal input[type=text] , #perfiles_jurados_modal textarea").each(function () {
@@ -1287,8 +1291,9 @@ function cargar_perfil_jurado(id) {
         $("#nivel_educativo option[value='" + e + "']").prop("selected", true);
     });
 
-    $("#descripcion_perfil").val(json_update.descripcion_perfil);
-    $("#campo_experiencia").val(json_update.campo_experiencia);
+    CKEDITOR.instances.descripcion_perfil.setData(json_update.descripcion_perfil);
+    CKEDITOR.instances.campo_experiencia.setData(json_update.campo_experiencia);
+
     $("#id_cpj").val(json_update.id);
 }
 
@@ -1476,12 +1481,29 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         // Enviar datos del formulario para guardar
-        if ($("#id_cpj").val() == "") {
+        if ($("#id_cpj").val() == "") {            
             //Se realiza la peticion con el fin de guardar el registro actual
+            var values_jurado = {
+                tipo_participante: $("#tipo_participante_cpj").val(),
+                convocatoria: $("#id").val(),                
+                cantidad_perfil_jurado: $("#cantidad_perfil_jurado").val(),
+                orden: $("#orden_perfil_jurado").val(),
+                formacion_profesional: $("#formacion_profesional").val(),
+                area_conocimiento: $("#area_conocimiento").val(),
+                formacion_postgrado: $("#formacion_postgrado").val(),
+                nivel_educativo: $("#nivel_educativo").val(),
+                area_perfil: $("#area_perfil").val(),
+                reside_bogota: $("#reside_bogota").val(),
+                descripcion_perfil: CKEDITOR.instances.descripcion_perfil.getData(),
+                campo_experiencia: CKEDITOR.instances.campo_experiencia.getData(),
+                modulo: "SICON-AJUSTAR-CONVOCATORIAS",
+                token: token_actual.token
+            };
+
             $.ajax({
                 type: 'POST',
                 url: url_pv + 'Convocatoriasparticipantes/new/',
-                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token + "&convocatoria=" + $("#id").attr('value') + "&cantidad_perfil_jurado=" + $("#cantidad_perfil_jurado").val()
+                data: $.param(values_jurado)
             }).done(function (result) {
 
                 if (result == 'error')
@@ -1510,6 +1532,9 @@ function validator_form(token_actual) {
                                 {
                                     cargar_tabla_perfiles_jurado(token_actual);
                                     notify("success", "ok", "Convocatoria perfil:", "Se creó el perfil del jurado con éxito.");
+                                    
+                                    CKEDITOR.instances.descripcion_perfil.setData('');
+                                    CKEDITOR.instances.campo_experiencia.setData('');
                                 }
                             }
                         }
@@ -1518,10 +1543,24 @@ function validator_form(token_actual) {
             });
         } else {
             //Realizo la peticion con el fin de editar el registro actual
+            var values_jurado = {
+                                    orden: $("#orden_perfil_jurado").val(),
+                                    formacion_profesional: $("#formacion_profesional").val(),
+                                    area_conocimiento: $("#area_conocimiento").val(),
+                                    formacion_postgrado: $("#formacion_postgrado").val(),
+                                    nivel_educativo: $("#nivel_educativo").val(),
+                                    area_perfil: $("#area_perfil").val(),
+                                    reside_bogota: $("#reside_bogota").val(),
+                                    descripcion_perfil: CKEDITOR.instances.descripcion_perfil.getData(),
+                                    campo_experiencia: CKEDITOR.instances.campo_experiencia.getData(),
+                                    modulo: "SICON-AJUSTAR-CONVOCATORIAS",
+                                    token: token_actual.token
+                                };
+
             $.ajax({
                 type: 'PUT',
                 url: url_pv + 'Convocatoriasparticipantes/edit/' + $("#id_cpj").attr('value'),
-                data: $form.serialize() + "&modulo=SICON-AJUSTAR-CONVOCATORIAS&token=" + token_actual.token
+                data: $.param(values_jurado)
             }).done(function (result) {
                 if (result == 'error')
                 {
@@ -1546,6 +1585,9 @@ function validator_form(token_actual) {
                                 cargar_tabla_perfiles_jurado(token_actual);
 
                                 notify("info", "ok", "Convocatoria perfil:", "Se edito el perfil del jurado con éxito.");
+
+                                CKEDITOR.instances.descripcion_perfil.setData('');
+                                CKEDITOR.instances.campo_experiencia.setData('');
                             }
                         }
                     }
