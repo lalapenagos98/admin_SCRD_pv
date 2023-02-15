@@ -442,7 +442,7 @@ function cargar_datos_perfiles(token_actual) {
     $.ajax({
         type: 'GET',
         url: url_pv + 'PropuestasJurados/postulacion_perfiles_convocatoria',
-        data: {"token": token_actual.token, "idregistro": $("#idregistro").val()},
+        data: {"token": token_actual.token, "idregistro": $("#idregistro").val(), "idc": $("#idc").val()},
 
     }).done(function (data) {
 
@@ -773,7 +773,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
     $.ajax({
         type: 'GET',
         url: url_pv + 'PropuestasJurados/search_info_inhabilidades',
-        data: {"token": token_actual.token, "idc": $('#convocatorias').val(), "postulacion": postulacion, "participante": participante, "anio": $('#anio').val()},
+        data: {"token": token_actual.token, "idc": $("#idc").val(), "postulacion": postulacion, "participante": participante, "anio": $('#anio').val()},
     }).done(function (data) {
 
         switch (data) {
