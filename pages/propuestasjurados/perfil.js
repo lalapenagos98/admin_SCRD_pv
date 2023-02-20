@@ -697,7 +697,7 @@ function validator_form(token_actual) {
         fields: {
             modalidad_participa: {
                 validators: {
-                    notEmpty: {message: 'La categoría es requerida'}
+                    notEmpty: {message: 'El tipo de perfil es requerido'}
                 }
             },
             tipo_documento: {
