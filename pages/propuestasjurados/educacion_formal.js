@@ -730,7 +730,6 @@ function validar_convocatoria_jurados(token_actual) {
                 break;
             case 'error_token':
                 location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
-                //notify("danger", "error_token", "URL:", 'PropuestasEvaluacion/evaluacionpropuestas/'+id_evaluacion+'/impedimentos');
                 break;
             case 'acceso_denegado':
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
@@ -749,7 +748,7 @@ function validar_convocatoria_jurados(token_actual) {
                     if (json.tiene_hoja_de_vida === false) {
                         $("#botones_acciones_jurado_sin_hoja").show();
                     } else {
-                        if (json.hoja_de_vida_banco_actual === true) {
+                        if (json.hoja_de_vida_banco_actual === true && json.propuesta_jurado.modalidad_participa !== null) {
 
                             if (json.propuesta_jurado.estado === 10) {
                                 $("#estado").hide();
@@ -761,9 +760,21 @@ function validar_convocatoria_jurados(token_actual) {
                                 $("#busqueda_convocatorias").hide();
                             }
 
+                        }else{
+                            alert("No ha ingresado información básica, por favor ingrese la información de la sección Información Básica antes de continuar cargando otro tipo de información.");
+                            $("#nivel_educacion").attr("disabled", "disabled");
+                            $("#titulo").attr("disabled", "disabled");
+                            $("#institucion").attr("disabled", "disabled");
+                            $("#ciudad_name").attr("disabled", "disabled");
+                            $("#fecha_graduacion").attr("disabled", "disabled");
+                            $("#fecha_graduacion").attr("disabled", "disabled");
+                            $("#graduado_check").attr("disabled", "disabled");
+                            
+                            $("#archivo").attr("disabled", "disabled");
+                            $(".btn-default").hide();
+                            $(".input-group-addon").hide();
                         }
                     }
-//                    $("#info_general").attr("value", json.observaciones_documentos_ganadores);
                 } else {
                     $("#convocatoria_no_disponible").show();
                     $("#mensaje_jurados").hide();

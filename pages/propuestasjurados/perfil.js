@@ -480,7 +480,7 @@ $(document).ready(function () {
         });
 
         $("#baceptar").click(function () {
-            location.href = "../propuestasjurados/perfil.html?m=2&id=1288&p=0";
+            location.href = "../propuestasjurados/perfil.html?m=2&id=1789&p=0";
         });
 
 
