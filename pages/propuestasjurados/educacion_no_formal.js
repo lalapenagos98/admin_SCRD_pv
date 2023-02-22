@@ -20,9 +20,11 @@
           location.href = url_pv_admin+'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
       } else
       {
-          //Verifica si el token actual tiene acceso de lectura
-          permiso_lectura(token_actual, "Menu Participante");
+        //Verifica si el token actual tiene acceso de lectura
+        permiso_lectura(token_actual, "Menu Participante");
 
+        /*Validar si existe una convocatoria de jurados vigente*/
+        validar_convocatoria_jurados(token_actual);
 
         // alert("Recuerde diligenciar toda la información requerida para este formulario");
          $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id="+  $("#idc").val()+"' ");
@@ -520,3 +522,80 @@
     });
 
   }
+
+   /*
+ * 22-02-2023
+ * Fredy Bejarano Gamboa
+ * Se agrega función validar_convocatoria_jurados
+ */
+   function validar_convocatoria_jurados(token_actual) {
+    $.ajax({
+        type: 'GET',
+        url: url_pv + 'Jurados/validar_convocatoria_jurados',
+        data: {"token": token_actual.token}
+
+    }).done(function (data) {
+
+        switch (data) {
+            case 'error':
+                notify("danger", "ok", "Usuario:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_metodo':
+                notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                break;
+            case 'error_token':
+                location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
+                break;
+            case 'acceso_denegado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'deshabilitado':
+                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                break;
+            case 'error_validacion':
+                notify("danger", "remove", "Usuario:", "Tiene evaluaciones sin confirmar");
+                break;
+            default:
+                var json = JSON.parse(data);
+                if (json.disponible === true) {
+                    $("#convocatoria").attr("value", json.convocatoria.id);
+                    $("#modalidad_participa_jurado").html(json.propuesta_jurado.modalidad_participa);
+                    if (json.tiene_hoja_de_vida === false) {
+                        $("#botones_acciones_jurado_sin_hoja").show();
+                    } else {
+                        if (json.hoja_de_vida_banco_actual === true && json.propuesta_jurado.modalidad_participa !== null) {
+
+                            if (json.propuesta_jurado.estado === 10) {
+                                $("#estado").hide();
+                                $("#listado_postulaciones").show();
+                                $("#busqueda_convocatorias").show();
+                            } else {
+                                $("#estado").show();
+                                $("#listado_postulaciones").hide();
+                                $("#busqueda_convocatorias").hide();
+                            }
+
+                        }else{
+                          alert("No ha ingresado información básica, por favor ingrese la información de la sección Información Básica antes de continuar cargando otro tipo de información.");
+                          $("#tipo").attr("disabled", "disabled");
+                          $("#modalidad").attr("disabled", "disabled");
+                          $("#nombre").attr("disabled", "disabled");
+                          $("#institucion").attr("disabled", "disabled");
+                          $("#fecha_inicio").attr("disabled", "disabled");
+                          $("#fecha_fin").attr("disabled", "disabled");
+                          $("#numero_hora").attr("disabled", "disabled");
+                          $("#ciudad_name").attr("disabled", "disabled");
+
+                          $("#archivo").attr("disabled", "disabled");
+                          $(".btn-default").hide();
+                          $(".input-group-addon").hide();
+                        }
+                    }
+                } else {
+                    $("#convocatoria_no_disponible").show();
+                    $("#mensaje_jurados").hide();
+                }
+        }
+
+    });
+}

@@ -28,7 +28,7 @@
          
          determinar_modalidad(token_actual);
 
-        alert("Recuerde diligenciar toda la información requerida para este formulario");
+        //alert("Recuerde diligenciar toda la información requerida para este formulario");
         
         if ($("#modalidad_participa_educacion").val() === "Experto con título universitario"){
             $("#back_step").attr("onclick", " location.href = 'educacion_formal.html?m=2&id=" + $("#idc").val() + "' ");
@@ -378,6 +378,17 @@ function determinar_modalidad(token_actual) {
                        notEmpty: {message: 'La dirección es requerida'},
                    }
                },
+               archivo: {
+                   validators: {
+                       file: {
+                           extension: 'pdf',
+                           type: 'application/pdf',
+                           maxSize: 5120 * 1024,
+                           message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                       },
+                       notEmpty: {message: 'El anexo en pdf es requerido'},
+                   }
+               }
              }
 
        }).on('success.form.bv', function (e) {
@@ -614,7 +625,7 @@ function validar_convocatoria_jurados(token_actual) {
                     if (json.tiene_hoja_de_vida === false) {
                         $("#botones_acciones_jurado_sin_hoja").show();
                     } else {
-                        if (json.hoja_de_vida_banco_actual === true) {
+                        if (json.hoja_de_vida_banco_actual === true && json.propuesta_jurado.modalidad_participa !== null) {
 
                             if (json.propuesta_jurado.estado === 10) {
                                 $("#estado").hide();
@@ -626,6 +637,22 @@ function validar_convocatoria_jurados(token_actual) {
                                 $("#busqueda_convocatorias").hide();
                             }
 
+                        }else{
+                          alert("No ha ingresado información básica, por favor ingrese la información de la sección Información Básica antes de continuar cargando otro tipo de información.");
+                          $("#tipo_entidad").attr("disabled", "disabled");
+                          $("#entidad").attr("disabled", "disabled");
+                          $("#fecha_inicio").attr("disabled", "disabled");
+                          $("#fecha_fin").attr("disabled", "disabled");
+                          $("#linea").attr("disabled", "disabled");
+                          $("#funcion").attr("disabled", "disabled");
+                          $("#correo").attr("disabled", "disabled");
+                          $("#ciudad_name").attr("disabled", "disabled");
+                          $("#direccion").attr("disabled", "disabled");
+
+                          
+                          $("#archivo").attr("disabled", "disabled");
+                          $(".btn-default").hide();
+                          $(".input-group-addon").hide();
                         }
                     }
 //                    $("#info_general").attr("value", json.observaciones_documentos_ganadores);
