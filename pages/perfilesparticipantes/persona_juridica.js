@@ -31,6 +31,7 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);
+
                     $("#pais").append('<option value="">:: Seleccionar ::</option>');
                     $("#pais_nacimiento").append('<option value="">:: Seleccionar ::</option>');
                     if (json.length > 0) {
@@ -244,6 +245,10 @@ $(document).ready(function () {
                     var json = JSON.parse(data);
                     
                     //Cargo los select de barrios
+
+                    //cargar el mensaje con el link a condiciones
+                    $('.condiciones').attr('href', json.link_condiciones);
+
                     $('#barrio_residencia').find('option').remove();
                     $("#barrio_residencia").append('<option value="">:: Seleccionar ::</option>');
                     if (json.barrios.length > 0) {
