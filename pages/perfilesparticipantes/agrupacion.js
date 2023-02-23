@@ -67,6 +67,10 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);                    
+                    
+                    //cargar el mensaje con el link a condiciones
+                    $('.condiciones').attr('href', json.link_condiciones);
+
                     //Cargo el formulario con los datos
                     $('#formulario_principal').loadJSON(json.participante);       
                     
