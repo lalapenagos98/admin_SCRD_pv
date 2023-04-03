@@ -22,7 +22,7 @@ $(document).ready(function () {
         //Verifica si el token actual tiene acceso de lectura
         permiso_lectura(token_actual, "Menu Participante");
 
-        alert("Recuerde diligenciar toda la información requerida para este formulario");
+        //alert("Recuerde diligenciar toda la información requerida para este formulario");
         $("#back_step").attr("onclick", " location.href = 'reconocimiento.html?m=2&id=" + $("#idc").val() + "' ");
         $("#next_step").attr("onclick", " location.href = 'documentos_administrativos.html?m=2&id=" + $("#idc").val() + "' ");
 
@@ -272,6 +272,17 @@ function validator_form(token_actual) {
                     integer: {message: 'El año debe ser numérico'}
                 }
             },
+            archivo: {
+                validators: {
+                    file: {
+                        extension: 'pdf',
+                        type: 'application/pdf',
+                        maxSize: 5120 * 1024,
+                        message: 'El tamaño debe ser menor o igual a 5MB y tipo de archivo debe ser PDF'
+                    },
+                    notEmpty: {message: 'El anexo en pdf es requerido'},
+                }
+            }
         }
 
     }).on('success.form.bv', function (e) {
@@ -508,7 +519,7 @@ function validar_convocatoria_jurados(token_actual) {
                     if (json.tiene_hoja_de_vida === false) {
                         $("#botones_acciones_jurado_sin_hoja").show();
                     } else {
-                        if (json.hoja_de_vida_banco_actual === true) {
+                        if (json.hoja_de_vida_banco_actual === true && json.propuesta_jurado.modalidad_participa !== null) {
 
                             if (json.propuesta_jurado.estado === 10) {
                                 $("#estado").hide();
@@ -520,6 +531,19 @@ function validar_convocatoria_jurados(token_actual) {
                                 $("#busqueda_convocatorias").hide();
                             }
 
+                        }else{
+                            alert("No ha ingresado información básica, por favor ingrese la información de la sección Información Básica antes de continuar cargando otro tipo de información.");
+                            $("#titulo").attr("disabled", "disabled");
+                            $("#tema").attr("disabled", "disabled");
+                            $("#tipo").attr("disabled", "disabled");
+                            $("#formato").attr("disabled", "disabled");
+                            $("#ciudad_name").attr("disabled", "disabled");
+                            $("#anio").attr("disabled", "disabled");
+
+                            
+                            $("#archivo").attr("disabled", "disabled");
+                            $(".btn-default").hide();
+                            $(".input-group-addon").hide();
                         }
                     }
 //                    $("#info_general").attr("value", json.observaciones_documentos_ganadores);

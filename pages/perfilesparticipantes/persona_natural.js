@@ -301,6 +301,9 @@ $(document).ready(function () {
                     if (json.error === 0)
                     {
                         json=json.respuesta;
+
+                        //cargar el mensaje con el link a condiciones
+                        $('.condiciones').attr('href', json.link_condiciones);
                         
                         //Cargo los select de barrios
                         $('#barrio_residencia').find('option').remove();

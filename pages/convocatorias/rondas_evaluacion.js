@@ -367,11 +367,11 @@ function validator_form(token_actual) {
                     notEmpty: {message: 'El nombre de la ronda es requerido'}
                 }
             },
-            descripcion_ronda: {
+            /*descripcion_ronda: {
                 validators: {
                     notEmpty: {message: 'La descripción es requerida'}
                 }
-            },
+            },*/
             total_ganadores: {
                 validators: {
                     notEmpty: {message: 'El número de ganadores es requerido'}
@@ -423,115 +423,127 @@ function validator_form(token_actual) {
 
         //$form.bootstrapValidator('resetForm', true);
 
-        //console.log("form-->" + $form.serialize());
+        //console.log("form-->" + $form.serialize());        
 
-        if ($("#id_registro").attr('value') === null || $("#id_registro").attr('value') === '') {
-            console.log("crear!!!");
-            //Se realiza la peticion con el fin de guardar el registro actual
+        if(CKEDITOR.instances.descripcion_ronda.getData()==='')
+        {            
+            notify("danger", "ok", "Convocatorias:", "La descripción de ronda, es requerida");            
+            $form.bootstrapValidator('disableSubmitButtons', false);
+        }
+        else
+        {
 
-
-            var values_ronda = {
-                convocatoria: $("#convocatoria").val(),
-                idConvocatoria: $("#idConvocatoria").val(),
-                numero_ronda: $("#numero_ronda").val(),
-                nombre_ronda: $("#nombre_ronda").val(),
-                total_ganadores: $("#total_ganadores").val(),
-                total_suplentes: $("#total_suplentes").val(),
-                fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
-                fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
-                fecha_deliberacion: $("#fecha_deliberacion").val(),
-                tipo_acta: $("#tipo_acta").val(),
-                tipo_evaluacion: $("#tipo_evaluacion").val(),                
-                descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
-                modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
-                token: token_actual.token
-            };
-
-            $.ajax({
-                type: 'POST',
-                url: url_pv + 'Rondas/new',
-                data: $.param(values_ronda)
-            }).done(function (result) {
-
-                switch (result) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    default:
-                        notify("success", "ok", "Convocatorias:", "Se creó la ronda con éxito.");
-                        //Cargar datos de la tabla de rondas
-                        cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-                        break;
-                }
-
-
-            });
-
-        } else {
-            //  console.log("editar!!!");
-
-            //Realizo la peticion con el fin de editar el registro actual
-            
-            var values_ronda = {
-                numero_ronda: $("#numero_ronda").val(),
-                nombre_ronda: $("#nombre_ronda").val(),
-                total_ganadores: $("#total_ganadores").val(),
-                total_suplentes: $("#total_suplentes").val(),
-                fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
-                fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
-                fecha_deliberacion: $("#fecha_deliberacion").val(),
-                tipo_acta: $("#tipo_acta").val(),
-                tipo_evaluacion: $("#tipo_evaluacion").val(),                
-                descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
-                modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
-                token: token_actual.token
-            };
-
-            $.ajax({
-                type: 'PUT',
-                url: url_pv + 'Rondas/edit/' + $("#id_registro").attr('value'),
-                data: $.param(values_ronda)
-
-            }).done(function (result) {
-                switch (result) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    case 'deshabilitado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    default:
-                        notify("info", "ok", "Convocatorias:", "Se editó la ronda con éxito.");
-                        cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
-                        break;
-                }
-            });
-
-            $("#id_registro").val(null);
+            if ($("#id_registro").attr('value') === null || $("#id_registro").attr('value') === '') {
+                console.log("crear!!!");
+                //Se realiza la peticion con el fin de guardar el registro actual
+    
+    
+                var values_ronda = {
+                    convocatoria: $("#convocatoria").val(),
+                    idConvocatoria: $("#idConvocatoria").val(),
+                    numero_ronda: $("#numero_ronda").val(),
+                    nombre_ronda: $("#nombre_ronda").val(),
+                    total_ganadores: $("#total_ganadores").val(),
+                    total_suplentes: $("#total_suplentes").val(),
+                    fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
+                    fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
+                    fecha_deliberacion: $("#fecha_deliberacion").val(),
+                    tipo_acta: $("#tipo_acta").val(),
+                    tipo_evaluacion: $("#tipo_evaluacion").val(),                
+                    descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
+                    modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
+                    token: token_actual.token
+                };
+    
+                $.ajax({
+                    type: 'POST',
+                    url: url_pv + 'Rondas/new',
+                    data: $.param(values_ronda)
+                }).done(function (result) {
+    
+                    switch (result) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_metodo':
+                            notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        default:
+                            notify("success", "ok", "Convocatorias:", "Se creó la ronda con éxito.");
+                            //Cargar datos de la tabla de rondas
+                            cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                            break;
+                    }
+    
+    
+                });
+    
+            } else {
+                //  console.log("editar!!!");
+    
+                //Realizo la peticion con el fin de editar el registro actual
+                
+                var values_ronda = {
+                    numero_ronda: $("#numero_ronda").val(),
+                    nombre_ronda: $("#nombre_ronda").val(),
+                    total_ganadores: $("#total_ganadores").val(),
+                    total_suplentes: $("#total_suplentes").val(),
+                    fecha_inicio_evaluacion: $("#fecha_inicio_evaluacion").val(),
+                    fecha_fin_evaluacion: $("#fecha_fin_evaluacion").val(),
+                    fecha_deliberacion: $("#fecha_deliberacion").val(),
+                    tipo_acta: $("#tipo_acta").val(),
+                    tipo_evaluacion: $("#tipo_evaluacion").val(),                
+                    descripcion_ronda: CKEDITOR.instances.descripcion_ronda.getData(),
+                    modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
+                    token: token_actual.token
+                };
+    
+                $.ajax({
+                    type: 'PUT',
+                    url: url_pv + 'Rondas/edit/' + $("#id_registro").attr('value'),
+                    data: $.param(values_ronda)
+    
+                }).done(function (result) {
+                    switch (result) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_metodo':
+                            notify("danger", "ok", "Se registro un error en el método, comuníquese con la mesa de ayuda soporte.convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        case 'deshabilitado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        default:
+                            notify("info", "ok", "Convocatorias:", "Se editó la ronda con éxito.");
+                            cargar_tabla($("#idConvocatoria").attr('value'), token_actual);
+                            break;
+                    }
+                });
+    
+                $("#id_registro").val(null);
+    
+            }
+    
+            $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+            bv.resetForm();
+            $('#nueva_ronda').modal('toggle');
 
         }
 
-        $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
-        bv.resetForm();
-        $('#nueva_ronda').modal('toggle');
+        
 
     });
 }
@@ -840,12 +852,12 @@ function validator_form_criterio(token_actual, idRonda) {
              validators: {
              notEmpty: {message: 'El grupo es requerido'}
              }
-             },*/
+             },
             descripcion_criterio: {
                 validators: {
                     notEmpty: {message: 'El criterio es requerido'}
                 }
-            },
+            },*/
             puntaje_maximo: {
                 validators: {
                     notEmpty: {message: 'El puntaje máximo es requerido'},
@@ -862,115 +874,125 @@ function validator_form_criterio(token_actual, idRonda) {
         }
     }).on('success.form.bv', function (e) {
 
-        // Prevent form submission
+// Prevent form submission
         e.preventDefault();
-        // Get the form instance
-        if ($("#exclusivo").prop('checked')) {
-            //$("#exclusivo").prop("checked", true);
-            $("#exclusivo").val(true);
-        } else {
-            //se establece con el fin de que viaje el parametro con el valor false
-            $("#exclusivo").prop("checked", true);
-            $("#exclusivo").val(false);
-        }
-
+        
         var $form = $(e.target);
 
         // Get the BootstrapValidator instance
         var bv = $form.data('bootstrapValidator');
 
-        //$form.bootstrapValidator('resetForm', true);
 
-        //console.log("form-->" + $form.serialize());
-        //console.log("id_registro_criterio"+$("#id_registro_criterio"));
-
-        if ($("#id_registro_criterio").attr('value') === null || $("#id_registro_criterio").attr('value') === '') {
-            //console.log("crear!!!");
-
-            //Se realiza la peticion con el fin de guardar el registro actual
-            $.ajax({
-                type: 'POST',
-                url: url_pv + 'Convocatoriasrondascriterios/new',
-                data: $form.serialize() + "&modulo=SICON-CONVOCATORIAS-CONFIGURACION&token=" + token_actual.token+"&campo_experiencia="+CKEDITOR.instances.descripcion_criterio.getData()
-            }).done(function (result) {
-
-
-                switch (result) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_puntaje':
-                        notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
-                        break;
-                    default:
-                        notify("success", "ok", "Convocatorias:", "Se creó el criterio con éxito.");
-                        //Cargar datos de la tabla de rondas
-                        cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
-                        break;
-                }
-
-
-            });
-        } else {
-
-            console.log("editar!!!");
-
-            //Realizo la peticion con el fin de editar el registro actual
-            $.ajax({
-                type: 'PUT',
-                url: url_pv + 'Convocatoriasrondascriterios/edit/' + $("#id_registro_criterio").attr('value'),
-                data: $form.serialize() + "&modulo=SICON-CONVOCATORIAS-CONFIGURACION&token=" + token_actual.token+"&campo_experiencia="+CKEDITOR.instances.descripcion_criterio.getData()
-            }).done(function (result) {
-
-
-                switch (result) {
-                    case 'error':
-                        notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_token':
-                        notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
-                        break;
-                    case 'acceso_denegado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    case 'error_metodo':
-                        notify("danger", "ok", "Convocatorias:", "Se registró un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-                        break;
-                    case 'error_puntaje':
-                        notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
-                        break;
-                    case 'deshabilitado':
-                        notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
-                        break;
-                    default:
-                        notify("info", "ok", "Convocatorias:", "Se editó el criterio con éxito.");
-                        sum_criterios(token_actual, $("#convocatoria_ronda").attr('value'));
-                        cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
-                        $("#id_registro_criterio").val(null);
-                        break;
-                }
-
-            });
-
+        if(CKEDITOR.instances.descripcion_criterio.getData()==='')
+        {                  
+            notify("danger", "ok", "Convocatorias:", "El criterio es requerido");            
+            $form.bootstrapValidator('disableSubmitButtons', false);
         }
+        else
+        {
+            // Get the form instance
+            if ($("#exclusivo").prop('checked')) {
+                //$("#exclusivo").prop("checked", true);
+                $("#exclusivo").val(true);
+            } else {
+                //se establece con el fin de que viaje el parametro con el valor false
+                $("#exclusivo").prop("checked", true);
+                $("#exclusivo").val(false);
+            }
+
+            //$form.bootstrapValidator('resetForm', true);
+
+            //console.log("form-->" + $form.serialize());
+            //console.log("id_registro_criterio"+$("#id_registro_criterio"));
+
+            if ($("#id_registro_criterio").attr('value') === null || $("#id_registro_criterio").attr('value') === '') {
+                //console.log("crear!!!");
+
+                //Se realiza la peticion con el fin de guardar el registro actual
+                $.ajax({
+                    type: 'POST',
+                    url: url_pv + 'Convocatoriasrondascriterios/new',
+                    data: $form.serialize() + "&modulo=SICON-CONVOCATORIAS-CONFIGURACION&token=" + token_actual.token+"&campo_experiencia="+CKEDITOR.instances.descripcion_criterio.getData()
+                }).done(function (result) {
 
 
-        $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
-        bv.resetForm();
-        $("#form_nuevo_criterio").trigger("reset");
-        $("#grupo_criterio").val(null);
-        //$("#descripcion_criterio").val(null);
-        CKEDITOR.instances.descripcion_criterio.setData('');                        
-        $("#exclusivo").prop("checked", false);
+                    switch (result) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        case 'error_metodo':
+                            notify("danger", "ok", "Convocatorias:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_puntaje':
+                            notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
+                            break;
+                        default:
+                            notify("success", "ok", "Convocatorias:", "Se creó el criterio con éxito.");
+                            //Cargar datos de la tabla de rondas
+                            cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
+                            break;
+                    }
+
+
+                });
+            } else {
+
+                console.log("editar!!!");
+
+                //Realizo la peticion con el fin de editar el registro actual
+                $.ajax({
+                    type: 'PUT',
+                    url: url_pv + 'Convocatoriasrondascriterios/edit/' + $("#id_registro_criterio").attr('value'),
+                    data: $form.serialize() + "&modulo=SICON-CONVOCATORIAS-CONFIGURACION&token=" + token_actual.token+"&campo_experiencia="+CKEDITOR.instances.descripcion_criterio.getData()
+                }).done(function (result) {
+
+
+                    switch (result) {
+                        case 'error':
+                            notify("danger", "ok", "Convocatorias:", "Se registró un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_token':
+                            notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
+                            break;
+                        case 'acceso_denegado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        case 'error_metodo':
+                            notify("danger", "ok", "Convocatorias:", "Se registró un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                            break;
+                        case 'error_puntaje':
+                            notify("danger", "ok", "Convocatorias:", "La suma de los valores de los criterios sobrepasa el valor máximo permitido");
+                            break;
+                        case 'deshabilitado':
+                            notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                            break;
+                        default:
+                            notify("info", "ok", "Convocatorias:", "Se editó el criterio con éxito.");
+                            sum_criterios(token_actual, $("#convocatoria_ronda").attr('value'));
+                            cargar_tabla_criterio($("#convocatoria_ronda").attr('value'), token_actual);
+                            $("#id_registro_criterio").val(null);
+                            break;
+                    }
+
+                });
+
+            }
+
+
+            $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
+            bv.resetForm();
+            $("#form_nuevo_criterio").trigger("reset");
+            $("#grupo_criterio").val(null);
+            //$("#descripcion_criterio").val(null);
+            CKEDITOR.instances.descripcion_criterio.setData('');                        
+            $("#exclusivo").prop("checked", false);
+        }
     });
 
 }

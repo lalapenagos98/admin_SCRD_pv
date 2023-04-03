@@ -778,8 +778,18 @@ function validar_convocatoria_jurados(token_actual) {
             default:
                 var json = JSON.parse(data);
                 if (json.disponible === true) {
+
                     $("#convocatoria").attr("value", json.convocatoria.id);
                     $("#modalidad_participa_jurado").html(json.propuesta_jurado.modalidad_participa);
+
+                    if (json.propuesta_jurado.modalidad_participa === null) {
+                        alert("No ha ingresado información básica, por favor ingrese la información de la sección Información Básica antes de continuar cargando otro tipo de información.");
+                        $("#postular").hide();
+
+                    }else{
+                        $("#postular").show();
+                    }
+
                 }
         }
 

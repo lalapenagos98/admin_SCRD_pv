@@ -74,7 +74,7 @@
                 <div class="loading centrado-porcentual"></div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Preselección de jurados</h1>
+                        <h1 class="page-header">Preselección de expertos</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -83,7 +83,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Búsqueda de jurados
+                                Búsqueda de expertos
                             </div>
                             <div class="panel-body">
                                 <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post">
@@ -154,20 +154,20 @@
                                 class="btn btn-danger"
                                 id="liberar_jurados"
                                 title="Liberar jurados de ésta convocatoria"
-                                data-toggle="modal" data-target="#confirmar_liberar" >Liberar jurados</button>
+                                data-toggle="modal" data-target="#confirmar_liberar" >Liberar expertos</button>
                             <button
                                 type="button"
                                 class="btn btn-info"
                                 id="busqueda_avanzada"
                                 title="búsqueda avanzada"
-                                data-toggle="modal" data-target="#exampleModal" >Búsqueda Banco de Jurados</button>
+                                data-toggle="modal" data-target="#exampleModal" >Búsqueda Banco de Expertos</button>
                             <!--22-09-2021 Wilmer Mogollón Se agrega botón generara_acta_preseleccion-->
                             <button
                                 type="button"
                                 class="btn btn-success"
                                 id="generar_acta_preseleccion"
                                 title="Generar acta jurados preseleccionados"
-                                data-toggle="modal" data-target="#genera_acta_modal" >Generar acta jurados preseleccionados</button>
+                                data-toggle="modal" data-target="#genera_acta_modal" >Generar acta expertos preseleccionados</button>
                         </div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Búsqueda Banco de Jurados</h4>
+                        <h4 class="modal-title" id="exampleModalLabel">Búsqueda Banco de Expertos</h4>
                     </div>
                     <div class="modal-body">
 
@@ -232,7 +232,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
 
-                                        <label>Convocatoria de Jurados</label><br/>
+                                        <label>Convocatoria de Expertos</label><br/>
                                         <div class="alert alert-info">
                                             <small>Por favor seleccione la convocatoria de banco de jurados de la cual desea importar las hojas de vida.</small>
                                         </div>
@@ -1142,11 +1142,9 @@
                                             </div>
                                             <div class="panel-body" >
                                                 <p>
-                                                    Tenga en cuenta que la evaluación se debe realizar de acuerdo al perfil al que se postuló el jurado. Por favor revisar las condiciones generales de participación del Banco de Jurados 2022.
+                                                    Tenga en cuenta que la evaluación se debe realizar de acuerdo al perfil al que se postuló el jurado. Por favor revisar las condiciones generales de participación del Banco de Expertos.
                                                 </p>
                                                 <form role="form" id="form_criterios">
-
-
 
                                                 </form>
 
@@ -1413,7 +1411,7 @@
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse6" class="collapsed" aria-expanded="false">Experiencia como jurado</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse6" class="collapsed" aria-expanded="false">Experiencia como experto</a>
                                                     </h4>
                                                 </div>
                                                 <div id="ver_collapse6" class="panel-collapse collapse" aria-expanded="false">
@@ -1566,13 +1564,13 @@
                     </div>
                     <div class="modal-body">
                         <div id="mensaje_liberar" style="display: none;">
-                            ¿Está seguro de liberar las postulaciones de los jurados que no fueron seleccionados en ésta convocatoria?<br/>
+                            ¿Está seguro de liberar las postulaciones de los expertos que no fueron seleccionados en ésta convocatoria?<br/>
                             Se van a liberar las postulaciones que se encuentren dentro de las siguientes situaciones:<br/>
                             <ul>
-                                <li>Las postulaciones de los jurados cuyo perfil no aplica para ésta convocatoria.</li>
-                                <li>Las postulaciones de los jurados que fueron evaluados y que no fueron seleccionados para conformar los grupos de evaluación en ésta convocatoria.</li>
-                                <li>Las postulaciones de los jurados que fueron seleccionados, pero sus notificaciones se encuentran en estado "Rechazada" o "Declinada".</li>
-                                <li>Las postulaciones de los jurados que fueron seleccionados como suplentes y que requieren ser liberados una vez se haya confirmado el Top General .</li>
+                                <li>Las postulaciones de los expertos cuyo perfil no aplica para ésta convocatoria.</li>
+                                <li>Las postulaciones de los expertos que fueron evaluados y que no fueron seleccionados para conformar los grupos de evaluación en ésta convocatoria.</li>
+                                <li>Las postulaciones de los expertos que fueron seleccionados, pero sus notificaciones se encuentran en estado "Rechazada" o "Declinada".</li>
+                                <li>Las postulaciones de los expertos que fueron seleccionados como suplentes y que requieren ser liberados una vez se haya confirmado el Top General .</li>
                             </ul>
 
                             <strong>Recuerde que luego de ejecutar esta acción no podrá deshacer los cambios</strong>
@@ -1613,7 +1611,7 @@
 
                     <div class="modal-body">
                         <div id="mensajegn" style="display:none;">
-                            ¿Está seguro de generar el acta de jurados preseleccionados?<br/>
+                            ¿Está seguro de generar el acta de expertos preseleccionados?<br/>
                         </div>
                     </div>
                     <div class="modal-footer">
