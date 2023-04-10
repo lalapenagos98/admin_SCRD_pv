@@ -93,6 +93,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $("#id_mentor").attr('value', '');
                 CKEDITOR.instances.descripcion_perfil_mentor.setData('');
                 CKEDITOR.instances.campo_experiencia_mentor.setData('');
+
                 $("#perfiles_mentores_modal select option:selected").removeAttr("selected");
                 $("#perfiles_mentores_modal select option:selected").prop("selected", false);
                 $("#perfiles_mentores_modal input[type=text] , #perfiles_mentores_modal textarea").each(function () {
@@ -1047,6 +1048,14 @@ keycloak.init(initOptions).then(function (authenticated) {
                             });
                         }
 
+                        //Cargo los niveles de formación iniciales
+                        $('#nivel_educativo_mentor').find('option').remove();
+                        if (json.nivel_educativo_mentor.length > 0) {
+                            $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
+                                $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                            });
+                        }
+
                         //Valido el tipo de perfil seleccionado para el mentor
                         $("#formacion_postgrado_mentor").on('change', function () {
                         if ($(this).val() == "true")
@@ -1072,14 +1081,20 @@ keycloak.init(initOptions).then(function (authenticated) {
                             }
                         });
 
+                        //cargo las localidades iniciales
+                        $("#localidad_mentor").removeAttr("disabled");
+                        $("#localidad_mentor").append('<option value="">:: Seleccionar ::</option>');
+                        if (json.localidades.length > 0) {
+                            $.each(json.localidades, function (key, localidad) {
+                                    $("#localidad_mentor").append('<option value="' + localidad.id + '" >' + localidad.nombre + '</option>');
+                                });
+                        }
+
                         //Verifico si es local
                         $('#reside_localidad').on('change', function () {
-
                             $('#localidad_mentor').find('option').remove();
-                            
                             if ($(this).val() == "true"){
                                 $("#localidad_mentor").removeAttr("disabled");
-
                                 $("#localidad_mentor").append('<option value="">:: Seleccionar ::</option>');
 
                                 if (json.localidades.length > 0) {
@@ -1587,12 +1602,17 @@ function cargar_perfil_mentor(id) {
     $("#formacion_profesional_mentor option[value='" + json_update.formacion_profesional + "']").prop('selected', true);
 
     $("#formacion_postgrado_mentor option[value='" + json_update.formacion_postgrado + "']").prop('selected', true);
-   
-    // !!problema cargando nivel educativo...
+
     $("#nivel_educativo_mentor option:selected").removeAttr("selected");
     $("#nivel_educativo_mentor option:selected").prop("selected", false);
     $.each(JSON.parse(json_update.nivel_educativo), function (i, e) {
         $("#nivel_educativo_mentor option[value='" + e + "']").prop("selected", true);
+    });
+
+    $("#area_experticia option:selected").removeAttr("selected");
+    $("#area_experticia option:selected").prop("selected", false);
+    $.each(JSON.parse(json_update.area_experticia), function (i, e) {
+        $("#area_experticia option[value='" + e + "']").prop("selected", true);
     });
 
     $('#campo_experiencia_mentor').val(json_update.campo_experiencia);
@@ -1601,28 +1621,17 @@ function cargar_perfil_mentor(id) {
 
     $("#reside_bogota_mentor option[value='" + json_update.reside_bogota + "']").prop('selected', true);
 
+    $("#reside_localidad option:selected").removeAttr("selected");
+    $("#reside_localidad option:selected").prop("selected", false);
     if(json_update.localidad > 0){
         $("#reside_localidad option[value='" + true + "']").prop('selected', true);
-        $("#localidad_mentor option:selected").removeAttr("selected");
-        $("#localidad_mentor option:selected").prop("selected", false);
-
-        /*
-        $.each(JSON.parse(json_update.localidades), function (i, e) {
-            if(json_update.localidad === e){
-                $("#localidad_mentor option[value='" + e + "']").prop("selected", true);
-            }else{
-                $("#localidad_mentor option[value='" + e + "']").prop("selected", false);
-            }
-        });*/
-
+        $("#localidad_mentor option[value='" + json_update.localidad + "']").prop('selected', true);
     }else{
-        $("#reside_localidad option[value='" + false  + "']").prop('selected', false);
+        $("#reside_localidad option[value='" + false  + "']").prop('selected', true);
     }
-
 
     $("#id_mentor").val(json_update.id);
 
-    alert("se asigna el id" + json_update.id);
 }
 
 //Carga el registro el registro del recurso de la convocatoria
@@ -1808,9 +1817,6 @@ function validator_form(token_actual) {
         var bv = $form.data('bootstrapValidator');
 
         // Enviar datos del formulario para guardar
-
-        alert("id mentor: " + $("#id_mentor").val());
-
         if ($("#id_mentor").val() == "") {
             //Se realiza la peticion con el fin de guardar el registro actual
 
@@ -1875,28 +1881,34 @@ function validator_form(token_actual) {
                     }
                 }
             });
-        } else {
-
-            //!!editar para guardar cuando se edita
+        } 
+        else {
 
             //Realizo la peticion con el fin de editar el registro actual            
             var values_jurado = {
-                orden: $("#orden_perfil_jurado").val(),
-                formacion_profesional: $("#formacion_profesional").val(),
-                area_conocimiento: $("#area_conocimiento").val(),
-                formacion_postgrado: $("#formacion_postgrado").val(),
-                nivel_educativo: $("#nivel_educativo").val(),
-                area_perfil: $("#area_perfil").val(),
-                reside_bogota: $("#reside_bogota").val(),
-                descripcion_perfil: CKEDITOR.instances.descripcion_perfil.getData(),
-                campo_experiencia: CKEDITOR.instances.campo_experiencia.getData(),
+                tipo_participante: $("#tipo_participante_mentor").val(),
+                convocatoria: $("#id").val(),                
+                cantidad_perfil: $("#cantidad_perfil_mentores").val(),
+                orden: $("#orden_perfil_mentor").val(),
+                formacion_profesional: $("#formacion_profesional_mentor").val(),
+                area_experticia: $("#area_experticia").val(),
+                formacion_postgrado: $("#formacion_postgrado_mentor").val(),
+                nivel_educativo: $("#nivel_educativo_mentor").val(),
+                reside_bogota: $("#reside_bogota_mentor").val(),
+                descripcion_perfil: $("#descripcion_perfil_mentor").val(),
+                campo_experiencia: $("#campo_experiencia_mentor").val(),
+                otroarea: $("#otraarea").val(),
+                experiencia_docente: $("#experiencia_docente").val(),
+                localidad: $("#localidad_mentor").val(),
+                /*descripcion_perfil: CKEDITOR.instances.descripcion_perfil_mentor.getData(),
+                campo_experiencia: CKEDITOR.instances.campo_experiencia_mentor.getData(),*/
                 modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
                 token: token_actual.token
             };
 
             $.ajax({
                 type: 'PUT',
-                url: url_pv + 'Convocatoriasparticipantes/edit/' + $("#id_cpj").attr('value'),
+                url: url_pv + 'Convocatoriasparticipantes/edit_mentor/' + $("#id_mentor").attr('value'),
                 data: $.param(values_jurado)
             }).done(function (result) {
                 if (result == 'error')
@@ -1939,8 +1951,6 @@ function validator_form(token_actual) {
         $("#id_mentor").attr("value", "");
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
-
-        
 
     });
 
