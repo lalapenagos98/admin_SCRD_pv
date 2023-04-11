@@ -32,7 +32,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             $.ajax({
                 type: 'POST',
                 data: {"token": token_actual.token, "modulo": "SICON-REPORTES-CONTRATISTAS"},
-                url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
+                url: url_pv + 'Convocatorias/select_entidades_contratistas'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
