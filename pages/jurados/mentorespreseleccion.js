@@ -82,6 +82,36 @@ keycloak.init(initOptions).then(function (authenticated) {
                 cargar_tabla_filtro(token_actual);
             });
 
+            $('#formacion_profesional_mentor').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
+            $('#formacion_postgrado_mentor').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
+            $('#experiencia_docente').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
+            $('#localidad_mentor').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
+            $('#area_experticia').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
+            $('#nivel_educativo_mentor').change(function () {
+                $('#resultado').focus();
+                cargar_tabla_filtro(token_actual);
+            });
+
             //carga el formulario para la busqueda por filtros
             $('#abrir_filtros').click(function () {
                 if($('#formulario_busqueda_libre_oculto').val() == 'true'){
@@ -95,21 +125,6 @@ keycloak.init(initOptions).then(function (authenticated) {
                 }
             });
 
-            $('#buscar_banco').click(function () {
-                //$("#formulario_busqueda_banco").submit();
-                //$('#resultado').focus();
-                //$('#filtro').val(true);
-                //cargar_tabla(token_actual);
-                //$("#exampleModal").modal("toggle");
-            });
-
-            $('#formulario_busqueda_banco').click(function () {
-                //$("#formulario_busqueda_banco").submit();
-                //$('#resultado').focus();
-                //$('#filtro').val(true);
-                //cargar_tabla(token_actual);
-                //$("#exampleModal").modal("toggle");
-            });
 
             //acta preselección
             $("#generar_acta_preseleccion").click(function () {
@@ -647,10 +662,12 @@ function cargar_tabla(token_actual) {
             {"data": "aciones",
                 render: function (data, type, row) {
                     if (row.id_postulacion === null || row.id_postulacion === undefined) {
-                        return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-info btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
-                                + '<span class="glyphicon glyphicon-search"></span></button><br/><br/>'+
-                                '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-danger btn_postular" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-log-in"></span></button>';
+                        return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-primary btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
+                                + '<span class="glyphicon glyphicon-search"></span></button><br/>'+
+                                '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
+                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>'+
+                                '<button id="' + row.numero_documento + '" title="Ver inhabilidades" type="button" class="btn btn-info btn_inhabilidades" numero-documento="' + row.numero_documento + '">'
+                                + '<span class="glyphicon glyphicon-eye-open"></span></button>';
                     } else {
                         return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-check"></span></button>';
@@ -752,10 +769,12 @@ function cargar_tabla_filtro(token_actual) {
             {"data": "aciones",
                 render: function (data, type, row) {
                     if (row.id_postulacion === null || row.id_postulacion === undefined) {
-                        return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-info btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
-                                + '<span class="glyphicon glyphicon-search"></span></button><br/><br/>'+
-                                '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-danger btn_postular" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-log-in"></span></button>';
+                        return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-primary btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
+                                + '<span class="glyphicon glyphicon-search"></span></button><br/>'+
+                                '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
+                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>'+
+                                '<button id="' + row.numero_documento + '" title="Ver inhabilidades" type="button" class="btn btn-info btn_inhabilidades" numero-documento="' + row.numero_documento + '">'
+                                + '<span class="glyphicon glyphicon-eye-open"></span></button>';
                     } else {
                         return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-check"></span></button>';
@@ -808,13 +827,29 @@ function acciones_registro(token_actual) {
         cargar_tabla_reconocimiento(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_tabla_publicaciones(token_actual, $(this).attr("id"), $(this).attr("id-participante"));        
 
-    });
-    
-    
+    });    
     
     $(".btn_postular").click(function () {
         postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this));        
     });
+
+    $('.btn_inhabilidades').click(function () {
+
+        const fechaActual = new Date();
+        const year = fechaActual.getFullYear();
+
+        $.AjaxDownloader({
+            url: url_pv_report + 'reporte_persona_natural_back.php',
+            data: {
+            nd: $(this).attr("numero-documento"),
+            anio: year,
+            cv1: 'true',
+            token: token_actual.token,
+            modulo: "SICON-PROPUESTAS-VERIFICACION"
+            }
+        });
+    });
+
 }
 
 //carga información básica del participante seleccionado
