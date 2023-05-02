@@ -173,13 +173,16 @@
                                                 </select>                                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
+
+
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Área (s) o prácticas de experticia</label>
-                                                <select id="area_experticia" class="form-control validar_jurado" name="area_experticia[]" multiple="multiple">                                                                                                                        
-                                                </select>
+                                                <br><input id="filtro_area" type="text" placeholder="Búsqueda de área o práctica..." /><input id="filtrar_seleccionadas" type="button" value="Ver Selección" /><input id="quitar_filtro" type="button" value="Ver todas" title="Ver todas" />
+                                                <div id="div_areas" class="div_multichulos"></div>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -188,7 +191,6 @@
                                                 <select id='formacion_postgrado_mentor' name="formacion_postgrado_mentor" class="form-control validacion_general validar_jurado" >                                                    
                                                     <option value="">:: Seleccionar ::</option>
                                                     <option value="true">Sí</option>
-                                                    <option value="false">No</option>
                                                 </select>                                                                                                                                                                              
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
@@ -262,7 +264,8 @@
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="formulario_busqueda_libre_oculto" value="true">
                                             <input type="hidden" id="idd" name="idd" />
-                                            <button type="button" class="btn btn-default" id="buscar_filtro" title="Buscar">Aplicar filtros</button>
+                                            <button type="button" class="btn btn-primary" id="buscar_filtro" title="Buscar">Aplicar filtros</button>
+                                            <button type="button" class="btn btn-info" id="limpiar_filtros" title="Buscar">Borrar filtros</button>
                                         </div>
                                     </div>
                                 </form>
@@ -295,7 +298,6 @@
                                                     <th>Número documento</th>
                                                     <th>Nombres</th>
                                                     <th>Apellidos</th>
-                                                    <th>Puntaje</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
@@ -418,7 +420,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="alert alert-info">
-                                        <small>Si requiere jurados que tenga experiencia disciplinar, por favor seleccione una linea.</small>
+                                        <small>Si requiere jurados que tenga experiencia, por favor seleccione una linea.</small>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -605,679 +607,6 @@
         </div>
         <!-- Modal -->
 
-
-        <!-- Modal evaluar hoja de vida-->
-        <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" >
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!--h5 class="modal-title" id="exampleModalLabel">Modal title</h5-->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-
-                            <div class="col-lg-12" style="display: none;" id="select_categorias_2">
-                                <div class="form-group">
-                                    <label>Seleccione la categoria a la cual va a ir el jurado </label>
-                                    <select id='categorias_2' name="categorias_2" class="form-control" >
-                                        <option value="">:: Seleccionar ::</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" id="id_perfil_selecionado">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="alertModalSelbcancelar" >Cancelar</button>
-                                    <button type="button" class="btn btn-primary" id="alertModalSelbaceptar" >Aceptar</button>
-                                </div>
-                            </div>
-
-                            <!--Tabs-->
-                            <div class="panel-body" id="panel_tabs" style="display: none;">
-                                <!-- Nav tabs -->
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#perfil_convocatoria" data-toggle="tab" aria-expanded="true">Perfil de la convocatoria</a>
-                                    </li>
-                                    <li class=""><a href="#hoja_de_vida" data-toggle="tab" aria-expanded="false">Ver hoja de vida</a>
-                                    </li>
-                                    <li class=""><a href="#inhabilidades" data-toggle="tab" aria-expanded="false">Ver inhabilidades</a>
-                                    </li>
-                                    <li class=""><a href="#puntuacion" data-toggle="tab" aria-expanded="false">Puntuación</a>
-                                    </li>
-                                </ul>
-
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-
-                                    <div class="tab-pane fade active in" id="perfil_convocatoria">
-
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">Perfil de la convocatoria al cual se postuló </h4>
-                                            </div>
-                                            <div class="panel-body" id="perfiles_jurados">
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="tab-pane fade" id="hoja_de_vida">
-                                        <!-- Accordion -->
-                                        <div class="panel-group" id="accordion">
-
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" class="">Información personal</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse1" class="panel-collapse collapse in" aria-expanded="true" style="">
-                                                    <div class="panel-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <h5 style="color: red;"><b>Modalidad en la que participa el aspirante: </b><div id="modalidad_participa_jurado"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Tipo de documento de identificación: </b><div id="tipo_documento"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Número de documento de identificación: </b><div id="numero_documento"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Nombres: </b><div id="nombres"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Apellidos: </b><div id="apellidos"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Fecha de nacimiento: </b><div id="fecha_nacimiento"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Sexo: </b><div id="sexo"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Orientación sexual: </b><div id="orientacion_sexual"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Identidad de género: </b><div id="identidad_genero"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Ciudad: </b><div id="ciudad"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Barrio: </b><div id="barrio"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Localidad: </b><div id="localidad"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Dirección de residencia: </b><div id="direccion_residencia"> </div></h5>
-                                                            </div>                                                            
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Correo electrónico: </b><div id="correo_electronico"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <h5><b>Perfil: </b><div id="propuesta_resumen"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="collapsed" aria-expanded="false">Documentos administrativos</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse2" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla experiencia laboral-->
-                                                        <div class="row" id="table_docs">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_documentos" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Documento</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="collapsed" aria-expanded="false">Educación Formal</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse3" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla educacion_formal-->
-                                                        <div class="row" id="table_eformal">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_educacion_formal" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Nivel educativo</th>
-                                                                            <th>Titulo</th>
-                                                                            <th>Institución educativa</th>
-                                                                            <th>Graduado</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-
-                                                            </div>
-                                                        </div>
-                                                        <div id="vermas" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenidox" >
-
-                                                                </div>
-                                                                <button type="button" id="vermas_back" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <!-- tabla educacion_formal-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="collapsed" aria-expanded="false">Educación no Formal</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse4" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla educacion no formal-->
-                                                        <div class="row" id="table_enformal">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_educacion_no_formal" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Tipo</th>
-                                                                            <th>Modalidad</th>
-                                                                            <th>Nombre</th>
-                                                                            <th>Institución</th>
-                                                                            <th>Fecha de Inicio</th>
-                                                                            <th>Fecha de Terminación</th>
-                                                                            <th>Número de Horas</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="vermas_enf" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_enf" >
-
-                                                                </div>
-                                                                <button type="button" id="vermas_back_enf" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="collapsed" aria-expanded="false">Experiencia disciplinar</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse5" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla experiencia laboral-->
-                                                        <div class="row" id="row_experiencia">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_experiencia" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Tipo Entidad</th>
-                                                                            <th>Entidad</th>
-                                                                            <th>Línea</th>
-                                                                            <th>Fecha de Inicio</th>
-                                                                            <th>Fecha de Terminación</th>
-                                                                            <th>Meses de Experiencia</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <!-- tabla experiencia laboral-->
-
-                                                        <div id="vermas_experiencia" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_experiencia" ></div>
-                                                                <button type="button" id="vermas_back_experiencia" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="collapsed" aria-expanded="false">Experiencia como jurado</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse6" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla experiencia jurado-->
-                                                        <div class="row" id="row_experiencia_jurado">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_experiencia_jurado" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Nombre convocatoria</th>
-                                                                            <th>Entidad</th>
-                                                                            <th>Año</th>
-                                                                            <th>Ambito</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div id="vermas_experiencia_jurado" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_experiencia_jurado" ></div>
-                                                                <button type="button" id="vermas_back_experiencia_jurado" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse7" class="collapsed" aria-expanded="false">Reconocimientos (Distinciones y Premios)</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse7" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla experiencia laboral-->
-                                                        <div class="row" id="row_reconocimiento">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_reconocimiento" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Nombre</th>
-                                                                            <th>Institución</th>
-                                                                            <th>Tipo</th>
-                                                                            <th>Año</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div id="vermas_reconocimiento" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_reconocimiento" ></div>
-                                                                <button type="button" id="vermas_back_reconocimiento" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse8" class="collapsed" aria-expanded="false">Publicaciones</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse8" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla publicaciones-->
-                                                        <div class="row" id="row_publicaciones">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_publicaciones" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Titulo</th>
-                                                                            <th>Tema</th>
-                                                                            <th>Tipo</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-
-                                                        <div id="vermas_publicaciones" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_publicaciones" ></div>
-                                                                <button type="button" id="vermas_back_publicaciones" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- Accordion -->
-                                    </div>
-
-
-                                    <!-- 19-08-2020 Wilmer Gustavo Mogollón Duque --- Se incorpora reporte de inhabilidades -->
-
-                                    <div class="tab-pane fade" id="inhabilidades">
-
-                                        <!--Información básica-->
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">Reporte de inhabilidades del jurado </h4>
-                                            </div>
-                                            <div class="panel-body" id="inhabilidades_jurados">
-                                                <div class="row">
-
-                                                    <div class="col-lg-12">
-
-                                                        <!-- 09-02-2021 Wilmer Gustavo Mogollón Duque --- Se agrega el comentario del número de estímulos que puede recibir un aspirante -->
-
-                                                        <p>
-                                                            Por favor tenga en cuenta el número de estímulos que el aspirante puede recibir como jurado o participante, 
-                                                            de acuerdo a las siguientes combinaciones.
-                                                        </p>
-                                                        <ul>
-                                                            <li>1 como jurado y 2 como participante</li>
-                                                            <li>2 como jurado y 1 como participante</li>
-                                                            <li>3 como jurado</li>
-                                                        </ul>
-                                                        <table id="info_propuesta_verificacion_1" class="table table-bordered table-striped">                                    
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th>Estado</th>
-                                                                    <td id="nombre_estado"></td>
-                                                                    <th>Código</th>
-                                                                    <td id="codigo_propuesta"></td>
-                                                                </tr>
-                                                                <tr>                                                                            
-                                                                    <th>Tipo de participante</th>
-                                                                    <td id="tipo_participante"></td>
-                                                                    <th>Nombre del participante</th>
-                                                                    <td id="nombre_participante"></td>
-                                                                </tr>
-                                                                <tr>                                                                            
-                                                                    <th colspan="1">Nombre de la propuesta</th>
-                                                                    <td colspan="3" id="nombre_propuesta"></td>
-                                                                </tr>                                                                                                                                                                                
-                                                            </tbody>
-                                                        </table>                                                                
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--Contratista-->
-                                        <div id="contratistas" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>El participante tiene contratos en el sector, los cuales son:</b>
-
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Participante</th>
-                                                            <th>Contratista en:</th>                                                                            
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_contratistas">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-                                        <!--Jurados seleccionados-->
-                                        <div id="jurados_seleccionados" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>Convocatorias en las que el aspirante ha sido jurado:</b>
-
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Año</th>
-                                                            <th>Convocatoria</th>
-                                                            <th>Categoría</th>   
-                                                            <th>Tipo Rol</th>                        
-                                                            <th>Participante</th>                                                                            
-                                                            <th>Estado postulación</th>
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_jurados_seleccionados">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-                                        <div id="jurados_proceso" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>Convocatorias en las que está en proceso para ser jurado:</b>
-
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Año</th>
-                                                            <th>Entidad</th>
-                                                            <th>Convocatoria</th>
-                                                            <th>Tipo Rol</th>                        
-                                                            <th>Participante</th>                                                                            
-                                                            <th>Estado postulación</th>
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_jurados_proceso">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-                                        <!--Jurados participa en otras convocatorias-->
-                                        <div id="propuestas_pn" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>El jurado participa en otras convocatorias, los cuales son:</b>
-
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Año</th>
-                                                            <th>Convocatoria</th>
-                                                            <th>Categoría</th>   
-                                                            <th>Tipo Rol</th>                        
-                                                            <th>Participante</th>
-                                                            <th>Propuesta código</th>                                                                                                                   
-                                                            <th>Estado propuesta</th>
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_propuestas_pn">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-                                        <!--Jurados participa en otras convocatorias-->
-                                        <div id="propuestas_ganadoras_pn" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>El jurado ha sido ganador en convocatorias, los cuales son:</b>
-
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Año</th>
-                                                            <th>Convocatoria</th>
-                                                            <th>Categoría</th>   
-                                                            <th>Tipo Rol</th>                        
-                                                            <th>Participante</th>
-                                                            <th>Propuesta código</th>                                                                                                                   
-                                                            <th>Estado propuesta</th>
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_propuestas_ganadoras_pn">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-                                        <!--Jurados seleccionados años anteriores-->
-                                        <div id="ganadoras_anios_anteriores" class="row" style="display: none">
-                                            <div class="col-lg-12"> 
-                                                <b>El jurado ya fue seleccionado como ganador en años anteriores para las siguientes convocatorias (SISTEMA DE CONVOCATORIAS v1):</b>
-                                                <table class="table table-bordered table-striped">                                    
-                                                    <thead>
-                                                        <tr style="background-color: #FA5858; color: #ffffff">
-                                                            <th>Año</th>
-                                                            <th>Entidad</th>
-                                                            <th>Convocatoria</th>                                                                            
-                                                            <th>Categoría</th>   
-                                                            <th>Propuesta</th>                                                                            
-                                                            <th>Participante</th>
-                                                            <th>Tipo participante</th>                                                                                                    
-                                                            <th>Tipo Rol</th>                                                                            
-                                                        </tr>                                                                                                                                                                                                                                                        
-                                                    </thead>
-                                                    <tbody id="body_ganadoras_anios_anteriores">                                                                        
-
-                                                    </tbody>
-                                                </table>                                                                                                                                
-                                            </div>                                                            
-                                        </div>
-
-                                    </div>
-
-                                    <div class="tab-pane fade" id="puntuacion">
-
-                                        <div class="panel panel-info">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">Jurado  </h4>
-                                            </div>
-                                            <div class="panel-body">
-                                                <form role="form" id="form_aplica_perfil">
-                                                    <fieldset id="fieldset_aplica_perfil">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Nombres: </b><div id="nombres2"> </div></h5>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <h5><b>Apellidos: </b><div id="apellidos2"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <h5><b>Perfil: </b><div id="propuesta_resumen_perfil"> </div></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-
-                                                                <div class="form-group">
-                                                                    <label>¿Aplica el perfil para la convocatoria?</label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="option_aplica_perfil" id="optionsRadiosInline1" value="true">Si
-                                                                    </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="option_aplica_perfil" id="optionsRadiosInline2" value="false">No
-                                                                    </label>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <label>Justificación</label>
-                                                                    <textarea class="form-control" rows="3" id="descripcion_evaluacion" name="descripcion_evaluacion"></textarea>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12" style="text-align: right">
-                                                            <button type="submit" class="btn btn-default guardar_aplica_perfil">Guardar</button>
-                                                            <input type="hidden" id="id_jurados_postulados">
-                                                            <input type="hidden" id="id_ronda">
-                                                        </div>
-                                                    </fieldset>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel panel-info" id="evaluar" >
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">Evaluar</h4>
-                                            </div>
-                                            <div class="panel-body" >
-                                                <p>
-                                                    Tenga en cuenta que la evaluación se debe realizar de acuerdo al perfil al que se postuló el jurado. Por favor revisar las condiciones generales de participación del Banco de Expertos.
-                                                </p>
-                                                <form role="form" id="form_criterios">
-
-                                                </form>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!--Tabs-->
-
-                        </div>
-
-
-
-
-
-
-                    </div>
-                    <!--div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="aceptar" style="display:none;">Aceptar</button>
-    
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelar" style="display:none;">Cancelar</button>
-                      <button type="button" class="btn btn-primary" id="baceptar" style="display:none;">Aceptar</button>
-                    </div-->
-                </div>
-            </div>
-        </div>
         
         <div class="modal fade" id="ver_hoja_de_vida" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" >
             <div class="modal-dialog modal-lg" role="document">
@@ -1367,6 +696,196 @@
 
                                                 </div>
                                             </div>
+
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#inhabilidades_experto" aria-expanded="false" class="">Reporte de inhabilidades del jurado</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="inhabilidades_experto" class="panel-collapse collapse" aria-expanded="false">
+                                                    <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+
+                                                            
+
+                                                            <p>
+                                                                Por favor tenga en cuenta el número de estímulos que el aspirante puede recibir como jurado o participante, 
+                                                                de acuerdo a las siguientes combinaciones.
+                                                            </p>
+                                                            <ul>
+                                                                <li>1 como jurado y 2 como participante</li>
+                                                                <li>2 como jurado y 1 como participante</li>
+                                                                <li>3 como jurado</li>
+                                                            </ul>
+                                                            <table id="info_propuesta_verificacion_1" class="table table-bordered table-striped">                                    
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>Estado</th>
+                                                                        <td id="nombre_estado"></td>
+                                                                        <th>Código</th>
+                                                                        <td id="codigo_propuesta"></td>
+                                                                    </tr>
+                                                                    <tr>                                                                            
+                                                                        <th>Tipo de participante</th>
+                                                                        <td id="tipo_participante"></td>
+                                                                        <th>Nombre del participante</th>
+                                                                        <td id="nombre_participante"></td>
+                                                                    </tr>
+                                                                    <tr>                                                                            
+                                                                        <th colspan="1">Nombre de la propuesta</th>
+                                                                        <td colspan="3" id="nombre_propuesta"></td>
+                                                                    </tr>                                                                                                                                                                                
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--Contratista-->
+                                                        <div id="contratistas" class="row" style="display: none">
+                                                            <div class="col-lg-12"> 
+                                                                <b>El participante tiene contratos en el sector, los cuales son:</b>
+                
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Participante</th>
+                                                                            <th>Contratista en:</th>                                                                            
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_contratistas">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>                                                                                                                                
+                                                            </div>                                                            
+                                                        </div>
+
+                                                        <!--Jurados seleccionados-->
+                                                        <div id="jurados_seleccionados" class="row" style="display: none">
+                                                            <div class="col-lg-12"> 
+                                                                <b>Convocatorias en las que el aspirante ha sido jurado:</b>
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Año</th>
+                                                                            <th>Convocatoria</th>
+                                                                            <th>Categoría</th>   
+                                                                            <th>Tipo Rol</th>                        
+                                                                            <th>Participante</th>                                                                            
+                                                                            <th>Estado postulación</th>
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_jurados_seleccionados">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>                                                                                                                                
+                                                            </div>                                                            
+                                                        </div>
+
+                                                        <div id="jurados_proceso" class="row" style="display: none">
+                                                            <div class="col-lg-12"> 
+                                                                <b>Convocatorias en las que está en proceso para ser jurado:</b>
+                
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Año</th>
+                                                                            <th>Entidad</th>
+                                                                            <th>Convocatoria</th>
+                                                                            <th>Tipo Rol</th>                        
+                                                                            <th>Participante</th>                                                                            
+                                                                            <th>Estado postulación</th>
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_jurados_proceso">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>                                                                                                                                
+                                                            </div>                                                            
+                                                        </div>
+
+                                                                                                        <!--Jurados participa en otras convocatorias-->
+                                                        <div id="propuestas_pn" class="row" style="display: none">
+                                                            <div class="col-lg-12"> 
+                                                                <b>El jurado participa en otras convocatorias, los cuales son:</b>
+                
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Año</th>
+                                                                            <th>Convocatoria</th>
+                                                                            <th>Categoría</th>   
+                                                                            <th>Tipo Rol</th>                        
+                                                                            <th>Participante</th>
+                                                                            <th>Propuesta código</th>                                                                                                                   
+                                                                            <th>Estado propuesta</th>
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_propuestas_pn">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>                                                                                                                                
+                                                            </div>                                                            
+                                                        </div>
+
+                                                                                                        <!--Jurados participa en otras convocatorias-->
+                                                        <div id="propuestas_ganadoras_pn" class="row" style="display: none">
+                                                            <div class="col-lg-12"> 
+                                                                <b>El jurado ha sido ganador en convocatorias, los cuales son:</b>
+                
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Año</th>
+                                                                            <th>Convocatoria</th>
+                                                                            <th>Categoría</th>   
+                                                                            <th>Tipo Rol</th>                        
+                                                                            <th>Participante</th>
+                                                                            <th>Propuesta código</th>                                                                                                                   
+                                                                            <th>Estado propuesta</th>
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_propuestas_ganadoras_pn">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>                                                                                                                                
+                                                            </div>                                                            
+                                                        </div>
+
+                                                        <div id="ganadoras_anios_anteriores" class="row" style="display: none">
+                                                            <div class="col-lg-12">
+                                                                <b>El jurado ya fue seleccionado como ganador en años anteriores para las siguientes convocatorias (SISTEMA DE CONVOCATORIAS v1):</b>
+                                                                <table class="table table-bordered table-striped">                                    
+                                                                    <thead>
+                                                                        <tr style="background-color: #FA5858; color: #ffffff">
+                                                                            <th>Año</th>
+                                                                            <th>Entidad</th>
+                                                                            <th>Convocatoria</th>                                                                            
+                                                                            <th>Categoría</th>   
+                                                                            <th>Propuesta</th>                                                                            
+                                                                            <th>Participante</th>
+                                                                            <th>Tipo participante</th>                                                                                                    
+                                                                            <th>Tipo Rol</th>                                                                            
+                                                                        </tr>                                                                                                                                                                                                                                                        
+                                                                    </thead>
+                                                                    <tbody id="body_ganadoras_anios_anteriores">                                                                        
+                
+                                                                    </tbody>
+                                                                </table>  
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                                           
+                                        
+
+
+
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
@@ -1393,7 +912,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="panel panel-info">
+                                            <div class="panel panel-info educacion_formal">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse3" class="collapsed" aria-expanded="false">Educación Formal</a>
@@ -1431,7 +950,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="panel panel-info">
+                                            <div class="panel panel-info educacion_no_formal">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
                                                         <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse4" class="collapsed" aria-expanded="false">Educación no Formal</a>
@@ -1475,7 +994,7 @@
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse5" class="collapsed" aria-expanded="false">Experiencia disciplinar</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse5" class="collapsed" aria-expanded="false">Experiencia del participante</a>
                                                     </h4>
                                                 </div>
                                                 <div id="ver_collapse5" class="panel-collapse collapse" aria-expanded="false">

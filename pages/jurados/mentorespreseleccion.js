@@ -82,34 +82,18 @@ keycloak.init(initOptions).then(function (authenticated) {
                 cargar_tabla_filtro(token_actual);
             });
 
-            $('#formacion_profesional_mentor').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
-            });
+            $('#limpiar_filtros').click(function () {
 
-            $('#formacion_postgrado_mentor').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
-            });
+                $('#formacion_profesional_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#area_experticia').val($('#formacion_profesional_mentor').prop(''));
+                $('#formacion_postgrado_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#nivel_educativo_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#experiencia_docente').val($('#formacion_profesional_mentor').prop(''));
+                $('#reside_bogota_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#reside_localidad').val($('#formacion_profesional_mentor').prop(''));
+                $('#localidad_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#palabra_clave_filtro').val($('#formacion_profesional_mentor').prop(''));
 
-            $('#experiencia_docente').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
-            });
-
-            $('#localidad_mentor').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
-            });
-
-            $('#area_experticia').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
-            });
-
-            $('#nivel_educativo_mentor').change(function () {
-                $('#resultado').focus();
-                cargar_tabla_filtro(token_actual);
             });
 
             //carga el formulario para la busqueda por filtros
@@ -504,13 +488,45 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                         $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
                     });
 
-                    //se carga información de Área (s) o prácticas de experticia
-                    $('#area_experticia').find('option').remove();
+
+                    $("#div_areas").html("");
+                    var htmlAreas = "";
+                    aAreas = new Array();                    
                     if (json.areas_experticia.length > 0) {
-                            $.each(json.areas_experticia, function (key, area_experticia) {
-                            $("#area_experticia").append('<option value="' + area_experticia.nombre + '" >' + area_experticia.nombre + '</option>');
+                        $.each(json.areas_experticia, function (key, array) {
+                            htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                            aAreas.push(array);
                         });
+                        $("#div_areas").html(htmlAreas);
                     }
+
+                    $('#filtro_area').on('change keyup', function () {
+                        for (var i=0; i<aAreas.length; i++) {
+                            var area = aAreas[i];
+                            if (incluye(area.nombre,$(this).val())) {
+                                $("#div_area_" + area.id).show();
+                            }
+                            else {
+                                $("#div_area_" + area.id).hide();
+                            }
+                        }
+                    });
+
+                    $('#quitar_filtro').on('click', function () {
+                        $('#filtro_area').val('').change();
+                    });
+            
+                    $('#filtrar_seleccionadas').on('click', function () {
+                        for (var i=0; i<aAreas.length; i++) {
+                            var area = aAreas[i];
+                            if ($("#area_" + area.id).is(":checked")) {
+                                $("#div_area_" + area.id).show();
+                            }
+                            else {
+                                $("#div_area_" + area.id).hide();
+                            }
+                        }
+                    });
 
                     //Valido el tipo de perfil seleccionado para el mentor
                     $("#formacion_postgrado_mentor").on('change', function () {
@@ -527,13 +543,6 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                         } else
                         {
                             $('#nivel_educativo_mentor').find('option').remove();
-                            if (json.niveles_educativos.length > 0) {
-                                $.each(json.niveles_educativos, function (key, nivel_educativo) {
-                                    if(nivel_educativo.id < 7){
-                                        $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                                    }
-                                });
-                            }
                         }
                     });
 
@@ -576,6 +585,15 @@ function cargar_select_perfiles(token_actual, convocatoria) {
     
 }
 
+var aAreas = new Array();
+
+function incluye(t1, t2) {
+    var t1normalizada = t1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    var t2normalizada = t2.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+    return (t1normalizada.includes(t2normalizada));
+}
+
 function cargar_tabla(token_actual) {
 
     //se obtienen los datos guardados del perfil
@@ -592,7 +610,7 @@ function cargar_tabla(token_actual) {
         "lengthMenu": [20, 30, 40],
         "responsive": true,
         "searching": false,
-        "order": [[5, "desc"]],
+        "order": [[4, "desc"]],
         "ajax": {
             type: 'POST',
             url: url_pv + "Mentorespreseleccion/buscar_perfil",
@@ -602,7 +620,6 @@ function cargar_tabla(token_actual) {
                         "convocatoriaperfil_id": $('#perfiles').val()
                     },
 
-            
             error: function (xhr, error, code) {
                 if(xhr.responseText=='error_token'){
                     notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caduco");
@@ -654,20 +671,13 @@ function cargar_tabla(token_actual) {
                     return row.apellidos;
                 },
             },
-            {"data": "Puntaje",
-                render: function (data, type, row) {
-                    return row.puntaje;
-                },
-            },
             {"data": "aciones",
                 render: function (data, type, row) {
                     if (row.id_postulacion === null || row.id_postulacion === undefined) {
                         return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-primary btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
                                 + '<span class="glyphicon glyphicon-search"></span></button><br/>'+
                                 '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>'+
-                                '<button id="' + row.numero_documento + '" title="Ver inhabilidades" type="button" class="btn btn-info btn_inhabilidades" numero-documento="' + row.numero_documento + '">'
-                                + '<span class="glyphicon glyphicon-eye-open"></span></button>';
+                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>';
                     } else {
                         return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-check"></span></button>';
@@ -682,6 +692,17 @@ function cargar_tabla_filtro(token_actual) {
 
     //se obtienen los datos que están en el formulario
 
+    //var areas = $('input[name="a_areas[]"]:checked');
+    var areas_id = [];
+
+    for (var i=0; i<aAreas.length; i++) {
+        var area = aAreas[i];
+        if ($("#area_" + area.id).is(":checked")) {
+            areas_id.push(area.id);
+        }
+    }
+
+
     $('#table_list').DataTable({
         "language": {
             "url": "../../dist/libraries/datatables/js/spanish.json"
@@ -692,7 +713,7 @@ function cargar_tabla_filtro(token_actual) {
         "lengthMenu": [20, 30, 40],
         "responsive": true,
         "searching": false,
-        "order": [[5, "desc"]],
+        "order": [[4, "desc"]],
         "ajax": {
             type: 'POST',
             url: url_pv + "Mentorespreseleccion/buscar_perfil_filtro",
@@ -700,7 +721,7 @@ function cargar_tabla_filtro(token_actual) {
                     {"token": token_actual.token,
                         "convocatoria": $('#convocatorias').val(),
                         "tipo_perfil":$('#formacion_profesional_mentor').val(), 
-                        "areas_experticia":$('#area_experticia').val(),
+                        "areas_experticia":areas_id,
                         "formacion_posgrado":$('#formacion_postgrado_mentor').val(),
                         "nivel_formación":$('#nivel_educativo_mentor').val(),
                         "experiencia_docente":$('#experiencia_docente').val(),
@@ -761,20 +782,13 @@ function cargar_tabla_filtro(token_actual) {
                     return row.apellidos;
                 },
             },
-            {"data": "Puntaje",
-                render: function (data, type, row) {
-                    return row.puntaje;
-                },
-            },
             {"data": "aciones",
                 render: function (data, type, row) {
                     if (row.id_postulacion === null || row.id_postulacion === undefined) {
                         return  '<button id="' + row.id_postulacion + '" title="Ver Hoja de Vida " type="button" class="btn btn-primary btn_cargar_hoja_vida" data-toggle="modal" data-target="#ver_hoja_de_vida" id-participante="' + row.id + '" id-participante-propuesta="' + row.propuesta + '">'
                                 + '<span class="glyphicon glyphicon-search"></span></button><br/>'+
                                 '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>'+
-                                '<button id="' + row.numero_documento + '" title="Ver inhabilidades" type="button" class="btn btn-info btn_inhabilidades" numero-documento="' + row.numero_documento + '">'
-                                + '<span class="glyphicon glyphicon-eye-open"></span></button>';
+                                + '<span class="glyphicon glyphicon-log-in"></span></button><br/>';
                     } else {
                         return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-check"></span></button>';
@@ -819,6 +833,9 @@ function acciones_registro(token_actual) {
         $("#ver_hoja_vida").val($(this).attr("id-participante-propuesta"));
         
         cargar_datos_basicos(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
+
+        cargar_inhabilidades(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
+
         cargar_tabla_documentos(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_tabla_educacion_formal(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_tabla_educacion_no_formal(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
@@ -831,23 +848,6 @@ function acciones_registro(token_actual) {
     
     $(".btn_postular").click(function () {
         postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this));        
-    });
-
-    $('.btn_inhabilidades').click(function () {
-
-        const fechaActual = new Date();
-        const year = fechaActual.getFullYear();
-
-        $.AjaxDownloader({
-            url: url_pv_report + 'reporte_persona_natural_back.php',
-            data: {
-            nd: $(this).attr("numero-documento"),
-            anio: year,
-            cv1: 'true',
-            token: token_actual.token,
-            modulo: "SICON-PROPUESTAS-VERIFICACION"
-            }
-        });
     });
 
 }
@@ -887,6 +887,15 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
                 if (json.participante) {
 
                     $('#modalidad_participa_jurado,#modalidad_participa_jurado_2').html(json.modalidad_participa_jurado);
+
+                    if(json.modalidad_participa_jurado == 'Experto sin título universitario'){
+                        $('.educacion_formal').hide();
+                        $('.educacion_no_formal').show();
+                    }else{
+                        $('.educacion_no_formal').hide();
+                        $('.educacion_formal').show();
+                    }
+
                     $('#tipo_documento,#tipo_documento_2').html(json.participante.tipo_documento);
                     $('#numero_documento,#numero_documento_2').html(json.participante.numero_documento);
                     $('#nombres,#nombres_2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
@@ -2317,8 +2326,6 @@ function cargar_select_nucleobasico(token_actual, id_areasconocimientos, set_val
 
 
 function cargar_inhabilidades(token_actual, postulacion, participante) {
-    $("#perfiles_jurados").html("");
-    //consulto si tengo propuesta cargada
 
     // cargo los datos
     $.ajax({
@@ -2349,7 +2356,6 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                 var json = JSON.parse(data);
                 if (json.participante) {
 
-
                     $('#nombre_participante').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre + ' ' + json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
                     $('#tipo_participante').html(json.participante.tipo);
                     $('#codigo_propuesta').html(json.propuesta_codigo);
@@ -2372,7 +2378,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                         $("#contratistas").css("display", "none");
                     }
 
-//Jurados seleccionados
+                    //Jurados seleccionados
 
                     if (json.html_propuestas_jurados_seleccionados !== "")
                     {
@@ -2385,7 +2391,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                     }
 
 
-//Jurados proceso
+                    //Jurados proceso
 
                     if (json.html_propuestas_jurados_proceso !== "")
                     {
@@ -2397,7 +2403,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                         $("#jurados_proceso").css("display", "none");
                     }
 
-//Personas naturales
+                    //Personas naturales
 
                     if (json.html_propuestas !== "")
                     {
