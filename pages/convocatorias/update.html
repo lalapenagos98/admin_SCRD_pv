@@ -180,8 +180,8 @@
                                                 <select disabled="disabled" id='localidad' name="localidad" class="form-control class_descripcion_ejecucion" >                                                    
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>                                                                                                                                                    
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Upz</label>
@@ -296,6 +296,26 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                <label>¿Esta convocatoria tiene mentorías?</label>
+                                                <select id='tiene_mentores' name="tiene_mentores" class="form-control" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Los mentores para esta convocatoria, son los mismos para sus diferentes categorías?</label>
+                                                <select disabled="disabled" id='mismos_mentores_categorias' name="mismos_mentores_categorias" class="form-control tiene_categorias" >                                                    
+                                                    <option value="true">Sí</option>
+                                                    <option value="false" selected="selected">No</option>
+                                                </select>                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
                                                 <label>Esta convocatoria es cerrada?
                                                 <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Solo aplica para convocatorias cuyos participantes sean invitados de manera directa por las entidades."><i class="fa fa-question"></i></button>                                                
                                                 </label>
@@ -341,14 +361,22 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>¿Cuántos perfiles de jurado requiere? <span class="icono_requerido">*</span></label>
                                                 <select id='cantidad_perfil_jurado' name="cantidad_perfil_jurado" class="form-control diferentes_categorias_disable" >                                                    
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>                                                                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>                                                                                                                                                    
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>¿Cuántos perfiles de mentores requiere? <span class="icono_requerido">*</span></label>
+                                                <select id='cantidad_perfil_mentores' name="cantidad_perfil_mentores" class="form-control diferentes_categorias_disable" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>                                                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>                                                                                                                                                
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -506,6 +534,14 @@
                                                 <button id="btn-perfile-jurados" type="button" class="btn btn-primary diferentes_categorias_button modalidad_jurados" data-toggle="modal" data-target="#perfiles_jurados_modal" >Abrir ventana de perfiles de los jurados</button>
                                             </div>                                                                                                                                                                                                                                                                                                       
                                         </div>                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label><br/>
+                                                <button id="btn-perfil-mentores" type="button" class="btn btn-primary diferentes_categorias_button modalidad_mentores" data-toggle="modal" data-target="#perfiles_mentores_modal" >Abrir ventana de perfiles de los mentores</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -815,6 +851,157 @@
                                     </div>
                                 </div>
                                 
+                                <div class="modal fade" id="perfiles_mentores_modal">
+                                    <div class="modal-dialog" style="width: 60%">
+                                        <div class="modal-content">
+                                            <!-- Modal que se activa cuando se realiza cualquier peticion ajax -->
+                                            <div class="loading centrado-porcentual"></div>
+                                            <!-- cabecera del diálogo -->
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Perfiles de los mentores</h4>                                                    
+                                            </div>
+
+                                            <!-- cuerpo del diálogo -->
+                                            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                                                <form id="form_validator_mentor" action="" class="form_validator_mentor" role="form" method="post">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Número de mentor<span class="icono_requerido">*</span></label>
+                                                                <select id='orden_perfil_mentor' name="orden" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>                                                                                                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Perfil. Describa de manera clara y breve las características básicas de conocimiento, formación, experiencia y trayectoria que debe tener el mentor<span class="icono_requerido">*</span></label>
+                                                                <textarea id="descripcion_perfil_mentor" name="descripcion_perfil_mentor" class="form-control validar_jurado" rows="3"></textarea>                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Otras áreas de experticia<span class="icono_requerido">*</span></label>
+                                                                <textarea id="otraarea" name="otraarea" class="form-control validar_jurado" rows="2"></textarea>                                                
+                                                            </div>
+                                                        </div>                                                                                                     
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Seleccione el tipo de perfil</label><br/>
+                                                                <select id='formacion_profesional_mentor' name="formacion_profesional_mentor" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Experto con título universitario</option>
+                                                                    <option value="false">Experto sin título universitario</option>
+                                                                </select>                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Área (s) o prácticas de experticia</label>
+                                                                <select id="area_experticia" class="form-control validar_jurado" name="area_experticia[]" multiple="multiple">                                                                                                                        
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El mentor debe tener formación de posgrado?</label><br/>
+                                                                <select id='formacion_postgrado_mentor' name="formacion_postgrado_mentor" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                                                                                                                              
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Nivel de formación</label>
+                                                                <select id="nivel_educativo_mentor" class="form-control validar_jurado" name="nivel_educativo_mentor[]" multiple="multiple">                                                                                                                        
+                                                                </select>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>Campo(s) de experiencia o trayectoria</label>
+                                                                <textarea id="campo_experiencia_mentor" name="campo_experiencia_mentor" class="form-control validar_jurado" rows="3"></textarea>                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label>¿El mentor debe tener experiencia como docente, formador, tallerista, o en el acompañamiento en la formulación de proyectos o procesos artísticos, creativos, culturales y patrimoniales?</label><br/>
+                                                                <select id='experiencia_docente' name="experiencia_docente" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El mentor debe residir en Bogotá?</label><br/>
+                                                                <select id='reside_bogota_mentor' name="reside_bogota_mentor" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="">:: Seleccionar ::</option>
+                                                                    <option value="true">Sí</option>
+                                                                    <option value="false">No</option>
+                                                                </select>                                                                
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Localidad</label>
+                                                                <select disabled="disabled" id='localidad_mentor' name="localidad_mentor" class="form-control validacion_general validar_jurado" >                                                    
+                                                                    <option value="" disabled="disabled">:: Seleccionar ::</option>
+                                                                </select>
+                                                            </div>                            
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>¿El mentor debe residir en una localidad en particular?</label><br/>
+                                                                    <select id='reside_localidad' name="reside_localidad" class="form-control validacion_general validar_jurado" >                                                    
+                                                                        <option value="">:: Seleccionar ::</option>
+                                                                        <option value="true">Sí</option>
+                                                                        <option value="false">No</option>
+                                                                    </select>                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12" style="text-align: right">                                                        
+                                                            <input type="hidden" id="tipo_participante_mentor" name="tipo_participante" value="6" />
+                                                            <input type="hidden" id="id_mentor" name="id" />
+                                                            <button type="submit" class="btn btn-default validar_mentor">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Mentor N°</th>
+                                                                                    <th>Descripción del perfil</th>                                                                                    
+                                                                                    <th>¿Activo?</th>
+                                                                                    <th>Acciones</th>                                                                                    
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tbody_perfiles_mentores">
+                                                                                                                                                               
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="modal fade" id="perfiles_participantes_modal">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
