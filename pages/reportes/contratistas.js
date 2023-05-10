@@ -32,7 +32,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             $.ajax({
                 type: 'POST',
                 data: {"token": token_actual.token, "modulo": "SICON-REPORTES-CONTRATISTAS"},
-                url: url_pv + 'Convocatorias/modulo_buscador_propuestas'
+                url: url_pv + 'Convocatorias/select_entidades_contratistas'
             }).done(function (data) {
                 if (data == 'error_metodo')
                 {
@@ -167,12 +167,12 @@ keycloak.init(initOptions).then(function (authenticated) {
                             $.post(url_pv + 'ConvocatoriasFormatos/cargar_contratistas_csv', {srcData: srcData, srcName: srcName, srcSize: srcSize, srcType: srcType, token: token_actual.token, modulo: "SICON-REPORTES-CONTRATISTAS", entidad: $("#entidad").val()}).done(function (data) {
                                 if (data == "error_columnas")
                                 {
-                                    notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con las columnas requeridas.");
+                                    notify("danger", "ok", "Contratistas:", "El archivo txt, no cumple con las columnas requeridas.");
                                 } else
                                 {
                                     if (data == "error_cabecera")
                                     {
-                                        notify("danger", "ok", "Contratistas:", "El archivo csv, no cumple con la cabecera.");
+                                        notify("danger", "ok", "Contratistas:", "El archivo txt, no cumple con la cabecera.");
                                     } else
                                     {
                                         notify("info", "ok", "Cargue exitoso:", data);
