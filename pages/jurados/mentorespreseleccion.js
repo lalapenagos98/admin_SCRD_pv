@@ -1797,7 +1797,6 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
 
                     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
                     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
-                    console.log("aplica_perfil-->" + json[r].postulacion);
                     if (json[r].postulacion) {
 
 //                        alert(json[r].postulacion.aplica_perfil);
