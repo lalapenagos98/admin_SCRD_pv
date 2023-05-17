@@ -107,7 +107,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 } else {
                     generar_acta_jurados_preseleccionados(token_actual, $("#categorias").val());
                 }
-//            generar_acta_jurados_preseleccionados(token_actual, $('#rondas').val());
+                //            generar_acta_jurados_preseleccionados(token_actual, $('#rondas').val());
                 $('#genera_acta_modal').modal('hide');
             });
 
@@ -1706,7 +1706,6 @@ function evaluar_perfil(token_actual, postulacion, participante) {
                 $("#fieldset_aplica_perfil").attr("disabled", "");
                 cargar_tabla(token_actual);
                 if (document.getElementById('optionsRadiosInline1').checked) {
-
                     $("#form_criterios").show();
                 } else {
 
