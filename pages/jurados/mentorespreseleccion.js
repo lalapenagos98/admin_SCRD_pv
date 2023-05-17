@@ -909,6 +909,7 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
                     $('#localidad,#localidad_2').html(json.participante.localidad_residencia);
                     $('#direccion_residencia,#direccion_residencia_2').html(json.participante.direccion_residencia);
                     $('#correo_electronico,#correo_electronico_2').html(json.participante.correo_electronico);
+                    $('#numero_telefono,#numero_telefono_2').html(json.participante.numero_celular);
                     $('#perfil,#perfil_2').html(json.perfil);
                     $('#nombres2,#nombres2_2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
                     $('#apellidos2,#apellidos2_2').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
@@ -1797,7 +1798,6 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
 
                     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
                     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
-                    console.log("aplica_perfil-->" + json[r].postulacion);
                     if (json[r].postulacion) {
 
 //                        alert(json[r].postulacion.aplica_perfil);
