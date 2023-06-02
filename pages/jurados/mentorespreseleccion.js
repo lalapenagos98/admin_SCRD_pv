@@ -698,7 +698,7 @@ function cargar_tabla_filtro(token_actual) {
     for (var i=0; i<aAreas.length; i++) {
         var area = aAreas[i];
         if ($("#area_" + area.id).is(":checked")) {
-            areas_id.push(area.id);
+            areas_id.push(area.nombre);
         }
     }
 
