@@ -372,7 +372,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>¿Cuántos perfiles de mentores requiere? <span class="icono_requerido">*</span></label>
-                                                <select id='cantidad_perfil_mentores' name="cantidad_perfil_mentores" class="form-control diferentes_categorias_disable" >                                                    
+                                                <select id='cantidad_perfil_mentores' name="cantidad_perfil_mentores" class="form-control" >                                                    
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>                                                                                                
                                             </div>                                                                                                                                                                                                                                                                                                        
@@ -882,7 +882,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                <label>Otras áreas de experticia<span class="icono_requerido">*</span></label>
+                                                                <label>Otras áreas de experticia</label>
                                                                 <textarea id="otraarea" name="otraarea" class="form-control validar_jurado" rows="2"></textarea>                                                
                                                             </div>
                                                         </div>                                                                                                     
@@ -896,6 +896,8 @@
                                                                 </select>                                                                
                                                             </div>                                                                                                                                                                                                                                                                                                        
                                                         </div>
+
+                                                         <!--
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label>Área (s) o prácticas de experticia</label>
@@ -903,6 +905,16 @@
                                                                 </select>
                                                             </div>                                                                                                                                                                                                                                                                                                        
                                                         </div>
+                                                        -->
+
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label>Área (s) o prácticas de experticia</label>
+                                                                <br><input id="filtro_area" type="text" placeholder="Búsqueda de área o práctica..." /><input id="filtrar_seleccionadas" type="button" value="Ver Selección" /><input id="quitar_filtro" type="button" value="Ver todas" title="Ver todas" />
+                                                                <div id="div_areas" class="div_multichulos"></div>
+                                                            </div>                                                                                                                                                                                                                                                                                                        
+                                                        </div>
+
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label>¿El mentor debe tener formación de posgrado?</label><br/>
