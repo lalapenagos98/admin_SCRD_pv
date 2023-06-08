@@ -89,6 +89,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $('#formacion_postgrado_mentor').val($('#formacion_profesional_mentor').prop(''));
                 $('#nivel_educativo_mentor').val($('#formacion_profesional_mentor').prop(''));
                 $('#experiencia_docente').val($('#formacion_profesional_mentor').prop(''));
+                $('#grupo_etnico').val($('#formacion_profesional_mentor').prop(''));
                 $('#reside_bogota_mentor').val($('#formacion_profesional_mentor').prop(''));
                 $('#reside_localidad').val($('#formacion_profesional_mentor').prop(''));
                 $('#localidad_mentor').val($('#formacion_profesional_mentor').prop(''));
@@ -725,6 +726,7 @@ function cargar_tabla_filtro(token_actual) {
                         "formacion_posgrado":$('#formacion_postgrado_mentor').val(),
                         "nivel_formación":$('#nivel_educativo_mentor').val(),
                         "experiencia_docente":$('#experiencia_docente').val(),
+                        "grupo_etnico":$('#grupo_etnico').val(),
                         "reside_bogota":$('#reside_bogota_mentor').val(),
                         "localidad":$('#localidad_mentor').val(),
                         "palabra_clave_filtro":$('#palabra_clave_filtro').val()
@@ -910,6 +912,7 @@ function cargar_datos_basicos(token_actual, postulacion, participante) {
                     $('#direccion_residencia,#direccion_residencia_2').html(json.participante.direccion_residencia);
                     $('#correo_electronico,#correo_electronico_2').html(json.participante.correo_electronico);
                     $('#numero_telefono,#numero_telefono_2').html(json.participante.numero_celular);
+                    $('#pertenencia_etnica_2').html(json.participante.grupo_etnico);
                     $('#perfil,#perfil_2').html(json.perfil);
                     $('#nombres2,#nombres2_2').html(json.participante.primer_nombre + ' ' + json.participante.segundo_nombre);
                     $('#apellidos2,#apellidos2_2').html(json.participante.primer_apellido + ' ' + json.participante.segundo_apellido);
