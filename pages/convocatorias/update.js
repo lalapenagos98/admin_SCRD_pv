@@ -1,5 +1,8 @@
 keycloak.init(initOptions).then(function (authenticated) {
     //Si no esta autenticado lo obliga a ingresar al keycloak
+
+    aAreas = new Array();
+
     if (authenticated === false)
     {
         keycloak.login();
@@ -91,8 +94,8 @@ keycloak.init(initOptions).then(function (authenticated) {
             //limpio el formulario de los perfiles de los mentores
             $('#perfiles_mentores_modal').on('hidden.bs.modal', function () {
                 $("#id_mentor").attr('value', '');
-                CKEDITOR.instances.descripcion_perfil_mentor.setData('');
-                CKEDITOR.instances.campo_experiencia_mentor.setData('');
+                //CKEDITOR.instances.descripcion_perfil_mentor.setData('');
+                //CKEDITOR.instances.campo_experiencia_mentor.setData('');
 
                 $("#perfiles_mentores_modal select option:selected").removeAttr("selected");
                 $("#perfiles_mentores_modal select option:selected").prop("selected", false);
@@ -959,8 +962,10 @@ keycloak.init(initOptions).then(function (authenticated) {
 
                         //Cargo el select de cantidad de jurados
                         $('#cantidad_perfil_mentores').find('option').remove();
+                        $("#cantidad_perfil_mentores").removeAttr("disabled");
                         $("#cantidad_perfil_mentores").append('<option value="">:: Seleccionar ::</option>');
                         if (json.cantidad_perfil_mentores.length > 0) {
+                            $("#cantidad_perfil_mentores").removeAttr("disabled");
                             $.each(json.cantidad_perfil_mentores, function (key, cantidad_perfil_mentores) {
                                 var selected = '';
                                 if (cantidad_perfil_mentores == json.convocatoria.cantidad_perfil_mentores)
@@ -1089,6 +1094,57 @@ keycloak.init(initOptions).then(function (authenticated) {
                                     $("#localidad_mentor").append('<option value="' + localidad.id + '" >' + localidad.nombre + '</option>');
                                 });
                         }
+
+                       // var aAreas = new Array();
+
+                        function incluye(t1, t2) {
+                            var t1normalizada = t1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                            var t2normalizada = t2.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+                            return (t1normalizada.includes(t2normalizada));
+                        }
+
+                        //cargo la información de busqueda de areas
+                        $("#div_areas").html("");
+                        var htmlAreas = "";
+
+                        if (json.areas_experticia.length > 0) {
+                            $.each(json.areas_experticia, function (key, array) {
+                                htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                                aAreas.push(array);
+                            });
+                            $("#div_areas").html(htmlAreas);
+                        }
+
+                        $('#filtro_area').on('change keyup', function () {
+                            for (var i=0; i<aAreas.length; i++) {
+                                var area = aAreas[i];
+                                if (incluye(area.nombre,$(this).val())) {
+                                    $("#div_area_" + area.id).show();
+                                }
+                                else {
+                                    $("#div_area_" + area.id).hide();
+                                }
+                            }
+                        });
+
+                        $('#quitar_filtro').on('click', function () {
+                            $('#filtro_area').val('').change();
+                        });
+                
+                        $('#filtrar_seleccionadas').on('click', function () {
+                            for (var i=0; i<aAreas.length; i++) {
+                                var area = aAreas[i];
+                                if ($("#area_" + area.id).is(":checked")) {
+                                    $("#div_area_" + area.id).show();
+                                }
+                                else {
+                                    $("#div_area_" + area.id).hide();
+                                }
+                            }
+                        });
+
+
 
                         //Verifico si es local
                         $('#reside_localidad').on('change', function () {
@@ -1234,12 +1290,15 @@ keycloak.init(initOptions).then(function (authenticated) {
                          CKEDITOR.instances.deberes_ganadores.setData(json.convocatoria.deberes_ganadores);
                          */
 
+                         $("#cantidad_perfil_mentores").removeAttr("disabled");
 
                     }
                 }
             });
 
             validator_form(token_actual);
+
+
         }
     }
 });
@@ -1609,11 +1668,53 @@ function cargar_perfil_mentor(id) {
         $("#nivel_educativo_mentor option[value='" + e + "']").prop("selected", true);
     });
 
-    $("#area_experticia option:selected").removeAttr("selected");
-    $("#area_experticia option:selected").prop("selected", false);
-    $.each(JSON.parse(json_update.area_experticia), function (i, e) {
-        $("#area_experticia option[value='" + e + "']").prop("selected", true);
+    //cargo la información de busqueda de areas
+    $("#div_areas").html("");
+    var htmlAreas = "";
+
+    if (json_update.area_experticia.length > 0) {
+    $.each(json_update.area_experticia, function (key, array) {
+        htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+        aAreas.push(array);
     });
+    
+    $("#div_areas").html(htmlAreas);
+    }
+
+    $('#filtro_area').on('change keyup', function () {
+        for (var i=0; i<aAreas.length; i++) {
+            var area = aAreas[i];
+            if (incluye(area.nombre,$(this).val())) {
+                $("#div_area_" + area.id).show();
+            }
+            else {
+                $("#div_area_" + area.id).hide();
+            }
+        }
+    });
+
+    $('#quitar_filtro').on('click', function () {
+        $('#filtro_area').val('').change();
+    });
+                
+    $('#filtrar_seleccionadas').on('click', function () {
+        for (var i=0; i<aAreas.length; i++) {
+            var area = aAreas[i];
+            if ($("#area_" + area.id).is(":checked")) {
+                $("#div_area_" + area.id).show();
+            }
+            else {
+                $("#div_area_" + area.id).hide();
+            }
+        }
+    });
+
+    function incluye(t1, t2) {
+        var t1normalizada = t1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        var t2normalizada = t2.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        return (t1normalizada.includes(t2normalizada));
+    }
 
     $('#campo_experiencia_mentor').val(json_update.campo_experiencia);
 
@@ -1820,13 +1921,23 @@ function validator_form(token_actual) {
         if ($("#id_mentor").val() == "") {
             //Se realiza la peticion con el fin de guardar el registro actual
 
+
+            var areas_id = [];
+
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                if ($("#area_" + area.id).is(":checked")) {
+                    areas_id.push(area.nombre);
+                }
+            }
+
             var values_mentor = {
                 tipo_participante: $("#tipo_participante_mentor").val(),
                 convocatoria: $("#id").val(),                
                 cantidad_perfil: $("#cantidad_perfil_mentores").val(),
                 orden: $("#orden_perfil_mentor").val(),
                 formacion_profesional: $("#formacion_profesional_mentor").val(),
-                area_experticia: $("#area_experticia").val(),
+                area_experticia: areas_id,
                 formacion_postgrado: $("#formacion_postgrado_mentor").val(),
                 nivel_educativo: $("#nivel_educativo_mentor").val(),
                 reside_bogota: $("#reside_bogota_mentor").val(),
@@ -1884,6 +1995,15 @@ function validator_form(token_actual) {
         } 
         else {
 
+            var areas_id = [];
+
+            for (var i=0; i<aAreas.length; i++) {
+                var area = aAreas[i];
+                if ($("#area_" + area.id).is(":checked")) {
+                    areas_id.push(area.nombre);
+                }
+            }
+
             //Realizo la peticion con el fin de editar el registro actual            
             var values_jurado = {
                 tipo_participante: $("#tipo_participante_mentor").val(),
@@ -1891,7 +2011,7 @@ function validator_form(token_actual) {
                 cantidad_perfil: $("#cantidad_perfil_mentores").val(),
                 orden: $("#orden_perfil_mentor").val(),
                 formacion_profesional: $("#formacion_profesional_mentor").val(),
-                area_experticia: $("#area_experticia").val(),
+                area_experticia: areas_id,
                 formacion_postgrado: $("#formacion_postgrado_mentor").val(),
                 nivel_educativo: $("#nivel_educativo_mentor").val(),
                 reside_bogota: $("#reside_bogota_mentor").val(),
@@ -1944,7 +2064,6 @@ function validator_form(token_actual) {
                     }
                 }
             });
-            
         }
 
         //Eliminó contenido del formulario

@@ -216,6 +216,22 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label>Pertenencia étnica</label><br/>
+                                                <select id='grupo_etnico' name="grupo_etnico" class="form-control validacion_general validar_jurado" >                                                    
+                                                    <option value="">:: Seleccionar ::</option>
+                                                    <option value="1">Palenquero</option>
+                                                    <option value="2">Negro o afrocolombiano</option>
+                                                    <option value="3">Raizal</option>
+                                                    <option value="4">Indígena</option>
+                                                    <option value="5">Rrom o gitano</option>
+                                                </select>                                                                
+                                            </div>                                                                                                                                                                                                                                                                                                        
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>¿El mentor debe residir en Bogotá?</label><br/>
@@ -685,6 +701,14 @@
                                                             <div class="col-lg-6">
                                                                 <h5><b>Correo electrónico: </b><div id="correo_electronico_2"> </div></h5>
                                                             </div>
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Número de teléfono: </b><div id="numero_telefono_2"> </div></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <h5><b>Pertenencia étnica: </b><div id="pertenencia_etnica_2"> </div></h5>
+                                                            </div>
                                                         </div>
 
                                                         <div class="row">
@@ -700,7 +724,7 @@
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#inhabilidades_experto" aria-expanded="false" class="">Reporte de inhabilidades del jurado</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#inhabilidades_experto" aria-expanded="false" class="">Reporte de inhabilidades</a>
                                                     </h4>
                                                 </div>
                                                 <div id="inhabilidades_experto" class="panel-collapse collapse" aria-expanded="false">
@@ -708,17 +732,22 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
 
-
-                                                            
-
                                                             <p>
-                                                                Por favor tenga en cuenta el número de estímulos que el aspirante puede recibir como jurado o participante, 
-                                                                de acuerdo a las siguientes combinaciones.
+                                                                Recuerde que cada aspirante a mentor podrá ser ganador en
+                                                                la vigencia 2023 de los estímulos de los siguientes programas de fomento cultural:
                                                             </p>
                                                             <ul>
-                                                                <li>1 como jurado y 2 como participante</li>
-                                                                <li>2 como jurado y 1 como participante</li>
-                                                                <li>3 como jurado</li>
+                                                                <li>Máximo dos (2) estímulos adjudicados por convocatorias del PDE.</li>
+                                                                <li>Máximo tres (3) estímulos, si:</li>
+                                                                <li>
+                                                                    <ol>
+                                                                        <li>tres (3) son del Banco de Expertos para el Sector Cultura.</li>
+                                                                        <li>dos (2) son como participante y uno (1) como experto.</li>
+                                                                        <li>dos (2) son como experto y uno (1) como participante.</li>
+                                                                    </ol>
+                                                                </li>
+                                                                <li>Máximo cuatro (4) estímulos si uno de ellos es adjudicado en la vigencia 2023 como
+                                                                    participante de las convocatorias de Es Cultura Local.</li>
                                                             </ul>
                                                             <table id="info_propuesta_verificacion_1" class="table table-bordered table-striped">                                    
                                                                 <tbody>
@@ -915,11 +944,12 @@
                                             <div class="panel panel-info educacion_formal">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse3" class="collapsed" aria-expanded="false">Educación Formal</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse3" class="collapsed" aria-expanded="false">Nivel académico</a>
                                                     </h4>
                                                 </div>
                                                 <div id="ver_collapse3" class="panel-collapse collapse" aria-expanded="false">
                                                     <div class="panel-body">
+                                                        <p>Soportes que acrediten educación formal como acta o diploma de pregrado, especialización, maestría o doctorado.</p>
                                                         <!-- tabla educacion_formal-->
                                                         <div class="row" id="table_eformal_2">
                                                             <div class="col-lg-12">
@@ -1033,44 +1063,7 @@
                                             <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse6" class="collapsed" aria-expanded="false">Experiencia como experto</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="ver_collapse6" class="panel-collapse collapse" aria-expanded="false">
-                                                    <div class="panel-body">
-                                                        <!-- tabla experiencia jurado-->
-                                                        <div class="row" id="row_experiencia_jurado_2">
-                                                            <div class="col-lg-12">
-                                                                <table id="table_experiencia_jurado_2" class="table" style="width: 100%;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Nombre convocatoria</th>
-                                                                            <th>Entidad</th>
-                                                                            <th>Año</th>
-                                                                            <th>Ambito</th>
-                                                                            <th>Ciudad</th>
-                                                                            <th>Acciones</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div id="vermas_experiencia_jurado_2" class="row" style="display: none;">
-                                                            <div class="col-lg-12">
-                                                                <div id="contenido_experiencia_jurado_2" ></div>
-                                                                <button type="button" id="vermas_back_experiencia_jurado_2" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-arrow-left "></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-info">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse7" class="collapsed" aria-expanded="false">Reconocimientos (Distinciones y Premios)</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#ver_collapse7" class="collapsed" aria-expanded="false">Reconocimientos (menciones, becas o premios)</a>
                                                     </h4>
                                                 </div>
                                                 <div id="ver_collapse7" class="panel-collapse collapse" aria-expanded="false">
