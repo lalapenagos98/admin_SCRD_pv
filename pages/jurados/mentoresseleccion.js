@@ -131,7 +131,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             });
 
             $("#notificarModal").on('hide.bs.modal', function () {
-                // $('.form_notificar').bootstrapValidator('resetFormData', true);
+                //$('.form_notificar').bootstrapValidator('resetFormData', true);
                 //$(".form_notificar").trigger("reset");
                 //$('.form_notificar').data('bootstrapValidator').destroy()
                 //console.log("estado...ssssll");
@@ -431,12 +431,12 @@ function cargar_tabla(token_actual) {
                 render: function (data, type, row) {
                     return  '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                             + '<span class="glyphicon glyphicon-check"></span></button>'
-                            //+'<button id="' + row.id_postulacion + '" title="Notificar" type="button" class="btn btn-primary btn_cargar_notificar" data-toggle="modal" data-target="#notificarModal" id-participante="' + row.id + '"  postulado= "' + row.postulado + '">'
-                            //+ '<span class="fa fa-send-o"></span></button>'
+                            +'<button id="' + row.id_postulacion + '" title="Notificar" type="button" class="btn btn-primary btn_cargar_notificar" data-toggle="modal" data-target="#notificarModal" id-participante="' + row.id + '"  postulado= "' + row.postulado + '">'
+                            + '<span class="fa fa-send-o"></span></button>'
                             //+ '<button id="' + row.notificacion + '" title="Declinar notificación" type="button" class="btn btn-danger btn_declinar"  id-participante="' + row.id + '" ' + (row.estado_notificacion == "Declinada" ? "disabled" : "") + '>'
                             //+ '<span class="fa fa-ban"></span></button>'
-                            //+ '<button id="' + row.notificacion + '" title="Ver notificación" type="button" class="btn  btn-warning btn_cargar_notificacion" data-toggle="modal" data-target="#notificacionModal" id-participante="' + row.id + '">'
-                            //+ '<span class="fa fa-file-text-o"></span></button>'
+                            + '<button id="' + row.notificacion + '" title="Ver notificación" type="button" class="btn  btn-warning btn_cargar_notificacion" data-toggle="modal" data-target="#notificacionModal" id-participante="' + row.id + '">'
+                            + '<span class="fa fa-file-text-o"></span></button>'
                             //+ '<button id="' + row.id_postulacion + '" title="Ver respuesta a notificación" type="button" class="btn  btn-info btn_carta" id-participante="' + row.id + '">'
                             //+ '<span class="fa fa-ticket"></span></button>';
                 },
