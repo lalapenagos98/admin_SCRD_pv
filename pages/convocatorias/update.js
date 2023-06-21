@@ -1214,6 +1214,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $("#presupuesto option[value='" + json.convocatoria.presupuesto + "']").prop('selected', true);
                         $("#cerrada option[value='" + json.convocatoria.cerrada + "']").prop('selected', true);
                         $("#tiene_mentores option[value='" + json.convocatoria.tiene_mentores + "']").prop('selected', true);
+                        $("#solo_mentores option[value='" + json.convocatoria.solo_mentores + "']").prop('selected', true);
                         $("#mismos_mentores_categorias option[value='" + json.convocatoria.mismos_mentores_categorias + "']").prop('selected', true);
 
                         if ($("#convenio").val() == "true")
