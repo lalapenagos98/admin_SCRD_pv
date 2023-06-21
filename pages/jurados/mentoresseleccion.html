@@ -129,7 +129,12 @@
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="idd" name="idd" />
                                             <button type="button" class="btn btn-default" id="buscar" title="Buscar">Buscar</button>
-
+                                            <button
+                                            type="button"
+                                            class="btn btn-success"
+                                            id="generar_acta_preseleccion"
+                                            title="Generar acta jurados preseleccionados"
+                                            data-toggle="modal" data-target="#genera_acta_modal" >Generar acta expertos</button>
                                         </div>
                                     </div>
                                 </form>
@@ -251,11 +256,14 @@
                                         <label>Valor estímulo</label>
                                         <input type="text" id="valor_estimulo" name="valor_estimulo"  class="form-control" >
                                     </div>
-
                                 </div>
-
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Horas mentoría</label>
+                                        <input type="text" id="horas_mentoria" name="horas_mentoria"  class="form-control" >
+                                    </div>
+                                </div>
                             </div>
-
                     </div>
 
                     <div class="modal-footer">
@@ -315,6 +323,10 @@
                             <div class="col-lg-6">
                                 <label>Estímulo</label>
                                 <p><span id="notificacionModal_estimulo"></span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Horas mentoría</label>
+                                <p><span id="notificacionModal_horas"></span></p>
                             </div>
 
                             <!-- 
@@ -987,7 +999,7 @@
         <!-- Modal -->
 
         <!-- Modal generar acta -->
-        <div class="modal fade" id="genera_aceptacion" tabindex="-1" role="dialog" aria-labelledby="genera_aceptacionLabel" aria-hidden="true">
+        <div class="modal fade" id="genera_acta_modal" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -998,13 +1010,13 @@
                     </div>
 
                     <div class="modal-body">
-                        <div id="mensaje">
-                            ¿Está seguro de generar la carta de aceptación?<br/>
+                        <div id="mensajegn" style="display:none;">
+                            ¿Está seguro de generar el acta de mentores seleccionados?<br/>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelarcarta">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptarcarta">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelargn" style="display:none;">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptargn" style="display:none;">Aceptar</button>
                     </div>
                 </div>
             </div>

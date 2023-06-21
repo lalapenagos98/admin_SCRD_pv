@@ -1678,10 +1678,8 @@ function cargar_notificacion(token_actual, notificacion_key) {
                     $('#notificacionModal_fecha_aceptacion').html(json.fecha_aceptacion);
                     $('#notificacionModal_fecha_rechazo').html(json.fecha_rechazo);
                     $('#notificacionModal_estimulo').html(json.valor_estimulo);
-
+                    $('#notificacionModal_horas').html(json.horas_mentoria);
                 }
-
-
                 break;
         }
 
@@ -1744,6 +1742,13 @@ function validator_form(token_actual) {
                     },
                     notEmpty: {
                         message: 'El valor del estímulo es requerido'
+                    }
+                }
+            },
+            horas_mentoria: {
+                validators: {
+                    integer: {
+                        message: 'El campo debe contener solo números'
                     }
                 }
             }
@@ -2016,4 +2021,28 @@ function evaluar_criterios(token_actual, postulacion, participante) {
     
         });
 }
+
+
+$("#generar_acta_preseleccion").click(function () {
+
+    $("#mensajegn").show();
+    $("#bcancelargn").show();
+    $("#baceptargn").show();
+});
+$("#baceptargn").click(function () {
+
+    generar_acta_jurados_preseleccionados($('#convocatorias').val());
+
+    /*
+    if ($("#categorias").val() === null) {
+        generar_acta_jurados_preseleccionados($('#convocatorias').val());
+    } else {
+        generar_acta_jurados_preseleccionados($("#categorias").val());
+    }*/
+
+    $('#genera_acta_modal').modal('hide');
+});
     
+function generar_acta_jurados_preseleccionados(id_convocatoria) {
+    window.open(url_pv + "FormatosDoc/generar_acta_mentores/convocatoria/" + id_convocatoria, "_blank");
+}
