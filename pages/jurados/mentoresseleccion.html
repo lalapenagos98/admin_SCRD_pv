@@ -133,7 +133,7 @@
                                             type="button"
                                             class="btn btn-success"
                                             id="generar_acta_preseleccion"
-                                            title="Generar acta jurados preseleccionados"
+                                            title="Generar acta expertos"
                                             data-toggle="modal" data-target="#genera_acta_modal" >Generar acta expertos</button>
                                         </div>
                                     </div>
@@ -338,6 +338,7 @@
                             </div>
                              -->
 
+                            <!-- 
                             <div class="col-lg-12" id="div_cambiar_rol" style="padding-top: 2em;">
                                 <form role="form" id="form_aplica_perfil">
                                     <fieldset id="fieldset_aplica_perfil">
@@ -359,11 +360,12 @@
 
                                         <div class="col-lg-12" style="text-align: right">
                                             <button type="button" class="btn btn-success cambiar_rol">Guardar</button>
-                                            <!--<input type="hidden" id="cambio_rol_jurado_sel">-->
+                                            
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
+                            -->
 
 
 
@@ -590,14 +592,18 @@
 
                                     <div class="tab-pane fade" id="puntuacion">
 
+                                        <!--
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">Evaluación mentor</h4>
                                             </div>
                                         </div>
 
+
+                                        
                                         <div class="panel-body">
 
+                                            
                                             <form role="form" id="form_aplica_perfil">
 
                                                 <fieldset id="fieldset_aplica_perfil">
@@ -636,6 +642,7 @@
                                             </form>
 
                                         </div>
+                                        -->
 
                                         <div class="panel panel-info" id="evaluar_mentor" >
                                             <div class="panel-heading">
@@ -645,6 +652,10 @@
                                                 <p>
                                                     Tenga en cuenta que la evaluación se debe realizar de acuerdo al perfil al que se postuló el mentor. Por favor revisar las condiciones generales de participación del Banco de Expertos.
                                                 </p>
+
+                                                <input type="hidden" id="id_jurados_postulados">
+                                                <input type="hidden" id="id_ronda">
+
                                                 <form role="form" id="form_criterios_mentor">
 
                                                 </form>

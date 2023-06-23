@@ -1509,7 +1509,10 @@ function acciones_registro(token_actual) {
         cargar_tabla_publicaciones(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_criterios_evaluacion(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_inhabilidades(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
-        // cargar_datos_convocatoria(token_actual,  $(this).attr("id"),  $(this).attr("id-participante"));   
+        // cargar_datos_convocatoria(token_actual,  $(this).attr("id"),  $(this).attr("id-participante"));
+        
+        //cargar la evaluacion
+
     });
 
     $(".btn_cargar_notificar").click(function () {
@@ -1836,15 +1839,15 @@ function guardar_aplica_mentor(token_actual, postulacion, btn_postular, option_a
 //carga información de los criterios de evaluacion de las rondas
 function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
     $("#form_criterios_mentor").empty();
-    $("#form_criterios_mentor").hide();
+    //$("#form_criterios_mentor").hide();
     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
     $(".guardar_aplica_perfil").removeClass("disabled");
-    $("#form_aplica_perfil").trigger("reset");
+    //$("#form_aplica_perfil").trigger("reset");
     //Cargar datos en la tabla actual
 
 
-    console.log("postulacion "+ postulacion + " participante " + participante);
+    //console.log("postulacion "+ postulacion + " participante " + participante);
 
     $.ajax({
         type: 'POST',
@@ -1854,6 +1857,8 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                 + "&postulacion=" + postulacion
                 + "&participante=" + participante
     }).done(function (data) {
+
+        //console.log(JSON.stringify(data));
 
         switch (data) {
             case 'Si':
@@ -1879,6 +1884,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                 //cargar_datos_formulario(token_actual);
                 var json = JSON.parse(data);
                 //Por cada ronda
+
                 $.each(json, function (r, ronda) {
 
                     $("#id_ronda").val(json[r].ronda.id);
@@ -1895,7 +1901,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                             $(".guardar_aplica_perfil").addClass("disabled");
                             $("#fieldset_aplica_perfil").attr("disabled", "");
                             $("input[name=option_aplica_perfil][value=true]").attr('checked', 'checked');
-                            $("#form_criterios_mentor").show();
+                            //$("#form_criterios_mentor").show();
                         } else if (json[r].postulacion.aplica_perfil !== null && (!json[r].postulacion.aplica_perfil)) {
                             $(".guardar_aplica_perfil").addClass("disabled");
                             $("#fieldset_aplica_perfil").attr("disabled", "");
@@ -1903,7 +1909,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                         }
 
                         if (json[r].postulacion.aplica_perfil === null) {
-                            $("#form_aplica_perfil").removeClass("disabled");
+                            //$("#form_aplica_perfil").removeClass("disabled");
                             $(".guardar_aplica_perfil").removeClass("disabled");
                             $("#fieldset_aplica_perfil").removeAttr("disabled", "");
                         }
