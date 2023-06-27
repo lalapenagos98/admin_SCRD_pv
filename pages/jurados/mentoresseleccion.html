@@ -129,7 +129,12 @@
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="idd" name="idd" />
                                             <button type="button" class="btn btn-default" id="buscar" title="Buscar">Buscar</button>
-
+                                            <button
+                                            type="button"
+                                            class="btn btn-success"
+                                            id="generar_acta_preseleccion"
+                                            title="Generar acta expertos"
+                                            data-toggle="modal" data-target="#genera_acta_modal" >Generar acta expertos</button>
                                         </div>
                                     </div>
                                 </form>
@@ -204,7 +209,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Fecha inicio de la evaluación:<span class="icono_requerido">*</span></label>
+                                        <label>Fecha inicio de las mentorías:<span class="icono_requerido">*</span></label>
                                         <div class="input-group date calendario c1" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
                                             <input class="form-control" id="fecha_inicio_evaluacion" name="fecha_inicio_evaluacion" size="16" type="text" value="" readonly>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -213,7 +218,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Fecha fin de la evaluación:<span class="icono_requerido">*</span></label>
+                                        <label>Fecha finalización de las mentorías:<span class="icono_requerido">*</span></label>
                                         <div class="input-group date calendario c2" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
                                             <input class="form-control" id="fecha_fin_evaluacion" name="fecha_fin_evaluacion" size="16" type="text" value="" readonly>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -225,26 +230,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Fecha de deliberación:<span class="icono_requerido">*</span></label>
-                                        <div class="input-group date calendario c3" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                            <input class="form-control" id="fecha_deliberacion" name="fecha_deliberacion" size="16" type="text" value="" readonly>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label>Tipo de jurado</label>
+                                        <label>Tipo de mentor</label>
                                         <select id="select_tipo_jurado" name="select_tipo_jurado" class="form-control">
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Jurado suplente?</label>
+                                        <label>¿Mentor suplente?</label>
                                     </div>
                                     <div class="form-group">
                                         <label class="radio-inline">
@@ -255,17 +248,22 @@
                                         </label>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Valor estímulo</label>
                                         <input type="text" id="valor_estimulo" name="valor_estimulo"  class="form-control" >
                                     </div>
-
                                 </div>
-
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Horas mentoría</label>
+                                        <input type="text" id="horas_mentoria" name="horas_mentoria"  class="form-control" >
+                                    </div>
+                                </div>
                             </div>
-
                     </div>
 
                     <div class="modal-footer">
@@ -326,14 +324,21 @@
                                 <label>Estímulo</label>
                                 <p><span id="notificacionModal_estimulo"></span></p>
                             </div>
+                            <div class="col-lg-6">
+                                <label>Horas mentoría</label>
+                                <p><span id="notificacionModal_horas"></span></p>
+                            </div>
+
+                            <!-- 
                             <div class="col-lg-12">
                                 <label>¿Desea cambiar el rol del jurado?</label>
                                 <label class="radio-inline">
                                     <input type="checkbox" name="cambio_rol" id="cambio_rol" value="1" onchange="javascript:showContent()">
                                 </label>
                             </div>
+                             -->
 
-
+                            <!-- 
                             <div class="col-lg-12" id="div_cambiar_rol" style="padding-top: 2em;">
                                 <form role="form" id="form_aplica_perfil">
                                     <fieldset id="fieldset_aplica_perfil">
@@ -355,11 +360,12 @@
 
                                         <div class="col-lg-12" style="text-align: right">
                                             <button type="button" class="btn btn-success cambiar_rol">Guardar</button>
-                                            <!--<input type="hidden" id="cambio_rol_jurado_sel">-->
+                                            
                                         </div>
                                     </fieldset>
                                 </form>
                             </div>
+                            -->
 
 
 
@@ -586,14 +592,18 @@
 
                                     <div class="tab-pane fade" id="puntuacion">
 
+                                        <!--
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">Evaluación mentor</h4>
                                             </div>
                                         </div>
 
+
+                                        
                                         <div class="panel-body">
 
+                                            
                                             <form role="form" id="form_aplica_perfil">
 
                                                 <fieldset id="fieldset_aplica_perfil">
@@ -632,6 +642,7 @@
                                             </form>
 
                                         </div>
+                                        -->
 
                                         <div class="panel panel-info" id="evaluar_mentor" >
                                             <div class="panel-heading">
@@ -641,6 +652,10 @@
                                                 <p>
                                                     Tenga en cuenta que la evaluación se debe realizar de acuerdo al perfil al que se postuló el mentor. Por favor revisar las condiciones generales de participación del Banco de Expertos.
                                                 </p>
+
+                                                <input type="hidden" id="id_jurados_postulados">
+                                                <input type="hidden" id="id_ronda">
+
                                                 <form role="form" id="form_criterios_mentor">
 
                                                 </form>
@@ -995,7 +1010,7 @@
         <!-- Modal -->
 
         <!-- Modal generar acta -->
-        <div class="modal fade" id="genera_aceptacion" tabindex="-1" role="dialog" aria-labelledby="genera_aceptacionLabel" aria-hidden="true">
+        <div class="modal fade" id="genera_acta_modal" tabindex="-1" role="dialog" aria-labelledby="genera_acta_modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1006,13 +1021,13 @@
                     </div>
 
                     <div class="modal-body">
-                        <div id="mensaje">
-                            ¿Está seguro de generar la carta de aceptación?<br/>
+                        <div id="mensajegn" style="display:none;">
+                            ¿Está seguro de generar el acta de mentores seleccionados?<br/>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelarcarta">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="baceptarcarta">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="bcancelargn" style="display:none;">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="baceptargn" style="display:none;">Aceptar</button>
                     </div>
                 </div>
             </div>

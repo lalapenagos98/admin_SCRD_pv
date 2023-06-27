@@ -131,7 +131,7 @@ keycloak.init(initOptions).then(function (authenticated) {
             });
 
             $("#notificarModal").on('hide.bs.modal', function () {
-                // $('.form_notificar').bootstrapValidator('resetFormData', true);
+                //$('.form_notificar').bootstrapValidator('resetFormData', true);
                 //$(".form_notificar").trigger("reset");
                 //$('.form_notificar').data('bootstrapValidator').destroy()
                 //console.log("estado...ssssll");
@@ -431,12 +431,12 @@ function cargar_tabla(token_actual) {
                 render: function (data, type, row) {
                     return  '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
                             + '<span class="glyphicon glyphicon-check"></span></button>'
-                            //+'<button id="' + row.id_postulacion + '" title="Notificar" type="button" class="btn btn-primary btn_cargar_notificar" data-toggle="modal" data-target="#notificarModal" id-participante="' + row.id + '"  postulado= "' + row.postulado + '">'
-                            //+ '<span class="fa fa-send-o"></span></button>'
+                            +'<button id="' + row.id_postulacion + '" title="Notificar" type="button" class="btn btn-primary btn_cargar_notificar" data-toggle="modal" data-target="#notificarModal" id-participante="' + row.id + '"  postulado= "' + row.postulado + '">'
+                            + '<span class="fa fa-send-o"></span></button>'
                             //+ '<button id="' + row.notificacion + '" title="Declinar notificación" type="button" class="btn btn-danger btn_declinar"  id-participante="' + row.id + '" ' + (row.estado_notificacion == "Declinada" ? "disabled" : "") + '>'
                             //+ '<span class="fa fa-ban"></span></button>'
-                            //+ '<button id="' + row.notificacion + '" title="Ver notificación" type="button" class="btn  btn-warning btn_cargar_notificacion" data-toggle="modal" data-target="#notificacionModal" id-participante="' + row.id + '">'
-                            //+ '<span class="fa fa-file-text-o"></span></button>'
+                            + '<button id="' + row.notificacion + '" title="Ver notificación" type="button" class="btn  btn-warning btn_cargar_notificacion" data-toggle="modal" data-target="#notificacionModal" id-participante="' + row.id + '">'
+                            + '<span class="fa fa-file-text-o"></span></button>'
                             //+ '<button id="' + row.id_postulacion + '" title="Ver respuesta a notificación" type="button" class="btn  btn-info btn_carta" id-participante="' + row.id + '">'
                             //+ '<span class="fa fa-ticket"></span></button>';
                 },
@@ -1509,7 +1509,10 @@ function acciones_registro(token_actual) {
         cargar_tabla_publicaciones(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_criterios_evaluacion(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
         cargar_inhabilidades(token_actual, $(this).attr("id"), $(this).attr("id-participante"));
-        // cargar_datos_convocatoria(token_actual,  $(this).attr("id"),  $(this).attr("id-participante"));   
+        // cargar_datos_convocatoria(token_actual,  $(this).attr("id"),  $(this).attr("id-participante"));
+        
+        //cargar la evaluacion
+
     });
 
     $(".btn_cargar_notificar").click(function () {
@@ -1678,10 +1681,8 @@ function cargar_notificacion(token_actual, notificacion_key) {
                     $('#notificacionModal_fecha_aceptacion').html(json.fecha_aceptacion);
                     $('#notificacionModal_fecha_rechazo').html(json.fecha_rechazo);
                     $('#notificacionModal_estimulo').html(json.valor_estimulo);
-
+                    $('#notificacionModal_horas').html(json.horas_mentoria);
                 }
-
-
                 break;
         }
 
@@ -1744,6 +1745,13 @@ function validator_form(token_actual) {
                     },
                     notEmpty: {
                         message: 'El valor del estímulo es requerido'
+                    }
+                }
+            },
+            horas_mentoria: {
+                validators: {
+                    integer: {
+                        message: 'El campo debe contener solo números'
                     }
                 }
             }
@@ -1831,15 +1839,15 @@ function guardar_aplica_mentor(token_actual, postulacion, btn_postular, option_a
 //carga información de los criterios de evaluacion de las rondas
 function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
     $("#form_criterios_mentor").empty();
-    $("#form_criterios_mentor").hide();
+    //$("#form_criterios_mentor").hide();
     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
     $(".guardar_aplica_perfil").removeClass("disabled");
-    $("#form_aplica_perfil").trigger("reset");
+    //$("#form_aplica_perfil").trigger("reset");
     //Cargar datos en la tabla actual
 
 
-    console.log("postulacion "+ postulacion + " participante " + participante);
+    //console.log("postulacion "+ postulacion + " participante " + participante);
 
     $.ajax({
         type: 'POST',
@@ -1849,6 +1857,8 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                 + "&postulacion=" + postulacion
                 + "&participante=" + participante
     }).done(function (data) {
+
+        //console.log(JSON.stringify(data));
 
         switch (data) {
             case 'Si':
@@ -1874,6 +1884,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                 //cargar_datos_formulario(token_actual);
                 var json = JSON.parse(data);
                 //Por cada ronda
+
                 $.each(json, function (r, ronda) {
 
                     $("#id_ronda").val(json[r].ronda.id);
@@ -1890,7 +1901,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                             $(".guardar_aplica_perfil").addClass("disabled");
                             $("#fieldset_aplica_perfil").attr("disabled", "");
                             $("input[name=option_aplica_perfil][value=true]").attr('checked', 'checked');
-                            $("#form_criterios_mentor").show();
+                            //$("#form_criterios_mentor").show();
                         } else if (json[r].postulacion.aplica_perfil !== null && (!json[r].postulacion.aplica_perfil)) {
                             $(".guardar_aplica_perfil").addClass("disabled");
                             $("#fieldset_aplica_perfil").attr("disabled", "");
@@ -1898,7 +1909,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                         }
 
                         if (json[r].postulacion.aplica_perfil === null) {
-                            $("#form_aplica_perfil").removeClass("disabled");
+                            //$("#form_aplica_perfil").removeClass("disabled");
                             $(".guardar_aplica_perfil").removeClass("disabled");
                             $("#fieldset_aplica_perfil").removeAttr("disabled", "");
                         }
@@ -2016,4 +2027,28 @@ function evaluar_criterios(token_actual, postulacion, participante) {
     
         });
 }
+
+
+$("#generar_acta_preseleccion").click(function () {
+
+    $("#mensajegn").show();
+    $("#bcancelargn").show();
+    $("#baceptargn").show();
+});
+$("#baceptargn").click(function () {
+
+    generar_acta_jurados_preseleccionados($('#convocatorias').val());
+
+    /*
+    if ($("#categorias").val() === null) {
+        generar_acta_jurados_preseleccionados($('#convocatorias').val());
+    } else {
+        generar_acta_jurados_preseleccionados($("#categorias").val());
+    }*/
+
+    $('#genera_acta_modal').modal('hide');
+});
     
+function generar_acta_jurados_preseleccionados(id_convocatoria) {
+    window.open(url_pv + "FormatosDoc/generar_acta_mentores/convocatoria/" + id_convocatoria, "_blank");
+}

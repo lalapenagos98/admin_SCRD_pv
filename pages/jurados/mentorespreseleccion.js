@@ -1368,7 +1368,11 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
             },
             {"data": "Meses de Experiencia",
                 render: function (data, type, row) {
-                    return  ((((new Date(row.fecha_fin)) - (new Date(row.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 30).toFixed(1);
+                    if(row.fecha_fin){
+                        return  ((((new Date(row.fecha_fin)) - (new Date(row.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 30).toFixed(1);
+                    }else{
+                        return  ((((new Date()) - (new Date(row.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 30).toFixed(1);
+                    }
                 },
             },
             {"data": "aciones",
@@ -1380,8 +1384,6 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
                             + '</button>';
                 },
             }
-
-
 
         ]
     });
