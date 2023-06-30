@@ -62,6 +62,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
                 $('#categorias').val(null);
                 cargar_tabla(token_actual);
+
+                //cargo los perfiles
+                cargar_select_perfiles(token_actual, $('#convocatorias').val());
             });
 
             $('#categorias').change(function () {
@@ -359,6 +362,9 @@ function cargar_tabla(token_actual) {
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     var data = ($('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
 
+    console.log("perfil ---" + $('#perfiles').val());
+
+
     $('#table_list').DataTable({
         "language": {
             "url": "../../dist/libraries/datatables/js/spanish.json"
@@ -376,6 +382,7 @@ function cargar_tabla(token_actual) {
                     {"token": token_actual.token,
                         "convocatoria": $('#convocatorias').val(),
                         "categoria": $('#categorias').val(),
+                        "perfil": $('#perfiles').val(),
                         "filtros": data
                     },
             //async: false
@@ -447,6 +454,47 @@ function cargar_tabla(token_actual) {
         ]
     });
 
+}
+
+function cargar_select_perfiles(token_actual, convocatoria) {
+
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token, "convocatoria": convocatoria, "tipo_participante": 6, modulo: "SICON-CONVOCATORIAS-CONFIGURACION"},
+        url: url_pv + 'Convocatoriasparticipantes/select'
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caducó");
+            } else
+            {
+                var json = JSON.parse(data);
+
+                if (json != null && json.perfiles_mentores.length > 0) {
+
+                    //se carga información de perfiles
+                    //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
+                    $.each(json.perfiles_mentores, function (key, perfil_mentor) {
+                        $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
+                    });
+
+                }
+                else
+                {
+                    //Se agrega para ocultar el select cuando no existe categorias de una convocatoria
+                    $('#select_perfiles').hide();
+                    $('#perfiles').find('option').remove();
+                }   
+            }
+        }
+    });
+
+    
 }
 
 /*

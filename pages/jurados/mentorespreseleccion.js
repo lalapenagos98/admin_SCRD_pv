@@ -67,6 +67,12 @@ keycloak.init(initOptions).then(function (authenticated) {
                 //cargar_tabla(token_actual);
             });
 
+            $('#perfiles').change(function () {
+                //console.log("cambia los perfiles -----");
+                cargar_tabla(token_actual);
+            });
+
+
             $('#categorias').change(function () {
                 //cargar_tabla(token_actual);
             });
@@ -484,7 +490,7 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                     $('#perfiles').find('option').remove();
 
                     //se carga información de perfiles
-                    $("#perfiles").append('<option value="">:: Seleccionar ::</option>');
+                    //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
                     $.each(json.perfiles_mentores, function (key, perfil_mentor) {
                         $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
                     });
@@ -849,7 +855,7 @@ function acciones_registro(token_actual) {
     });    
     
     $(".btn_postular").click(function () {
-        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this));        
+        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());        
     });
 
 }
@@ -2227,9 +2233,13 @@ function seleccionar_jurado(token_actual, postulacion, participante) {
     });
 }
 
-function postular(token_actual, postulacion, participante,btn_postular) {
+function postular(token_actual, postulacion, participante, btn_postular, perfil) {
 
     var idregistro = ($('#categorias').val() === null) ? $('#convocatorias').val() : $('#categorias').val();
+
+    //console.log("perfil --- " + perfil);
+
+
     $.ajax({
         type: 'POST',
         url: url_pv + 'Mentorespreseleccion/new_postulacion',
@@ -2239,6 +2249,7 @@ function postular(token_actual, postulacion, participante,btn_postular) {
             "idc": $("#idc").val(), //id de la convocatoria de jurado
             "idregistro": idregistro,
             "participante": participante,
+            "perfil":perfil
         },
     }).done(function (result) {
 
