@@ -1040,7 +1040,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
             },
             "processing": true,
             "destroy": true,
-            "serverSide": true,
+            "serverSide": false,
             "lengthMenu": [10, 15, 20],
             "responsive": true,
             "searching": false,
@@ -1139,6 +1139,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
     
             ]
         });
+        calcularTotalAniosExperiencia();
     }
     
     //Permite realizar acciones despues de cargar la tabla experiencia disciplina

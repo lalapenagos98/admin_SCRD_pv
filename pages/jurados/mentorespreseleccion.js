@@ -1309,7 +1309,7 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
         },
         "processing": true,
         "destroy": true,
-        "serverSide": true,
+        "serverSide": false,
         "lengthMenu": [10, 15, 20],
         "responsive": true,
         "searching": false,
@@ -1410,6 +1410,7 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
 
         ]
     });
+    calcularTotalAniosExperiencia();
 }
 
 //Permite realizar acciones despues de cargar la tabla experiencia disciplina
