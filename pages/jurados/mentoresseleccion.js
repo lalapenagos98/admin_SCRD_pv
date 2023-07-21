@@ -357,7 +357,7 @@ function cargar_select_categorias(token_actual, convocatoria) {
 }
 
 function cargar_tabla(token_actual) {
-
+console.log('infgresa')
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     var data = ($('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)

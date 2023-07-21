@@ -542,7 +542,7 @@ function cargar_tabla(token_actual) {
                                 '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-danger btn_postular" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-log-in"></span></button>';
                     } else {
-                        return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
+                        return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#alerta_ver_hoja_de_vida" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-check"></span></button>';
                     }
 
