@@ -86,6 +86,21 @@ function crearParametro(id, label, valores, tipo, obligatorio, estado_propuesta)
             parametro+='</div>';
             return(parametro);
             break;
+        case 'Lista desplegable - selección múltiple':
+            parametro='<div class="col-lg-12">';
+            parametro+='<div class="form-group">';
+            parametro+='<label>'+label+' '+span_obligatorio+'</label>';
+            parametro+='<select id="parametro_'+id+'" name="parametro['+id+'][]" class="js-example-basic-multiple select2" multiple="multiple" '+disabled+' style="width:100%">';
+            var array = valores.split(",");
+            for (var i in array) {
+                if (array.hasOwnProperty(i)) {                                        
+                    parametro+='<option value="'+array[i]+'">'+array[i]+'</option>';   
+                }
+            }                         
+            parametro+='</select>';
+            parametro+='</div>';
+            parametro+='</div>';
+            return(parametro);
         case 'Fecha':
             parametro='<div class="col-lg-6">';
             parametro+='<div class="form-group">';
