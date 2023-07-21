@@ -91,7 +91,6 @@ function crearParametro(id, label, valores, tipo, obligatorio, estado_propuesta)
             parametro+='<div class="form-group">';
             parametro+='<label>'+label+' '+span_obligatorio+'</label>';
             parametro+='<select id="parametro_'+id+'" name="parametro['+id+'][]" class="js-example-basic-multiple select2" multiple="multiple" '+disabled+' style="width:100%">';
-            parametro += '<option value="" disabled selected>Seleccionar</option>';
             var array = valores.split(",");
             for (var i in array) {
                 if (array.hasOwnProperty(i)) {                                        
