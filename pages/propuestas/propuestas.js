@@ -217,6 +217,7 @@ $(document).ready(function () {
                                                                             }
                                                                         }
                                                                         $("#dinamico").html(parametros);
+                                                                        $('.select2').selectize();
 
                                                                         //crear tooltip 
                                                                         $('[data-toggle="tooltip"]').tooltip();
