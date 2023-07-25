@@ -855,7 +855,21 @@ function acciones_registro(token_actual) {
     });    
     
     $(".btn_postular").click(function () {
-        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());        
+        Swal.fire({
+            title: "Confirmar Evaluación",
+            text: "¿Está seguro de postular al participante a la etapa de evaluación?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            // Si el usuario selecciona "Sí", proceder con la evaluación
+            if (result.isConfirmed) {
+        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());   
+    } else {
+        // Si el usuario selecciona "No", no se ejecuta la evaluación
+    }
+     });   
     });
 
 }
