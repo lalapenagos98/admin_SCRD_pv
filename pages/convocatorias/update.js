@@ -1468,7 +1468,7 @@ function cargar_tabla_perfiles_mentores(token_actual) {
                     notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caducó");
                 } else
                 {
-                    var json = data;
+                    var json =  JSON.parse(data);
                     console.log(data)
                     if (json.perfiles_mentores.length > 0) {
 
