@@ -222,10 +222,7 @@ $(document).ready(function () {
                                                                         //crear tooltip 
                                                                         $('[data-toggle="tooltip"]').tooltip();
                                                                         $('.btn_tooltip').tooltip();
-                                                                        
-                                                                        
                                                                         //Cargo el select de la lista despegable de opcion multiple
-                                                        
                                                                         for (var i in json.parametros) {
                                                                             
                                                                             if (json.parametros[i].tipo_parametro == "Lista desplegable - selección múltiple") {
@@ -243,6 +240,21 @@ $(document).ready(function () {
                                                                                 }
                                                                             }
                                                                          }
+                                                                        //Cargo los parametros obligatorios
+                                                                        $("#validator").attr("value", JSON.stringify(json.validator));
+
+
+                                                                        //Cargo el select de medios que se entero                                
+                                                                        if (json.medio_se_entero.length > 0) {
+                                                                            $.each(json.medio_se_entero, function (key, medio) {
+                                                                                var selected = '';
+                                                                                if (medio == json.propuesta.porque_medio)
+                                                                                {
+                                                                                    selected = 'selected="selected"';
+                                                                                }
+                                                                                $("#porque_medio").append('<option value="' + medio + '" >' + medio + '</option>');
+                                                                            });
+                                                                        }
 
                                                                         //Set los valores del medio que se entero
                                                                         $("#porque_medio option:selected").removeAttr("selected");
