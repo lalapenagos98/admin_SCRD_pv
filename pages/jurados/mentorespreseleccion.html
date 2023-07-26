@@ -54,6 +54,16 @@
         <!--Select2-->
         <link href="../../dist/css/select2.min.css" rel="stylesheet" />
 
+        <!--Selectize-->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+        integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        />
+       
+
     </head>
 
     <body>
@@ -118,10 +128,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6" style="display: none;" id="select_perfiles">
+                                        <div class="col-lg-12" style="display: none;" id="select_perfiles">
                                             <div class="form-group">
                                                 <label>Perfiles</label>
-                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" style=" height: auto;
+                                                <select id='perfiles' name="perfiles" class=" perfiles-search" style=" width: 100%; height: auto;
             white-space: normal;">
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>
@@ -1295,5 +1305,13 @@
         <script src='../../dist/js/main_funcionairo.js'></script>
         <script src='mentorespreseleccion.js'></script>
         <script src='../../dist/js/jquery.loadJSON.js'></script>
+        
+        <!--Selectize-->
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+        integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        ></script>
     </body>
 </html>
