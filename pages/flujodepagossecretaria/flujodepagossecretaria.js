@@ -2466,7 +2466,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                     {
                         $("#jurados_seleccionados").css("display", "block");
                         $(".tr_jurados_seleccionados").remove();
-                        $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+                        $("#body_jurados_seleccionados").empty().append(json.html_propuestas_jurados_seleccionados);
 
                     } else
                     {
