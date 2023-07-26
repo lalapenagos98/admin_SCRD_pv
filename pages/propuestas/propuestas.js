@@ -217,11 +217,29 @@ $(document).ready(function () {
                                                                             }
                                                                         }
                                                                         $("#dinamico").html(parametros);
+                                                                        $('.select2').selectize();
 
                                                                         //crear tooltip 
                                                                         $('[data-toggle="tooltip"]').tooltip();
                                                                         $('.btn_tooltip').tooltip();
-
+                                                                        //Cargo el select de la lista despegable de opcion multiple
+                                                                        for (var i in json.parametros) {
+                                                                            
+                                                                            if (json.parametros[i].tipo_parametro == "Lista desplegable - selección múltiple") {
+                                                                               let texto_identificador = `parametro[${json.parametros[i].id}]`;
+                                                                               if(json.propuesta[texto_identificador]){
+                                                                                var selectElement = $("#parametro_" + json.parametros[i].id);
+                                                                                var arrayJson = JSON.parse(json.propuesta[texto_identificador])
+                                                                                
+                                                                                selectElement.find('option').each(function() {
+                                                                                        var optionValue = $(this).val();
+                                                                                        console.log(arrayJson , optionValue, arrayJson.includes(optionValue))
+                                                                                        if(arrayJson.includes(optionValue))
+                                                                                            $(this).attr('selected', 'selected="selected"');
+                                                                                    });
+                                                                                }
+                                                                            }
+                                                                         }
                                                                         //Cargo los parametros obligatorios
                                                                         $("#validator").attr("value", JSON.stringify(json.validator));
 
