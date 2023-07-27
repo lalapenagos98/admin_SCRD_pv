@@ -357,7 +357,6 @@ function cargar_select_categorias(token_actual, convocatoria) {
 }
 
 function cargar_tabla(token_actual) {
-
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     var data = ($('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
@@ -1582,6 +1581,19 @@ function acciones_registro(token_actual) {
     });
 
     $(".btn_cargar_notificar").click(function () {
+
+        var puntaje = parseFloat($(this).closest('tr').find('td:eq(5)').text());
+
+        if (isNaN(puntaje) || puntaje === null) {
+            // El puntaje es nulo o no es un número válido
+            Swal.fire({
+            icon: 'error',
+            title: 'Debe puntuar al mentor para poder notificar',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
+            return false; // Detener la ejecución del código y no continuar con la notificación
+        }
 
         $("#id_jurado_postulado").val($(this).attr("id"));
 
