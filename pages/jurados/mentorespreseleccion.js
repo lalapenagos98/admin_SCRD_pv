@@ -537,16 +537,6 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                         }
                     });
 
-                    $('#borrar_seleccionadas').on('click', function () {
-                        for (var i = 0; i < aAreas.length; i++) {
-                            var area = aAreas[i];
-                            if ($("#area_" + area.id).is(":checked")) {
-                                // Desmarcar el checkbox
-                                $("#area_" + area.id).prop('checked', false);
-                            }
-                        }
-                    });
-
                     //Valido el tipo de perfil seleccionado para el mentor
                     $("#formacion_postgrado_mentor").on('change', function () {
                     if ($(this).val() == "true")
