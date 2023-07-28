@@ -105,18 +105,6 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
-            //carga el formulario para la busqueda por filtros
-            $('#abrir_filtros').click(function () {
-                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
-                    $('#formulario_busqueda_libre').show();
-                    $('#formulario_busqueda_libre_oculto').val('false');
-                    $('#abrir_filtros').text('Cerrar filtros');
-                }else{
-                    $('#formulario_busqueda_libre').hide();
-                    $('#formulario_busqueda_libre_oculto').val('true');
-                    $('#abrir_filtros').text('Abrir filtros');
-                }
-            });
 
 
             //acta preselección
@@ -488,9 +476,17 @@ function cargar_select_perfiles(token_actual, convocatoria) {
 
                     //Cargos el select de areasconocimientos
                     $('#select_perfiles').show();
-                    $('#abrir_filtros').show();
                     $('#perfiles').find('option').remove();
-
+                    
+                    //carga el formulario para la busqueda por filtros
+                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
+                    $('#formulario_busqueda_libre').show();
+                    $('#formulario_busqueda_libre_oculto').val('false');
+                }else{
+                    $('#formulario_busqueda_libre').hide();
+                    $('#formulario_busqueda_libre_oculto').val('true');
+                }
+           
                     //se carga información de perfiles
                     //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
                     $.each(json.perfiles_mentores, function (key, perfil_mentor) {
