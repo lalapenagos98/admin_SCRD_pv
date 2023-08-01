@@ -394,7 +394,12 @@ function cargar_tabla(token_actual) {
 
         },
         "rowCallback": function (row, data, index) {
-
+            // Verificar si el puntaje es mayor a 80 cambia de color a verde
+            if (data["puntaje"]>=80) {
+                $('td', row).css('background-color', '#dcf4dc');
+            } else if (!data["puntaje"]) {
+                $('td', row).css('background-color', '');
+            }
         },
         "columns": [
             {"data": "Cod. de inscripción",
