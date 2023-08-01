@@ -8,7 +8,7 @@ var name_local_storage_keycloak = "token_keycloak";
 
 //Conexión al keycloak
 var keycloak = Keycloak({
-    url: 'https://sso.scrd.gov.co/auth',
+    url: 'https://dev-dev-sso.scrd.gov.co/auth',
     realm: 'SCRD',
     clientId: 'sicon-ui'    
 });
