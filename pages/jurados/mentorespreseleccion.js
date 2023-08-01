@@ -533,6 +533,7 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                         }
                     });
 
+                    
                     $('#borrar_seleccionadas').on('click', function () {
                         for (var i = 0; i < aAreas.length; i++) {
                             var area = aAreas[i];
