@@ -1652,7 +1652,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                     {
                         $("#ganadoras_anios_anteriores").css("display", "block");
                         $(".tr_ganador_anio_anterior").remove();
-                        $("#body_ganadoras_anios_anteriores").append(json.html_ganadoras_anios_anteriores);
+                        $("#body_ganadoras_anios_anteriores").empty().append(json.html_ganadoras_anios_anteriores);
 
                     } else
                     {
@@ -1663,7 +1663,7 @@ function cargar_verificacion_1(token_actual, propuesta) {
                     {
                         $("#jurados_seleccionados").css("display", "block");
                         $(".tr_jurados_seleccionados").remove();
-                        $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+                        $("#body_jurados_seleccionados").empty().append(json.html_propuestas_jurados_seleccionados);
 
                     } else
                     {

@@ -44,6 +44,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                 //cargar_tabla(token_actual);
             });
 
+            
+
             //carga select convocatorias
             $('#entidad').change(function () {
                 cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
@@ -103,18 +105,6 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
-            //carga el formulario para la busqueda por filtros
-            $('#abrir_filtros').click(function () {
-                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
-                    $('#formulario_busqueda_libre').show();
-                    $('#formulario_busqueda_libre_oculto').val('false');
-                    $('#abrir_filtros').text('Cerrar filtros');
-                }else{
-                    $('#formulario_busqueda_libre').hide();
-                    $('#formulario_busqueda_libre_oculto').val('true');
-                    $('#abrir_filtros').text('Abrir filtros');
-                }
-            });
 
 
             //acta preselección
@@ -486,15 +476,23 @@ function cargar_select_perfiles(token_actual, convocatoria) {
 
                     //Cargos el select de areasconocimientos
                     $('#select_perfiles').show();
-                    $('#abrir_filtros').show();
                     $('#perfiles').find('option').remove();
-
+                    
+                    //carga el formulario para la busqueda por filtros
+                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
+                    $('#formulario_busqueda_libre').show();
+                    $('#formulario_busqueda_libre_oculto').val('false');
+                }else{
+                    $('#formulario_busqueda_libre').hide();
+                    $('#formulario_busqueda_libre_oculto').val('true');
+                }
+           
                     //se carga información de perfiles
                     //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
                     $.each(json.perfiles_mentores, function (key, perfil_mentor) {
                         $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
                     });
-
+                    $("#perfiles").selectize();
 
                     $("#div_areas").html("");
                     var htmlAreas = "";
@@ -531,6 +529,17 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                             }
                             else {
                                 $("#div_area_" + area.id).hide();
+                            }
+                        }
+                    });
+
+                    
+                    $('#borrar_seleccionadas').on('click', function () {
+                        for (var i = 0; i < aAreas.length; i++) {
+                            var area = aAreas[i];
+                            if ($("#area_" + area.id).is(":checked")) {
+                                // Desmarcar el checkbox
+                                $("#area_" + area.id).prop('checked', false);
                             }
                         }
                     });
@@ -855,7 +864,21 @@ function acciones_registro(token_actual) {
     });    
     
     $(".btn_postular").click(function () {
-        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());        
+        Swal.fire({
+            title: "Confirmar Evaluación",
+            text: "¿Está seguro de postular al participante a la etapa de evaluación?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            // Si el usuario selecciona "Sí", proceder con la evaluación
+            if (result.isConfirmed) {
+        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());   
+    } else {
+        // Si el usuario selecciona "No", no se ejecuta la evaluación
+    }
+     });   
     });
 
 }
@@ -1284,6 +1307,22 @@ function acciones_registro_educacion_no_formal(token_actual) {
     });
 }
 
+function calcularTotalAniosExperiencia() {
+    var totalAnios = 0;
+    $('#table_experiencia, #table_experiencia_2').DataTable().rows().every(function (index, element) {
+        var rowData = this.data();
+        var aniosExperiencia = 0;
+        if (rowData.fecha_fin) {
+            aniosExperiencia = ((((new Date(rowData.fecha_fin)) - (new Date(rowData.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 365);
+        } else {
+            aniosExperiencia = ((((new Date()) - (new Date(rowData.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 365);
+        }
+        totalAnios += aniosExperiencia;
+        console.log(aniosExperiencia);
+    });
+    $('#total_anios_experiencia').text("Total de años de experiencia: " + totalAnios.toFixed(2));
+}
+
 //carga información de la experiencia disciplinar
 function cargar_tabla_experiencia(token_actual, postulacion, participante) {
 //Cargar datos en la tabla actual
@@ -1293,7 +1332,7 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
         },
         "processing": true,
         "destroy": true,
-        "serverSide": true,
+        "serverSide": false,
         "lengthMenu": [10, 15, 20],
         "responsive": true,
         "searching": false,
@@ -1307,6 +1346,7 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
             //$(".check_activar_t").attr("checked", "true");
             //$(".check_activar_f").removeAttr("checked");
             acciones_registro_experiencia(token_actual);
+            calcularTotalAniosExperiencia();
         },
         "rowCallback": function (row, data, index) {
             $('#contenido_experiencia,#contenido_experiencia_2').html(" <div class='row'><div class='col-lg-6'>"
@@ -1393,6 +1433,7 @@ function cargar_tabla_experiencia(token_actual, postulacion, participante) {
 
         ]
     });
+    calcularTotalAniosExperiencia();
 }
 
 //Permite realizar acciones despues de cargar la tabla experiencia disciplina
@@ -2400,7 +2441,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                     {
                         $("#jurados_seleccionados").css("display", "block");
                         $(".tr_jurados_seleccionados").remove();
-                        $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+                        $("#body_jurados_seleccionados").empty().append(json.html_propuestas_jurados_seleccionados);
                     } else
                     {
                         $("#jurados_seleccionados").css("display", "none");
@@ -2413,7 +2454,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                     {
                         $("#jurados_proceso").css("display", "block");
                         $(".tr_jurados_proceso").remove();
-                        $("#body_jurados_proceso").append(json.html_propuestas_jurados_proceso);
+                        $("#body_jurados_proceso").empty().append(json.html_propuestas_jurados_proceso);
                     } else
                     {
                         $("#jurados_proceso").css("display", "none");

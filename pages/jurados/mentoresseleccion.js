@@ -1018,7 +1018,23 @@ function acciones_registro_educacion_no_formal(token_actual) {
             });
         });
     }
-    
+
+    function calcularTotalAniosExperiencia() {
+        var totalAnios = 0;
+        $('#table_experiencia, #table_experiencia_2').DataTable().rows().every(function (index, element) {
+            var rowData = this.data();
+            var aniosExperiencia = 0;
+            if (rowData.fecha_fin) {
+                aniosExperiencia = ((((new Date(rowData.fecha_fin)) - (new Date(rowData.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 365);
+            } else {
+                aniosExperiencia = ((((new Date()) - (new Date(rowData.fecha_inicio))) / (60 * 60 * 24 * 1000)) / 365);
+            }
+            totalAnios += aniosExperiencia;
+            console.log(aniosExperiencia);
+        });
+        $('#total_anios_experiencia').text("Total de años de experiencia: " + totalAnios.toFixed(2));
+    }
+
     //carga información de la experiencia disciplinar
     function cargar_tabla_experiencia(token_actual, postulacion, participante) {
     //Cargar datos en la tabla actual
@@ -1028,7 +1044,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
             },
             "processing": true,
             "destroy": true,
-            "serverSide": true,
+            "serverSide": false,
             "lengthMenu": [10, 15, 20],
             "responsive": true,
             "searching": false,
@@ -1042,6 +1058,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
                 //$(".check_activar_t").attr("checked", "true");
                 //$(".check_activar_f").removeAttr("checked");
                 acciones_registro_experiencia(token_actual);
+                calcularTotalAniosExperiencia();
             },
             "rowCallback": function (row, data, index) {
                 $('#contenido_experiencia,#contenido_experiencia_2').html(" <div class='row'><div class='col-lg-6'>"
@@ -1126,6 +1143,7 @@ function acciones_registro_educacion_no_formal(token_actual) {
     
             ]
         });
+        calcularTotalAniosExperiencia();
     }
     
     //Permite realizar acciones despues de cargar la tabla experiencia disciplina
@@ -1470,7 +1488,7 @@ function acciones_registro_documento(token_actual) {
                         {
                             $("#jurados_seleccionados").css("display", "block");
                             $(".tr_jurados_seleccionados").remove();
-                            $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+                            $("#body_jurados_seleccionados").empty().append(json.html_propuestas_jurados_seleccionados);
                         } else
                         {
                             $("#jurados_seleccionados").css("display", "none");
@@ -1483,7 +1501,7 @@ function acciones_registro_documento(token_actual) {
                         {
                             $("#jurados_proceso").css("display", "block");
                             $(".tr_jurados_proceso").remove();
-                            $("#body_jurados_proceso").append(json.html_propuestas_jurados_proceso);
+                            $("#body_jurados_proceso").empty().append(json.html_propuestas_jurados_proceso);
                         } else
                         {
                             $("#jurados_proceso").css("display", "none");
@@ -1568,6 +1586,19 @@ function acciones_registro(token_actual) {
     });
 
     $(".btn_cargar_notificar").click(function () {
+
+        var puntaje = parseFloat($(this).closest('tr').find('td:eq(5)').text());
+
+        if (isNaN(puntaje) || puntaje === null) {
+            // El puntaje es nulo o no es un número válido
+            Swal.fire({
+            icon: 'error',
+            title: 'Debe puntuar al mentor para poder notificar',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
+            return false; // Detener la ejecución del código y no continuar con la notificación
+        }
 
         $("#id_jurado_postulado").val($(this).attr("id"));
 
