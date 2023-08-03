@@ -391,7 +391,7 @@ function cargar_tabla(token_actual) {
             //$(".check_activar_f").removeAttr("checked");
             acciones_registro(token_actual);
             //validator_form(token_actual);
-
+            
         },
         "rowCallback": function (row, data, index) {
 
@@ -421,6 +421,11 @@ function cargar_tabla(token_actual) {
             {"data": "Apellidos",
                 render: function (data, type, row) {
                     return row.apellidos;
+                },
+            },
+            {"data": "Fecha de creación",
+                render: function (data, type, row) {
+                    return row.fecha_creacion;
                 },
             },
             {"data": "Puntaje",
