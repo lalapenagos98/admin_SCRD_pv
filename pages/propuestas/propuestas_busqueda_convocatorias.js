@@ -63,16 +63,13 @@ $(document).ready(function () {
           }
 
           $("#linea_estrategica").append(
-            '<option value="">:: Seleccionar ::</option>'
+            '<option value="" data-modalidad="[]" data-programa="0">:: Seleccionar ::</option>'
           );
           if (json.lineas_estrategicas.length > 0) {
             $.each(json.lineas_estrategicas, function (key, linea_estrategica) {
+              console.log(linea_estrategica)
               $("#linea_estrategica").append(
-                '<option value="' +
-                  linea_estrategica.id +
-                  '"  >' +
-                  linea_estrategica.nombre +
-                  "</option>"
+                  '<option value="' + linea_estrategica.id + '" data-modalidad="' + linea_estrategica.modalidad + '" data-programa="' + linea_estrategica.programa + '">' + linea_estrategica.nombre + '</option>'
               );
             });
           }
@@ -90,16 +87,16 @@ $(document).ready(function () {
             });
           }
 
-                    $("#modalidad").append('<option value="">:: Seleccionar ::</option>');
-                    if (json.modalidades.length > 0) {
-                        $.each(json.modalidades, function (key, modalidad) {
-                            //Quitamos la modalidad jurado
-                            if(modalidad.id!==2)
-                            {
-                                $("#modalidad").append('<option value="' + modalidad.id + '"  >' + modalidad.nombre + '</option>');
-                            }
-                        });
-                    }
+          $("#modalidad").append('<option value="">:: Seleccionar ::</option>');
+          if (json.modalidades.length > 0) {
+              $.each(json.modalidades, function (key, modalidad) {
+                  //Quitamos la modalidad jurado
+                  if(modalidad.id!==2)
+                  {
+                      $("#modalidad").append('<option value="' + modalidad.id + '" data-programa="'+modalidad.programa+'" >' + modalidad.nombre + '</option>');
+                  }
+              });
+          }
 
           $("#programa").append('<option value="">:: Seleccionar ::</option>');
           if (json.programas.length > 0) {
@@ -178,7 +175,7 @@ $(document).ready(function () {
         { data: "convocatoria" },
         { data: "categoria" },
         { data: "ver_cronograma" },
-        { data: "ver_convocatoria" },
+        { data: "ver_convocatoria" ,className:'text-center'},
       ],
       columnDefs: [
         {
@@ -215,9 +212,12 @@ $(document).ready(function () {
 
     $("#modalidad").change(function () {
       dataTable.draw();
+      cargar_lineas_participacion()
     });
 
     $("#programa").change(function () {
+      console.log($(this).val(),'id del progrma')
+      opciones_del_programa($(this).val(),dataTable)
       dataTable.draw();
     });
 
@@ -405,4 +405,83 @@ function cargar_cronograma(token_actual) {
       }
     });
   });
+}
+
+function opciones_del_programa(id_programa,dataTable) {
+  console.log('ingresa ocultar campos')
+  var columnasOcultas = [4, 6];
+  if(id_programa === '2')//programa PDAC
+  {
+// Ocultar las columnas definidas en columnasOcultas
+    for (var i = 0; i < columnasOcultas.length; i++) {
+      console.log('ingresa ocultar columnas')
+      dataTable.column(columnasOcultas[i]).visible(false);
+    }
+    dataTable.column(8).header().innerHTML = "Línea de participación";
+    $('#div_area').addClass('hidden')
+    $('#div_enfoque').addClass('hidden')
+    $('#div_nombre_convocatoria').addClass('hidden')
+    $('#entidad').val(2)
+    $('#label_linea_estrategica').html('Línea de participación')
+    $('#modalidad option[data-programa="2"]').each(function() {
+      $(this).show();
+    });
+    $('#modalidad option:not([data-programa="2"])').each(function() {
+      $(this).hide();
+    });
+    $('#modalidad option:first-child').show();
+  }
+  else
+  {
+// Ocultar las columnas definidas en columnasOcultas
+    for (var i = 0; i < columnasOcultas.length; i++) {
+      console.log('ingresa ocultar columnas')
+      dataTable.column(columnasOcultas[i]).visible(true);
+    }
+    dataTable.column(8).header().innerHTML = "categoría";
+    $('#div_area').removeClass('hidden')
+    $('#div_enfoque').removeClass('hidden')
+    $('#div_nombre_convocatoria').removeClass('hidden')
+    $('#label_linea_estrategica').html('Linea estrategica')
+    $('#modalidad option[data-programa="2"]').each(function() {
+      $(this).hide();
+    });
+    $('#modalidad option:not([data-programa="2"])').each(function() {
+      $(this).show();
+    });
+    $('#modalidad option:first-child').show();
+  }
+
+}
+function  cargar_lineas_participacion () {
+
+  if ($('#programa').val() === '2'){
+
+
+    $('#linea_estrategica option').each(function() {
+      var modalidadValue = $(this).data('modalidad');
+      var modalidadSet = [parseInt($('#modalidad').val())]
+      var modalidadArray = modalidadValue;
+
+      var isValid = modalidadArray.some(number => modalidadSet.includes(parseInt( number)));
+        if (isValid) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+    });
+  }else{
+
+    $('#linea_estrategica option:not([data-programa="2"])').each(function() {
+
+      $(this).show();
+
+    })
+    $('#linea_estrategica option [data-programa="2"]').each(function() {
+
+      $(this).hide();
+
+    })
+  }
+
 }
