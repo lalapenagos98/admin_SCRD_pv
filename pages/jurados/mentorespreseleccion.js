@@ -94,6 +94,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 $('#area_experticia').val($('#formacion_profesional_mentor').prop(''));
                 $('#formacion_postgrado_mentor').val($('#formacion_profesional_mentor').prop(''));
                 $('#nivel_educativo_mentor').val($('#formacion_profesional_mentor').prop(''));
+                $('#area_conocimiento2').val($('#formacion_profesional_mentor').prop(''));
                 $('#experiencia_docente').val($('#formacion_profesional_mentor').prop(''));
                 $('#grupo_etnico').val($('#formacion_profesional_mentor').prop(''));
                 $('#reside_bogota_mentor').val($('#formacion_profesional_mentor').prop(''));
@@ -553,6 +554,13 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                         }
                     });
 
+                    $('#area_conocimiento2').find('option').remove();
+                        if (json.areas_conocimientos.length > 0) {
+                            $.each(json.areas_conocimientos, function (key, area_conocimiento) {
+                                $("#area_conocimiento2").append('<option value="' + area_conocimiento.nombre + '" >' + area_conocimiento.nombre + '</option>');
+                            });
+                        }
+
                     //Verifico si es local
                     let localidades_db = json.localidades;
                     let selectLocalidad = $('#localidad_mentor');
@@ -731,6 +739,7 @@ function cargar_tabla_filtro(token_actual) {
                         "areas_experticia":areas_id,
                         "formacion_posgrado":$('#formacion_postgrado_mentor').val(),
                         "nivel_formación":$('#nivel_educativo_mentor').val(),
+                        "area_conocimiento":$('#area_conocimiento2').val(),
                         "experiencia_docente":$('#experiencia_docente').val(),
                         "grupo_etnico":$('#grupo_etnico').val(),
                         "reside_bogota":$('#reside_bogota_mentor').val(),
