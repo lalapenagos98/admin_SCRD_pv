@@ -798,8 +798,8 @@ function cargar_tabla_filtro(token_actual) {
                                 '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-log-in"></span></button><br/>';
                     } else {
-                        return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-check"></span></button>';
+                        return'<button id="' + row.notificacion + '" title="En revisión" type="button" class="" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-ok"></span></button>';
                     }
                 },
             }

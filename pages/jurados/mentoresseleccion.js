@@ -90,6 +90,10 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
+            $("#enRevision").on('hide.bs.modal', function () {
+
+            });
+
             $(".guardar_aplica_mentor").click(function () {
 
                 var option_aplica_perfil;
@@ -445,7 +449,11 @@ function cargar_tabla(token_actual) {
                             + '<span class="fa fa-file-text-o"></span></button>'
                             //+ '<button id="' + row.id_postulacion + '" title="Ver respuesta a notificación" type="button" class="btn  btn-info btn_carta" id-participante="' + row.id + '">'
                             //+ '<span class="fa fa-ticket"></span></button>';
-                },
+                            // + '<span id="' + row.id_postulacion + '" title="En revisión" class="icon-button" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            // + '<span class="glyphicon glyphicon-ok"></span></span>'
+                            + '<button id="' + row.notificacion + '" title="En revisión" type="button" class="" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-ok"></span></button>';
+                },      
             }
 
 
