@@ -2141,6 +2141,7 @@ console.log('ingresa en editr',$("#id").val())
         $("#area_conocimiento2 option:selected").prop("selected", false);
         $("#div_areas input[type='checkbox']").prop("checked", false);
         $("#nivel_educativo_mentor option:selected").prop("selected", false);
+        $("#otraarea").val("");
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
 
