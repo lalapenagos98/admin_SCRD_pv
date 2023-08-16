@@ -522,7 +522,17 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                     $('#quitar_filtro').on('click', function () {
                         $('#filtro_area').val('').change();
                     });
-            
+
+                    $('#borrar_seleccionadas').on('click', function () {
+                        for (var i = 0; i < aAreas.length; i++) {
+                            var area = aAreas[i];
+                            if ($("#area_" + area.id).is(":checked")) {
+                                // Desmarcar el checkbox
+                                $("#area_" + area.id).prop('checked', false);
+                            }
+                        }
+                    });
+                    
                     $('#filtrar_seleccionadas').on('click', function () {
                         for (var i=0; i<aAreas.length; i++) {
                             var area = aAreas[i];
