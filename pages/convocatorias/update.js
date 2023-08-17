@@ -1057,7 +1057,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo_mentor').find('option').remove();
                         if (json.nivel_educativo_mentor.length > 0) {
                             $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                if (key >= 2) { // Excluye los dos primeros valores (índices 0 y 1)
+                                    $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '">' + nivel_educativo.nombre + '</option>');
+                                }
                             });
                         }
 
@@ -1078,10 +1080,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 $('#nivel_educativo_mentor').find('option').remove();
                                 if (json.nivel_educativo_mentor.length > 0) {
                                     $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                        if(nivel_educativo.id < 7){
+                                        if(nivel_educativo.id < 7 && key >= 2){
                                             $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                                            }
-                                        });
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -1167,9 +1169,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo').find('option').remove();
                         if (json.niveles_educativos.length > 0) {
                             $.each(json.niveles_educativos, function (key, nivel_educativo) {
-                                $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                            });
-                        }
+                                if (key >= 2) { // Excluye las dos primeras opciones (índices 0 y 1)
+                                    $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                            }
+                                });
+                            }   
 
                         //Cargo el select de entidades
                         $('#estado').find('option').remove();
@@ -1451,39 +1455,52 @@ function cargar_tabla_perfiles_jurado(token_actual) {
 
 //Carga la tabla de los perfiles de los jurados
 function cargar_tabla_perfiles_mentores(token_actual) {
-    
+    $("#tbody_perfiles_mentores").html('');
+
     $.ajax({
         type: 'POST',
         data: {"token": token_actual.token, "convocatoria": $("#id").val(), "tipo_participante": 6, modulo: "SICON-CONVOCATORIAS-CONFIGURACION"},
-        url: url_pv + 'Convocatoriasparticipantes/select'
-    }).done(function (data) {
-        if (data == 'error_metodo')
-        {
-            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
-        } else
-        {
-            if (data == 'error_token')
+        url: url_pv + 'Convocatoriasparticipantes/select',
+        success:function (data,xhr,request){
+            if (data == 'error_metodo')
             {
-                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caducó");
+                notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
             } else
             {
+                if (data == 'error_token')
+                {
+                    notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caducó");
+                } else
+                {
+                    var json =  JSON.parse(data);
+                    console.log(data)
+                    if (json.perfiles_mentores.length > 0) {
 
-                var json = JSON.parse(data);
-
-                if (json.perfiles_mentores.length > 0) {
-                    $("#tbody_perfiles_mentores").find("tr").remove();
-                    $.each(json.perfiles_mentores, function (key, perfil_jurado) {
-                        var checked = '';
-                        if (perfil_jurado.active == true)
-                        {
-                            checked = "checked='checked'";
-                        }
-                        $("#tbody_perfiles_mentores").append('<tr><td>' + perfil_jurado.orden + '</td><td>' + perfil_jurado.descripcion_perfil + '</td><td><input onclick="activar_perfil_mentor(' + perfil_jurado.id + ',' + $("#id").attr('value') + ',\'' + token_actual.token + '\')" type="checkbox" ' + checked + '></td><td><button type="button" class="btn btn-warning btn-update-convocatoria-mentores-' + perfil_jurado.id + '" onclick="cargar_perfil_mentor(' + perfil_jurado.id + ')" lang="' + JSON.stringify(perfil_jurado).replace(/\"/g, "&quot;") + '"><span class="glyphicon glyphicon-edit"></span></button></td></tr>');
-                    });
+                        $.each(json.perfiles_mentores, function (key, perfil_jurado) {
+                            var checked = '';
+                            if (perfil_jurado.active == true)
+                            {
+                                checked = "checked='checked'";
+                            }
+                            $("#tbody_perfiles_mentores").append('<tr><td>' + perfil_jurado.orden + '</td><td>' + perfil_jurado.descripcion_perfil + '</td><td><input onclick="activar_perfil_mentor(' + perfil_jurado.id + ',' + $("#id").attr('value') + ',\'' + token_actual.token + '\')" type="checkbox" ' + checked + '></td><td><button type="button" class="btn btn-warning btn-update-convocatoria-mentores-' + perfil_jurado.id + '" onclick="cargar_perfil_mentor(' + perfil_jurado.id + ')" lang="' + JSON.stringify(perfil_jurado).replace(/\"/g, "&quot;") + '"><span class="glyphicon glyphicon-edit"></span></button></td></tr>');
+                        });
+                    }
                 }
             }
+        },
+        error:function (response,xhr,request){
+            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
         }
     });
+       /*
+        .done(function (data) {
+
+        }
+
+        */
+    //);
+
+
 }
 
 //Carga la tabla de los recursos de la convocatoria
@@ -1655,6 +1672,8 @@ function cargar_perfil_mentor(id) {
 
     var json_update = JSON.parse($(".btn-update-convocatoria-mentores-" + id).attr("lang"));
 
+    console.log(json_update)
+
     $("#orden_perfil_mentor option[value='" + json_update.orden + "']").prop('selected', true);
     $('#descripcion_perfil_mentor').val(json_update.descripcion_perfil);
     $('#otraarea').val(json_update.otraarea);
@@ -1673,15 +1692,37 @@ function cargar_perfil_mentor(id) {
     $("#div_areas").html("");
     var htmlAreas = "";
 
-    if (json_update.area_experticia.length > 0) {
-    $.each(json_update.area_experticia, function (key, array) {
-        htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
-        aAreas.push(array);
-    });
-    
-    $("#div_areas").html(htmlAreas);
+    if(typeof json_update.area_experticia_array_api_metodo_select !== 'undefined')
+    {
+        if (json_update.area_experticia_array_api_metodo_select.length > 0) {
+            $.each(json_update.area_experticia_array_api_metodo_select, function (key, array) {
+                htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                aAreas.push(array);
+            });
+
+            $("#div_areas").html(htmlAreas);
+        }
+    }
+    else
+    {
+        if (json_update.area_experticia.length > 0) {
+            $.each(json_update.area_experticia, function (key, array) {
+                htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                aAreas.push(array);
+            });
+
+            $("#div_areas").html(htmlAreas);
+        } if (json_update.area_experticia.length > 0) {
+            $.each(json_update.area_experticia, function (key, array) {
+                htmlAreas += '<div id="div_area_' + array.id + '" class="div_checkbox_filtrable"><input id="area_' + array.id + '" type="checkbox" name="a_areas[]" value="' + array.id + '" ' + array.checked + ' title="' + array.nombre + '" />' + array.nombre + "</div>";
+                aAreas.push(array);
+            });
+
+            $("#div_areas").html(htmlAreas);
+        }
     }
 
+    $('#cantidad_perfiles_mentores').val(json_update.cantidad_perfiles_mentores)
     $('#filtro_area').on('change keyup', function () {
         for (var i=0; i<aAreas.length; i++) {
             var area = aAreas[i];
@@ -1732,6 +1773,8 @@ function cargar_perfil_mentor(id) {
         $("#reside_localidad option[value='" + false  + "']").prop('selected', true);
     }
 
+
+    $("#cantidad_perfiles_mentores").val(json_update.cantidad_perfiles_mentores)
     $("#id_mentor").val(json_update.id);
 
 }
@@ -1947,6 +1990,7 @@ function validator_form(token_actual) {
                 otroarea: $("#otraarea").val(),
                 experiencia_docente: $("#experiencia_docente").val(),
                 localidad: $("#localidad_mentor").val(),
+                cantidad_perfiles_mentores:$("#cantidad_perfiles_mentores").val(),
                 /*descripcion_perfil: CKEDITOR.instances.descripcion_perfil_mentor.getData(),
                 campo_experiencia: CKEDITOR.instances.campo_experiencia_mentor.getData(),*/
                 modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
@@ -1995,7 +2039,7 @@ function validator_form(token_actual) {
             });
         } 
         else {
-
+console.log('ingresa en editr',$("#id").val())
             var areas_id = [];
 
             for (var i=0; i<aAreas.length; i++) {
@@ -2021,6 +2065,7 @@ function validator_form(token_actual) {
                 otroarea: $("#otraarea").val(),
                 experiencia_docente: $("#experiencia_docente").val(),
                 localidad: $("#localidad_mentor").val(),
+                cantidad_perfiles_mentores:$("#cantidad_perfiles_mentores").val(),
                 /*descripcion_perfil: CKEDITOR.instances.descripcion_perfil_mentor.getData(),
                 campo_experiencia: CKEDITOR.instances.campo_experiencia_mentor.getData(),*/
                 modulo: "SICON-CONVOCATORIAS-CONFIGURACION",
@@ -2053,6 +2098,7 @@ function validator_form(token_actual) {
                                 notify("danger", "ok", "Convocatoria perfil:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                             } else
                             {
+                                console.log('luego va a ccargar mentores')
                                 cargar_tabla_perfiles_mentores(token_actual);
 
                                 notify("info", "ok", "Convocatoria perfil:", "Se edito el perfil del jurado con éxito.");
@@ -2069,6 +2115,10 @@ function validator_form(token_actual) {
 
         //Eliminó contenido del formulario
         $("#id_mentor").attr("value", "");
+        $("#area_conocimiento2 option:selected").prop("selected", false);
+        $("#div_areas input[type='checkbox']").prop("checked", false);
+        $("#nivel_educativo_mentor option:selected").prop("selected", false);
+        $("#otraarea").val("");
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
 
@@ -2466,4 +2516,3 @@ function validator_form(token_actual) {
         bv.resetForm();
     });
 }
-        

@@ -229,6 +229,14 @@
   z-index: 9999 !important;
 }
 
+div.swal2-popup {
+  font-size: 12px !important;
+}
+
+button.swal2-confirm, button.swal2-cancel {
+  font-size: 12px !important;
+  padding: 15px 20px !important;
+}
 
 #div-login-dinamico{
     background-color:#ffffff;
@@ -238,4 +246,6 @@
     -moz-box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);
     box-shadow: -1px 6px 5px 1px rgba(0,0,0,0.75);
     width: 30%;
+
+    
 }
