@@ -107,8 +107,15 @@ $(document).ready(function () {
                                                         location.href = url_pv_admin + 'index.html?msg=Su sesión ha expirado, por favor vuelva a ingresar.&msg_tipo=danger';
                                                     } else
                                                     {
-                                                        var json = JSON.parse(data);                                                        
-                                                        $("#titulo_convocatoria").html("Esta seguro de inscribir la propuesta en la convocatoria "+json.nombre_convocatoria);                                                        
+                                                        var json = JSON.parse(data);
+                                                        console.log(data,'datos convocatoria')
+                                                        $("#titulo_convocatoria").html("Esta seguro de inscribir la propuesta en la convocatoria "+json.nombre_convocatoria);
+                                                        if(json.programa === 2){
+                                                            $("#div_text_seleccionar_tipo_participante").html('Seleccionar el tipo de participante con el cual desea inscribir su proyecto para la convocatoria')
+                                                            $("#titulo_convocatoria").html("¿Está seguro de inscribir el proyecto en la convocatoria "+json.nombre_convocatoria+'?');
+                                                        }
+
+
                                                         $("#programa").val(json.programa);                                                                                                                
                                                         $("#nombre_convocatoria_par").val(json.nombre_convocatoria_par);
                                                         $("#convocatoria_padre").val(json.convocatoria_padre);                                                        
@@ -287,7 +294,12 @@ $(document).ready(function () {
                                 {
                                     if (data == 'crear_perfil')
                                     {
-                                        location.href = url_pv_admin + 'pages/perfilesparticipantes/'+redirect_perfil+'.html?msg=Para poder inscribir la propuesta debe crear el perfil ('+m+').&msg_tipo=danger';
+                                        if($("#programa").val() == 2){
+                                            location.href = url_pv_admin + 'pages/perfilesparticipantes/'+redirect_perfil+'.html?msg=Para poder inscribir el proyecto debe crear el perfil de la persona Jurídica (ESAL).&msg_tipo=danger';
+                                        }else{
+                                            location.href = url_pv_admin + 'pages/perfilesparticipantes/'+redirect_perfil+'.html?msg=Para poder inscribir la propuesta debe crear el perfil ('+m+').&msg_tipo=danger';
+                                        }
+
                                     } else
                                     {
                                         if (data == 'error_participante_propuesta')
