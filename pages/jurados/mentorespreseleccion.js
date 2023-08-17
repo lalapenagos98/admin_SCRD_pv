@@ -67,6 +67,12 @@ keycloak.init(initOptions).then(function (authenticated) {
                 //cargar_tabla(token_actual);
             });
 
+            $('#perfiles').change(function () {
+                //console.log("cambia los perfiles -----");
+                cargar_tabla(token_actual);
+            });
+
+
             $('#categorias').change(function () {
                 //cargar_tabla(token_actual);
             });
@@ -97,18 +103,6 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
-            //carga el formulario para la busqueda por filtros
-            $('#abrir_filtros').click(function () {
-                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
-                    $('#formulario_busqueda_libre').show();
-                    $('#formulario_busqueda_libre_oculto').val('false');
-                    $('#abrir_filtros').text('Cerrar filtros');
-                }else{
-                    $('#formulario_busqueda_libre').hide();
-                    $('#formulario_busqueda_libre_oculto').val('true');
-                    $('#abrir_filtros').text('Abrir filtros');
-                }
-            });
 
 
             //acta preselección
@@ -480,11 +474,19 @@ function cargar_select_perfiles(token_actual, convocatoria) {
 
                     //Cargos el select de areasconocimientos
                     $('#select_perfiles').show();
-                    $('#abrir_filtros').show();
                     $('#perfiles').find('option').remove();
-
+                    
+                    //carga el formulario para la busqueda por filtros
+                if($('#formulario_busqueda_libre_oculto').val() == 'true'){
+                    $('#formulario_busqueda_libre').show();
+                    $('#formulario_busqueda_libre_oculto').val('false');
+                }else{
+                    $('#formulario_busqueda_libre').hide();
+                    $('#formulario_busqueda_libre_oculto').val('true');
+                }
+           
                     //se carga información de perfiles
-                    $("#perfiles").append('<option value="">:: Seleccionar ::</option>');
+                    //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
                     $.each(json.perfiles_mentores, function (key, perfil_mentor) {
                         $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
                     });
@@ -516,7 +518,17 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                     $('#quitar_filtro').on('click', function () {
                         $('#filtro_area').val('').change();
                     });
-            
+
+                    $('#borrar_seleccionadas').on('click', function () {
+                        for (var i = 0; i < aAreas.length; i++) {
+                            var area = aAreas[i];
+                            if ($("#area_" + area.id).is(":checked")) {
+                                // Desmarcar el checkbox
+                                $("#area_" + area.id).prop('checked', false);
+                            }
+                        }
+                    });
+                    
                     $('#filtrar_seleccionadas').on('click', function () {
                         for (var i=0; i<aAreas.length; i++) {
                             var area = aAreas[i];
@@ -792,8 +804,8 @@ function cargar_tabla_filtro(token_actual) {
                                 '<button id="' + row.id_postulacion + '" title="Seleccionar la hoja de vida" type="button" class="btn btn-success btn_postular" id-participante="' + row.id + '">'
                                 + '<span class="glyphicon glyphicon-log-in"></span></button><br/>';
                     } else {
-                        return '<button id="' + row.id_postulacion + '" title="Evaluar la hoja de vida " type="button" class="btn btn-primary btn_cargar" data-toggle="modal" data-target="#evaluar" id-participante="' + row.id + '">'
-                                + '<span class="glyphicon glyphicon-check"></span></button>';
+                        return'<button id="' + row.notificacion + '" title="En revisión" type="button" class="" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-ok"></span></button>';
                     }
                 },
             }
@@ -849,7 +861,21 @@ function acciones_registro(token_actual) {
     });    
     
     $(".btn_postular").click(function () {
-        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this));        
+        Swal.fire({
+            title: "Confirmar Evaluación",
+            text: "¿Está seguro de postular al participante a la etapa de evaluación?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí",
+            cancelButtonText: "No"
+        }).then((result) => {
+            // Si el usuario selecciona "Sí", proceder con la evaluación
+            if (result.isConfirmed) {
+        postular(token_actual, $(this).attr("id"), $(this).attr("id-participante"),$(this), $('#perfiles').val());   
+    } else {
+        // Si el usuario selecciona "No", no se ejecuta la evaluación
+    }
+     });   
     });
 
 }
@@ -2245,9 +2271,13 @@ function seleccionar_jurado(token_actual, postulacion, participante) {
     });
 }
 
-function postular(token_actual, postulacion, participante,btn_postular) {
+function postular(token_actual, postulacion, participante, btn_postular, perfil) {
 
     var idregistro = ($('#categorias').val() === null) ? $('#convocatorias').val() : $('#categorias').val();
+
+    //console.log("perfil --- " + perfil);
+
+
     $.ajax({
         type: 'POST',
         url: url_pv + 'Mentorespreseleccion/new_postulacion',
@@ -2257,6 +2287,7 @@ function postular(token_actual, postulacion, participante,btn_postular) {
             "idc": $("#idc").val(), //id de la convocatoria de jurado
             "idregistro": idregistro,
             "participante": participante,
+            "perfil":perfil
         },
     }).done(function (result) {
 

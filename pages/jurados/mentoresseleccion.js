@@ -62,6 +62,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                 cargar_select_categorias(token_actual, $('#convocatorias').val());
                 $('#categorias').val(null);
                 cargar_tabla(token_actual);
+
+                //cargo los perfiles
+                cargar_select_perfiles(token_actual, $('#convocatorias').val());
             });
 
             $('#categorias').change(function () {
@@ -84,6 +87,10 @@ keycloak.init(initOptions).then(function (authenticated) {
             });
 
             $("#evaluar").on('hide.bs.modal', function () {
+
+            });
+
+            $("#enRevision").on('hide.bs.modal', function () {
 
             });
 
@@ -354,10 +361,12 @@ function cargar_select_categorias(token_actual, convocatoria) {
 }
 
 function cargar_tabla(token_actual) {
-
     //var data = JSON.stringify( $("#formulario_busqueda_banco").serializeArray() );
     //var data =  $("#formulario_busqueda_banco").serializeArray();
     var data = ($('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
+
+    console.log("perfil ---" + $('#perfiles').val());
+
 
     $('#table_list').DataTable({
         "language": {
@@ -376,6 +385,7 @@ function cargar_tabla(token_actual) {
                     {"token": token_actual.token,
                         "convocatoria": $('#convocatorias').val(),
                         "categoria": $('#categorias').val(),
+                        "perfil": $('#perfiles').val(),
                         "filtros": data
                     },
             //async: false
@@ -385,10 +395,18 @@ function cargar_tabla(token_actual) {
             //$(".check_activar_f").removeAttr("checked");
             acciones_registro(token_actual);
             //validator_form(token_actual);
-
+            
         },
         "rowCallback": function (row, data, index) {
 
+        },
+        "rowCallback": function (row, data, index) {
+            // Verificar si el puntaje es mayor a 80 cambia de color a verde
+            if (data["puntaje"]>=80) {
+                $('td', row).css('background-color', '#dcf4dc');
+            } else if (!data["puntaje"]) {
+                $('td', row).css('background-color', '');
+            }
         },
         "columns": [
             {"data": "Cod. de inscripción",
@@ -417,6 +435,11 @@ function cargar_tabla(token_actual) {
                     return row.apellidos;
                 },
             },
+            {"data": "Fecha de creación",
+                render: function (data, type, row) {
+                    return row.fecha_creacion;
+                },
+            },
             {"data": "Puntaje",
                 render: function (data, type, row) {
                     return row.puntaje;
@@ -439,7 +462,11 @@ function cargar_tabla(token_actual) {
                             + '<span class="fa fa-file-text-o"></span></button>'
                             //+ '<button id="' + row.id_postulacion + '" title="Ver respuesta a notificación" type="button" class="btn  btn-info btn_carta" id-participante="' + row.id + '">'
                             //+ '<span class="fa fa-ticket"></span></button>';
-                },
+                            // + '<span id="' + row.id_postulacion + '" title="En revisión" class="icon-button" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            // + '<span class="glyphicon glyphicon-ok"></span></span>'
+                            + '<button id="' + row.notificacion + '" title="En revisión" type="button" class="" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-ok"></span></button>';
+                },      
             }
 
 
@@ -447,6 +474,47 @@ function cargar_tabla(token_actual) {
         ]
     });
 
+}
+
+function cargar_select_perfiles(token_actual, convocatoria) {
+
+    $.ajax({
+        type: 'POST',
+        data: {"token": token_actual.token, "convocatoria": convocatoria, "tipo_participante": 6, modulo: "SICON-CONVOCATORIAS-CONFIGURACION"},
+        url: url_pv + 'Convocatoriasparticipantes/select'
+    }).done(function (data) {
+        if (data == 'error_metodo')
+        {
+            notify("danger", "ok", "Usuarios:", "Se registro un error en el método, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+        } else
+        {
+            if (data == 'error_token')
+            {
+                notify("danger", "ok", "Convocatorias:", "Por favor actualizar la página, debido a que su sesión caducó");
+            } else
+            {
+                var json = JSON.parse(data);
+
+                if (json != null && json.perfiles_mentores.length > 0) {
+
+                    //se carga información de perfiles
+                    //$("#perfiles").append('<option value="">:: Seleccionar ::</option>');
+                    $.each(json.perfiles_mentores, function (key, perfil_mentor) {
+                        $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
+                    });
+
+                }
+                else
+                {
+                    //Se agrega para ocultar el select cuando no existe categorias de una convocatoria
+                    $('#select_perfiles').hide();
+                    $('#perfiles').find('option').remove();
+                }   
+            }
+        }
+    });
+
+    
 }
 
 /*
@@ -1534,6 +1602,19 @@ function acciones_registro(token_actual) {
     });
 
     $(".btn_cargar_notificar").click(function () {
+
+        var puntaje = parseFloat($(this).closest('tr').find('td:eq(5)').text());
+
+        if (isNaN(puntaje) || puntaje === null) {
+            // El puntaje es nulo o no es un número válido
+            Swal.fire({
+            icon: 'error',
+            title: 'Debe puntuar al mentor para poder notificar',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
+            return false; // Detener la ejecución del código y no continuar con la notificación
+        }
 
         $("#id_jurado_postulado").val($(this).attr("id"));
 

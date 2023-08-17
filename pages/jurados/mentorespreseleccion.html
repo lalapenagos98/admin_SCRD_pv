@@ -120,7 +120,8 @@
                                         <div class="col-lg-6" style="display: none;" id="select_perfiles">
                                             <div class="form-group">
                                                 <label>Perfiles</label>
-                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" >
+                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" style=" height: auto;
+            white-space: normal;">
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>
                                             </div>
@@ -130,7 +131,8 @@
                                         <div class="col-lg-6" style="display: none;" id="select_perfiles">
                                             <div class="form-group">
                                                 <label>Perfiles</label>
-                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" >
+                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" style=" height: auto;
+            white-space: normal;" >
                                                     <option value="">:: Seleccionar ::</option>
                                                 </select>
                                             </div>
@@ -178,7 +180,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Área (s) o prácticas de experticia</label>
-                                                <br><input id="filtro_area" type="text" placeholder="Búsqueda de área o práctica..." /><input id="filtrar_seleccionadas" type="button" value="Ver Selección" /><input id="quitar_filtro" type="button" value="Ver todas" title="Ver todas" />
+                                                <br><input id="filtro_area" type="text" placeholder="Búsqueda de área o práctica..." /><input id="filtrar_seleccionadas" type="button" value="Ver Selección" /><input id="quitar_filtro" type="button" value="Ver todas" title="Ver todas" /><input id="borrar_seleccionadas" type="button" value="Borrar Selección" />
                                                 <div id="div_areas" class="div_multichulos"></div>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
@@ -269,7 +271,7 @@
                                             <div class="form-group">
                                                 <label>Palabra clave</label>
                                                 <div class="alert alert-info">
-                                                    <small>En este campos usted podrá incluir una serie de palabras clave que le facilitarán realizar la búsqueda.</small>
+                                                    <small>Busque por palabras claves, separándolas por comas.</small>
                                                 </div>
                                                 <input type="text" id="palabra_clave_filtro" name="palabra_clave_filtro" class="form-control">
                                             </div>
@@ -1282,6 +1284,10 @@
 
         <!--Select2-->
         <script src="../../dist/js/select2.min.js"></script>
+        
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 
         <!-- funcionalidades principales -->
         <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>

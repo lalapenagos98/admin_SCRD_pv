@@ -126,6 +126,17 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-lg-6" id="select_perfiles">
+                                            <div class="form-group">
+                                                <label>Perfiles</label>
+                                                <select id='perfiles' name="perfiles" class="form-control perfiles-search" >
+                                                    <option value="">:: Seleccionar ::</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="idd" name="idd" />
                                             <button type="button" class="btn btn-default" id="buscar" title="Buscar">Buscar</button>
@@ -168,6 +179,7 @@
                                                     <th style="width: 15%;">Número documento</th>
                                                     <th style="width: 20%;">Nombres</th>
                                                     <th style="width: 20%;">Apellidos</th>
+                                                    <th style="width: 20%;">Fecha y hora de creación</th>
                                                     <th style="width: 10%;">Puntaje</th>
                                                     <!-- <th style="width: 10%;">Estado notificación</th> -->
                                                     <th style="width: 5%;">Acciones</th>
@@ -380,7 +392,7 @@
         <!-- Modal -->
 
         <!-- Modal -->
-        <div class="modal fade" id="evaluar" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" aria-hidden="true">
+        <div class="modal fade" id="notificarModal" tabindex="-1" role="dialog" aria-labelledby="evaluarLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1074,6 +1086,10 @@
         <!--Select2-->
         <script src="../../dist/js/select2.min.js"></script>
 
+        <!--SweetAlert2-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+        
         <!-- funcionalidades principales -->
         <script src="https://sso.scrd.gov.co/auth/js/keycloak.js"></script>
         <script src='../../dist/js/main_funcionairo.js'></script>
