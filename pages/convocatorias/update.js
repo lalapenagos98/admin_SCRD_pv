@@ -1038,10 +1038,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                         }
 
                         //Cargo el select de areas de conocimientos
-                        $('#area_conocimiento').find('option').remove();
-                        if (json.areas_conocimientos.length > 0) {
-                            $.each(json.areas_conocimientos, function (key, area_conocimiento) {
-                                $("#area_conocimiento").append('<option value="' + area_conocimiento.nombre + '" >' + area_conocimiento.nombre + '</option>');
+                        $('#area_conocimiento2').find('option').remove();
+                        if (json.area_conocimiento2.length > 0) {
+                            $.each(json.area_conocimiento2, function (key, area_conocimiento) {
+                                $("#area_conocimiento2").append('<option value="' + area_conocimiento.nombre + '" >' + area_conocimiento.nombre + '</option>');
                             });
                         }
 
@@ -1057,7 +1057,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo_mentor').find('option').remove();
                         if (json.nivel_educativo_mentor.length > 0) {
                             $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                if (key >= 2) { // Excluye los dos primeros valores (índices 0 y 1)
+                                    $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '">' + nivel_educativo.nombre + '</option>');
+                                }
                             });
                         }
 
@@ -1078,10 +1080,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 $('#nivel_educativo_mentor').find('option').remove();
                                 if (json.nivel_educativo_mentor.length > 0) {
                                     $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                        if(nivel_educativo.id < 7){
+                                        if(nivel_educativo.id < 7 && key >= 2){
                                             $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                                            }
-                                        });
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -1144,8 +1146,25 @@ keycloak.init(initOptions).then(function (authenticated) {
                             }
                         });
 
+                        $('#formacion_profesional_mentor').on('click', function() {
+                            // Obtener el valor seleccionado en el select
+                            var selectedValue = $(this).val();
+                    
+                            // Mostrar u ocultar el div "area_conocimiento_div" dependiendo del valor seleccionado
+                            if (selectedValue === "true") {
+                                $('#area_conocimiento_div').show();
+                            } else {
+                                $('#area_conocimiento_div').hide();
+                            }
+                        });
 
-
+                        $('#area_conocimiento').find('option').remove();
+                        if (json.areas_conocimientos.length > 0) {
+                            $.each(json.areas_conocimientos, function (key, area_conocimiento) {
+                                $("#area_conocimiento").append('<option value="' + area_conocimiento.nombre + '" >' + area_conocimiento.nombre + '</option>');
+                            });
+                        }
+                        
                         //Verifico si es local
                         $('#reside_localidad').on('change', function () {
                             $('#localidad_mentor').find('option').remove();
@@ -1167,9 +1186,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo').find('option').remove();
                         if (json.niveles_educativos.length > 0) {
                             $.each(json.niveles_educativos, function (key, nivel_educativo) {
-                                $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                            });
-                        }
+                                if (key >= 2) { // Excluye las dos primeras opciones (índices 0 y 1)
+                                    $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                            }
+                                });
+                            }   
 
                         //Cargo el select de entidades
                         $('#estado').find('option').remove();
@@ -1675,9 +1696,13 @@ function cargar_perfil_mentor(id) {
     $('#otraarea').val(json_update.otraarea);
 
     $("#formacion_profesional_mentor option[value='" + json_update.formacion_profesional + "']").prop('selected', true);
-
+    
     $("#formacion_postgrado_mentor option[value='" + json_update.formacion_postgrado + "']").prop('selected', true);
-
+    $("#area_conocimiento2 option:selected").removeAttr("selected");
+    $("#area_conocimiento2 option:selected").prop("selected", false);
+    $.each(JSON.parse(json_update.area_conocimiento), function (i, e) {
+        $("#area_conocimiento2 option[value='" + e + "']").prop("selected", true);
+    });
     $("#nivel_educativo_mentor option:selected").removeAttr("selected");
     $("#nivel_educativo_mentor option:selected").prop("selected", false);
     $.each(JSON.parse(json_update.nivel_educativo), function (i, e) {
@@ -1978,6 +2003,7 @@ function validator_form(token_actual) {
                 orden: $("#orden_perfil_mentor").val(),
                 formacion_profesional: $("#formacion_profesional_mentor").val(),
                 area_experticia: areas_id,
+                area_conocimiento: $("#area_conocimiento2").val(),
                 formacion_postgrado: $("#formacion_postgrado_mentor").val(),
                 nivel_educativo: $("#nivel_educativo_mentor").val(),
                 reside_bogota: $("#reside_bogota_mentor").val(),
@@ -2052,6 +2078,7 @@ console.log('ingresa en editr',$("#id").val())
                 cantidad_perfil: $("#cantidad_perfil_mentores").val(),
                 orden: $("#orden_perfil_mentor").val(),
                 formacion_profesional: $("#formacion_profesional_mentor").val(),
+                area_conocimiento: $("#area_conocimiento2").val(),
                 area_experticia: areas_id,
                 formacion_postgrado: $("#formacion_postgrado_mentor").val(),
                 nivel_educativo: $("#nivel_educativo_mentor").val(),
@@ -2111,6 +2138,10 @@ console.log('ingresa en editr',$("#id").val())
 
         //Eliminó contenido del formulario
         $("#id_mentor").attr("value", "");
+        $("#area_conocimiento2 option:selected").prop("selected", false);
+        $("#div_areas input[type='checkbox']").prop("checked", false);
+        $("#nivel_educativo_mentor option:selected").prop("selected", false);
+        $("#otraarea").val("");
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
 
