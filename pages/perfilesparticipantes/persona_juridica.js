@@ -243,7 +243,7 @@ $(document).ready(function () {
                 } else
                 {
                     var json = JSON.parse(data);
-                    
+                    console.log(data)
                     //Cargo los select de barrios
 
                     //cargar el mensaje con el link a condiciones
