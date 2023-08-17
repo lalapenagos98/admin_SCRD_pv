@@ -2420,7 +2420,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                     {
                         $("#jurados_seleccionados").css("display", "block");
                         $(".tr_jurados_seleccionados").remove();
-                        $("#body_jurados_seleccionados").append(json.html_propuestas_jurados_seleccionados);
+                        $("#body_jurados_seleccionados").empty().append(json.html_propuestas_jurados_seleccionados);
                     } else
                     {
                         $("#jurados_seleccionados").css("display", "none");
@@ -2433,7 +2433,7 @@ function cargar_inhabilidades(token_actual, postulacion, participante) {
                     {
                         $("#jurados_proceso").css("display", "block");
                         $(".tr_jurados_proceso").remove();
-                        $("#body_jurados_proceso").append(json.html_propuestas_jurados_proceso);
+                        $("#body_jurados_proceso").empty().append(json.html_propuestas_jurados_proceso);
                     } else
                     {
                         $("#jurados_proceso").css("display", "none");
