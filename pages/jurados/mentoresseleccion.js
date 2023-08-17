@@ -90,6 +90,10 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             });
 
+            $("#enRevision").on('hide.bs.modal', function () {
+
+            });
+
             $(".guardar_aplica_mentor").click(function () {
 
                 var option_aplica_perfil;
@@ -391,10 +395,18 @@ function cargar_tabla(token_actual) {
             //$(".check_activar_f").removeAttr("checked");
             acciones_registro(token_actual);
             //validator_form(token_actual);
-
+            
         },
         "rowCallback": function (row, data, index) {
 
+        },
+        "rowCallback": function (row, data, index) {
+            // Verificar si el puntaje es mayor a 80 cambia de color a verde
+            if (data["puntaje"]>=80) {
+                $('td', row).css('background-color', '#dcf4dc');
+            } else if (!data["puntaje"]) {
+                $('td', row).css('background-color', '');
+            }
         },
         "columns": [
             {"data": "Cod. de inscripción",
@@ -423,6 +435,11 @@ function cargar_tabla(token_actual) {
                     return row.apellidos;
                 },
             },
+            {"data": "Fecha de creación",
+                render: function (data, type, row) {
+                    return row.fecha_creacion;
+                },
+            },
             {"data": "Puntaje",
                 render: function (data, type, row) {
                     return row.puntaje;
@@ -445,7 +462,11 @@ function cargar_tabla(token_actual) {
                             + '<span class="fa fa-file-text-o"></span></button>'
                             //+ '<button id="' + row.id_postulacion + '" title="Ver respuesta a notificación" type="button" class="btn  btn-info btn_carta" id-participante="' + row.id + '">'
                             //+ '<span class="fa fa-ticket"></span></button>';
-                },
+                            // + '<span id="' + row.id_postulacion + '" title="En revisión" class="icon-button" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            // + '<span class="glyphicon glyphicon-ok"></span></span>'
+                            + '<button id="' + row.notificacion + '" title="En revisión" type="button" class="" data-toggle="modal" data-target="#enRevision" id-participante="' + row.id + '">'
+                            + '<span class="glyphicon glyphicon-ok"></span></button>';
+                },      
             }
 
 
@@ -1563,6 +1584,19 @@ function acciones_registro(token_actual) {
     });
 
     $(".btn_cargar_notificar").click(function () {
+
+        var puntaje = parseFloat($(this).closest('tr').find('td:eq(5)').text());
+
+        if (isNaN(puntaje) || puntaje === null) {
+            // El puntaje es nulo o no es un número válido
+            Swal.fire({
+            icon: 'error',
+            title: 'Debe puntuar al mentor para poder notificar',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+            });
+            return false; // Detener la ejecución del código y no continuar con la notificación
+        }
 
         $("#id_jurado_postulado").val($(this).attr("id"));
 

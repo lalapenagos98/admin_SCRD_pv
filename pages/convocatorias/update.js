@@ -1057,7 +1057,9 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo_mentor').find('option').remove();
                         if (json.nivel_educativo_mentor.length > 0) {
                             $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                if (key >= 2) { // Excluye los dos primeros valores (índices 0 y 1)
+                                    $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '">' + nivel_educativo.nombre + '</option>');
+                                }
                             });
                         }
 
@@ -1078,10 +1080,10 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 $('#nivel_educativo_mentor').find('option').remove();
                                 if (json.nivel_educativo_mentor.length > 0) {
                                     $.each(json.nivel_educativo_mentor, function (key, nivel_educativo) {
-                                        if(nivel_educativo.id < 7){
+                                        if(nivel_educativo.id < 7 && key >= 2){
                                             $("#nivel_educativo_mentor").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                                            }
-                                        });
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -1167,9 +1169,11 @@ keycloak.init(initOptions).then(function (authenticated) {
                         $('#nivel_educativo').find('option').remove();
                         if (json.niveles_educativos.length > 0) {
                             $.each(json.niveles_educativos, function (key, nivel_educativo) {
-                                $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
-                            });
-                        }
+                                if (key >= 2) { // Excluye las dos primeras opciones (índices 0 y 1)
+                                    $("#nivel_educativo").append('<option value="' + nivel_educativo.nombre + '" >' + nivel_educativo.nombre + '</option>');
+                                            }
+                                });
+                            }   
 
                         //Cargo el select de entidades
                         $('#estado').find('option').remove();
@@ -2111,6 +2115,10 @@ console.log('ingresa en editr',$("#id").val())
 
         //Eliminó contenido del formulario
         $("#id_mentor").attr("value", "");
+        $("#area_conocimiento2 option:selected").prop("selected", false);
+        $("#div_areas input[type='checkbox']").prop("checked", false);
+        $("#nivel_educativo_mentor option:selected").prop("selected", false);
+        $("#otraarea").val("");
         $form.bootstrapValidator('disableSubmitButtons', false).bootstrapValidator('resetForm', true);
         bv.resetForm();
 
