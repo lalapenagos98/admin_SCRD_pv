@@ -44,6 +44,8 @@ keycloak.init(initOptions).then(function (authenticated) {
                 //cargar_tabla(token_actual);
             });
 
+            
+
             //carga select convocatorias
             $('#entidad').change(function () {
                 cargar_select_convocatorias(token_actual, $('#anio').val(), $('#entidad').val());
@@ -490,7 +492,7 @@ function cargar_select_perfiles(token_actual, convocatoria) {
                     $.each(json.perfiles_mentores, function (key, perfil_mentor) {
                         $("#perfiles").append('<option value="' + perfil_mentor.id + '" >' + perfil_mentor.descripcion_perfil + '</option>');
                     });
-
+                    $("#perfiles").selectize();
 
                     $("#div_areas").html("");
                     var htmlAreas = "";
