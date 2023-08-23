@@ -540,7 +540,7 @@ function validator_form(token_actual) {
                                         notify("danger", "ok", "Propuesta:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                     } else
                                     {
-                                        notify("success", "ok", "Propuesta:", "Se actualizó con el éxito la propuesta.");
+                                        notify("success", "ok", "Propuesta:", "Se actualizó con éxito su proyecto.");
 
                                         var redirect = "documentacion.html";
                                         

@@ -932,7 +932,8 @@ function cargar_formulario(token_actual)
 {
     $(".cargar_formulario").click(function () {
         //Cargo el id actual        
-        $("#id").attr('value', $(this).attr('title'))
+        //$("#id").attr('value', $(this).attr('title'))
+        $("#id").attr('value', $(this).data('id'))
         //Realizo la peticion para cargar el formulario
         $.ajax({
             type: 'GET',
