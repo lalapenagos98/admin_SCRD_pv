@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>::Información de la propuesta::</title>
+        <title>::Información del proyecto::</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                 <div class="loading centrado-porcentual"></div>                 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Información de la propuesta</h1>
+                        <h1 class="page-header">Información del proyecto</h1>
                     </div>
                     <div class="panel-body" style="text-align: right">                    
                         <button type="button" id="link_participante" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Regresar"><i class="fa fa-arrow-left"></i>
@@ -130,8 +130,8 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Trayectoria de la entidad participante <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_trayectoria_entidad">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa la trayectoria y experiencia de la entidad."><i class="fa fa-question"></i></button>
-                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label>Trayectoria de la entidad participante <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_trayectoria_entidad">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa la trayectoria y experiencia de la entidad. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="Max 2.000 caracteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                     </div>
@@ -160,8 +160,8 @@
                                         </div>                                         
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label>Descripción breve del proyecto <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_resumen">500</span></label>
-                                                <textarea id="resumen" name="resumen" class="form-control contar_caracteres" title="500" rows="3"></textarea>                                                
+                                                <label>Descripción breve del proyecto <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_resumen">500</span></label><button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Descripción breve del proyecto. (Max 500 caracacteres )"><i class="fa fa-question"></i></button>
+                                                <textarea id="resumen" name="resumen" class="form-control contar_caracteres" title="Max 500 caracacteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                         
                                     </div>
@@ -215,18 +215,18 @@
                                     </div>                                    
                                     
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6" id="areas_div">
                                             <div class="form-group">
                                                 <label>Áreas del proyecto <span class="icono_requerido">*</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Seleccione una o varias áreas disciplinares o artísticas en las que se desarrollará su proyecto"><i class="fa fa-question"></i></button>
                                                 <select id="area" name="area[]" class="form-control" multiple="multiple">
                                                 </select>                                               
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                                
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6" id="problema_necesidad_div">
                                             <div class="form-group">
                                                 <label>Problema o necesidad <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_problema_necesidad">2000</span></label>&nbsp;&nbsp;
-                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa el problema o necesidad a abordar y explique cómo su proyecto aportará en su resolución."><i class="fa fa-question"></i></button>
-                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa el problema o necesidad a abordar y explique cómo su proyecto aportará en su resolución. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
                                     </div>
@@ -235,9 +235,9 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>¿Cómo se diagnosticó el problema o necesidad? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_diagnostico_problema">2000</span></label> &nbsp;&nbsp;
-                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Relacione las fuentes de la información primarias y secundarias que permitieron identificar el problema o necesidad referida y su contexto."><i class="fa fa-question"></i></button>
-                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_metropolitano" data-toggle="tooltip" data-placement="top" title="Describa los trabajos acciones o estudios previos realizados con el propósito de contextualizar el problema o necesidad identificada"><i class="fa fa-question"></i></button>                                                                                                
-                                                <textarea id="diagnostico_problema" name="diagnostico_problema" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Relacione las fuentes de la información primarias y secundarias que permitieron identificar el problema o necesidad referida y su contexto. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <button style="display: none" type="button" class="btn btn-primary btn-circle campos_metropolitano" data-toggle="tooltip" data-placement="top" title="Describa los trabajos acciones o estudios previos realizados con el propósito de contextualizar el problema o necesidad identificada. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="diagnostico_problema" name="diagnostico_problema" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                     </div>
@@ -245,24 +245,24 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label id="nombre_justificacion"></label><span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_justificacion">2000</span>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique de manera concreta, ¿por qué es importante resolver el problema o necesidad identificada?, ¿de qué forma la propuesta y la experiencia de la entidad resultan pertinentes para aportar en la transformación o superación del problema?"><i class="fa fa-question"></i></button>
-                                                <textarea id="justificacion" name="justificacion" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label id="nombre_justificacion"></label><span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_justificacion">2000</span>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique de manera concreta, ¿por qué es importante resolver el problema o necesidad identificada?, ¿de qué forma la propuesta y la experiencia de la entidad resultan pertinentes para aportar en la transformación o superación del problema? (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="justificacion" name="justificacion" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
                                     </div>
                                     <div class="row">                                        
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Aportes del proyecto con relación a la línea de participación<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_aportes_proyecto">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los aportes del proyecto de acuerdo con la línea de participación seleccionada (ver descripción de las líneas en las condiciones generales de participación)"><i class="fa fa-question"></i></button>
-                                                <textarea id="aportes_proyecto" name="aportes_proyecto" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label>Aportes del proyecto con relación a la línea de participación<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_aportes_proyecto">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los aportes del proyecto de acuerdo con la línea de participación seleccionada (ver descripción de las líneas en las condiciones generales de participación). (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="aportes_proyecto" name="aportes_proyecto" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                     </div>
                                     <div class="row">                                        
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Antecedentes generales del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_atencedente">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa las acciones o circunstancias que permiten comprender la relación entre la propuesta y el contexto a intervenir."><i class="fa fa-question"></i></button>
-                                                <textarea id="atencedente" name="atencedente" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label>Antecedentes generales del proyecto<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_atencedente">2000</span></label> &nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa las acciones o circunstancias que permiten comprender la relación entre la propuesta y el contexto a intervenir. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="atencedente" name="atencedente" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                     </div>
@@ -310,8 +310,8 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Metodología <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_metodologia">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la perspectiva conceptual desde la que se aborda el proyecto y la estructura de los componentes del proyecto: fases, temáticas, contenidos, estrategias  y herramientas que permitirán el logro de los objetivos, expresando su alcance, viabilidad y sostenibilidad."><i class="fa fa-question"></i></button>
-                                                <textarea id="metodologia" name="metodologia" class="form-control contar_caracteres" title="2000" rows="3"></textarea>                                                
+                                                <label>Metodología <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_metodologia">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la perspectiva conceptual desde la que se aborda el proyecto y la estructura de los componentes del proyecto: fases, temáticas, contenidos, estrategias  y herramientas que permitirán el logro de los objetivos, expresando su alcance, viabilidad y sostenibilidad. (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="metodologia" name="metodologia" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                                                                                                            
                                     </div>
@@ -328,8 +328,8 @@
                                     <div class="row campos_locales"> 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Especifique como se incorporará al proyecto el o los enfoques seleccionados<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_enfoques_seleccionados">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la forma como se integrará al proyecto el enfoque o enfoques seleccionados (recuerde que se valorarán propuestas con perspectiva interseccional de estos enfoques)"><i class="fa fa-question"></i></button>
-                                                <textarea id="enfoques_seleccionados" name="enfoques_seleccionados" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
+                                                <label>Especifique como se incorporará al proyecto el o los enfoques seleccionados<span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_enfoques_seleccionados">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explique la forma como se integrará al proyecto el enfoque o enfoques seleccionados (recuerde que se valorarán propuestas con perspectiva interseccional de estos enfoques). (Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="enfoques_seleccionados" name="enfoques_seleccionados" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>
                                     </div>
@@ -337,8 +337,8 @@
                                     <div class="row">                                        
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Impacto esperado <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Defina el alcance esperado del proyecto con relación a la línea de participación elegida y el aporte que se espera entregar al campo cultural, artístico y patrimonial, al territorio, poblaciones y ámbitos intervenidos. Incluya el impacto esperado del proyecto en relación con sus aportes a la inclusión social, económica y productiva."><i class="fa fa-question"></i></button>
-                                                <textarea id="impacto" name="impacto" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
+                                                <label>Impacto esperado <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Defina el alcance esperado del proyecto con relación a la línea de participación elegida y el aporte que se espera entregar al campo cultural, artístico y patrimonial, al territorio, poblaciones y ámbitos intervenidos. Incluya el impacto esperado del proyecto en relación con sus aportes a la inclusión social, económica y productiva.(Max 2.000 carcteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="impacto" name="impacto" class="form-control contar_caracteres" title="(Max 2.000 carcteres)" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                                                            
                                     </div>
@@ -414,8 +414,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group campos_locales" style="display: none">
-                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los mecanismos y estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto en relación con el criterio seleccionado."><i class="fa fa-question"></i></button>
-                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
+                                                <label>Describa los mecanismos o estrategias de medición (cualitativa y cuantitativa) <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa los mecanismos y estrategias de medición (cualitativa y cuantitativa) que utilizará para medir el impacto del proyecto en relación con el criterio seleccionado. (Max 1.000 caracacteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="Max 2.000 carcteres" rows="3"></textarea>
                                             </div>                                                                                                                                                                                                                                                                                                        
                                         </div>                                        
                                     </div>
@@ -452,7 +452,7 @@
                                                 <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Esta seguro que la información de la propuesta esta correcta?</p>
+                                                <p>¿Está seguro que la información del proyecto es la correcta?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>

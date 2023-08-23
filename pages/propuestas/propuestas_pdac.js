@@ -294,6 +294,14 @@ $(document).ready(function () {
                                                                                     selected = 'selected="selected"';
                                                                                 }
                                                                                 $("#area").append('<option value="' + area.nombre + '" >' + area.nombre + '</option>');
+                                                                                if(json.convocatoria_programa == 2)
+                                                                                {
+                                                                                    $("#area").val(['Actividades de la economía creativa y cultural'])
+                                                                                    $("#areas_div").addClass('hidden')
+                                                                                    $("#problema_necesidad_div").removeClass('col-lg-6')
+                                                                                    $("#problema_necesidad_div").addClass('col-lg-12')
+
+                                                                                }
                                                                             });
                                                                         }
 
@@ -477,6 +485,7 @@ $(document).ready(function () {
                                                             } else
                                                             {
                                                                 var json = JSON.parse(data);
+
                                                                 $("#upz").append('<option value="">:: Seleccionar ::</option>');
                                                                 if (json != null)
                                                                 {

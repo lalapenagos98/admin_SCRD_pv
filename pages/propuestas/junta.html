@@ -49,7 +49,11 @@
 
         <!-- Datepicker animate -->
         <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
-
+        <style>
+            .icono-verde {
+                color: #5cb85c; /* Cambia este valor al color que desees */
+            }
+        </style>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -73,13 +77,15 @@
                 <div class="row">                    
                     <div class="col-lg-12">                         
                         <h1 class="page-header">Información de la junta directiva</h1>
-                    </div>                    
-                    <div class="panel-body" style="text-align: right">                                            
-                        <button type="button" class="btn btn-success btn-circle btn-lg" data-toggle="modal" data-target="#nuevo_integrante" ><i class="fa fa-file-o"></i></button>
+                    </div>
+                    <div class="panel-body" style="text-align: right">
+                        <button type="button" class="btn btn-success btn-circle btn-lg" data-toggle="modal" data-target="#nuevo_integrante" title="Diligencie los datos de cada integrante de la junta directiva">
+                            <i class="fa fa-user-plus"></i>
+                        </button>
                         <button type="button" id="link_propuestas" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Regresar"><i class="fa fa-arrow-left"></i>
                         </button>
                         <button type="button" id="link_documentacion" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Siguiente"><i class="fa fa-arrow-right"></i>
-                        </button>                        
+                        </button>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -91,9 +97,9 @@
                             </div>
                             <div class="panel-body">
                                 <ul>
-                                    <li>En esta sección la entidad sin ánimo de lucro, podrá diligenciar el formulario con los datos solicitados por el <span class="programa_actual"></span>, para cada uno de los miembros que conforman la junta directiva.</li>
-                                    <li>Recuerde que se debe registrar la totalidad de los integrantes de la junta directiva de la Persona Jurídica y al representante legal de la misma. Tenga presente que aquí no se registra a los integrantes del equipo de trabajo que ejecutará la propuesta.</li>
-                                    <li>Dado el caso que la convocatoria contemple sustentación o audición, solo podrán participar en ella los integrantes que estén inscritos en el SICON</li>
+                                    <li>Diligencia el formulario con los datos solicitados para cada uno de los miembros que conforman la junta directiva de la persona jurídica (ESAL) participante. <i class="fa fa-user-plus icono-verde"></i></li>
+                                    <li>Recuerda que se debe registrar a todos los integrantes de la junta directiva de la persona jurídica y a su representante legal. Ten presente que aquí no se registra a los integrantes del equipo de trabajo, que ejecutará el proyecto.</li>
+                                    <li>Es MUY IMPORTANTE que tengas en cuenta que a la sustentación debe asistir el representante legal de la entidad llamada a sustentar, o su delegado debidamente autorizado.</li>
                                 </ul>
                             </div>                        
                         </div>
@@ -122,7 +128,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label>Cargo que desempeña dentro de la junta<span class="icono_requerido">*</span></label>
+                                                        <label>Cargo que desempeña dentro de la Junta Directiva<span class="icono_requerido">*</span></label>
                                                         <input type="text" name="rol" class="form-control">
                                                     </div>
                                                 </div>
@@ -130,7 +136,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label>¿Representante?<span class="icono_requerido">*</span></label>
+                                                        <label>¿Es el Representante Legal de la Persona Jurídica?<span class="icono_requerido">*</span></label>
                                                         <select id='representante' name="representante" class="form-control" >                                                    
                                                             <option value="true">Sí</option>
                                                             <option value="false" selected="selected">No</option>
@@ -566,7 +572,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <label>Bajo gravedad de juramento informo que no tengo un contrato vigente con la entidad que oferta la convocatoria a la cual me estoy postulando (Secretaria Distrital de Cultura, Recreación y Deporte - SCRD,  Instituto Distrital de las Artes – IDARTES, el Instituto Distrital de Patrimonio Cultural – IDPC, la Orquesta Filarmónica de Bogotá – OFB o la Fundación Gilberto Álzate Avendaño – FUGA según sea el caso), y que por lo tanto no incurro en la causal de exclusión de personas naturales contratistas descritas en el punto 3.2 de las Condiciones Generales de Participación del PDE. </label>
+                                                        <label>Bajo gravedad de juramento informo que no tengo un contrato vigente con la entidad que oferta la convocatoria a la cual me estoy postulando (ofertada por la Secretaria Distrital de Cultura, Recreación y Deporte - SCRD, Instituto Distrital de las Artes – IDARTES, el Instituto Distrital de Patrimonio Cultural – IDPC, la Orquesta Filarmónica de Bogotá – OFB o la Fundación Gilberto Álzate Avendaño – FUGA según sea el caso), y que por lo tanto no incurro en la causal de exclusión de personas naturales contratistas establecidas las Condiciones Generales de Participación del PDE y del PDAC.</label>
                                                         <input type="checkbox" name="afirmacion_no_contratista" value="Si" style="width: 30px; height: 30px;" />
                                                     </div>
                                                 </div>

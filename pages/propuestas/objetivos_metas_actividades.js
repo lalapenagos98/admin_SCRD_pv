@@ -1136,7 +1136,7 @@ function cargar_formulario_actividad(token_actual)
 {
     $(".cargar_actividad_cronograma").click(function () {
         //Cargo el id actual        
-        $("#propuestaactividad").attr('value', $(this).attr('title'));
+        $("#propuestaactividad").attr('value', $(this).data('id'));
         cargar_tabla_cronograma(token_actual);
     });
 
@@ -1150,11 +1150,11 @@ function cargar_formulario_actividad(token_actual)
 
         $("#form_nuevo_actividad").data('bootstrapValidator').resetForm();
         $("#form_nuevo_actividad").bootstrapValidator('resetForm', true);
-
-        if ($(this).attr('title') > 0)
+        let id_actividad = $(this).data('id')
+        if (id_actividad > 0)
         {
             //Cargo el id actual        
-            $("#id_registro_2").attr('value', $(this).attr('title'));
+            $("#id_registro_2").attr('value', id_actividad);
             //Realizo la peticion para cargar el formulario
             $.ajax({
                 type: 'GET',

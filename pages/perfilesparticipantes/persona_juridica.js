@@ -225,7 +225,7 @@ $(document).ready(function () {
                 $('#tipo_sede').attr("disabled", false); 
             }
         });
-        
+        console.log($("#id").attr('value'),'valor del id')
         //Realizo la peticion para cargar el formulario
         $.ajax({
             type: 'GET',
@@ -327,7 +327,8 @@ $(document).ready(function () {
                             $("#estrato").append('<option value="' + array + '" '+selected+' >' + array + '</option>');
                         });
                     }
-                    
+                    $("#estrato").val(1)
+                    $("#estrato").addClass('hidden')//PDAC NO TIENE ESTRATO
                     //Cargos el select de estrato
                     $('#tipo_sede').find('option').remove();
                     $("#tipo_sede").append('<option value="">:: Seleccionar ::</option>');

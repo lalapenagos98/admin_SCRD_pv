@@ -272,6 +272,7 @@ $(document).ready(function () {
                 if(enviar)
                 {
                     //Realizo la peticion para cargar el formulario
+                    console.log($("#id").val(),'id convocatoria')
                     $.ajax({
                         type: 'GET',
                         data: {"token": token_actual.token, "conv": $("#id").val(), "alianza_sectorial": $("#alianza_sectorial").val(), "modulo": "Menu Participante", "p": getURLParameter('p')},

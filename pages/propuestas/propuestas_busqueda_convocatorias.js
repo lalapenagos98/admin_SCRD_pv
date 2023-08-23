@@ -169,10 +169,10 @@ $(document).ready(function () {
         { data: "anio" },
         { data: "programa" },
         { data: "entidad" },
+        { data: "convocatoria" },
         { data: "area" },
         { data: "linea_estrategica" },
         { data: "enfoque" },
-        { data: "convocatoria" },
         { data: "categoria" },
         { data: "ver_cronograma" },
         { data: "ver_convocatoria" ,className:'text-center'},
@@ -409,7 +409,7 @@ function cargar_cronograma(token_actual) {
 
 function opciones_del_programa(id_programa,dataTable) {
   console.log('ingresa ocultar campos')
-  var columnasOcultas = [4, 6];
+  var columnasOcultas = [5, 7, 8];
   if(id_programa === '2')//programa PDAC
   {
 // Ocultar las columnas definidas en columnasOcultas
@@ -418,6 +418,7 @@ function opciones_del_programa(id_programa,dataTable) {
       dataTable.column(columnasOcultas[i]).visible(false);
     }
     dataTable.column(8).header().innerHTML = "Línea de participación";
+    dataTable.column(6).header().innerHTML = "Línea de participación";
     $('#div_area').addClass('hidden')
     $('#div_enfoque').addClass('hidden')
     $('#div_nombre_convocatoria').addClass('hidden')
@@ -439,6 +440,7 @@ function opciones_del_programa(id_programa,dataTable) {
       dataTable.column(columnasOcultas[i]).visible(true);
     }
     dataTable.column(8).header().innerHTML = "categoría";
+    dataTable.column(6).header().innerHTML = "Linea";
     $('#div_area').removeClass('hidden')
     $('#div_enfoque').removeClass('hidden')
     $('#div_nombre_convocatoria').removeClass('hidden')

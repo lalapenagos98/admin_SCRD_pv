@@ -377,7 +377,7 @@ function validator_form(token_actual) {
             },
             unidadmedida: {
                 validators: {
-                    notEmpty: {message: 'La unidad de medida, es requerido'}
+                    notEmpty: {message: 'El tipo de gasto, es requerido'}
                 }
             },
             cantidad: {

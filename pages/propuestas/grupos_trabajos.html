@@ -50,6 +50,11 @@
         <!-- Datepicker animate -->
         <link href="../../dist/libraries/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
 
+        <style>
+            .icono-verde {
+                color: #5cb85c; /* Cambia este valor al color que desees */
+            }
+        </style>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -76,7 +81,7 @@
                         <h1 class="page-header">Información del equipo de trabajo</h1>
                     </div>                    
                     <div class="panel-body" style="text-align: right">                                            
-                        <button type="button" class="btn btn-success btn-circle btn-lg" data-toggle="modal" data-target="#nuevo_integrante" ><i class="fa fa-file-o"></i></button>
+                        <button type="button" class="btn btn-success btn-circle btn-lg" data-toggle="modal" data-target="#nuevo_integrante" title="Diligencie los datos de cada integrante del equipo de trabajo que ejecutará el proyecto apoyado"><i class="fa fa-user-plus"></i></button>
                         <button type="button" id="link_propuestas" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Regresar"><i class="fa fa-arrow-left"></i>
                         </button>
                         <button type="button" id="link_documentacion" class="btn btn-default btn-circle btn-lg" data-toggle="tooltip" data-placement="top" title="Siguiente"><i class="fa fa-arrow-right"></i>
@@ -91,7 +96,7 @@
                                 Antes de diligenciar el formulario, por favor lea la siguiente información:
                             </div>
                             <div class="panel-body">
-                                <p>En esta sección se debe registrar la información solicitada de cada uno de los miembros del equipo de trabajo que ejecutará el proyecto apoyado</p>
+                                <p>En esta sección se debe registrar la información solicitada de cada uno de los miembros del equipo de trabajo que ejecutará el proyecto apoyado <i class="fa fa-user-plus icono-verde"></i></p>
                             </div>                        
                         </div>
                     </div>
@@ -109,303 +114,320 @@
 
                             <!-- cuerpo del diálogo -->
                             <div class="modal-body">
-                                <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post" enctype="multipart/form-data">                                    
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label>Rol que desempeña o ejecuta en la propuesta <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="rol" class="form-control">
-                                            </div>
+                                <form id="formulario_principal" action="" class="formulario_principal" role="form" method="post" enctype="multipart/form-data">
+
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Información básica
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label>¿Director del Proyecto?<span class="icono_requerido">*</span></label>
-                                                <select id='director' name="director" class="form-control" >                                                    
-                                                    <option value="true">Sí</option>
-                                                    <option value="false" selected="selected">No</option>
-                                                </select>                                                
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div> 
-                                    </div>                                                                        
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Tipo de documento de identificación  <span class="icono_requerido">*</span></label>
-                                                <select id='tipo_documento' name="tipo_documento" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Número de documento de identificación <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="numero_documento" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Primer nombre <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="primer_nombre" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Segundo nombre</label>
-                                                <input type="text" name="segundo_nombre" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Primer apellido <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="primer_apellido" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Segundo apellido</label>
-                                                <input type="text" name="segundo_apellido" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Sexo <span class="icono_requerido">*</span></label>
-                                                <select id='sexo' name="sexo" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Orientación Sexual <span class="icono_requerido">*</span></label>
-                                                <select id='orientacion_sexual' name="orientacion_sexual" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Identidad de género <span class="icono_requerido">*</span></label>
-                                                <select id='identidad_genero' name="identidad_genero" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Grupo étnico <span class="icono_requerido">*</span></label>
-                                                <select id='grupo_etnico' name="grupo_etnico" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>¿Tiene usted algún tipo de discapacidad? <span class="icono_requerido">*</span></label>
-                                                <select id='discapacidad' name="discapacidad" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>
-                                        </div>                                        
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>¿A qué régimen de salud pertenece?  <span class="icono_requerido">*</span></label>
-                                                <select id='regimen_salud' name="regimen_salud" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                    <option value="Contributivo">Contributivo</option>
-                                                    <option value="Subsidiado">Subsidiado</option>
-                                                </select>
-                                            </div>
-                                        </div>                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>¿Es usted víctima del conflicto armado? <span class="icono_requerido">*</span></label>
-                                                <select id='es_victima' name="es_victima" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                    <option value="Sí">Sí</option>
-                                                    <option value="No">No</option>
-                                                    <option value="No deseo responder">No deseo responder</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Fecha de nacimiento <span class="icono_requerido">*</span></label>
-                                                <div class="input-group date calendario" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" name="fecha_nacimiento" size="16" type="text" value="" readonly>
-                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Rol que desempeña o ejecuta en la propuesta <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="rol" class="form-control">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>                                        
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>¿Director del Proyecto?<span class="icono_requerido">*</span></label>
+                                                        <select id='director' name="director" class="form-control" >
+                                                            <option value="true">Sí</option>
+                                                            <option value="false" selected="selected">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Tipo de documento de identificación  <span class="icono_requerido">*</span></label>
+                                                        <select id='tipo_documento' name="tipo_documento" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Número de documento de identificación <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="numero_documento" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Primer nombre <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="primer_nombre" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Segundo nombre</label>
+                                                        <input type="text" name="segundo_nombre" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Primer apellido <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="primer_apellido" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Segundo apellido</label>
+                                                        <input type="text" name="segundo_apellido" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Sexo <span class="icono_requerido">*</span></label>
+                                                        <select id='sexo' name="sexo" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Orientación Sexual <span class="icono_requerido">*</span></label>
+                                                        <select id='orientacion_sexual' name="orientacion_sexual" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Identidad de género <span class="icono_requerido">*</span></label>
+                                                        <select id='identidad_genero' name="identidad_genero" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Grupo étnico <span class="icono_requerido">*</span></label>
+                                                        <select id='grupo_etnico' name="grupo_etnico" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>¿Tiene usted algún tipo de discapacidad? <span class="icono_requerido">*</span></label>
+                                                        <select id='discapacidad' name="discapacidad" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>¿A qué régimen de salud pertenece?  <span class="icono_requerido">*</span></label>
+                                                        <select id='regimen_salud' name="regimen_salud" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                            <option value="Contributivo">Contributivo</option>
+                                                            <option value="Subsidiado">Subsidiado</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>¿Es usted víctima del conflicto armado? <span class="icono_requerido">*</span></label>
+                                                        <select id='es_victima' name="es_victima" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                            <option value="Sí">Sí</option>
+                                                            <option value="No">No</option>
+                                                            <option value="No deseo responder">No deseo responder</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Fecha de nacimiento <span class="icono_requerido">*</span></label>
+                                                        <div class="input-group date calendario" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                                                            <input class="form-control" name="fecha_nacimiento" size="16" type="text" value="" readonly>
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>País de nacimiento <span class="icono_requerido">*</span></label>
+                                                        <select id='pais_nacimiento' name="pais_nacimiento" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Departamento de nacimiento <span class="icono_requerido">*</span></label>
+                                                        <select id='departamento_nacimiento' name="departamento_nacimiento" class="form-control">
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Ciudad de nacimiento <span class="icono_requerido">*</span></label>
+                                                        <select id='ciudad_nacimiento' name="ciudad_nacimiento" class="form-control">
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>País de nacimiento <span class="icono_requerido">*</span></label>
-                                                <select id='pais_nacimiento' name="pais_nacimiento" class="form-control">                                                    
-                                                </select>
-                                            </div>
+
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Información de contacto
                                         </div>
-                                        <div class="col-lg-6">                                            
-                                            <div class="form-group">
-                                                <label>Departamento de nacimiento <span class="icono_requerido">*</span></label>
-                                                <select id='departamento_nacimiento' name="departamento_nacimiento" class="form-control">                                                    
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>País de residencia <span class="icono_requerido">*</span></label>
+                                                        <select id='pais' name="pais" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Departamento de residencia <span class="icono_requerido">*</span></label>
+                                                        <select id='departamento' name="departamento" class="form-control">
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>                                            
-                                    </div> 
-                                    <div class="row">                                        
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Ciudad de nacimiento <span class="icono_requerido">*</span></label>
-                                                <select id='ciudad_nacimiento' name="ciudad_nacimiento" class="form-control">                                                    
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>                                                                                        
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>País de residencia <span class="icono_requerido">*</span></label>
-                                                <select id='pais' name="pais" class="form-control">                                                    
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Ciudad de residencia <span class="icono_requerido">*</span></label>
+                                                        <select id='ciudad_residencia' name="ciudad_residencia" class="form-control">
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Localidad de residencia <span class="icono_requerido">*</span></label>
+                                                        <select id='localidad_residencia' name="localidad_residencia" class="form-control" >
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">                                        
-                                        <div class="col-lg-6">                                            
-                                            <div class="form-group">
-                                                <label>Departamento de residencia <span class="icono_requerido">*</span></label>
-                                                <select id='departamento' name="departamento" class="form-control">                                                    
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Barrio de residencia</label>
+                                                        <select id='barrio_residencia' name="barrio_residencia" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Dirección de residencia <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="direccion_residencia" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>                                            
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Ciudad de residencia <span class="icono_requerido">*</span></label>
-                                                <select id='ciudad_residencia' name="ciudad_residencia" class="form-control">                                                    
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                             </div>
-                                        </div>     
-                                    </div>                                    
-                                    <div class="row">                                    
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Localidad de residencia <span class="icono_requerido">*</span></label>
-                                                <select id='localidad_residencia' name="localidad_residencia" class="form-control" >                                                                                                        
-                                                </select>
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Barrio de residencia</label>
-                                                <select id='barrio_residencia' name="barrio_residencia" class="form-control" >                                                    
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                    </div>                                                                        
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Dirección de residencia <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="direccion_residencia" class="form-control">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Dirección correspondencia</label>
+                                                        <input type="text" name="direccion_correspondencia" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Estrato<span class="icono_requerido">*</span></label>
+                                                        <select id='estrato' name="estrato" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Dirección correspondencia</label>
-                                                <input type="text" name="direccion_correspondencia" class="form-control">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Área</label>
+                                                        <select id='area' name="area" class="form-control" >
+                                                            <option value="">:: Seleccionar ::</option>
+                                                            <option value="Urbana">Urbana</option>
+                                                            <option value="Rural">Rural</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Teléfono fijo</label>
+                                                        <input type="text" name="numero_telefono" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Estrato<span class="icono_requerido">*</span></label>
-                                                <select id='estrato' name="estrato" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Número de celular personal <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="numero_celular" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Correo electrónico <span class="icono_requerido">*</span></label>
+                                                        <input type="text" name="correo_electronico" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Área</label>
-                                                <select id='area' name="area" class="form-control" >
-                                                    <option value="">:: Seleccionar ::</option>
-                                                    <option value="Urbana">Urbana</option>
-                                                    <option value="Rural">Rural</option>                                                    
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Redes sociales</label>
+                                                        <input type="text" name="facebook" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label>Página web, vínculo o blog</label>
+                                                        <input type="text" name="links" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">                                        
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Teléfono fijo</label>
-                                                <input type="text" name="numero_telefono" class="form-control">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Experiencia <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_experiencia">1000</span></label>&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa su experiencia en el rol que desempeñará en la ejecución de la la propuesta/proyecto."><i class="fa fa-question"></i></button>
+                                                        <textarea id="experiencia" name="experiencia" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>                                    
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Número de celular personal <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="numero_celular" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Correo electrónico <span class="icono_requerido">*</span></label>
-                                                <input type="text" name="correo_electronico" class="form-control">
-                                            </div>
-                                        </div>                                    
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label>Redes sociales</label>
-                                                <input type="text" name="facebook" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label>Página web, vínculo o blog</label>
-                                                <input type="text" name="links" class="form-control">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>Actividades a cargo <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_actividades_cargo">1000</span></label>&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Mencione las actividades que estarán bajo su cargo en la ejecución de la la propuesta/proyecto."><i class="fa fa-question"></i></button>
+                                                        <textarea id="actividades_cargo" name="actividades_cargo" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label>Experiencia <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_experiencia">1000</span></label>&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa su experiencia en el rol que desempeñará en la ejecución de la la propuesta/proyecto."><i class="fa fa-question"></i></button>
-                                                <textarea id="experiencia" name="experiencia" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label>Actividades a cargo <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_actividades_cargo">1000</span></label>&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Mencione las actividades que estarán bajo su cargo en la ejecución de la la propuesta/proyecto."><i class="fa fa-question"></i></button>
-                                                <textarea id="actividades_cargo" name="actividades_cargo" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
-                                            </div>                                                                                                                                                                                                                                                                                                        
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-lg-12" style="text-align: right">
                                             <input type="hidden" id="id" name="id" />
