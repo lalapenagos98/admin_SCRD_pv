@@ -1051,11 +1051,11 @@ function cargar_formulario(token_actual)
 
         $("#form_nuevo_objetivo").data('bootstrapValidator').resetForm();
         $("#form_nuevo_objetivo").bootstrapValidator('resetForm', true);
-
-        if ($(this).attr('title') > 0)
+        let editar_objetivo = $(this).attr('title')
+        if (editar_objetivo > 0)
         {
             //Cargo el id actual        
-            $("#id_registro").attr('value', $(this).attr('title'));
+            $("#id_registro").attr('value', editar_objetivo);
             //Realizo la peticion para cargar el formulario
             $.ajax({
                 type: 'GET',
