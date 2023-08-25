@@ -549,6 +549,12 @@ function cargar_tabla_presupuesto(token_actual)
             {"data": "editar"},
             {"data": "active"}
         ],
+        "columnDefs": [
+            {
+                "targets": [10], // Índice de la columna "activar_registro"
+                "visible": false, // Ocultar la columna "activar_registro"
+            },
+        ],
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
  
