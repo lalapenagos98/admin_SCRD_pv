@@ -1051,7 +1051,7 @@ function cargar_formulario(token_actual)
 
         $("#form_nuevo_objetivo").data('bootstrapValidator').resetForm();
         $("#form_nuevo_objetivo").bootstrapValidator('resetForm', true);
-        let editar_objetivo = $(this).attr('title')
+        let editar_objetivo = $(this).data('id')
         if (editar_objetivo > 0)
         {
             //Cargo el id actual        

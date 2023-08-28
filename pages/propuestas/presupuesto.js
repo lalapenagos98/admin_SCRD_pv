@@ -532,7 +532,7 @@ function cargar_tabla_presupuesto(token_actual)
                     return row.objetivo;
                 }
             },
-            { className: "columna_activo", "targets": [ 12 ] }
+            { className: "columna_activo", "targets": [ 12,14 ] }
         ],        
         "columns": [
             {"data": "objetivo"},
@@ -551,7 +551,7 @@ function cargar_tabla_presupuesto(token_actual)
         ],
         "columnDefs": [
             {
-                "targets": [10], // Índice de la columna "activar_registro"
+                "targets": [10,12], // Índice de la columna "activar_registro"
                 "visible": false, // Ocultar la columna "activar_registro"
             },
         ],
@@ -677,7 +677,7 @@ function cargar_formulario_presupuesto(token_actual)
         $("#formulario_principal").bootstrapValidator('resetForm', true);
 
         //Cargo el id actual        
-        $("#id_registro_4").attr('value', $(this).attr('title'));
+        $("#id_registro_4").attr('value', $(this).data('id'));
         //Realizo la peticion para cargar el formulario
         $.ajax({
             type: 'GET',
