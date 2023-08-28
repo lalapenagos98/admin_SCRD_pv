@@ -177,7 +177,7 @@ keycloak.init(initOptions).then(function (authenticated) {
 
             $("#optionsRadiosInline1").click(function () {
 
-                $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', false);
+                $('#form_aplica_perfil').bootstrapValidator('enableFieldValidators', 'descripcion_evaluacion', true);
             });
 
             $("#optionsRadiosInline2").click(function () {
@@ -1502,7 +1502,7 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
     $("#form_criterios").hide();
     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
-    $(".guardar_aplica_perfil").removeClass("disabled");
+    //$(".guardar_aplica_perfil").removeClass("disabled");
     $("#form_aplica_perfil").trigger("reset");
     //Cargar datos en la tabla actual
     $.ajax({
@@ -1546,19 +1546,18 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
 
                     $("input[name=option_aplica_perfil][value=true]").removeAttr('checked');
                     $("input[name=option_aplica_perfil][value=false]").removeAttr('checked');
-                    console.log("aplica_perfil-->" + json[r].postulacion);
                     if (json[r].postulacion) {
 
 //                        alert(json[r].postulacion.aplica_perfil);
 
                         if (json[r].postulacion.aplica_perfil !== null && json[r].postulacion.aplica_perfil) {
-                            $(".guardar_aplica_perfil").addClass("disabled");
-                            $("#fieldset_aplica_perfil").attr("disabled", "");
+                            //$(".guardar_aplica_perfil").addClass("disabled");
+                            //$("#fieldset_aplica_perfil").attr("disabled", "");
                             $("input[name=option_aplica_perfil][value=true]").attr('checked', 'checked');
                             $("#form_criterios").show();
                         } else if (json[r].postulacion.aplica_perfil !== null && (!json[r].postulacion.aplica_perfil)) {
-                            $(".guardar_aplica_perfil").addClass("disabled");
-                            $("#fieldset_aplica_perfil").attr("disabled", "");
+                            //$(".guardar_aplica_perfil").addClass("disabled");
+                            //$("#fieldset_aplica_perfil").attr("disabled", "");
                             $("input[name=option_aplica_perfil][value=false]").attr('checked', 'checked');
                         }
 
@@ -1568,19 +1567,20 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                          * Verificando disable - enabled de formulario se agrega el siguiente if que permite habilitar el formulario form_aplica_perfil
                          */
 
-
+                        /*
                         if (json[r].postulacion.aplica_perfil === null) {
                             $("#form_aplica_perfil").removeClass("disabled");
                             $(".guardar_aplica_perfil").removeClass("disabled");
                             $("#fieldset_aplica_perfil").removeAttr("disabled", "");
                         }
+                        */
 
 
 
                         $("#descripcion_evaluacion").val(json[r].postulacion.descripcion_evaluacion);
                         $("#id_jurados_postulados").val(json[r].postulacion.id);
                         //grupo
-                        $("#form_criterios").append('<fieldset class="criterios" ' + (json[r].postulacion.estado >= 12 ? ' disabled="" ' : '') + '>');
+                        $("#form_criterios").append('<fieldset class="criterios">');
                     }
 
                     //categoria criterio
@@ -1630,8 +1630,8 @@ function cargar_criterios_evaluacion(token_actual, postulacion, participante) {
                     }); //fin foreach categoria criterio
 
                     $(".criterios").append('<div class="col-lg-12" style="text-align: right">'
-                            + '<button type="button" class="btn btn-default ' + ((json[r].postulacion.estado >= 12) ? "disabled" : ' guardar_evaluacion_' + $("#id_ronda").val()) + '">Guardar</button>'
-                            + '<button type="button" class="btn btn-default ' + ((json[r].postulacion.estado >= 12) ? "disabled" : ' confirmar_evaluacion_' + $("#id_ronda").val()) + '">Confirmar evaluación</button></div>'
+                            + '<button type="button" class="btn btn-default ' + ' guardar_evaluacion_' + $("#id_ronda").val() + '">Guardar</button>'
+                            + '<button type="button" class="btn btn-default ' + ' confirmar_evaluacion_' + $("#id_ronda").val() + '">Confirmar evaluación</button></div>'
                             );
                 }); //fin foreach ronda
 
@@ -1702,8 +1702,8 @@ function evaluar_perfil(token_actual, postulacion, participante) {
                 break;
             default:
                 notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
-                $(".guardar_aplica_perfil").addClass("disabled");
-                $("#fieldset_aplica_perfil").attr("disabled", "");
+                //$(".guardar_aplica_perfil").addClass("disabled");
+                //$("#fieldset_aplica_perfil").attr("disabled", "");
                 cargar_tabla(token_actual);
                 if (document.getElementById('optionsRadiosInline1').checked) {
                     $("#form_criterios").show();
@@ -1799,7 +1799,7 @@ function confirmar_evaluacion(token_actual, postulacion, participante) {
                 break;
             default:
                 notify("success", "ok", "Convocatorias:", "Se actualizó el registro con éxito.");
-                $(".criterios").attr('disabled', '');
+                //$(".criterios").attr('disabled', '');
                 cargar_tabla(token_actual);
                 break;
         }
