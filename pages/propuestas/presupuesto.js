@@ -520,10 +520,12 @@ function cargar_tabla_presupuesto(token_actual)
             //Cargo el formulario, para crear o editar
             cargar_formulario_presupuesto(token_actual);
         },
-        "columnDefs": [{
+        "columnDefs": [
+            {
                 "targets": 0,
                 "render": function (data, type, row, meta) {
-                    //Creo los botones para acciones de cada fila de la tabla                    
+                    console.log(row,data)
+                    //Creo los botones para acciones de cada fila de la tabla
                     row.valorunitario = addCommas(row.valorunitario);
                     row.valortotal = addCommas(row.valortotal);
                     row.aportesolicitado = addCommas(row.aportesolicitado);
@@ -532,8 +534,12 @@ function cargar_tabla_presupuesto(token_actual)
                     return row.objetivo;
                 }
             },
-            { className: "columna_activo", "targets": [ 12,14 ] }
-        ],        
+
+            {
+                "targets": [10,12], // Índice de la columna "activar_registro"
+                "visible": false, // Ocultar la columna "activar_registro"
+            },
+        ],
         "columns": [
             {"data": "objetivo"},
             {"data": "actividad"},
@@ -549,31 +555,38 @@ function cargar_tabla_presupuesto(token_actual)
             {"data": "editar"},
             {"data": "active"}
         ],
-        "columnDefs": [
-            {
-                "targets": [10,12], // Índice de la columna "activar_registro"
-                "visible": false, // Ocultar la columna "activar_registro"
-            },
-        ],
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
- 
+
             // Remove the formatting to get integer data for summation
             var intVal = function (i) {
-                return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                return typeof i === 'string' ? i.replace(/[\$.]/g, '') * 1 : typeof i === 'number' ? i : 0;
             };
- 
+
             //console.log(api.rows().data().active);
             //console.log(api.column(10).row().data().active);
-            
-            
- 
+
+console.log(api
+    .column(6)
+    .data()
+    .reduce(function (a, b, c) {
+
+        if(data[c].active===true){
+            return intVal(a) + intVal(b);
+        }
+        else
+        {
+            return intVal(a);
+        }
+
+    }, 0))
+
             // valor_total
             valor_total = api
                 .column(6)
                 .data()
                 .reduce(function (a, b, c) {
-                    
+
                     if(data[c].active===true){
                         return intVal(a) + intVal(b);
                     }
@@ -581,9 +594,9 @@ function cargar_tabla_presupuesto(token_actual)
                     {
                         return intVal(a);
                     }
-                    
+
                 }, 0);
-                
+
             // aporte_solicitado
             aporte_solicitado = api
                 .column(7)
@@ -595,9 +608,9 @@ function cargar_tabla_presupuesto(token_actual)
                     else
                     {
                         return intVal(a);
-                    }                    
+                    }
                 }, 0);
-                
+
             // aporte_cofinanciado
             aporte_cofinanciado = api
                 .column(8)
@@ -609,9 +622,9 @@ function cargar_tabla_presupuesto(token_actual)
                     else
                     {
                         return intVal(a);
-                    }                    
+                    }
                 }, 0);
-                
+
             // aporte_cofinanciado
             aporte_recursos = api
                 .column(9)
@@ -623,12 +636,12 @@ function cargar_tabla_presupuesto(token_actual)
                     else
                     {
                         return intVal(a);
-                    }                    
-                }, 0);            
-            $("#valor_total").html('$ '+addCommas(valor_total));
-            $("#aporte_solicitado").html('$ '+addCommas(aporte_solicitado));
-            $("#aporte_cofinanciado").html('$ '+addCommas(aporte_cofinanciado));
-            $("#aporte_recursos").html('$ '+addCommas(aporte_recursos));            
+                    }
+                }, 0);
+            $("#valor_total").html(' '+addCommas(valor_total));
+            $("#aporte_solicitado").html(' '+addCommas(aporte_solicitado));
+            $("#aporte_cofinanciado").html(' '+addCommas(aporte_cofinanciado));
+            $("#aporte_recursos").html(' '+addCommas(aporte_recursos));
         }
     });
 }
@@ -789,7 +802,19 @@ function addCommas(nStr) {
        var x2 = x.length > 1 ? '.' + x[1] : '';
        var rgx = /(\d+)(\d{3})/;
        while (rgx.test(x1)) {
-           x1 = x1.replace(rgx, '$1' + ',' + '$2');
+           x1 = x1.replace(rgx, '$1' + '.' + '$2');
        }
-       return x1 + x2;
+       return '$ '+ x1 + x2;
+}
+function addCommasv(nStr) {
+    console.log(nStr)
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+    return x1 + x2;
 }
