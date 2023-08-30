@@ -28,7 +28,7 @@ $(document).ready(function () {
             $('#insumo').on('change', function() {
                 $('#unidadmedida').find('option').remove();
                 $("#unidadmedida").append('<option value="" >::Seleccionar::</option>');
-                if( this.value === 'Honorarios equipo de trabajo'){
+                if( this.value === 'Recurso humano'){
                     $("#unidadmedida").append('<option value="Artistas" >Artistas</option>');
                     $("#unidadmedida").append('<option value="Formadores" >Formadores</option>');
                     $("#unidadmedida").append('<option value="Director" >Director</option>');
@@ -45,7 +45,7 @@ $(document).ready(function () {
                 if( this.value === 'Premios y reconocimientos'){
                     $("#unidadmedida").append('<option value="Premios y reconocimientos" >Premios y reconocimientos</option>');
                 }
-                if( this.value === 'Alquileres'){
+                if( this.value === 'Alquiler'){
                     $("#unidadmedida").append('<option value="Sonido e iluminación" >Sonido e iluminación</option>');
                     $("#unidadmedida").append('<option value="Tarimas y sillas" >Tarimas y sillas</option>');
                     $("#unidadmedida").append('<option value="Carpas y pisos" >Carpas y pisos</option>');
@@ -54,7 +54,7 @@ $(document).ready(function () {
                     $("#unidadmedida").append('<option value="Instrumentos" >Instrumentos</option>');
                 }
                 
-                if( this.value === 'Producción'){
+                if( this.value === 'Logística'){
                     $("#unidadmedida").append('<option value="Montajes de exposiciones o eventos" >Montajes de exposiciones o eventos</option>');
                     $("#unidadmedida").append('<option value="Escenografía" >Escenografía</option>');
                     $("#unidadmedida").append('<option value="Utilería" >Utilería</option>');
@@ -77,14 +77,14 @@ $(document).ready(function () {
                 }
                 
                 
-                if( this.value === 'Alimentación'){
+                if( this.value === 'Alimentación e hidratación'){
                     $("#unidadmedida").append('<option value="Refrigerios" >Refrigerios</option>');
                     $("#unidadmedida").append('<option value="Hidratación" >Hidratación</option>');
                     $("#unidadmedida").append('<option value="Alimentación" >Alimentación</option>');                    
                 }
                 
                 
-                if( this.value === 'Divulgación y publicidad'){
+                if( this.value === 'Divulgación'){
                     $("#unidadmedida").append('<option value="Diseño de páginas web y redes sociales" >Diseño de páginas web y redes sociales</option>');
                     $("#unidadmedida").append('<option value="Impresión" >Impresión</option>');
                     $("#unidadmedida").append('<option value="Diseño de piezas publicitarias" >Diseño de piezas publicitarias</option>');
