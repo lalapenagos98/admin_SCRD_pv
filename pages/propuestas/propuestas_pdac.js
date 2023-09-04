@@ -297,6 +297,8 @@ $(document).ready(function () {
                                                                                 if(json.convocatoria_programa == 2)
                                                                                 {
                                                                                     $("#area").val(['Actividades de la economía creativa y cultural'])
+                                                                                    $("#aportes_proyecto").val(' ')
+                                                                                    $("#atencedente").val(' ')
                                                                                     $("#areas_div").addClass('hidden')
                                                                                     $("#problema_necesidad_div").removeClass('col-lg-6')
                                                                                     $("#problema_necesidad_div").addClass('col-lg-12')
