@@ -266,7 +266,7 @@ $(document).ready(function () {
                                                                                 {                                                                                    
                                                                                     selected = 'selected="selected"';
                                                                                 }
-                                                                                $("#medir_impacto").append('<option value="' + medio + '" >' + medio + '</option>');
+                                                                                $("#medir_impacto").append('<option value="' + medio + '" selected>' + medio + '</option>');
                                                                             });
                                                                         }
 
