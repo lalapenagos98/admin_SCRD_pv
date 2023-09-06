@@ -63,7 +63,7 @@ $(document).ready(function () {
           }
 
           $("#linea_estrategica").append(
-            '<option value="" data-modalidad="[]" data-programa="0">:: Seleccionar ::</option>'
+            '<option value="" data-modalidad="[0]" data-programa="0">:: Seleccionar ::</option>'
           );
           if (json.lineas_estrategicas.length > 0) {
             $.each(json.lineas_estrategicas, function (key, linea_estrategica) {
@@ -468,7 +468,7 @@ function  cargar_lineas_participacion () {
 
     $('#linea_estrategica option').each(function() {
       var modalidadValue = $(this).data('modalidad');
-      var modalidadSet = [parseInt($('#modalidad').val())]
+      var modalidadSet = [0,parseInt($('#modalidad').val())]
       var modalidadArray = modalidadValue;
 
       var isValid = modalidadArray.some(number => modalidadSet.includes(parseInt( number)));
@@ -478,13 +478,15 @@ function  cargar_lineas_participacion () {
           $(this).hide();
         }
     });
-  }else{
+  }
+  else{
 
     $('#linea_estrategica option:not([data-programa="2"])').each(function() {
 
       $(this).show();
 
     })
+
     $('#linea_estrategica option [data-programa="2"]').each(function() {
 
       $(this).hide();
