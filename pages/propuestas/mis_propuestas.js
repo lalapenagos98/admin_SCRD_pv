@@ -66,7 +66,7 @@ $(document).ready(function () {
         if ($("#busqueda").val() == "0")
         {
             //Cargar datos en la tabla actual
-            $('#table_list').DataTable({
+           var dataTable = $('#table_list').DataTable({
                 "language": {
                     "url": "../../dist/libraries/datatables/js/spanish.json"
                 },
@@ -118,11 +118,11 @@ $(document).ready(function () {
                             //Creo los botones para acciones de cada fila de la tabla
                             if(row.id_estado==22)
                             {
-                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta"><span class="fa fa-file-text-o"></span></button></a><br/><a href="subsanar_propuesta.html?id='+row.id_convocatoria+'&p='+row.id_propuesta+'&sub=1" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-info btn_tooltip" title="Subsanar propuesta"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';                            
+                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta - proyecto"><span class="fa fa-file-text-o"></span></button></a><br/><a href="subsanar_propuesta.html?id='+row.id_convocatoria+'&p='+row.id_propuesta+'&sub=1" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-info btn_tooltip" title="Subsanar propuesta"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';
                             }
                             else
                             {
-                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';                            
+                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta - proyecto"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';
                             }
                             
                             if( row.id_estado!=7 && row.id_estado!=20 )
@@ -228,13 +228,38 @@ $(document).ready(function () {
             $("#busqueda").attr("value", "1");
         } else
         {
-            $('#table_list').DataTable().draw();
+            var dataTable =  $('#table_list').DataTable().draw();
         }
 
         $('#buscar').click(function () {
-                   $('#table_list').DataTable().draw();
-        });                 
-        
+
+            opciones_del_programa($("#entidad").val(),dataTable)
+            $('#table_list').DataTable().draw();
+        });
+        function opciones_del_programa(id_programa,dataTable) {
+            var columnasOcultas = [4];
+            if(id_programa === '2')//programa PDAC
+            {
+                // Ocultar las columnas definidas en columnasOcultas
+                for (var i = 0; i < columnasOcultas.length; i++) {
+                    console.log('ingresa ocultar columnas 1')
+                    dataTable.column(columnasOcultas[i]).visible(false);
+                }
+                dataTable.column(4).header().innerHTML = "Líneas de participación";
+            }
+            else
+            {
+// Ocultar las columnas definidas en columnasOcultas
+                for (var i = 0; i < columnasOcultas.length; i++) {
+                    console.log('ingresa ocultar columnas 2')
+                    dataTable.column(columnasOcultas[i]).visible(true);
+                }
+                dataTable.column(4).header().innerHTML = "Categoria";
+
+            }
+
+        }
+
         $("#modal-btn-si").on("click", function () {
             
             if($("#justificacion_anulacion").val()=="")

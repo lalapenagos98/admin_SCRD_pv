@@ -216,7 +216,6 @@ $(document).ready(function () {
     });
 
     $("#programa").change(function () {
-      console.log($(this).val(),'id del progrma')
       opciones_del_programa($(this).val(),dataTable)
       dataTable.draw();
     });
@@ -417,8 +416,11 @@ function opciones_del_programa(id_programa,dataTable) {
       console.log('ingresa ocultar columnas')
       dataTable.column(columnasOcultas[i]).visible(false);
     }
-    dataTable.column(8).header().innerHTML = "Línea de participación";
-    dataTable.column(6).header().innerHTML = "Línea de participación";
+    dataTable.column(8).header().innerHTML = "Líneas de participación";
+    dataTable.column(6).header().innerHTML = "Líneas de participación";
+
+    $("#modalidad option[value='7']").text("Poyecto metropolitanos");
+    $("#modalidad option[value='9']").text("Poyecto locales e interlocales");
     $('#div_area').addClass('hidden')
     $('#div_enfoque').addClass('hidden')
     $('#div_nombre_convocatoria').addClass('hidden')
@@ -441,6 +443,10 @@ function opciones_del_programa(id_programa,dataTable) {
     }
     dataTable.column(8).header().innerHTML = "categoría";
     dataTable.column(6).header().innerHTML = "Linea";
+
+    $("#modalidad option[value='7']").text("Cerrada");
+    $("#modalidad option[value='9']").text("Abierta");
+
     $('#div_area').removeClass('hidden')
     $('#div_enfoque').removeClass('hidden')
     $('#div_nombre_convocatoria').removeClass('hidden')
