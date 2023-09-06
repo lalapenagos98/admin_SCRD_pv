@@ -420,7 +420,7 @@ function opciones_del_programa(id_programa,dataTable) {
     dataTable.column(6).header().innerHTML = "Líneas de participación";
 
     $("#modalidad option[value='7']").text("Poyectos Metropolitanos");
-    $("#modalidad option[value='9']").text("Poyectos Locales e interlocales");
+    $("#modalidad option[value='9']").text("Poyectos Locales e Interlocales");
     $('#div_area').addClass('hidden')
     $('#div_enfoque').addClass('hidden')
     $('#div_nombre_convocatoria').addClass('hidden')
