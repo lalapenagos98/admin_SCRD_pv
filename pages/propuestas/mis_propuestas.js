@@ -122,7 +122,7 @@ $(document).ready(function () {
                             }
                             else
                             {
-                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta - proyecto"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';
+                                row.ver_propuesta = '<a href="'+href+'" ><button style="margin: 0 0 5px 0" type="button" class="btn btn-warning btn_tooltip" title="Ver propuesta - proyecto"><span class="fa fa-file-text-o"></span></button></a><br/><button style="margin: 0 0 5px 0" type="button" onclick="anular_propuesta('+row.id_propuesta+')" class="btn btn-danger btn_tooltip" title="Anular propuesta - proyecto" data-toggle="modal" data-target="#anular_propuesta"><span class="fa fa-times-circle"></span></button>';
                             }
                             
                             if( row.id_estado!=7 && row.id_estado!=20 )
@@ -160,18 +160,18 @@ $(document).ready(function () {
                                 }
                                 else
                                 {
-                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita_pdac.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta inscrita"><span class="fa fa-bar-chart-o"></span></button></a>';
+                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita_pdac.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta - proyecto inscrito"><span class="fa fa-bar-chart-o"></span></button></a>';
                                 }
                             }
                             else
                             {
                                 if(row.fecha_subsanacion!=null)
                                 {
-                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta inscrita"><span class="fa fa-bar-chart-o"></span></button></a><br/><a href="'+url_pv_report+'reporte_propuesta_subsanacion.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-info btn_tooltip" title="Reporte de propuesta subsanada"><span class="fa fa-bar-chart-o"></span></button></a>';
+                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button style="margin: 0 0 5px 0" type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta - proyecto inscrito"><span class="fa fa-bar-chart-o"></span></button></a><br/><a href="'+url_pv_report+'reporte_propuesta_subsanacion.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-info btn_tooltip" title="Reporte de propuesta subsanada"><span class="fa fa-bar-chart-o"></span></button></a>';
                                 }
                                 else
                                 {
-                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta inscrita"><span class="fa fa-bar-chart-o"></span></button></a>';
+                                    row.ver_reporte='<a href="'+url_pv_report+'reporte_propuesta_inscrita.php?id='+row.id_propuesta+'&token='+row.token+'" target="_blank"><button type="button" class="btn btn-danger btn_tooltip" title="Reporte de propuesta - proyecto inscrito"><span class="fa fa-bar-chart-o"></span></button></a>';
                                 }
                             }                                                        
                             
@@ -246,6 +246,7 @@ $(document).ready(function () {
                     dataTable.column(columnasOcultas[i]).visible(false);
                 }
                 dataTable.column(4).header().innerHTML = "Líneas de participación";
+                dataTable.column(5).header().innerHTML = "Proyecto";
             }
             else
             {
@@ -255,6 +256,7 @@ $(document).ready(function () {
                     dataTable.column(columnasOcultas[i]).visible(true);
                 }
                 dataTable.column(4).header().innerHTML = "Categoria";
+                dataTable.column(5).header().innerHTML = "Propuesta";
 
             }
 
