@@ -225,25 +225,15 @@ $(document).ready(function () {
                                                                         //Cargo el select de la lista despegable de opcion multiple
                                                                         for (var i in json.parametros) {
                                                                             
-                                                                            if (json.parametros[i].tipo_parametro == "Lista desplegable - selección múltiple") {                                                                  
+                                                                            if (json.parametros[i].tipo_parametro == "Lista desplegable - selección múltiple") {
                                                                                let texto_identificador = `parametro[${json.parametros[i].id}]`;
-                                                                               console.log(json.parametros[i])
-                                                                                if(json.parametros[i].obligatorio){
-                                                                                 
-                                                                                    // $(`#parametro_${json.parametros[i].id}`).attr("name", `parametro[${json.parametros[i].id}]`);
-                                                                                    $(`#parametro_${json.parametros[i].id}`).prop("required", true);
-                                                                                    $(`#parametro_${json.parametros[i].id}`).addClass("required-select");
-                                                                                    $(`#parametro_${json.parametros[i].id}`).data("id", json.parametros[i].id);
-                                                                                    var selectize = $("#parametro_" + json.parametros[i].id)[0].selectize;
-                                                                                    selectize.isRequired = true;
-                                                                                    selectize.refreshValidityState();
-                                                                                }
                                                                                if(json.propuesta[texto_identificador]){
                                                                                 var selectElement = $("#parametro_" + json.parametros[i].id);
                                                                                 var arrayJson = JSON.parse(json.propuesta[texto_identificador])
                                                                                 
                                                                                 selectElement.find('option').each(function() {
                                                                                         var optionValue = $(this).val();
+                                                                                        console.log(arrayJson , optionValue, arrayJson.includes(optionValue))
                                                                                         if(arrayJson.includes(optionValue))
                                                                                             $(this).attr('selected', 'selected="selected"');
                                                                                     });
@@ -526,17 +516,6 @@ function validator_form(token_actual) {
         {
             validar = true;
         }
-
-        $(".required-select").each(function() {
-            var selectedValue = $(this).val();
-            let id = $(this).data("id");
-            // Check if the selected value is not an empty string
-            if(!selectedValue.length){
-                $(`#parametro_${id}-selectized`).parent("div").addClass("campo-error")
-                notify("danger", "ok", "Propuesta:", "Debe seleccionar las opciones");
-                validar = false;
-            }
-          });
 
         // Prevent form submission
         e.preventDefault();
