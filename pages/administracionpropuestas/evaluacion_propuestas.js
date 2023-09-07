@@ -860,7 +860,7 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
 
                     //grupo
                     //$("#form_criterios").append('<fieldset class="criterios" '+( (json[r].evaluacion.estado >= 39 || json[r].ronda.estado >= 41 )? ' disabled="" ': '') +'>');
-                    $("#form_criterios").append('<fieldset class="criterios" ' + ((json[r].evaluacion_nombre_estado == 'Evaluada' || json[r].ronda_nombre_estado == 'Evaluada' || json[r].evaluacion_nombre_estado == 'Confirmada') ? ' disabled="" ' : '') + '>');
+                    $("#form_criterios").append('<fieldset class="criterios">');
 
                     $.each(json[r].criterios, function (key, array) {
                         //console.log("key-->"+key);
@@ -922,7 +922,7 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
 
                     //$(".btn_guardar_evaluacion").append('<button  class="btn btn-primary" id="guardar_evaluacion" '+( (json[r].evaluacion.estado >= 39 || json[r].ronda.estado >= 41 )? ' disabled="" ': '') + '>Guardar evaluación</button>');
 
-                    $(".btn_guardar_evaluacion").append('<button  class="btn btn-primary" id="guardar_evaluacion" ' + ((json[r].evaluacion_nombre_estado == 'Evaluada' || json[r].ronda_nombre_estado == 'Evaluada') ? ' disabled="" ' : '') + '>Guardar evaluación</button>');
+                    $(".btn_guardar_evaluacion").append('<button  class="btn btn-primary" id="guardar_evaluacion">Guardar evaluación</button>');
 
 
                 });
@@ -991,7 +991,7 @@ function evaluar_criterios(token_actual, id_evaluacion) {
                 notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
                 break;
             case 'deshabilitado':
-                notify("danger", "remove", "Usuario:", "No tiene permisos para editar información.");
+                notify("danger", "remove", "Usuario:", "La evaluación ya se encuentra confirmada");
                 break;
             case 'error_duplicado':
                 notify("danger", "remove", "Usuario:", "Ya existe un usuario registrado con el mismo documento de identificación.");
