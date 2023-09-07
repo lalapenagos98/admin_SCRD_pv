@@ -238,6 +238,12 @@ button.swal2-confirm, button.swal2-cancel {
   padding: 15px 20px !important;
 }
 
+.campo-error{
+  border-color: red !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+}
+
 #div-login-dinamico{
     background-color:#ffffff;
     opacity: 0.9;
