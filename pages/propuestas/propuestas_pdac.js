@@ -127,13 +127,13 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".campos_metropolitano").css("display","block");
                                                                             $(".campos_locales").css("display","none");
-                                                                            $("#nombre_justificacion").html('Justificación');
+                                                                            $("#nombre_justificacion").html('Justificación del proyecto');
                                                                         }
                                                                         else
                                                                         {
                                                                             $(".div_alianza").css("display","block");                                                                            
                                                                             $(".localidad_principal").css("display","block");                                                                            
-                                                                            $("#nombre_justificacion").html('Justificación');
+                                                                            $("#nombre_justificacion").html('Justificación del proyecto');
                                                                             $(".campos_metropolitano").css("display","none");
                                                                             $(".campos_locales").css("display","block");                                                                            
                                                                         }
@@ -454,6 +454,10 @@ $(document).ready(function () {
                                                                         }
 
                                                                         $("#mecanismos_cualitativa_local").val(json.propuesta.mecanismos_cualitativa);
+
+                                                                        $("#estrategia_construccion_memoria").val(json.propuesta.estrategia_construccion_memoria);
+                                                                        $("#correspondencia_proyecto_objetivos").val(json.propuesta.correspondencia_proyecto_objetivos);
+
                                                                         
                                                                         //Valido formulario
                                                                         validator_form(token_actual);

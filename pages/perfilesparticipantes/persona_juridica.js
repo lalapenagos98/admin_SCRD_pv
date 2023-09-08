@@ -327,8 +327,12 @@ $(document).ready(function () {
                             $("#estrato").append('<option value="' + array + '" '+selected+' >' + array + '</option>');
                         });
                     }
-                    $("#estrato").val(1)
-                    $("#estrato").addClass('hidden')//PDAC NO TIENE ESTRATO
+                    if(json.programa ==2)
+                    {
+                        $("#estrato").val(1)
+                        $("#estrato").addClass('hidden')//PDAC NO TIENE ESTRATO
+                    }
+
                     //Cargos el select de estrato
                     $('#tipo_sede').find('option').remove();
                     $("#tipo_sede").append('<option value="">:: Seleccionar ::</option>');
