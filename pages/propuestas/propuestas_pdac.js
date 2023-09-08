@@ -127,13 +127,13 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".campos_metropolitano").css("display","block");
                                                                             $(".campos_locales").css("display","none");
-                                                                            $("#nombre_justificacion").html('Justificación');
+                                                                            $("#nombre_justificacion").html('Justificación del proyecto');
                                                                         }
                                                                         else
                                                                         {
                                                                             $(".div_alianza").css("display","block");                                                                            
                                                                             $(".localidad_principal").css("display","block");                                                                            
-                                                                            $("#nombre_justificacion").html('Justificación');
+                                                                            $("#nombre_justificacion").html('Justificación del proyecto');
                                                                             $(".campos_metropolitano").css("display","none");
                                                                             $(".campos_locales").css("display","block");                                                                            
                                                                         }
