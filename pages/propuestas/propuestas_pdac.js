@@ -454,6 +454,10 @@ $(document).ready(function () {
                                                                         }
 
                                                                         $("#mecanismos_cualitativa_local").val(json.propuesta.mecanismos_cualitativa);
+
+                                                                        $("#estrategia_construccion_memoria").val(json.propuesta.estrategia_construccion_memoria);
+                                                                        $("#correspondencia_proyecto_objetivos").val(json.propuesta.correspondencia_proyecto_objetivos);
+
                                                                         
                                                                         //Valido formulario
                                                                         validator_form(token_actual);
