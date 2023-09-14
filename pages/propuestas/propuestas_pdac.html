@@ -116,7 +116,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Línea estratégica del proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selecciona la línea de participación en la que deseas inscribir tu proyecto."><i class="fa fa-question"></i></button>
+                                                <label>Línea de participación del proyecto <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selecciona la línea de participación en la que deseas inscribir tu proyecto."><i class="fa fa-question"></i></button>
                                                 <select id="linea_estrategica" name="linea_estrategica[]" class="form-control" multiple="multiple">
                                                 </select>
                                             </div>
@@ -152,13 +152,13 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Descripción breve del proyecto <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_resumen">1000</span></label><button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Descripción breve del proyecto. (Max 1000 caracacteres )"><i class="fa fa-question"></i></button>
-                                                <textarea id="resumen" name="resumen" class="form-control contar_caracteres" title="Max 1000 caracacteres" rows="3"></textarea>
+                                                <textarea id="resumen" name="resumen" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Experiencia de la entidad participante <span class="icono_requerido">*</span> <span style="font-size: 10px; color: blue" class="caracter_trayectoria_entidad">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe la experiencia de la entidad que presenta el proyecto, en la ejecución de proyectos similares o afines. (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="Max 3.000 caracteres" rows="3"></textarea>
+                                                <textarea id="trayectoria_entidad" name="trayectoria_entidad" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -175,24 +175,24 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-8">
                                             <div class="form-group">
                                                 <label>Articulación del proyecto con el Plan de Desarrollo de Bogotá D.C.<span class="icono_requerido">*</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selecciona el propósito del Plan de Desarrollo Distrital “Un nuevo Contrato Social y Ambiental para la Bogotá del Siglo XXI” al que su propuesta/proyecto se articula."><i class="fa fa-question"></i></button>
                                                 <select id="relacion_plan" name="relacion_plan[]" class="form-control" multiple="multiple">
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Explica la selección del propósito del Plan de Desarrollo de Bogotá D.C., con el cual se articula tu proyecto
                                                     <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_seleccion_area">3000</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de qué forma su proyecto se articula con el propósito del Plan de Desarrollo de Bogotá D.C. seleccionado. (Max 3000 caracacteres )"><i class="fa fa-question"></i></button>
-                                                <textarea id="seleccion_area" name="seleccion_area" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
+                                                <textarea id="seleccion_area" name="seleccion_area" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Correspondencia del proyecto con los objetivos del PDAC <span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de qué manera tu proyecto establece correspondencia con los objetivos del PDAC (Max 1.000 caracteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="correspondencia_proyecto_objetivos" name="correspondencia_proyecto_objetivos" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <label>Correspondencia del proyecto con los objetivos del PDAC <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_correspondencia_proyecto_objetivos">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de qué manera tu proyecto establece correspondencia con los objetivos del PDAC (Max 1.000 caracteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="correspondencia_proyecto_objetivos" name="correspondencia_proyecto_objetivos" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12" id="problema_necesidad_div">
@@ -200,45 +200,45 @@
                                                 <label>Problema o necesidad abordada por el proyecto <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_problema_necesidad">3000</span></label>&nbsp;&nbsp;
                                                 <button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe el problema o necesidad que el proyecto pretende abordar y explica cómo aportará a su resolución. Explica, además, cuál será el aporte del proyecto frente a las necesidades del ecosistema cultural de la localidad o localidades donde se desarrollará
                                                  (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <textarea id="problema_necesidad" name="problema_necesidad" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>¿Cuáles son los antecedentes del proyecto y cuál es su contexto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_diagnostico_problema">3000</span></label> &nbsp;&nbsp;
+                                                <label>¿Cuáles son los antecedentes del proyecto y cuál es su contexto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_diagnostico_problema">3000</span></label> &nbsp;
                                                 <button style="display: none" type="button" class="btn btn-primary btn-circle campos_locales" data-toggle="tooltip" data-placement="top" title="Correlaciona las fuentes primarias y secundarias de información, a partir de las cuales se identificó la problemática o necesidad abordada por el proyecto. Describe las acciones o circunstancias que permiten comprender la relación entre el proyecto y el contexto a intervenir. (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
                                                 <button style="display: none" type="button" class="btn btn-primary btn-circle campos_metropolitano" data-toggle="tooltip" data-placement="top" title="Correlaciona las fuentes primarias y secundarias de información, a partir de las cuales se identificó la problemática o necesidad abordada por el proyecto. Describe las acciones o circunstancias que permiten comprender la relación entre el proyecto y el contexto a intervenir. (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="diagnostico_problema" name="diagnostico_problema" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <textarea id="diagnostico_problema" name="diagnostico_problema" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label id="nombre_justificacion">Justificación del proyecto</label><span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_justificacion">3000</span>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de manera concreta, ¿por qué es importante resolver la problemática o necesidad identificada?, ¿de qué forma el proyecto y la experiencia de la entidad resultan pertinentes para aportar en la transformación o superación de esa problemática o necesidad? (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="justificacion" name="justificacion" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <textarea id="justificacion" name="justificacion" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>¿Cuál es el planteamiento metodológico del proyecto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_metodologia">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica el marco conceptual desde el cual se aborda el proyecto y la estructura de sus componentes: fases, temáticas, contenidos, estrategias y herramientas que permitirán el logro de los objetivos, expresando su alcance, viabilidad y sostenibilidad. (Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="metodologia" name="metodologia" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <textarea id="metodologia" name="metodologia" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>¿Cuál es la estrategia de construcción de la memoria del proyecto?<span class="icono_requerido">*</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa de qué forma se realizarán la sistematización de la ejecución del proyecto y la socialización de sus resultados entre la población beneficiaria (Max 3.000 caracteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="estrategia_construccion_memoria" name="estrategia_construccion_memoria" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <label>¿Cuál es la estrategia de construcción de la memoria del proyecto?<span class="icono_requerido">*</span></label><span style="font-size: 10px; color: blue" class="caracter_estrategia_construccion_memoria">3000</span></label>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describa de qué forma se realizarán la sistematización de la ejecución del proyecto y la socialización de sus resultados entre la población beneficiaria (Max 3.000 caracteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="estrategia_construccion_memoria" name="estrategia_construccion_memoria" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>¿Cuáles son los aportes y cuál es el impacto del proyecto en relación con su línea de participación? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_impacto">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Define cuales son los aportes y cuál es el impacto que se espera del proyecto, en relación con la línea de participación elegida (ver descripción de las líneas en las condiciones generales de participación).(Max 3.000 carcteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="impacto" name="impacto" class="form-control contar_caracteres" title="(Max 3.000 carcteres)" rows="3"></textarea>
+                                                <textarea id="impacto" name="impacto" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group campos_locales" style="display: none">
-                                                <label>¿Cuáles son las estrategias e instrumentos de medición (cualitativa y cuantitativa) del impacto esperado del proyecto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe las estrategias e instrumentos de medición (cualitativa y cuantitativa) que se utilizarán para medir el impacto esperado del proyecto.(Max 3.000 caracacteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="Max 3.000 carcteres" rows="3"></textarea>
+                                                <label>¿Cuáles son las estrategias e instrumentos de medición (cualitativa y cuantitativa) del impacto esperado del proyecto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe las estrategias e instrumentos de medición (cualitativa y cuantitativa) que se utilizarán para medir el impacto esperado del proyecto.(Max 3.000 caracacteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>

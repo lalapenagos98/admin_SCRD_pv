@@ -125,17 +125,17 @@ $(document).ready(function () {
                                                                         
                                                                         if(json.convocatoria_padre_categoria=="621" || json.convocatoria_padre_categoria=="1187"  || json.convocatoria_padre_categoria=="1720" )
                                                                         {
-                                                                            $(".campos_metropolitano").css("display","block");
+                                                                            $(".campos_metropolitano").css("display","");
                                                                             $(".campos_locales").css("display","none");
                                                                             $("#nombre_justificacion").html('Justificación del proyecto');
                                                                         }
                                                                         else
                                                                         {
                                                                             $(".div_alianza").css("display","block");                                                                            
-                                                                            $(".localidad_principal").css("display","block");                                                                            
+                                                                            $(".localidad_principal").css("display","block");
                                                                             $("#nombre_justificacion").html('Justificación del proyecto');
                                                                             $(".campos_metropolitano").css("display","none");
-                                                                            $(".campos_locales").css("display","block");                                                                            
+                                                                            $(".campos_locales").css("display","");
                                                                         }
                                                                         //eliminó disabled todos los componentes
                                                                         if (json.estado == 7)
@@ -383,27 +383,27 @@ $(document).ready(function () {
                                                                         //agrego los totales de caracteres
                                                                         if(json.propuesta.trayectoria_entidad!=null)
                                                                         {
-                                                                            $(".caracter_trayectoria_entidad").html(2000 - json.propuesta.trayectoria_entidad.length);
+                                                                            $(".caracter_trayectoria_entidad").html(3000 - json.propuesta.trayectoria_entidad.length);
                                                                         }
                                                                         if(json.propuesta.problema_necesidad!=null)
                                                                         {
-                                                                            $(".caracter_problema_necesidad").html(2000 - json.propuesta.problema_necesidad.length);
+                                                                            $(".caracter_problema_necesidad").html(3000 - json.propuesta.problema_necesidad.length);
                                                                         }
                                                                         if(json.propuesta.diagnostico_problema!=null)
                                                                         {
-                                                                            $(".caracter_diagnostico_problema").html(2000 - json.propuesta.diagnostico_problema.length);
+                                                                            $(".caracter_diagnostico_problema").html(3000 - json.propuesta.diagnostico_problema.length);
                                                                         }
                                                                         if(json.propuesta.justificacion!=null)
                                                                         {
-                                                                            $(".caracter_justificacion").html(2000 - json.propuesta.justificacion.length);
+                                                                            $(".caracter_justificacion").html(3000 - json.propuesta.justificacion.length);
                                                                         }
                                                                         if(json.propuesta.resumen!=null)
                                                                         {
-                                                                            $(".caracter_resumen").html(500 - json.propuesta.resumen.length);
+                                                                            $(".caracter_resumen").html(1000 - json.propuesta.resumen.length);
                                                                         }
                                                                         if(json.propuesta.seleccion_area!=null)
                                                                         {
-                                                                            $(".caracter_seleccion_area").html(2000 - json.propuesta.seleccion_area.length);
+                                                                            $(".caracter_seleccion_area").html(3000 - json.propuesta.seleccion_area.length);
                                                                         }
                                                                         if(json.propuesta.atencedente!=null)
                                                                         {
@@ -415,11 +415,11 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.metodologia!=null)
                                                                         {
-                                                                            $(".caracter_metodologia").html(2000 - json.propuesta.metodologia.length);
+                                                                            $(".caracter_metodologia").html(3000 - json.propuesta.metodologia.length);
                                                                         }
                                                                         if(json.propuesta.impacto!=null)
                                                                         {
-                                                                            $(".caracter_impacto").html(2000 - json.propuesta.impacto.length);
+                                                                            $(".caracter_impacto").html(3000 - json.propuesta.impacto.length);
                                                                         }
                                                                         if(json.propuesta.enfoques_seleccionados!=null)
                                                                         {
@@ -427,7 +427,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.mecanismos_cualitativa!=null)
                                                                         {
-                                                                            $(".caracter_mecanismos_cualitativa").html(1000 - json.propuesta.mecanismos_cualitativa.length);
+                                                                            $(".caracter_mecanismos_cualitativa").html(3000 - json.propuesta.mecanismos_cualitativa.length);
                                                                         }
                                                                         if(json.propuesta.aportes_dinamizacion!=null)
                                                                         {
@@ -447,7 +447,17 @@ $(document).ready(function () {
                                                                         {
                                                                             $(".caracter_construccion_reconocimiento").html(500 - json.propuesta.construccion_reconocimiento.length);
                                                                         }
-                                                                        
+
+                                                                        if(json.propuesta.correspondencia_proyecto_objetivos!=null)
+                                                                        {
+                                                                            $(".caracter_correspondencia_proyecto_objetivos").html(3000 - json.propuesta.construccion_reconocimiento.length);
+                                                                        }
+
+                                                                        if(json.propuesta.estrategia_construccion_memoria!=null)
+                                                                        {
+                                                                            $(".caracter_estrategia_construccion_memoria").html(3000 - json.propuesta.construccion_reconocimiento.length);
+                                                                        }
+
                                                                         if(json.propuesta.impacto_proyecto!=null)
                                                                         {
                                                                             $(".caracter_impacto_proyecto").html(500 - json.propuesta.impacto_proyecto.length);
