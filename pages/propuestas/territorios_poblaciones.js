@@ -565,4 +565,9 @@ function validator_form(token_actual) {
         }
     });
 
+    $('#localidades').select2({
+        placeholder: '::Seleccionar::',
+        tags: true
+    });
+
 }

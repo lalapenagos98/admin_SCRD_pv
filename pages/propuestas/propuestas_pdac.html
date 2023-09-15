@@ -139,17 +139,22 @@
                                             <div class="form-group">
                                                 <label>¿El proyecto es el resultado de una alianza sectorial?<span class="icono_requerido">*</span></label>
                                                 <br/>
-                                                <input type="hidden" id="alianza_sectorial" name="alianza_sectorial" />
-                                                <span id="valor_alianza" style="font-weight: bold; font-size: 18px; color: red"></span>
+                                                <select id="alianza_sectorial" name="alianza_sectorial" class="form-control" >
+                                                    <option value="">::Seleccionar::</option>
+                                                    <option value='true'>Sí</option>
+                                                    <option value='false'>No</option>
+                                                </select>
+                                                <!--<input type="hidden" id="alianza_sectorial" name="alianza_sectorial" />-->
+                                                <span class="hidden" id="valor_alianza" style="font-weight: bold; font-size: 18px; color: red"></span>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Nombre del proyecto <span class="icono_requerido">*</span></label>
                                                 <input type="text" name="nombre" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>Descripción breve del proyecto <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_resumen">1000</span></label><button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Descripción breve del proyecto. (Max 1000 caracacteres )"><i class="fa fa-question"></i></button>
                                                 <textarea id="resumen" name="resumen" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
@@ -177,7 +182,7 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <div class="form-group">
-                                                <label>Articulación del proyecto con el Plan de Desarrollo de Bogotá D.C.<span class="icono_requerido">*</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selecciona el propósito del Plan de Desarrollo Distrital “Un nuevo Contrato Social y Ambiental para la Bogotá del Siglo XXI” al que su propuesta/proyecto se articula."><i class="fa fa-question"></i></button>
+                                                <label>Articulación del proyecto con el Plan de Desarrollo de Bogotá D.C.<span class="icono_requerido">*</span></label> &nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Selecciona el propósito del Plan de Desarrollo Distrital “Un nuevo Contrato Social y Ambiental para la Bogotá del Siglo XXI” al que su proyecto se articula."><i class="fa fa-question"></i></button>
                                                 <select id="relacion_plan" name="relacion_plan[]" class="form-control" multiple="multiple">
                                                 </select>
                                             </div>
@@ -191,8 +196,8 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Correspondencia del proyecto con los objetivos del PDAC <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_correspondencia_proyecto_objetivos">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de qué manera tu proyecto establece correspondencia con los objetivos del PDAC (Max 1.000 caracteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="correspondencia_proyecto_objetivos" name="correspondencia_proyecto_objetivos" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
+                                                <label>Correspondencia del proyecto con los objetivos del PDAC <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_correspondencia_proyecto_objetivos">1000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Explica de qué manera tu proyecto establece correspondencia con los objetivos del PDAC (Max 1.000 caracteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="correspondencia_proyecto_objetivos" name="correspondencia_proyecto_objetivos" class="form-control contar_caracteres" title="1000" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12" id="problema_necesidad_div">
@@ -237,8 +242,8 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group campos_locales" style="display: none">
-                                                <label>¿Cuáles son las estrategias e instrumentos de medición (cualitativa y cuantitativa) del impacto esperado del proyecto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">3000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe las estrategias e instrumentos de medición (cualitativa y cuantitativa) que se utilizarán para medir el impacto esperado del proyecto.(Max 3.000 caracacteres)"><i class="fa fa-question"></i></button>
-                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="3000" rows="3"></textarea>
+                                                <label>¿Cuáles son las estrategias e instrumentos de medición (cualitativa y cuantitativa) del impacto esperado del proyecto? <span class="icono_requerido">*</span><span style="font-size: 10px; color: blue" class="caracter_mecanismos_cualitativa">2000</span></label>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Describe las estrategias e instrumentos de medición (cualitativa y cuantitativa) que se utilizarán para medir el impacto esperado del proyecto.(Max 2.000 caracacteres)"><i class="fa fa-question"></i></button>
+                                                <textarea id="mecanismos_cualitativa_local" name="mecanismos_cualitativa" class="form-control contar_caracteres" title="2000" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -374,6 +374,16 @@ $(document).ready(function () {
                                                                             $("#valor_alianza").html("No");
                                                                         }
                                                                         
+                                                                        if(json.propuesta.modalidad == 7)
+                                                                        {
+                                                                            $(".div_alianza").css("display");
+                                                                        }
+                                                                        else
+                                                                        {
+
+                                                                            $(".div_alianza").css("display: none");
+                                                                        }
+
                                                                         $("#alianza_sectorial option[value='" + json.propuesta.alianza_sectorial + "']").prop('selected', true);
 
                                                                         $("#primera_vez_pdac option[value='" + json.propuesta.primera_vez_pdac + "']").prop('selected', true);
@@ -427,7 +437,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.mecanismos_cualitativa!=null)
                                                                         {
-                                                                            $(".caracter_mecanismos_cualitativa").html(3000 - json.propuesta.mecanismos_cualitativa.length);
+                                                                            $(".caracter_mecanismos_cualitativa").html(2000 - json.propuesta.mecanismos_cualitativa.length);
                                                                         }
                                                                         if(json.propuesta.aportes_dinamizacion!=null)
                                                                         {
@@ -450,7 +460,7 @@ $(document).ready(function () {
 
                                                                         if(json.propuesta.correspondencia_proyecto_objetivos!=null)
                                                                         {
-                                                                            $(".caracter_correspondencia_proyecto_objetivos").html(3000 - json.propuesta.construccion_reconocimiento.length);
+                                                                            $(".caracter_correspondencia_proyecto_objetivos").html(1000 - json.propuesta.construccion_reconocimiento.length);
                                                                         }
 
                                                                         if(json.propuesta.estrategia_construccion_memoria!=null)
