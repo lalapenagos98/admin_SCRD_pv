@@ -163,8 +163,8 @@ function validator_form(key) {
           'check[]': {
               validators: {
                   choice: {
-                      min: 8,
-                      max: 8,
+                      min: 10,
+                      max: 10,
                       message: 'Debe seleccionar todos los compromisos'
                   }
               }
