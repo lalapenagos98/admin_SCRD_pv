@@ -1778,6 +1778,7 @@ function cargar_notificacion(token_actual, notificacion_key) {
                     $('#notificacionModal_fecha_rechazo').html(json.fecha_rechazo);
                     $('#notificacionModal_estimulo').html(json.valor_estimulo);
                     $('#notificacionModal_horas').html(json.horas_mentoria);
+                    $('#notificacionModal_horas').html(json.sesiones);
                 }
                 break;
         }
@@ -1845,6 +1846,13 @@ function validator_form(token_actual) {
                 }
             },
             horas_mentoria: {
+                validators: {
+                    integer: {
+                        message: 'El campo debe contener solo números'
+                    }
+                }
+            },
+            sesiones: {
                 validators: {
                     integer: {
                         message: 'El campo debe contener solo números'
