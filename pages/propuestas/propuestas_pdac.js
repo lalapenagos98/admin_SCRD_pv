@@ -373,15 +373,19 @@ $(document).ready(function () {
                                                                         {
                                                                             $("#valor_alianza").html("No");
                                                                         }
-                                                                        
+                                                                        console.log('ásdasd',json.propuesta.modalidad)
                                                                         if(json.propuesta.modalidad == 7)
                                                                         {
-                                                                            $(".div_alianza").css("display");
+                                                                            console.log('ásdasd')
+                                                                            $(".div_alianza").addClass("hidden");
+                                                                           //$(".campos_locales").addClass("hidden");
+                                                                            $("#primera_vez_pdac option[value='false']").prop('selected', true);
+
                                                                         }
                                                                         else
                                                                         {
 
-                                                                            $(".div_alianza").css("display: none");
+                                                                            $(".div_alianza").css("display");
                                                                         }
 
                                                                         $("#alianza_sectorial option[value='" + json.propuesta.alianza_sectorial + "']").prop('selected', true);
@@ -687,10 +691,10 @@ function validator_form(token_actual) {
                             } else
                             {
                                 if (isNaN(result)) {
-                                    notify("danger", "ok", "Propuesta:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
+                                    notify("danger", "ok", "Proyecto:", "Se registro un error, comuníquese con la mesa de ayuda convocatorias@scrd.gov.co");
                                 } else
                                 {
-                                    notify("success", "ok", "Propuesta:", "Se actualizó con el éxito la propuesta.");
+                                    notify("success", "ok", "Proyecto:", "Se actualizó con el éxito la propuesta.");
 
                                     var redirect = "";
                                     if (getURLParameter('m') == "pn")
