@@ -138,10 +138,7 @@ $(document).ready(function () {
                                                                             $(".campos_locales").css("display","");
                                                                         }
                                                                         //eliminó disabled todos los componentes
-                                                                        if (json.estado == 7)
-                                                                        {
-                                                                            $("#formulario_principal input,select,button[type=submit],textarea").removeAttr("disabled");
-                                                                        }
+
 
                                                                         //Cargos el select de localidades
                                                                         $('#localidad').find('option').remove();
@@ -361,8 +358,7 @@ $(document).ready(function () {
                                                                             });
                                                                         }
 
-                                                                        //Cargo el formulario con los datos
-                                                                        $('#formulario_principal').loadJSON(json.propuesta);
+
                                                                         
 
                                                                         if(json.propuesta.alianza_sectorial)
@@ -373,20 +369,38 @@ $(document).ready(function () {
                                                                         {
                                                                             $("#valor_alianza").html("No");
                                                                         }
-                                                                        console.log('ásdasd',json.propuesta.modalidad)
+
                                                                         if(json.propuesta.modalidad == 7)
                                                                         {
-                                                                            console.log('ásdasd')
+
                                                                             $(".div_alianza").addClass("hidden");
-                                                                           //$(".campos_locales").addClass("hidden");
+                                                                            $(".primera_vez_pdac_div").addClass("hidden");
                                                                             $("#primera_vez_pdac option[value='false']").prop('selected', true);
 
+                                                                            $("#problema_necesidad_div").append("<div class=\"form-group\">\n" +
+                                                                                "                                                <label>Problema o necesidad abordada por el proyecto <span class=\"icono_requerido\">*</span><span style=\"font-size: 10px; color: blue\" class=\"caracter_problema_necesidad\">3000</span></label>&nbsp;&nbsp;\n" +
+                                                                                "                                                <button id=\"button_problema_necesidad\" type=\"button\" class=\"btn btn-primary btn-circle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Describe el problema o necesidad que el proyecto pretende abordar y explica cómo aportará a su resolución. Explica, además, cuál será el aporte del proyecto frente a las necesidades del ecosistema cultural de Bogotá D.C.\n" +
+                                                                                "                                                 (Max 3.000 caracteres)\"><i class=\"fa fa-question\"></i></button>\n" +
+                                                                                "                                                <textarea id=\"problema_necesidad\" name=\"problema_necesidad\" class=\"form-control contar_caracteres\" title=\"3000\" rows=\"3\"></textarea>\n" +
+                                                                                "                                            </div>")
+                                                                            $("#button_problema_necesidad").tooltip();
                                                                         }
                                                                         else
                                                                         {
-
+                                                                            $("#problema_necesidad_div").append("<div class=\"form-group\">\n" +
+                                                                                "                                                <label>Problema o necesidad abordada por el proyecto <span class=\"icono_requerido\">*</span><span style=\"font-size: 10px; color: blue\" class=\"caracter_problema_necesidad\">3000</span></label>&nbsp;&nbsp;\n" +
+                                                                                "                                                <button id=\"button_problema_necesidad\" type=\"button\" class=\"btn btn-primary btn-circle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Describe el problema o necesidad que el proyecto pretende abordar y explica cómo aportará a su resolución. Explica, además, cuál será el aporte del proyecto frente a las necesidades del ecosistema cultural de la localidad o localidades donde se desarrollará\n" +
+                                                                                "                                                 (Max 3.000 caracteres)\"><i class=\"fa fa-question\"></i></button>\n" +
+                                                                                "                                                <textarea id=\"problema_necesidad\" name=\"problema_necesidad\" class=\"form-control contar_caracteres\" title=\"3000\" rows=\"3\"></textarea>\n" +
+                                                                                "                                            </div>")
+                                                                            $("#button_problema_necesidad").tooltip();
                                                                             $(".div_alianza").css("display");
                                                                         }
+
+                                                                        //Cargo el formulario con los datos
+                                                                        $('#formulario_principal').loadJSON(json.propuesta);
+                                                                        //disabled todos los componentes
+                                                                        $("#formulario_principal input,select,button[type=submit],textarea").attr("disabled", "disabled");
 
                                                                         $("#alianza_sectorial option[value='" + json.propuesta.alianza_sectorial + "']").prop('selected', true);
 
@@ -441,7 +455,7 @@ $(document).ready(function () {
                                                                         }
                                                                         if(json.propuesta.mecanismos_cualitativa!=null)
                                                                         {
-                                                                            $(".caracter_mecanismos_cualitativa").html(2000 - json.propuesta.mecanismos_cualitativa.length);
+                                                                            $(".caracter_mecanismos_cualitativa_local").html(2000 - json.propuesta.mecanismos_cualitativa.length);
                                                                         }
                                                                         if(json.propuesta.aportes_dinamizacion!=null)
                                                                         {
@@ -464,12 +478,12 @@ $(document).ready(function () {
 
                                                                         if(json.propuesta.correspondencia_proyecto_objetivos!=null)
                                                                         {
-                                                                            $(".caracter_correspondencia_proyecto_objetivos").html(1000 - json.propuesta.construccion_reconocimiento.length);
+                                                                            $(".caracter_correspondencia_proyecto_objetivos").html(1000 - json.propuesta.correspondencia_proyecto_objetivos.length);
                                                                         }
 
                                                                         if(json.propuesta.estrategia_construccion_memoria!=null)
                                                                         {
-                                                                            $(".caracter_estrategia_construccion_memoria").html(3000 - json.propuesta.construccion_reconocimiento.length);
+                                                                            $(".caracter_estrategia_construccion_memoria").html(3000 - json.propuesta.estrategia_construccion_memoria.length);
                                                                         }
 
                                                                         if(json.propuesta.impacto_proyecto!=null)
@@ -477,12 +491,16 @@ $(document).ready(function () {
                                                                             $(".caracter_impacto_proyecto").html(500 - json.propuesta.impacto_proyecto.length);
                                                                         }
 
+
                                                                         $("#mecanismos_cualitativa_local").val(json.propuesta.mecanismos_cualitativa);
 
                                                                         $("#estrategia_construccion_memoria").val(json.propuesta.estrategia_construccion_memoria);
                                                                         $("#correspondencia_proyecto_objetivos").val(json.propuesta.correspondencia_proyecto_objetivos);
 
-                                                                        
+                                                                        if (json.estado == 7)
+                                                                        {
+                                                                            $("#formulario_principal input,select,button[type=submit],textarea").removeAttr("disabled");
+                                                                        }
                                                                         //Valido formulario
                                                                         validator_form(token_actual);
 
