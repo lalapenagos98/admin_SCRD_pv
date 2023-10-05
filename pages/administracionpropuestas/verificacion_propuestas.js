@@ -849,7 +849,7 @@ function cargar_verificacion_1(propuesta,token_actual) {
 
                     if (json.programa === 2)
                     {
-                        $(".pdac_programa").css("display", "block");
+                        $(".pdac_programa").css("display", "");
                     } else
                     {
                         $(".pdac_programa").css("display", "none");
@@ -1061,6 +1061,7 @@ function cargar_verificacion_1(propuesta,token_actual) {
 
 
                     //Por defecto los documentos tecnicos esta desactivados
+                    /* para que puedan verificar las veces que necesiten
                     $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
                     $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
 
@@ -1084,7 +1085,7 @@ function cargar_verificacion_1(propuesta,token_actual) {
                         $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
 
                     }
-
+*/
                     //Si la propuesta esta estado por
                     //Registrada
                     //Anulada
@@ -1099,11 +1100,11 @@ function cargar_verificacion_1(propuesta,token_actual) {
                     if (json.propuesta.estado == 7 || json.propuesta.estado == 20 || json.propuesta.estado == 22 || json.propuesta.estado == 23 || json.propuesta.estado == 24 || json.propuesta.estado == 31)
                     {
 
-                        $("#doc_administrativos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
-                        $("#boton_confirma_administrativa_1").attr("disabled", "disabled");
+                        //$("#doc_administrativos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        //$("#boton_confirma_administrativa_1").attr("disabled", "disabled");
 
-                        $("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
-                        $("#boton_confirma_tecnica_1").attr("disabled", "disabled");
+                        //$("#doc_tecnicos_verificacion_1").find('input,select,button,textarea').attr("disabled", "disabled");
+                        //$("#boton_confirma_tecnica_1").attr("disabled", "disabled");
 
                     }
 
@@ -1366,7 +1367,7 @@ function cargar_verificacion_2(propuesta,token_actual) {
 
                     $('#doc_administrativos_verificacion_2 tr').remove();
                     $("#doc_administrativos_verificacion_2").append(html_table);
-
+/*
                     $("#doc_administrativos_verificacion_2").find('input,select,button,textarea').attr("disabled", "disabled");
                     $("#boton_confirma_administrativa_2").attr("disabled", "disabled");
 
@@ -1379,7 +1380,7 @@ function cargar_verificacion_2(propuesta,token_actual) {
                         $("#boton_confirma_administrativa_2").removeAttr("disabled");
                     }
 
-
+*/
                 }
             }
         }
