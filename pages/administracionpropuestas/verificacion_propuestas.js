@@ -1,4 +1,5 @@
 keycloak.init(initOptions).then(function (authenticated) {
+
     //Si no esta autenticado lo obliga a ingresar al keycloak
     if (authenticated === false)
     {
@@ -92,6 +93,7 @@ keycloak.init(initOptions).then(function (authenticated) {
                 {
                     if ($("#entidad").val() != "")
                     {
+
                         $.ajax({
                             type: 'POST',
                             data: {"modulo": "SICON-PROPUESTAS-VERIFICACION", "token": token_actual.token, "anio": $("#anio").val(), "entidad": $("#entidad").val()},
@@ -126,6 +128,13 @@ keycloak.init(initOptions).then(function (authenticated) {
                                 }
                             }
                         });
+                        $('#titulo_es_scrd').html('Categoría')
+
+                        if($("#entidad").val() == 2){
+                            $('#titulo_es_scrd').html('Linea de participación')
+
+                        }
+
                     }
                 }
 
@@ -713,8 +722,7 @@ function guardar_confirmacion(token_actual, estado_actual_propuesta, tipo_verifi
 
 function cargar_tabla(token_actual) {
 
-    
-    $('#table_list').DataTable({
+    table_list = $('#table_list').DataTable({
         "language": {
             "url": "../../dist/libraries/datatables/js/spanish.json"
         },
@@ -743,11 +751,14 @@ function cargar_tabla(token_actual) {
                 "targets": 0,
                 "render": function (data, type, row, meta) {
                     //Verificar cual es la categoria padre
-                    var categoria = row.convocatoria;
-                    if (row.categoria != null) {
-                        row.convocatoria = row.categoria;
-                        row.categoria = categoria;
+                    if(!row.es_programa_scrd) {
+                        var categoria = row.convocatoria;
+                        if (row.categoria != null) {
+                            row.convocatoria = row.categoria;
+                            row.categoria = categoria;
+                        }
                     }
+
 
                     //Iconos de verificacion de documentación
                     var icon_admin = '<button type="button" class="btn btn-danger btn-circle btn_tooltip" title="El funcionario no ha terminado de revisar los documentos administrativos."><span class="fa fa-times"></span></button>';
@@ -785,7 +796,14 @@ function cargar_tabla(token_actual) {
             {"data": "anio"},
             {"data": "entidad"},
             {"data": "convocatoria"},
-            {"data": "categoria"},
+            {"data": "categoria",render:function (data,type) {
+                    function normalizarTexto(texto) {
+                        return texto.replace(/\\u([\dA-Fa-f]{4})/g, function(match, grp) {
+                            return String.fromCharCode(parseInt(grp, 16));
+                        });
+                    }
+                    return normalizarTexto(data)
+                }},
             {"data": "propuesta"},
             {"data": "codigo"},
             {"data": "participante"},
