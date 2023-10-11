@@ -802,6 +802,8 @@ function cargar_tabla(token_actual) {
                             return String.fromCharCode(parseInt(grp, 16));
                         });
                     }
+                    if(data === null)
+                        return data
                     return normalizarTexto(data)
                 }},
             {"data": "propuesta"},
