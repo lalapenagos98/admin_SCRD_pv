@@ -723,6 +723,7 @@ function cargar_info_basica(token_actual, id_propuesta, id_evaluacion) {
             default:
 
                 var json = JSON.parse(data);
+                var propuesta = json.id_propuesta;
 
 
                 //informacion básica de la propuesta
@@ -786,6 +787,28 @@ function cargar_info_basica(token_actual, id_propuesta, id_evaluacion) {
                     });
                     $("#links_table").html(items);
                 }
+
+                $("#generar_presupuesto").click(function () {                
+                
+                    $.AjaxDownloader({
+                        data: {
+                            propuesta: propuesta,
+                            token: token_actual.token
+                        },
+                        url: url_pv + 'PropuestasFormatos/propuesta_presupuesto_funcionario_xlsEvaluacion/'
+                    });
+                });
+    
+                $("#generar_cronograma").click(function () {
+                    
+                    $.AjaxDownloader({
+                        data : {
+                            propuesta: propuesta,
+                            token: token_actual.token                       
+                        },
+                        url: url_pv + 'PropuestasFormatos/propuesta_cronograma_funcionario_xlsEvaluacion/'
+                    });
+                });
 
                 //desarcar archivo
                 $(".download_file").click(function () {
