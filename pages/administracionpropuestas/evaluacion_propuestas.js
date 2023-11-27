@@ -1,7 +1,6 @@
+let tipoCumple = false;
+
 $(document).ready(function () {
-
-
-
 
     //Verifico si el token exite en el cliente y verifico que el token este activo en el servidor
     var token_actual = getLocalStorage(name_local_storage);
@@ -377,6 +376,11 @@ function cargar_tabla(token_actual) {
     //var data =  ( $('#filtro').val() == 'true' ? $("#formulario_busqueda_banco").serializeArray() : null)
 
     //Se verifica si el usuario pertenece a un grupo de evaluación de la ronda
+
+    if($('#rondas').val() == 1975){
+        tipoCumple = true;
+    }
+
     $.ajax({
         type: 'GET',
         url: url_pv + 'Gruposevaluacion/evaluador/ronda/' + $('#rondas').val(),
@@ -406,7 +410,6 @@ function cargar_tabla(token_actual) {
             default:
 
                 var json = JSON.parse(data);
-                console.log(json);
                 if (json.id) {
 
                     if ((json.active !== null) && json.active) {
@@ -571,7 +574,15 @@ function cargar_tabla(token_actual) {
                                 },
                                 {"data": "Total de la evaluación",
                                     render: function (data, type, row) {
-                                        return row.total_evaluacion;
+                                        if(tipoCumple){
+                                            if(row.total_evaluacion>2){
+                                                return "Cumple";
+                                            }else{
+                                                return "No cumple";
+                                            }
+                                        }else{
+                                            return row.total_evaluacion;
+                                        }
                                     },
                                 },
                                 {"data": "Estado de la evaluación",
@@ -905,8 +916,15 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                                     + ' >'
                                     + '<option value="null">::Sin calificar::</option>';
 
-                            for (i = a.puntaje_minimo; i <= a.puntaje_maximo; i++) {
-                                select = select + '<option ' + ((a.evaluacion.puntaje == i) ? 'selected' : '') + ' value=' + i + ' >' + i + '</option>';
+                            if(a.puntaje_minimo==0){
+                                //Aplica para campos de cumple o no cumple
+                                for (i = a.puntaje_minimo; i <= a.puntaje_maximo; i++) {
+                                    select = select + '<option ' + ((a.evaluacion.puntaje == i) ? 'selected' : '') + ' value=' + i + ' >' + (i>0 ? "Cumple":"No cumple") + '</option>';
+                                }
+                            }else{
+                                for (i = a.puntaje_minimo; i <= a.puntaje_maximo; i++) {
+                                    select = select + '<option ' + ((a.evaluacion.puntaje == i) ? 'selected' : '') + ' value=' + i + ' >' + i + '</option>';
+                                }
                             }
 
                             select = select + '</select>';
