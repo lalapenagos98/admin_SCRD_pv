@@ -377,7 +377,7 @@ function cargar_tabla(token_actual) {
 
     //Se verifica si el usuario pertenece a un grupo de evaluación de la ronda
 
-    if($('#rondas').val() == 1975){
+    if($('#rondas').val() == 1990){
         tipoCumple = true;
     }
 
@@ -909,6 +909,7 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                             //  key.push(a.id);
                             //console.log("-->>"+a.id);
                             //  console.log("min"+a.puntaje_minimo+'-max'+a.puntaje_maximo);
+                            
 
                             //se construye las opciones del componente select
                             select = '<select id="puntuacion_' + a.id + '" name="puntuacion_' + a.id + '" class="form-control ' + r + key + '"'
@@ -916,8 +917,8 @@ function cargar_criterios_evaluacion(token_actual, id_evaluacion) {
                                     + ' >'
                                     + '<option value="null">::Sin calificar::</option>';
 
-                            if(a.puntaje_minimo==0){
-                                //Aplica para campos de cumple o no cumple
+                            //Aplica para campos de cumple o no cumple
+                            if(a.si_no == true){
                                 for (i = a.puntaje_minimo; i <= a.puntaje_maximo; i++) {
                                     select = select + '<option ' + ((a.evaluacion.puntaje == i) ? 'selected' : '') + ' value=' + i + ' >' + (i>0 ? "Cumple":"No cumple") + '</option>';
                                 }
